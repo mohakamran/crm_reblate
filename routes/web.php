@@ -33,6 +33,7 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/admin-login',[AuthController::class,'viewLoginAdmin']);
     Route::post('/admin-login',[AuthController::class,'loginAdmin'])->name('user.admin');
     Route::post('/client-login',[AuthController::class,'loginClient'])->name('user.client');
+    Route::get('/forget-password',[AuthController::class,'forgetPassword']);
 });
 
 
@@ -112,7 +113,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/create-credentials/{id}',[ClientController::class,'sendDetails']);
     Route::get('/view-clients-logins',[ClientController::class,'viewClientLogins']);
     Route::get('/delete-client-login/{id}',[ClientController::class,'deleteClientLogin']);
-    Route::get('/reset-password-client/{id}',[ClientController::class,'resetPasswordClient']);
+
 });
 
 Route::get('/clear', function() {

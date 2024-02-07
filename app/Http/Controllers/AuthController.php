@@ -22,6 +22,10 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+    // forget password
+    public function forgetPassword(){
+       return view('auth.forget');
+    }
     // client login
     public function loginClient(Request $request){
         $validate = $request->validate([
