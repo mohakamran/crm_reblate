@@ -319,9 +319,9 @@ class LoginController extends Controller
             // $emp = Login::where('emp_code',$id)->first();
             $emp = DB::table('table_login_details')->where('emp_code',$id)->first();
             if($emp) {
-                $emp->delete();
+                DB::table('table_login_details')->where('emp_code',$id)->delete();
             }
-            $emp_data->delete();
+            DB::table('users')->where('user_code',$id)->delete();
             return response()->json(['message' => 'success']);
         }
 

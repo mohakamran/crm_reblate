@@ -13,10 +13,61 @@ use Illuminate\Support\Facades\Mail;
 
 class ClientController extends Controller
 {
+
+    public function resetPasswordClient($id) {
+        $userEmp = DB::table('users')->where('user_code', $id)->first();
+
+        if ($userEmp) {
+            // Generate a random password
+            $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=';
+            $randomPassword = Str::random(12, $characters);
+
+            // Update the user's password
+            DB::table('users')
+                ->where('user_code', $id)
+                ->update(['password' => Hash::make($randomPassword)]);
+
+            // Send email to relevant user
+            $login_user_name = $userEmp->user_name;
+            $login_user_email = $userEmp->user_email;
+            $data = compact('login_user_name', 'login_user_email', 'randomPassword');
+            $mail_subject = "Your Password has been reset!";
+
+            Mail::send('client-login.update-email-template', $data, function ($message) use ($mail_subject, $login_user_email) {
+                $message->to($login_user_email)
+                    ->subject($mail_subject);
+            });
+
+            return response()->json(['success']);
+        } else {
+            return response()->json(['error']);
+        }
+    }
+
+    // delete client credentials
+    public function deleteClientLogin($id)
+    {
+        $check = DB::table('client_portal')->where('client_id', $id)->first();
+        if ($check) {
+            $check_user = DB::table('users')->where('user_code', $id)->first();
+            if ($check_user) {
+                DB::table('users')->where('user_code', $id)->delete();
+            }
+            DB::table('client_portal')->where('client_id', $id)->delete();
+            return response()->json(['message' => 'success']);
+        } else {
+            // Return an error response if the record was not found
+            return response()->json(['message' => 'error', 'error' => 'Record not found'], 404);
+        }
+    }
+
     // view created login clients
     public function viewClientLogins(){
-        $client_data = DB::table('client_portal')->orderBy('id', 'desc')->get();
-        // dd($client_data->client_id);
+        $rec = DB::table('client_portal')->orderBy('id','desc')->get();
+        $title = "Logins Created";
+        $data = compact('rec','title');
+        return view('client-login.view-login',$data);
+
     }
     // send details to client
     public function sendDetails($id) {

@@ -212,7 +212,7 @@
                                                                 <label class="form-check-label" for="remember">Remember
                                                                     me</label>
                                                             </div>
-                                                            {{-- <a href="{{ route('password.update') }}" class="text-end">Forget Password?</a> --}}
+                                                            <a href="/forget-password" class="text-end">Forget Password?</a>
                                                         </div>
 
                                                         <div class="mt-4">

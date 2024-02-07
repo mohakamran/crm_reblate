@@ -91,8 +91,8 @@ Client Logins
                                                     ="mdi mdi-delete"></i></a>
                                                 </a> --}}
                                                 <a href="/send-redentials-clients/{{$emp->client_id}}" class="btn btn-success"><i class="mdi mdi-pencil"></i></a></a>
-                                                <a href="javascript:void()" onclick="sendPassword('{{$emp->client_id }}')" class="btn btn-danger">
-                                                    <i class="mdi mdi-lock"></i></a>
+                                                {{-- <a href="javascript:void()" onclick="sendPassword('{{$emp->client_id }}')" class="btn btn-danger">
+                                                    <i class="mdi mdi-lock"></i></a> --}}
                                             </div>
                                         </td>
 

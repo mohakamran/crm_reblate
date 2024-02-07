@@ -111,6 +111,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/send-redentials-clients/{id}',[ClientController::class,'sendDetailsClients']);
     Route::post('/create-credentials/{id}',[ClientController::class,'sendDetails']);
     Route::get('/view-clients-logins',[ClientController::class,'viewClientLogins']);
+    Route::get('/delete-client-login/{id}',[ClientController::class,'deleteClientLogin']);
+    Route::get('/reset-password-client/{id}',[ClientController::class,'resetPasswordClient']);
 });
 
 Route::get('/clear', function() {
