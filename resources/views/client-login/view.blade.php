@@ -28,15 +28,21 @@ Client Logins
                     <div class="card-body">
 
                         <h4 class="card-title">Client Logins</h4>
-                        {{-- <p class="card-title-desc">The Buttons extension for DataTables
-                            provides a common set of options, API methods and styling to display
-                            buttons on a page that will interact with a DataTable. The core library
-                            provides the based framework upon which plug-ins can built.
-                        </p> --}}
+                        <p class="card-title-desc">If you do not see any client in the list then first add client from <a href="/add-new-client">here</a> and then come back.
+                        </p>
 
                         @if (session('success'))
                         <div class="alert alert-success alert-dismissible fade show" id="close-now">
                             {{ session('success') }}
+                            <a type="button" onclick="hideNow()" class="close" data-dismiss="alert" aria-label="Close"
+                                style="float: right;">
+                                <span aria-hidden="true">&times;</span>
+                            </a>
+                        </div>
+                       @endif
+                        @if (session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" id="close-now">
+                            {{ session('error') }}
                             <a type="button" onclick="hideNow()" class="close" data-dismiss="alert" aria-label="Close"
                                 style="float: right;">
                                 <span aria-hidden="true">&times;</span>
@@ -81,9 +87,11 @@ Client Logins
                                                     <i class="mdi mdi-pencil"></i>
                                                 </a>
                                                 <a href="javascript:void()" onclick="deleteEmployee('{{ $emp->emp_code }}')" class="btn btn-danger">
-                                                    <i class="mdi mdi-delete"></i></a>
+                                                    <i class
+                                                    ="mdi mdi-delete"></i></a>
                                                 </a> --}}
-                                                <a href="javascript:void()" onclick="sendPassword('{{$emp->emp_code }}')" class="btn btn-danger">
+                                                <a href="/send-redentials-clients/{{$emp->client_id}}" class="btn btn-success"><i class="mdi mdi-pencil"></i></a></a>
+                                                <a href="javascript:void()" onclick="sendPassword('{{$emp->client_id }}')" class="btn btn-danger">
                                                     <i class="mdi mdi-lock"></i></a>
                                             </div>
                                         </td>
@@ -102,90 +110,90 @@ Client Logins
 
         <script>
             // Function to confirm deletion with SweetAlert
-            function confirmDelete(id) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'User Will be deleted!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes',
-                    cancelButtonText: 'No',
-                    confirmButtonColor: '#FF5733', // Red color for "Yes"
-                    cancelButtonColor: '#4CAF50', // Green color for "No"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Send an AJAX request to delete the task
-                        $.ajax({
-                            url: '/delete-employee-login/'+id,
-                            method: 'GET', // Use the DELETE HTTP method
-                            success: function() {
-                                // Provide user feedback
-                                Swal.fire({
-                                    title: 'Success!',
-                                    text: 'User has been deleted.',
-                                    icon: 'success'
-                                }).then(() => {
-                                    location.reload(); // Refresh the page
-                                });
-                            },
-                            error: function(xhr, status, error) {
-                                // Handle errors, you can display an error message to the user
-                                console.error('Error:', error);
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: 'An error occurred while deleting the user!',
-                                    icon: 'error'
-                                });
-                            }
-                        });
+            // function confirmDelete(id) {
+            //     Swal.fire({
+            //         title: 'Are you sure?',
+            //         text: 'User Will be deleted!',
+            //         icon: 'warning',
+            //         showCancelButton: true,
+            //         confirmButtonText: 'Yes',
+            //         cancelButtonText: 'No',
+            //         confirmButtonColor: '#FF5733', // Red color for "Yes"
+            //         cancelButtonColor: '#4CAF50', // Green color for "No"
+            //     }).then((result) => {
+            //         if (result.isConfirmed) {
+            //             // Send an AJAX request to delete the task
+            //             $.ajax({
+            //                 url: '/delete-employee-login/'+id,
+            //                 method: 'GET', // Use the DELETE HTTP method
+            //                 success: function() {
+            //                     // Provide user feedback
+            //                     Swal.fire({
+            //                         title: 'Success!',
+            //                         text: 'User has been deleted.',
+            //                         icon: 'success'
+            //                     }).then(() => {
+            //                         location.reload(); // Refresh the page
+            //                     });
+            //                 },
+            //                 error: function(xhr, status, error) {
+            //                     // Handle errors, you can display an error message to the user
+            //                     console.error('Error:', error);
+            //                     Swal.fire({
+            //                         title: 'Error!',
+            //                         text: 'An error occurred while deleting the user!',
+            //                         icon: 'error'
+            //                     });
+            //                 }
+            //             });
 
-                    }
-                });
-            }
-            function changeShiftEmp(id) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'Shift of employee will be changed!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes',
-                    cancelButtonText: 'No',
-                    confirmButtonColor: '#FF5733', // Red color for "Yes"
-                    cancelButtonColor: '#4CAF50', // Green color for "No"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Send an AJAX request to delete the task
-                        $.ajax({
-                            url: '/change-shift/'+id,
-                            method: 'GET', // Use the DELETE HTTP method
-                            success: function() {
-                                // Provide user feedback
-                                Swal.fire({
-                                    title: 'Success!',
-                                    text: 'Shift has been changed.',
-                                    icon: 'success'
-                                }).then(() => {
-                                    location.reload(); // Refresh the page
-                                });
-                            },
-                            error: function(xhr, status, error) {
-                                // Handle errors, you can display an error message to the user
-                                console.error('Error:', error);
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: 'An error occurred while deleting the employee!',
-                                    icon: 'error'
-                                });
-                            }
-                        });
+            //         }
+            //     });
+            // }
+            // function changeShiftEmp(id) {
+            //     Swal.fire({
+            //         title: 'Are you sure?',
+            //         text: 'Shift of employee will be changed!',
+            //         icon: 'warning',
+            //         showCancelButton: true,
+            //         confirmButtonText: 'Yes',
+            //         cancelButtonText: 'No',
+            //         confirmButtonColor: '#FF5733', // Red color for "Yes"
+            //         cancelButtonColor: '#4CAF50', // Green color for "No"
+            //     }).then((result) => {
+            //         if (result.isConfirmed) {
+            //             // Send an AJAX request to delete the task
+            //             $.ajax({
+            //                 url: '/change-shift/'+id,
+            //                 method: 'GET', // Use the DELETE HTTP method
+            //                 success: function() {
+            //                     // Provide user feedback
+            //                     Swal.fire({
+            //                         title: 'Success!',
+            //                         text: 'Shift has been changed.',
+            //                         icon: 'success'
+            //                     }).then(() => {
+            //                         location.reload(); // Refresh the page
+            //                     });
+            //                 },
+            //                 error: function(xhr, status, error) {
+            //                     // Handle errors, you can display an error message to the user
+            //                     console.error('Error:', error);
+            //                     Swal.fire({
+            //                         title: 'Error!',
+            //                         text: 'An error occurred while deleting the employee!',
+            //                         icon: 'error'
+            //                     });
+            //                 }
+            //             });
 
-                    }
-                });
-            }
+            //         }
+            //     });
+            // }
             function sendPasswordEmp(id) {
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: 'You want to reset password of employee login!',
+                    text: 'Send Password Reset!',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Yes',
@@ -196,7 +204,7 @@ Client Logins
                     if (result.isConfirmed) {
                         // Send an AJAX request to delete the task
                         $.ajax({
-                            url: '/reset-password/'+id,
+                            url: '/send-details-clients/'+id,
                             method: 'GET', // Use the DELETE HTTP method
                             success: function() {
                                 // Provide user feedback
@@ -223,12 +231,12 @@ Client Logins
                 });
             }
 
-            function deleteEmployee(id) {
-                confirmDelete(id);
-            }
-            function changeShift(id) {
-                changeShiftEmp(id);
-            }
+            // function deleteEmployee(id) {
+            //     confirmDelete(id);
+            // }
+            // function changeShift(id) {
+            //     changeShiftEmp(id);
+            // }
             function sendPassword(id) {
                 sendPasswordEmp(id);
             }

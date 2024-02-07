@@ -5,9 +5,79 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Client;
+use DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Facades\Mail;
 
 class ClientController extends Controller
 {
+    // view created login clients
+    public function viewClientLogins(){
+        $client_data = DB::table('client_portal')->orderBy('id', 'desc')->get();
+        // dd($client_data->client_id);
+    }
+    // send details to client
+    public function sendDetails($id) {
+        $client_data = DB::table('clients')->where('client_id',$id)->first();
+        if($client_data) {
+            $check_id= DB::table('client_portal')->where('client_id',$id)->first();
+            // if client already exists then redirect to error message
+            if($check_id) {
+                session()->flash('error', 'Client ID Already Exists!');
+                return redirect('/create-client-logins');
+            }
+            // send email to relevant user
+            $client_email = $client_data->client_email;
+            $client_name = $client_data->client_name;
+            $project_name = $client_data->project_name;
+            $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=';
+            $randomPassword = Str::random(12, $characters);
+
+            DB::table('client_portal')->insert([
+                'name' => $client_name,
+                // 'status' => 'created',
+                'client_id' => $id,
+                'status' => 'created',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            DB::table('users')->insert([
+                'user_name' => $client_name,
+                'user_email' => $client_email,
+                'user_type' => "client",
+                'remember_token' => '',
+                'user_code' => $id,
+                'password' => Hash::make($randomPassword),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $data = compact('client_name', 'client_email', 'randomPassword','project_name' );
+            $mail_subject = "Reblate Solutions have invited you on Client Portal!";
+            Mail::send('client-login.email-template', $data, function ($message) use ($mail_subject, $client_email) {
+                $message->to($client_email)
+                        ->subject($mail_subject);
+            });
+            session()->flash('success', 'Login Invitation Sent successfully!');
+            return redirect('/create-client-logins');
+
+        } else {
+            return redirect('/create-client-logins');
+        }
+    }
+    // send client credentials to client
+    public function sendDetailsClients($id) {
+        $client_data = DB::table('clients')->where('client_id',$id)->first();
+        if($client_data) {
+            $data = compact('client_data');
+            return view('client-login.view-client-login',$data);
+        } else {
+            return redirect('/create-client-logins');
+        }
+    }
     // create login view
     public function createClientLoginView() {
         $emp_data = Client::all();
@@ -81,7 +151,7 @@ class ClientController extends Controller
     }
     // client details
     public function viewClientDetail($id) {
-        $client_data = Client::find($id);
+        $client_data = Client::where('client_id',$id)->first();
         if($client_data) {
             $title = $client_data->client_name;
             $btn_text = 'Go back';
@@ -94,7 +164,7 @@ class ClientController extends Controller
     }
     // delete client id
     public function deleteClientData($id) {
-        $client_data = Client::find($id);
+        $client_data = Client::where('client_id',$id)->first();
         if($client_data) {
             $client_data->delete();
             return response()->json(['message' => 'success']);
@@ -106,7 +176,7 @@ class ClientController extends Controller
     }
     //client route update
     public function updateClientRoute($id) {
-        $client_data = Client::find($id);
+        $client_data = Client::where('client_id',$id)->first();
         if($client_data) {
             $title = "Update Client Data";
             $route="/update-client/".$id;
@@ -120,7 +190,7 @@ class ClientController extends Controller
     }
     // update clients info and save in database
     public function updateClientData(Request $req, $id) {
-        $client = Client::find($id);
+        $client = Client::where('client_id',$id)->first();
         if($client) {
             $validate = $req->validate([
                 'client_name' => 'required',

@@ -55,14 +55,14 @@
 
                                         <td>{{ $count }}</td>
                                         {{-- <td>{{ ( $emp->Emp_Code < 10) ? '00'.$emp->Emp_Code : $emp->Emp_Code }}sols</td> --}}
-                                        <td><a href="{{ Route('view-client-detail', $client->id) }}">{{ $client->client_name }} </a></td>
+                                        <td><a href="{{ Route('view-client-detail', $client->client_id) }}">{{ $client->client_name }} </a></td>
                                         <td>{{ $client->project_name }} </a></td>
                                         <td>{{ $client->project_type }} </a></td>
                                         <td>{{ $client->client_email }}</td>
 
                                         <td class="text-nowrap">
                                             <div class="d-flex gap-3">
-                                                <a href="{{ Route('update_client', $client->id)}}" data-toggle="tooltip" class="btn btn-success btn-sm"
+                                                <a href="{{ Route('update_client', $client->client_id)}}" data-toggle="tooltip" class="btn btn-success btn-sm"
                                                     data-original-title="Edit">
                                                     <i class="mdi mdi-pencil"></i>
                                                 </a>
