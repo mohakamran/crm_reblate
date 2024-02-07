@@ -55,6 +55,7 @@
                                     <th>EMP ID</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Employee Type</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -69,7 +70,8 @@
                                         <td>{{ $emp->emp_code }} </td>
                                         <td>{{ $emp->username}}
                                         </td>
-                                        <td>{{ $emp->emp_email }}</td>
+                                        <td>{{ $emp->email }}</td>
+                                        <td>{{ $emp->employee_type }}</td>
 
 
                                         <td class="text-nowrap">
@@ -223,9 +225,9 @@
             function deleteEmployee(id) {
                 confirmDelete(id);
             }
-            function changeShift(id) {
-                changeShiftEmp(id);
-            }
+            // function changeShift(id) {
+            //     changeShiftEmp(id);
+            // }
             function sendPassword(id) {
                 sendPasswordEmp(id);
             }

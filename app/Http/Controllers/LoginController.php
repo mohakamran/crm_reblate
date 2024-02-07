@@ -9,6 +9,7 @@ use App\Models\UserEmployee;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
+use DB;
 
 
 use Illuminate\Support\Str;
@@ -18,14 +19,15 @@ use Illuminate\Support\Facades\Hash;
 class LoginController extends Controller
 {
     public function resetPassword($id) {
-        $userEmp = UserEmployee::where('emp_code',$id)->first();
+        // $userEmp = UserEmployee::where('emp_code',$id)->first();
+        $userEmp = DB::table('users')->where('user_code',$id)->first();
         if($userEmp) {
             // send email to relevant user
             $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=';
             $randomPassword = Str::random(12, $characters);
-            $login_user_name = $userEmp->username;
-            $login_user_code = $userEmp->emp_code;
-            $login_user_email = $userEmp->emp_email;
+            $login_user_name = $userEmp->user_name;
+            $login_user_code = $userEmp->user_code;
+            $login_user_email = $userEmp->user_email;
             // $randomPassword = $randomPassword;
             $data = compact('login_user_code', 'login_user_email','login_user_name', 'randomPassword' );
             $mail_subject = "Your Password has been reset!";
@@ -82,7 +84,7 @@ class LoginController extends Controller
     public function registerNewEmployeeLogin(Request $req) {
         $req->validate([
             'emp_login_name' => 'required',
-            'emp_login_email' => 'required|unique:user_employee,emp_email',
+            'emp_login_email' => 'required|unique:employees,emp_email',
             'emp_login_user_type_hidden' => 'required',
             'emp_code' => 'required',
             'employee_department' => 'required',
@@ -106,8 +108,12 @@ class LoginController extends Controller
         // dd($data);
 
         $user_check = UserEmployee::where('emp_code', $login_user_code)->first();
+        $email_check = DB::table('users')->where('user_email',$login_user_email)->first();
+        if($email_check) {
+            session()->flash('fail', 'Email Already Exists!');
+            return back();
+        }
         if($user_check) {
-
             session()->flash('fail', 'Employee ID already exists!');
             return back();
         }
@@ -154,15 +160,25 @@ class LoginController extends Controller
             $login->save();
 
 
-            $UserEmployee = new UserEmployee();
-            $UserEmployee->username = $login_user_name;
-            $UserEmployee->status = "created";
-            $UserEmployee->emp_email = $login_user_email;
-            $UserEmployee->employee_type = $login_user_type;
-            $UserEmployee->remember_token = '';
-            $UserEmployee->emp_code = $login_user_code;
-            $UserEmployee->password = Hash::make($randomPassword);
-            $UserEmployee->save();
+            // $UserEmployee = new UserEmployee();
+            // $UserEmployee->username = $login_user_name;
+            // $UserEmployee->status = "created";
+            // $UserEmployee->emp_email = $login_user_email;
+            // $UserEmployee->employee_type = $login_user_type;
+            // $UserEmployee->remember_token = '';
+            // $UserEmployee->emp_code = $login_user_code;
+            // $UserEmployee->password = Hash::make($randomPassword);
+            // $UserEmployee->save();
+            DB::table('users')->insert([
+                'user_name' => $login_user_name,
+                'user_email' => $login_user_email,
+                'user_type' => $login_user_type,
+                'remember_token' => '',
+                'user_code' => $login_user_code,
+                'password' => Hash::make($randomPassword),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
 
             // save in employee table
@@ -285,7 +301,10 @@ class LoginController extends Controller
     }
 
     public function viewLoginEmp() {
-        $rec = UserEmployee::orderBy('id', 'desc')->get();
+        // $rec = UserEmployee::orderBy('id', 'desc')->get();
+        $rec = DB::table('table_login_details')
+                    ->orderBy('id', 'desc')
+                    ->get();
         $title = "Logins Created";
         $data = compact('rec','title');
         return view('login.view-login',$data);
@@ -293,10 +312,13 @@ class LoginController extends Controller
 
     public function delviewLoginEmp($id) {
 
-        $emp_data = UserEmployee::where('emp_code', $id)->first();
+        // $emp_data = UserEmployee::where('emp_code', $id)->first();
+
+        $emp_data = DB::table('users')->where('user_code',$id)->first();
 
         if($emp_data) {
-            $emp = Login::where('emp_code',$id)->first();
+            // $emp = Login::where('emp_code',$id)->first();
+            $emp = DB::table('table_login_details')->where('emp_code',$id)->first();
             if($emp) {
                 $emp->delete();
             }
