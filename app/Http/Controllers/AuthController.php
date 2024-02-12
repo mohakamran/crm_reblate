@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Employee;
 use App\Models\Client;
+use DB;
 
 use Illuminate\Support\Facades\Response;
 
@@ -22,6 +23,84 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+    //forget password check
+    public function forgetPasswordView(Request $request) {
+        $validate = $request->validate([
+            'client_email' => 'required',
+        ]);
+        $user_type = $request->user_type;
+        $client_email = $request->client_email;
+        if($user_type==""){
+            session()->flash('user_role', 'Please select a user type!');
+            return back()->withInput(['client_email' => $client_email]);
+        }
+        if($user_type == "employee") {
+            $check = DB::table('users')
+            ->where('user_email', $client_email)
+            ->where('user_type', 'employee')
+            ->first();
+            if(!$check) {
+                session()->flash('user_role', 'Employee Email not found in Database!');
+                return back()->withInput([
+                    'client_email' => $client_email,
+                    'user_type' => $user_type
+                ]);
+            }
+        }
+        if($user_type == "admin") {
+            $check = DB::table('users')
+            ->where('user_email', $client_email)
+            ->where('user_type', 'admin')
+            ->first();
+            if(!$check) {
+                session()->flash('user_role', 'Admin Email not found in Database!');
+                return back()->withInput([
+                    'client_email' => $client_email,
+                    'user_type' => $user_type
+                ]);
+            }
+        }
+        if($user_type == "client") {
+            $check = DB::table('users')
+            ->where('user_email', $client_email)
+            ->where('user_type', 'client')
+            ->first();
+            if(!$check) {
+                session()->flash('user_role', 'Client Email not found in Database!');
+                return back()->withInput([
+                    'client_email' => $client_email,
+                    'user_type' => $user_type
+                ]);
+            }
+        }
+
+        $mail_subject = "Request for Reset Password";
+        // $check = DB::table('users')
+        //     ->where('user_email', $client_email)
+        //     ->where('user_type', 'client')
+        //     ->first();
+        $user_code = $check->user_code;
+        $user_name = $check->user_name;
+         // Define the set of characters to use in the password
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=';
+        $randomPassword = Str::random(12, $characters);
+        $data = compact('client_email', 'randomPassword','user_name');
+
+        Mail::send('emails.email-reset-template',$data , function ($message) use ($mail_subject, $client_email) {
+            $message->to($client_email)
+                ->subject($mail_subject);
+        });
+
+        DB::table('users')
+        ->where('user_code', $user_code)
+        ->update([
+            'password' => $randomPassword
+         ]);
+
+        session()->flash('message', 'We have sent you a new password! Please check inbox.');
+        return back();
+
+    }
     // forget password
     public function forgetPassword(){
        return view('auth.forget');

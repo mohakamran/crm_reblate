@@ -24,25 +24,58 @@ use App\Http\Controllers\LoginController;
 // AuthController
 
 
+Route::get('/employee-login',[AuthController::class,'viewLoginEmployee'])->name('user.emp');
+Route::post('/employee-login',[AuthController::class,'loginEmployee']);
+Route::get('/client-login',[AuthController::class,'viewLoginClient']);
+Route::get('/admin-login',[AuthController::class,'viewLoginAdmin']);
+Route::post('/admin-login',[AuthController::class,'loginAdmin'])->name('user.admin');
+Route::post('/client-login',[AuthController::class,'loginClient'])->name('user.client');
+Route::get('/forget-password',[AuthController::class,'forgetPassword']);
+Route::post('/forget-password',[AuthController::class,'forgetPasswordView']);
+
 Route::middleware(['guest'])->group(function () {
     Route::get('/login',[AuthController::class,'index'])->name('auth.login');
     // Route::post('/user-login',[AuthController::class,'loginIndex'])->name('auth.user');
-    Route::get('/employee-login',[AuthController::class,'viewLoginEmployee'])->name('user.emp');
-    Route::post('/employee-login',[AuthController::class,'loginEmployee']);
-    Route::get('/client-login',[AuthController::class,'viewLoginClient']);
-    Route::get('/admin-login',[AuthController::class,'viewLoginAdmin']);
-    Route::post('/admin-login',[AuthController::class,'loginAdmin'])->name('user.admin');
-    Route::post('/client-login',[AuthController::class,'loginClient'])->name('user.client');
-    Route::get('/forget-password',[AuthController::class,'forgetPassword']);
 });
 
 
 Route::middleware(['auth'])->group(function () {
+// Route::view('/', 'index.index')->name('home');
+Route::get('/',[AuthController::class,'indexHomePage']);
+
+
+
+});
+
+Route::get('/clear', function() {
+    try {
+        // Clear the application cache
+        Artisan::call('cache:clear');
+        Artisan::call('view:clear');
+        Artisan::call('route:clear');
+        Artisan::call('config:cache');
+        Artisan::call('optimize:clear');
+
+
+       echo "cache cleared! <a href='/'>Go back</a> ";
+    } catch (\Exception $e) {
+        return 'Error clearing cache: ' . $e->getMessage();
+    }
+});
+
+Route::group(['middleware' => 'admin'], function () {
+//     // users maangement for super admin
+//     Route::get('/view-users/{user_id}', [AuthController::class,'viewUsersData']);
+//     Route::get('/delete-user/{user_id}', [AuthController::class,'deleteUser']);
+//     Route::get('/user-register',[AuthController::class,'registerUser'])->name('auth.register');
+//     Route::post('/user-register',[AuthController::class,'registerUserData']);
+//     Route::get('/user-details/{user_id}',[AuthController::class,'changeUserDetails'])->name('user.change-details');
+//     Route::post('/user-details/{user_id}',[AuthController::class,'changeUserDetailsData']);
+//     Route::get('/send-reset/{user_id}',[AuthController::class,'sendUserResetPassword']);
 
     // home page
 
-    // Route::view('/', 'index.index')->name('home');
-    Route::get('/',[AuthController::class,'indexHomePage']);
+
     // Route::view('/demo','pages.demo');
 
     // Employee Routes
@@ -109,37 +142,9 @@ Route::middleware(['auth'])->group(function () {
 
     // client logins
     Route::get('/create-client-logins',[ClientController::class,'createClientLoginView']);
-    Route::get('/send-redentials-clients/{id}',[ClientController::class,'sendDetailsClients']);
+    Route::get('/send-credentials-clients/{id}',[ClientController::class,'sendDetailsClients']);
     Route::post('/create-credentials/{id}',[ClientController::class,'sendDetails']);
     Route::get('/view-clients-logins',[ClientController::class,'viewClientLogins']);
     Route::get('/delete-client-login/{id}',[ClientController::class,'deleteClientLogin']);
-
+    Route::get('/reset-password-client/{id}',[ClientController::class,'resetPasswordClient']);
 });
-
-Route::get('/clear', function() {
-    try {
-        // Clear the application cache
-        Artisan::call('cache:clear');
-        Artisan::call('view:clear');
-        Artisan::call('route:clear');
-        Artisan::call('config:cache');
-        Artisan::call('optimize:clear');
-
-
-       echo "cache cleared! <a href='/'>Go back</a> ";
-    } catch (\Exception $e) {
-        return 'Error clearing cache: ' . $e->getMessage();
-    }
-});
-
-// Route::group(['middleware' => 'admin'], function () {
-//     // users maangement for super admin
-//     Route::get('/view-users/{user_id}', [AuthController::class,'viewUsersData']);
-//     Route::get('/delete-user/{user_id}', [AuthController::class,'deleteUser']);
-//     Route::get('/user-register',[AuthController::class,'registerUser'])->name('auth.register');
-//     Route::post('/user-register',[AuthController::class,'registerUserData']);
-//     Route::get('/user-details/{user_id}',[AuthController::class,'changeUserDetails'])->name('user.change-details');
-//     Route::post('/user-details/{user_id}',[AuthController::class,'changeUserDetailsData']);
-//     Route::get('/send-reset/{user_id}',[AuthController::class,'sendUserResetPassword']);
-
-// });
