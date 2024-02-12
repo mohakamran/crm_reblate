@@ -123,7 +123,7 @@
 
                 {{-- users routes  --}}
 
-                @if (auth()->user()->user_type == 'super_admin')
+                {{-- @if (auth()->user()->user_type == 'super_admin')
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -135,10 +135,10 @@
                         <ul aria-expanded="false" class="collapse">
                             <li><a href="/view-users/{{ auth()->user()->id }}">View Users</a></li>
                             <li><a href="{{ Route('auth.register') }}">Add new user</a></li>
-                            {{-- <li><a href="#">Employee Cards</a></li> --}}
+
                         </ul>
                     </li>
-                @endif
+                @endif --}}
                 {{-- Employees --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -495,7 +495,7 @@
         </button>
         <div class="dropdown-menu dropdown-menu-end">
             <!-- item-->
-            <a class="dropdown-item" href="{{ Route('user.chang-password', auth()->user()->id) }}"><i
+            <a class="dropdown-item" href="{{ Route('user.chang-password')}}"><i
                     class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
                     class="align-middle">Change Password</span></a>
             {{-- <a class="dropdown-item" href="apps-chat"><i

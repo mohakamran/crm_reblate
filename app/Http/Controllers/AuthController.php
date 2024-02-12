@@ -94,7 +94,7 @@ class AuthController extends Controller
         DB::table('users')
         ->where('user_code', $user_code)
         ->update([
-            'password' => $randomPassword
+            'password' => Hash::make($randomPassword)
          ]);
 
         session()->flash('message', 'We have sent you a new password! Please check inbox.');
@@ -286,12 +286,13 @@ class AuthController extends Controller
         return redirect($url);
     }
 
-    public function changePassword($id) {
-        $user = User::find($id);
+    public function changePassword() {
+        $id = auth()->user()->user_code;
+        $user = DB::table('users')->where('user_code',$id)->first();
         if($user) {
             $title= "Change Password";
-            $route = "/change-password/".$user->id;
-            $btn_text = "Update Account";
+            $route = "/change-password";
+            $btn_text = "Update Password";
             $data = compact('title','user','route','btn_text');
             return view('auth.change-password')->with($data);
         }
@@ -301,15 +302,16 @@ class AuthController extends Controller
 
     }
 
-    public function changePasswordData($id, Request $req){
+    public function changePasswordData(Request $req){
         $validate = $req->validate([
             'user_name' => 'required|string|max:255',
-            'user_email' => 'required|string |email|max:255',
+            // 'user_email' => 'required|string |email|max:255',
             'user_password' => 'sometimes|confirmed',
             'user_password_confirmation' => 'sometimes',
         ]);
-        $user = User::find($id);
-        if($id) {
+        $user_code = auth()->user()->user_code;
+        $user = DB::table('users')->where('user_code',$user_code)->first();
+        if($user) {
             if($req->user_password == "") {
                 $hash_password = $user->password;
             } else {
@@ -318,10 +320,14 @@ class AuthController extends Controller
             }
 
             // udpating data to database
-            $user->user_name = $req->user_name;
-            $user->user_email = $req->user_email;
-            $user->password = $hash_password;
-            $user->save();
+            // $user->user_name = $req->user_name;
+            // // $user->user_email = $req->user_email;
+            // $user->password = $hash_password;
+            // $user->save();
+            DB::table('users')->where('user_code',$user_code)->update([
+                'user_name'=>$user->user_name,
+                'password'=>$hash_password
+            ]);
              // success message
             session()->flash('success', 'Account Updated Successfully!');
             return back();

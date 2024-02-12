@@ -93,8 +93,8 @@ Route::group(['middleware' => 'admin'], function () {
     // users
 
     Route::get('/logout',[AuthController::class,'logout']);
-    Route::get('/change-password/{user_id}',[AuthController::class,'changePassword'])->name('user.chang-password');
-    Route::post('/change-password/{user_id}',[AuthController::class,'changePasswordData']);
+    Route::get('/change-password',[AuthController::class,'changePassword'])->name('user.chang-password');
+    Route::post('/change-password',[AuthController::class,'changePasswordData']);
 
     //expenses
     Route::get('/add-new-expense', [ExpenseController::class,'addExpenseRoute'])->name('add-new-expense');

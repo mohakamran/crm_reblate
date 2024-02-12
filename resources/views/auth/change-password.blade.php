@@ -14,8 +14,8 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title">Fill below form to add new employee. Fields with(<span
-                                style="color:red;">*</span>) are mandatory to fill, remaining are optional.</p>
+                        {{-- <p class="card-title">Fill below form to add new employee. Fields with(<span
+                                style="color:red;">*</span>) are mandatory to fill, remaining are optional.</p> --}}
                         <br>
 
                         <form method="post" action="{{ $route }}" enctype="multipart/form-data">
@@ -35,7 +35,7 @@
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <input class="form-control" type="text" placeholder="User Name" name="user_name"
-                                        value="{{ isset($user->user_name) ? $user->user_name : old('user_name') }}">
+                                            value="{{ isset($user->user_name) ? $user->user_name : old('user_name') }}">
                                         @error('user_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -43,7 +43,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <input class="form-control" type="email" placeholder="email" name="user_email"
                                         value="{{ isset($user->user_email) ? $user->user_email : old('user_email') }}">
@@ -52,29 +52,42 @@
                                         @enderror
                                         <label for="">Email address <span class="text-danger">*</span></label>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <input class="form-control" type="password" placeholder="Password"
-                                            name="user_password_confirmation">
-                                        @error('user_password_confirmation')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                        <label for="">Confirm Password <span class="text-danger">*</span></label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="password" placeholder="Password"
-                                            name="user_password">
+                                            name="user_password" id="user_password">
                                         @error('user_password')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                         <label for="">Password <span class="text-danger">*</span></label>
                                     </div>
+                                    <div class="mb-3">
+
+                                        <input type="checkbox" onclick="togglePasswordVisibility()" id="passwordCheck">
+                                        <label for="showPassword">Show Password</label>
+
+                                    </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" type="password" placeholder="Password"
+                                            name="user_password_confirmation" id="confirmPassword">
+                                        @error('user_password_confirmation')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <label for="">Confirm Password <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="mb-3">
+
+                                        <input type="checkbox" onclick="toggleConfirmPasswordVisibility()" id="passwordConfirmCheck">
+                                        <label for="showPassword">Show Password</label>
+
+                                    </div>
+                                </div>
+
                             </div>
 
 
@@ -95,6 +108,19 @@
             function hideNow() {
                 var divElement = document.getElementById('close-now');
                 divElement.style.display = 'none';
+            }
+
+            function togglePasswordVisibility() {
+                const passwordInput = document.getElementById('user_password');
+                const checkbox = document.getElementById('passwordCheck');
+
+                passwordInput.type = checkbox.checked ? 'text' : 'password';
+            }
+            function toggleConfirmPasswordVisibility() {
+                const passwordInput = document.getElementById('confirmPassword');
+                const checkbox = document.getElementById('passwordConfirmCheck');
+
+                passwordInput.type = checkbox.checked ? 'text' : 'password';
             }
         </script>
     @endsection

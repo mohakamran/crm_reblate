@@ -201,9 +201,9 @@
         </button>
         <div class="dropdown-menu dropdown-menu-end">
             <!-- item-->
-            <a class="dropdown-item" href="{{ Route('user.chang-password', auth()->user()->id) }}"><i
-                    class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Change Password</span></a>
+            <a class="dropdown-item" href="{{ Route('user.chang-password')}}"><i
+                class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
+                class="align-middle">Change Password</span></a>
             {{-- <a class="dropdown-item" href="apps-chat"><i
                     class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-1"></i> <span
                     class="align-middle">Messages</span></a> --}}
