@@ -147,4 +147,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/view-clients-logins',[ClientController::class,'viewClientLogins']);
     Route::get('/delete-client-login/{id}',[ClientController::class,'deleteClientLogin']);
     Route::get('/reset-password-client/{id}',[ClientController::class,'resetPasswordClient']);
+
+    // employee
+    Route::get('view-slips',[SalaryController::class,'viewSlips']);
 });

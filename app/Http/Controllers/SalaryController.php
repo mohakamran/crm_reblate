@@ -8,6 +8,9 @@ use App\Models\Employee;
 use App\Models\Salary;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
+
+use Illuminate\Support\Facades\Auth;
+
 use DB;
 
 use Storage;
@@ -19,6 +22,20 @@ use PDF;
 
 class SalaryController extends Controller
 {
+    // view slips
+    public function viewSlips(){
+        $emp_id = auth()->user()->user_code;
+        if($emp_id) {
+            $emp_info = DB::table('salaries')->where('emp_id',$emp_id)->first();
+            $info = DB::table('salaries')->where('emp_id', $emp_id)->orderBy('id', 'desc')->get();
+            if($emp_info) {
+                $emp_name = $emp_info->emp_name;
+            }
+            return view('salaries.emp-slips',compact('info','emp_name'));
+        } else {
+            return redirect('/');
+        }
+    }
     public function generateNewSalarySlip() {
         // $rec = Employee::orderBy('id', 'desc')->get();
         $rec = DB::table('employees')->orderBy('id', 'desc')->get();
