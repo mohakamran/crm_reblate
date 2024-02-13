@@ -74,9 +74,34 @@
                                         </td>
 
                                         <td>
-                                            <a href="/view-salaries/{{$emp->Emp_Code}}">
-                                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 32 32"><path fill="currentColor" d="M30.94 15.66A16.69 16.69 0 0 0 16 5A16.69 16.69 0 0 0 1.06 15.66a1 1 0 0 0 0 .68A16.69 16.69 0 0 0 16 27a16.69 16.69 0 0 0 14.94-10.66a1 1 0 0 0 0-.68ZM16 25c-5.3 0-10.9-3.93-12.93-9C5.1 10.93 10.7 7 16 7s10.9 3.93 12.93 9C26.9 21.07 21.3 25 16 25Z"/><path fill="currentColor" d="M16 10a6 6 0 1 0 6 6a6 6 0 0 0-6-6Zm0 10a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"/></svg>
-                                            </a>
+                                            @if (auth()->user()->user_type == 'employee' || auth()->user()->user_type == 'manager')
+                                            @if (Session::has('salary_slips_access'))
+                                                @php
+                                                    $salary_slips_access = Session::get('salary_slips_access');
+                                                    // Convert to an array if it's a single value
+                                                    if (!is_array($salary_slips_access)) {
+                                                        $salary_slips_access = explode(',', $salary_slips_access);
+                                                        // Remove any empty elements resulting from the explode function
+                                                        $salary_slips_access = array_filter($salary_slips_access);
+                                                    }
+                                                @endphp
+                                                {{-- update --}}
+                                                @if (is_array($salary_slips_access) && in_array('update', $salary_slips_access) )
+                                                    <a href="/view-salaries/{{$emp->Emp_Code}}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 32 32"><path fill="currentColor" d="M30.94 15.66A16.69 16.69 0 0 0 16 5A16.69 16.69 0 0 0 1.06 15.66a1 1 0 0 0 0 .68A16.69 16.69 0 0 0 16 27a16.69 16.69 0 0 0 14.94-10.66a1 1 0 0 0 0-.68ZM16 25c-5.3 0-10.9-3.93-12.93-9C5.1 10.93 10.7 7 16 7s10.9 3.93 12.93 9C26.9 21.07 21.3 25 16 25Z"/><path fill="currentColor" d="M16 10a6 6 0 1 0 6 6a6 6 0 0 0-6-6Zm0 10a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"/></svg>
+                                                    </a>
+                                                    @else
+                                                    no action allowed
+                                                @endif
+
+                                            @endif
+                                        @else
+                                        <a href="/view-salaries/{{$emp->Emp_Code}}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 32 32"><path fill="currentColor" d="M30.94 15.66A16.69 16.69 0 0 0 16 5A16.69 16.69 0 0 0 1.06 15.66a1 1 0 0 0 0 .68A16.69 16.69 0 0 0 16 27a16.69 16.69 0 0 0 14.94-10.66a1 1 0 0 0 0-.68ZM16 25c-5.3 0-10.9-3.93-12.93-9C5.1 10.93 10.7 7 16 7s10.9 3.93 12.93 9C26.9 21.07 21.3 25 16 25Z"/><path fill="currentColor" d="M16 10a6 6 0 1 0 6 6a6 6 0 0 0-6-6Zm0 10a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"/></svg>
+                                       </a>
+                                        @endif
+
+
                                         </td>
 
                                             @php $count++; @endphp

@@ -16,6 +16,22 @@ use DB;
 class EmployeesController extends Controller
 {
 
+    public function viewInfo() {
+        $user_code = auth()->user()->user_code;
+        $emp_data = DB::table('employees')->where('Emp_Code', $user_code)->first();
+        // dd($emp_data);
+        if($emp_data) {
+            $title = $emp_data->Emp_Full_Name;
+            $btn_text = "Update Data";
+            $route="/update-employee-data/".$user_code;
+            $data = compact('title', 'emp_data', 'route', 'btn_text');
+            return view('emp.add-new-employee')->with($data);
+        }
+        else {
+            return redirect('/');
+        }
+    }
+
 
     public function index() {
         $title = "Add New Employee";

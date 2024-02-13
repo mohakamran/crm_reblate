@@ -62,15 +62,53 @@
                                         <td>{{ $emp->expense_child_category }}</td>
                                         <td class="text-nowrap">
                                             <div class="d-flex gap-3">
-                                                <a href="/update-expense/{{ $emp->id }}" data-toggle="tooltip" class="btn btn-success btn-sm"
-                                                    data-original-title="Edit">
-                                                    <i class="mdi mdi-pencil"></i>
-                                                </a>
-                                                     <a href="javascript:void()" onclick="deleteExpense({{ $emp->id }})" class="btn btn-danger btn-sm"
-                                                    data-toggle="tooltip" data-original-title="Close">
-                                                      <i class="mdi mdi-delete"></i>
-                                                </a>
+                                                @if (auth()->user()->user_type == 'employee' || auth()->user()->user_type == 'manager')
+                                                    @if (Session::has('expenses_access'))
+                                                        @php
+                                                            $expenses_access = Session::get('expenses_access');
+                                                            // Convert to an array if it's a single value
+                                                            if (!is_array($expenses_access)) {
+                                                                $expenses_access = explode(',', $expenses_access);
+                                                                // Remove any empty elements resulting from the explode function
+                                                                $expenses_access = array_filter($expenses_access);
+                                                            }
+                                                        @endphp
+                                                        @if (is_array($expenses_access) && in_array('update', $expenses_access) && in_array('delete', $expenses_access))
+                                                            <a href="/update-expense/{{ $emp->id }}" data-toggle="tooltip" class="btn btn-success btn-sm"
+                                                                data-original-title="Edit">
+                                                                <i class="mdi mdi-pencil"></i>
+                                                            </a>
+                                                            <a href="javascript:void()" onclick="deleteExpense({{ $emp->id }})" class="btn btn-danger btn-sm"
+                                                                data-toggle="tooltip" data-original-title="Close">
+                                                                <i class="mdi mdi-delete"></i>
+                                                            </a>
+                                                        @elseif (is_array($expenses_access) && in_array('update', $expenses_access))
+                                                            <a href="/update-expense/{{ $emp->id }}" data-toggle="tooltip" class="btn btn-success btn-sm"
+                                                                data-original-title="Edit">
+                                                                <i class="mdi mdi-pencil"></i>
+                                                            </a>
+                                                        @elseif (is_array($expenses_access) && in_array('delete', $expenses_access))
+                                                            <a href="javascript:void()" onclick="deleteExpense({{ $emp->id }})" class="btn btn-danger btn-sm"
+                                                                data-toggle="tooltip" data-original-title="Close">
+                                                                <i class="mdi mdi-delete"></i>
+                                                            </a>
+                                                        @else
+                                                            no action allowed
+                                                        @endif
+                                                    {{-- else admin action  --}}
+                                                    @else
+                                                        <a href="/update-expense/{{ $emp->id }}" data-toggle="tooltip" class="btn btn-success btn-sm"
+                                                            data-original-title="Edit">
+                                                            <i class="mdi mdi-pencil"></i>
+                                                        </a>
+                                                        <a href="javascript:void()" onclick="deleteExpense({{ $emp->id }})" class="btn btn-danger btn-sm"
+                                                            data-toggle="tooltip" data-original-title="Close">
+                                                            <i class="mdi mdi-delete"></i>
+                                                        </a>
+                                                    @endif
+                                                @endif
                                             </div>
+
                                         </td>
                                         @php $count++;  @endphp
                                     </tr>

@@ -62,14 +62,52 @@
 
                                         <td class="text-nowrap">
                                             <div class="d-flex gap-3">
-                                                <a href="{{ Route('update_client', $client->client_id)}}" data-toggle="tooltip" class="btn btn-success btn-sm"
-                                                    data-original-title="Edit">
-                                                    <i class="mdi mdi-pencil"></i>
-                                                </a>
-                                                     <a href="javascript:void()" onclick="deleteClient({{ $client->id }})" class="btn btn-danger btn-sm"
-                                                    data-toggle="tooltip" data-original-title="Close">
-                                                      <i class="mdi mdi-delete"></i>
-                                                </a>
+                                                @if (auth()->user()->user_type == 'employee' || auth()->user()->user_type == 'manager')
+                                                    @if (Session::has('clients_access'))
+                                                        @php
+                                                            $clients_access = Session::get('clients_access');
+                                                            // Convert to an array if it's a single value
+                                                            if (!is_array($clients_access)) {
+                                                                $clients_access = explode(',', $clients_access);
+                                                                // Remove any empty elements resulting from the explode function
+                                                                $clients_access = array_filter($clients_access);
+                                                            }
+                                                        @endphp
+                                                        {{-- update --}}
+                                                        @if (is_array($clients_access) && in_array('update', $clients_access) && in_array('delete', $clients_access))
+                                                            <a href="{{ Route('update_client', $client->client_id)}}" data-toggle="tooltip" class="btn btn-success btn-sm"
+                                                                data-original-title="Edit">
+                                                                <i class="mdi mdi-pencil"></i>
+                                                            </a>
+                                                                <a href="javascript:void()" onclick="deleteClient({{ $client->id }})" class="btn btn-danger btn-sm"
+                                                                data-toggle="tooltip" data-original-title="Close">
+                                                                <i class="mdi mdi-delete"></i>
+                                                            </a>
+                                                            @elseif (is_array($clients_access) && in_array('update', $clients_access))
+                                                            <a href="{{ Route('update_client', $client->client_id)}}" data-toggle="tooltip" class="btn btn-success btn-sm"
+                                                                data-original-title="Edit">
+                                                                <i class="mdi mdi-pencil"></i>
+                                                            </a>
+                                                            @elseif (is_array($clients_access) && in_array('delete', $clients_access))
+                                                            <a href="javascript:void()" onclick="deleteClient({{ $client->id }})" class="btn btn-danger btn-sm"
+                                                                data-toggle="tooltip" data-original-title="Close">
+                                                                <i class="mdi mdi-delete"></i>
+                                                            </a>
+                                                            @else
+                                                            no action allowed
+                                                        @endif
+
+                                                    @endif
+                                                    @else
+                                                    <a href="{{ Route('update_client', $client->client_id)}}" data-toggle="tooltip" class="btn btn-success btn-sm"
+                                                        data-original-title="Edit">
+                                                        <i class="mdi mdi-pencil"></i>
+                                                    </a>
+                                                        <a href="javascript:void()" onclick="deleteClient({{ $client->id }})" class="btn btn-danger btn-sm"
+                                                        data-toggle="tooltip" data-original-title="Close">
+                                                        <i class="mdi mdi-delete"></i>
+                                                    </a>
+                                               @endif
                                             </div>
                                         </td>
                                         @php $count++;  @endphp

@@ -189,7 +189,7 @@ class LoginController extends Controller
             $empModel->Emp_Phone = "";
             $empModel->Emp_Shift_Time = $employee_shift_time;
             $empModel->Emp_Designation = $employee_designation;
-            $empModel->Emp_Status = "active";
+            $empModel->Emp_Status = "inactive";
             $empModel->Emp_Joining_Date = $employee_joining_date;
             $empModel->Emp_Address = "";
             $empModel->Emp_Image =  "";

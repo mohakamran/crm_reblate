@@ -88,6 +88,7 @@
                                                 {{-- <a href="/update-login-emp/{{$emp->emp_code}}" data-toggle="tooltip" class="btn btn-success ">
                                                     <i class="mdi mdi-pencil"></i>
                                                 </a> --}}
+
                                                 <a href="javascript:void()" onclick="deleteEmployee('{{ $emp->client_id }}')" class="btn btn-danger">
                                                     <i class="mdi mdi-delete"></i></a>
                                                 </a>

@@ -14,6 +14,8 @@ use App\Models\Employee;
 use App\Models\Client;
 use DB;
 
+use Illuminate\Support\Facades\Session;
+
 use Illuminate\Support\Facades\Response;
 
 
@@ -38,6 +40,7 @@ class AuthController extends Controller
             $check = DB::table('users')
             ->where('user_email', $client_email)
             ->where('user_type', 'employee')
+            ->orWhere('user_type', 'manager')
             ->first();
             if(!$check) {
                 session()->flash('user_role', 'Employee Email not found in Database!');
@@ -176,13 +179,35 @@ class AuthController extends Controller
 
     public function indexHomePage() {
         $user_type = auth()->user()->user_type;
-        if($user_type == "employee") {
+        $user_code = auth()->user()->user_code;
+        if($user_type == "employee" || $user_type == "manager") {
             $employees = Employee::all();
             $emp_count = count($employees);
             // dd($count);
             $clients = Client::all();
             $client_count = count($clients);
             $data = compact('emp_count','client_count');
+            // create session for
+            $check_permissions = DB::table('table_login_details')->where('emp_code',$user_code)->where('employee_type','employee')->Orwhere('employee_type','manager')->first();
+            // dd($check_permissions);
+            if($check_permissions) {
+                Session::put('employees_access', $check_permissions->employees_access);
+                Session::put('expenses_access', $check_permissions->expenses_access);
+                Session::put('clients_access', $check_permissions->clients_access);
+                Session::put('invoices_access', $check_permissions->invoices_access);
+                Session::put('salary_slips_access', $check_permissions->salary_slips_access);
+                Session::put('reports_access', $check_permissions->reports_access);
+                Session::put('tasks_access', $check_permissions->tasks_access);
+                Session::put('attendance_access', $check_permissions->attendance_access);
+            }
+
+            //
+            // $check_active_status = DB::table('employees')->where('Emp_Code',$user_code)->first();
+            // if($check_active_status) {
+            //     Session::put('emp_status', $check_active_status->Emp_Status);
+            // }
+
+            // dd($employees_access);
             return view('index.emp-dashboard',$data);
         } else if($user_type == "admin") {
             $employees = Employee::all();
@@ -282,6 +307,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
+        session()->flush(); // removing all sessions
         $url = route('auth.login'); // 'login' is the name of the route
         return redirect($url);
     }

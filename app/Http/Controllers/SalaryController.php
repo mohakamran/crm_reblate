@@ -25,10 +25,13 @@ class SalaryController extends Controller
     // view slips
     public function viewSlips(){
         $emp_id = auth()->user()->user_code;
-        if($emp_id) {
-            $emp_info = DB::table('salaries')->where('emp_id',$emp_id)->first();
+        // dd($emp_id);
+        $emp_info = DB::table('salaries')->where('emp_id',$emp_id)->first();
+        // dd($emp_info);
+        if($emp_info) {
             $info = DB::table('salaries')->where('emp_id', $emp_id)->orderBy('id', 'desc')->get();
-            if($emp_info) {
+            $emp_name = "";
+            if($info) {
                 $emp_name = $emp_info->emp_name;
             }
             return view('salaries.emp-slips',compact('info','emp_name'));

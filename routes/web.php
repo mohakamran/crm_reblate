@@ -89,6 +89,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/update-employee/{emp_id}', [EmployeesController::class, 'updateEmployee']);
     Route::post('/update-employee-data/{emp_id}', [EmployeesController::class, 'updateEmployeeData']);
     Route::get('/view_emp_details/{emp_id}', [EmployeesController::class, 'viewEmployeeData']);
+    Route::get('/view_info', [EmployeesController::class, 'viewInfo']);
 
     // users
 
@@ -149,5 +150,5 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/reset-password-client/{id}',[ClientController::class,'resetPasswordClient']);
 
     // employee
-    Route::get('view-slips',[SalaryController::class,'viewSlips']);
+    Route::get('view-my-slips',[SalaryController::class,'viewSlips']);
 });
