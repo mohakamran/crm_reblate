@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SecurityController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,9 @@ use App\Http\Controllers\LoginController;
 */
 
 // AuthController
+
+// Route::get('/generate',[AuthController::class,'generateIndex']);
+Route::get('/send-password/{token}',[AuthController::class,'generateIndexView']);
 
 
 Route::get('/employee-login',[AuthController::class,'viewLoginEmployee'])->name('user.emp');
@@ -151,4 +155,12 @@ Route::group(['middleware' => 'admin'], function () {
 
     // employee
     Route::get('view-my-slips',[SalaryController::class,'viewSlips']);
+
+    //google 2fa
+    Route::get('/google-2fa',[SecurityController::class,'google2FA']);
+
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

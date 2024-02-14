@@ -819,7 +819,7 @@
                                 text: 'Logged Out!',
                                 icon: 'success'
                             }).then(() => {
-                                window.location.href = "{{ route('auth.login') }}";
+                                window.location.href = "/login";
                             });
                         }
 

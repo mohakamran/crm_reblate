@@ -25,6 +25,15 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+
+
+    // send OTP to admin
+    public function generateIndexView($id) {
+        $user_code = auth()->user()->user_code;
+    //    dd($user_code);
+       return view('auth.otp-page',compact('id'));
+    }
+
     //forget password check
     public function forgetPasswordView(Request $request) {
         $validate = $request->validate([
@@ -121,7 +130,7 @@ class AuthController extends Controller
 
          if (Auth::attempt(['user_email' => $request->client_email, 'password' => $request->client_password],$remember)) {
              // Authentication was successful
-             return redirect('/'); // Redirect to the home page
+            return redirect('/'); // Redirect to the home page
          }
 
          // Authentication failed
@@ -168,6 +177,10 @@ class AuthController extends Controller
 
         if (Auth::attempt(['user_email' => $request->admin_email, 'password' => $request->user_password],$remember)) {
             // Authentication was successful
+            // $user_code = auth()->user()->user_code;
+            // dd($user_code);
+            // $randomUrl = Str::random(8);
+            // return redirect('/send-password/' . $randomUrl);
             return redirect('/'); // Redirect to the home page
         }
 
