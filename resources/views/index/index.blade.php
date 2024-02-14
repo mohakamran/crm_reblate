@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-xl-4 col-md-6">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body ">
                         <div class="d-flex align-items-center">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
