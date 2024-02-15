@@ -193,7 +193,7 @@ class AuthController extends Controller
     public function indexHomePage() {
         $user_type = auth()->user()->user_type;
         $user_code = auth()->user()->user_code;
-        if($user_type == "employee" || $user_type == "manager") {
+        if($user_type == "employee") {
             $employees = Employee::all();
             $emp_count = count($employees);
             // dd($count);
@@ -222,7 +222,29 @@ class AuthController extends Controller
 
             // dd($employees_access);
             return view('index.emp-dashboard',$data);
-        } else if($user_type == "admin") {
+        }
+        else if($user_type == "manager") {
+            $employees = Employee::all();
+            $emp_count = count($employees);
+            // dd($count);
+            $clients = Client::all();
+            $client_count = count($clients);
+            $data = compact('emp_count','client_count');
+            $check_permissions = DB::table('table_login_details')->where('emp_code',$user_code)->where('employee_type','employee')->Orwhere('employee_type','manager')->first();
+            // dd($check_permissions);
+            if($check_permissions) {
+                Session::put('employees_access', $check_permissions->employees_access);
+                Session::put('expenses_access', $check_permissions->expenses_access);
+                Session::put('clients_access', $check_permissions->clients_access);
+                Session::put('invoices_access', $check_permissions->invoices_access);
+                Session::put('salary_slips_access', $check_permissions->salary_slips_access);
+                Session::put('reports_access', $check_permissions->reports_access);
+                Session::put('tasks_access', $check_permissions->tasks_access);
+                Session::put('attendance_access', $check_permissions->attendance_access);
+            }
+            return view('index.manager-dashboard',$data);
+        }
+         else if($user_type == "admin") {
             $employees = Employee::all();
             $emp_count = count($employees);
             // dd($count);
@@ -239,7 +261,7 @@ class AuthController extends Controller
             $data = compact('emp_count','client_count');
             return view('index.client-dashboard',$data);
         } else {
-            return view('auth.login');
+            return view('login');
         }
 
     }
@@ -319,10 +341,9 @@ class AuthController extends Controller
 
     public function logout()
     {
+        // session->flush();
         Auth::logout();
-        session()->flush(); // removing all sessions
-        $url = route('auth.login'); // 'login' is the name of the route
-        return redirect($url);
+        return response()->json(['message' => 'success']);
     }
 
     public function changePassword() {

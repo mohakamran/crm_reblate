@@ -36,11 +36,8 @@ Route::post('/admin-login',[AuthController::class,'loginAdmin'])->name('user.adm
 Route::post('/client-login',[AuthController::class,'loginClient'])->name('user.client');
 Route::get('/forget-password',[AuthController::class,'forgetPassword']);
 Route::post('/forget-password',[AuthController::class,'forgetPasswordView']);
+Route::get('/login',[AuthController::class,'index'])->name('login');
 
-Route::middleware(['guest'])->group(function () {
-    Route::get('/login',[AuthController::class,'index'])->name('auth.login');
-    // Route::post('/user-login',[AuthController::class,'loginIndex'])->name('auth.user');
-});
 
 
 Route::middleware(['auth'])->group(function () {

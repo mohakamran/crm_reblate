@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Login;
 use App\Models\UserEmployee;
+use App\Models\User;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
@@ -18,8 +19,8 @@ use Illuminate\Support\Facades\Hash;
 class LoginController extends Controller
 {
     public function resetPassword($id) {
-        // $userEmp = UserEmployee::where('emp_code',$id)->first();
-        $userEmp = DB::table('users')->where('user_code',$id)->first();
+        $userEmp = User::where('user_code',$id)->first();
+        // $userEmp = DB::table('users')->where('user_code',$id)->first();
         if($userEmp) {
             // send email to relevant user
             $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=';
@@ -40,7 +41,8 @@ class LoginController extends Controller
                         ->subject($mail_subject);
             });
 
-            $userEmp->password = Hash::make($randomPassword);
+            $hashedPassword = Hash::make($randomPassword);
+            $userEmp->password = $hashedPassword;
             $userEmp->save();
             return response()->json(['success']);
         } else {
@@ -222,11 +224,16 @@ class LoginController extends Controller
     // create login and save data in databse
     public function registerLoginEmp($id, Request $req) {
         $employee = Employee::where('Emp_Code', $id)->first();
+
         if($employee) {
             $login_user_name = $req->emp_login_name_hidden;
             $login_user_email = $req->emp_login_email_hidden;
             $login_user_type = $req->emp_login_user_type_hidden;
             $login_user_code = $req->emp_login_code_hidden;
+            $employee_designation = $employee->Emp_Designation;
+            $employee_shift_time = $employee->Emp_Shift_Time;
+            $employee_joining_date = $employee->Emp_Joining_Date;
+            $employee_department = $employee->department;
             // emp access
             $emp_access = $req->input('emp_access', []);
             // expenses access
@@ -249,14 +256,14 @@ class LoginController extends Controller
             $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=';
             $randomPassword = Str::random(12, $characters);
 
-            $data = compact('login_user_code', 'login_user_email','login_user_name', 'randomPassword' );
+            $data = compact('login_user_code', 'employee_designation' ,'employee_shift_time' ,'employee_joining_date', 'employee_department', 'login_user_email','login_user_name', 'randomPassword' );
             $mail_subject = "Reblate Solutions Invited You For A New Role";
             // Mail::send('login.email-template', [], function ($message) use ($mail_subject, $login_user_email) {
             //     $message->to($login_user_email)
             //             ->subject($mail_subject);
             // });
             // exit;
-            Mail::send('login.email-template', $data, function ($message) use ($mail_subject, $login_user_email) {
+            Mail::send('login.email-template-two', $data, function ($message) use ($mail_subject, $login_user_email) {
                 $message->to($login_user_email)
                         ->subject($mail_subject);
             });
@@ -280,15 +287,16 @@ class LoginController extends Controller
             $login->save();
 
 
-            $UserEmployee = new UserEmployee();
-            $UserEmployee->username = $login_user_name;
-            $UserEmployee->status = "created";
-            $UserEmployee->emp_email = $login_user_email;
-            $UserEmployee->employee_type = $login_user_type;
-            $UserEmployee->emp_code = $login_user_code;
-            $UserEmployee->remember_token = '';
-            $UserEmployee->password = Hash::make($randomPassword);
-            $UserEmployee->save();
+            DB::table('users')->insert([
+                'user_name' => $login_user_name,
+                'user_email' => $login_user_email,
+                'user_type' => $login_user_type,
+                'remember_token' => '',
+                'user_code' => $login_user_code,
+                'password' => Hash::make($randomPassword),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
             session()->flash('success', 'Login Invitation Sent successfully!');
             return redirect('/create-new-login');
@@ -314,6 +322,7 @@ class LoginController extends Controller
         // $emp_data = UserEmployee::where('emp_code', $id)->first();
 
         $emp_data = DB::table('users')->where('user_code',$id)->first();
+        // console.log($id);
 
         if($emp_data) {
             // $emp = Login::where('emp_code',$id)->first();

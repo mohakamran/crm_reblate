@@ -755,7 +755,7 @@
                 </div>
 
                 <div class="flex-grow-1 ms-2 text-start">
-                    <span class="ms-1 fw-medium user-name-text">{{ auth()->user()->user_name }}</span>
+                    <span class="ms-1 fw-medium user-name-text">{{ auth()->user()->user_name }} </span>
                 </div>
 
                 <div class="flex-shrink-0 text-end">
