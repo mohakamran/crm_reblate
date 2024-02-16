@@ -20,7 +20,7 @@ class AdminMiddleware
         if(!Auth::check()) {
             return redirect('/login');
         }
-        if (Auth::check() && Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'client' || Auth::user()->user_type == 'employee') {
+        if (Auth::check() && Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'employee' ||  Auth::user()->user_type == 'client' || Auth::user()->user_type == 'manager' ) {
             return $next($request);
         }
         return redirect('/');

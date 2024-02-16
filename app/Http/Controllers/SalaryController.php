@@ -25,7 +25,7 @@ class SalaryController extends Controller
     // view slips
     public function viewSlips(){
         $emp_id = auth()->user()->user_code;
-        dd($emp_id);
+        // dd($emp_id);
         $emp_info = DB::table('salaries')->where('emp_id',$emp_id)->first();
         // dd($emp_info);
         if($emp_info) {

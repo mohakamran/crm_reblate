@@ -18,6 +18,7 @@ class EmployeesController extends Controller
 
     public function viewInfo() {
         $user_code = auth()->user()->user_code;
+        // dd($user_code);
         $emp_data = DB::table('employees')->where('Emp_Code', $user_code)->first();
         // dd($emp_data);
         if($emp_data) {

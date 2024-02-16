@@ -192,6 +192,7 @@ class AuthController extends Controller
 
     public function indexHomePage() {
         $user_type = auth()->user()->user_type;
+        // dd($user_type);
         $user_code = auth()->user()->user_code;
         if($user_type == "employee") {
             $employees = Employee::all();
@@ -201,7 +202,7 @@ class AuthController extends Controller
             $client_count = count($clients);
             $data = compact('emp_count','client_count');
             // create session for
-            $check_permissions = DB::table('table_login_details')->where('emp_code',$user_code)->where('employee_type','employee')->Orwhere('employee_type','manager')->first();
+            $check_permissions = DB::table('table_login_details')->where('emp_code',$user_code)->where('employee_type','employee')->first();
             // dd($check_permissions);
             if($check_permissions) {
                 Session::put('employees_access', $check_permissions->employees_access);
@@ -224,13 +225,14 @@ class AuthController extends Controller
             return view('index.emp-dashboard',$data);
         }
         else if($user_type == "manager") {
+            // dd($user_type);
             $employees = Employee::all();
             $emp_count = count($employees);
             // dd($count);
             $clients = Client::all();
             $client_count = count($clients);
             $data = compact('emp_count','client_count');
-            $check_permissions = DB::table('table_login_details')->where('emp_code',$user_code)->where('employee_type','employee')->Orwhere('employee_type','manager')->first();
+            $check_permissions = DB::table('table_login_details')->where('emp_code',$user_code)->where('employee_type','manager')->first();
             // dd($check_permissions);
             if($check_permissions) {
                 Session::put('employees_access', $check_permissions->employees_access);
@@ -261,7 +263,7 @@ class AuthController extends Controller
             $data = compact('emp_count','client_count');
             return view('index.client-dashboard',$data);
         } else {
-            return view('login');
+            return view('auth.login');
         }
 
     }
