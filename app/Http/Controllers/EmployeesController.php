@@ -246,25 +246,25 @@ class EmployeesController extends Controller
             $file_path = $emp_data->Emp_Image;
             if (File::exists($file_path)) {
                 File::delete($file_path);
-                $emp_data->delete();
+                DB::table('employees')->where('Emp_Code', $emp_id)->delete();
                 // return redirect('manage-employees');
             } else {
-                $emp_data->delete();
+                DB::table('employees')->where('Emp_Code', $emp_id)->delete();
                 // return response()->json(['message' => 'success']);
             }
             // $c_employee_user = UserEmployee::where('emp_code',$emp_id)->first();
             $c_employee_user = DB::table('user_employee')->where('emp_code', $emp_id)->first();
             if($c_employee_user) {
-                $c_employee_user->delete();
+                DB::table('user_employee')->where('emp_code', $emp_id)->delete();
             }
             // $login_table_employee_user = Login::where('emp_code',$emp_id)->first();
             $login_table_employee_user = DB::table('user_employee')->where('emp_code', $emp_id)->first();
             if($login_table_employee_user) {
                 $login_table_employee_user->delete();
             }
-            $login_user_table = DB::table('users')->where('user_type', $emp_id)->first();
+            $login_user_table = DB::table('user_employee')->where('emp_code', $emp_id)->first();
             if($login_user_table) {
-                $login_user_table->delete();
+                DB::table('user_employee')->where('emp_code', $emp_id)->delete();
             }
             return response()->json(['message' => 'success']);
 
