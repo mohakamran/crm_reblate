@@ -94,7 +94,7 @@
                                             <img src="{{ url('emp-image.png') }}" class="img-left">
                                         </div>
 
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-6" style="background-color: #fff;">
                                             <div class="text-center  mt-2">
                                                 <a href="https://reblatesols.com" class="" target="_blank">
                                                     <img src="{{ url('reblat-logo.png') }}" alt="" height="60"

@@ -16,21 +16,21 @@
     <body data-sidebar="colored">
     @endsection
     @section('content')
-        <div class="row">
-            <div class="col-xl-4 col-md-6">
+        <div class="row" style="display: flex; flex-wrap: wrap;">
+            <div class="col-md-4 col-xl-3">
                 <div class="card overflow-hidden">
-                    <div class="card-body overflow-hidden">
+                    <div class="card-body overflow-hidden" style="position: relative;">
                         <div class="ag-courses-item_bg"></div>
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
-                                <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:50px; color:#14213d" viewBox="0 0 512 512"><path fill="currentColor" d="M256 256a112 112 0 1 0-112-112a112 112 0 0 0 112 112m0 32c-69.42 0-208 42.88-208 128v64h416v-64c0-85.12-138.58-128-208-128"/></svg>
+                                <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:30px; color:#14213d" viewBox="0 0 512 512"><path fill="currentColor" d="M256 256a112 112 0 1 0-112-112a112 112 0 0 0 112 112m0 32c-69.42 0-208 42.88-208 128v64h416v-64c0-85.12-138.58-128-208-128"/></svg>
                                 </span>
                             </div>
-                            <div class="flex-grow-1 overflow-hidden ms-4">
-                                <p class="text-muted text-truncate font-size-15 mb-2"> Total Employees</p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">{{$emp_count}}
-                                </h3>
+                            <div class="flex-grow-1 overflow-hidden ms-2 justify-content-between d-flex align-items-center gap-5">
+                                <p class="text-truncate font-size-18 mb-0 fw-bold">Employees</p>
+                                <h5 class="mb-0">{{$emp_count}}
+                                </h5>
                                 {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p> --}}
@@ -54,20 +54,20 @@
                 </div>
             </div>
 
-            <div class="col-xl-4 col-md-6">
+            <div class="col-md-4 col-xl-3">
                 <div class="card overflow-hidden">
-                    <div class="card-body overflow-hidden">
+                    <div class="card-body overflow-hidden" style="position: relative;">
                         <div class="ag-courses-item_bg"></div>
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
-                                <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:50px; color:#14213d" viewBox="0 0 20 20"><path fill="currentColor" d="M0 3h20v12h-.75c0-1.79-1.46-3.25-3.25-3.25c-1.31 0-2.42.79-2.94 1.91c-.25-.1-.52-.16-.81-.16c-.98 0-1.8.63-2.11 1.5H0zm8.37 3.11c-.06.15-.1.31-.11.47s-.01.33.01.5l.02.08c.01.06.02.14.05.23c.02.1.06.2.1.31c.03.11.09.22.15.33c.07.12.15.22.23.31s.18.17.31.23c.12.06.25.09.4.09c.14 0 .27-.03.39-.09s.22-.14.3-.22c.09-.09.16-.2.22-.32c.07-.12.12-.23.16-.33s.07-.2.09-.31c.03-.11.04-.18.05-.22s.01-.07.01-.09c.05-.29.03-.56-.04-.82s-.21-.48-.41-.66c-.21-.18-.47-.27-.79-.27c-.19 0-.36.03-.52.1c-.15.07-.28.16-.38.28c-.09.11-.17.25-.24.4m4.48 6.04v-1.14c0-.33-.1-.66-.29-.98s-.45-.59-.77-.79c-.32-.21-.66-.31-1.02-.31l-1.24.84l-1.28-.82c-.37 0-.72.1-1.04.3c-.31.2-.56.46-.74.77c-.18.32-.27.65-.27.99v1.14l.18.05c.12.04.29.08.51.14c.23.05.47.1.74.15c.26.05.57.09.91.13c.34.03.67.05.99.05c.3 0 .63-.02.98-.05c.34-.04.64-.08.89-.13c.25-.04.5-.1.76-.16l.5-.12c.08-.02.14-.04.19-.06m3.15.1c1.52 0 2.75 1.23 2.75 2.75s-1.23 2.75-2.75 2.75c-.73 0-1.38-.3-1.87-.77a2.235 2.235 0 0 0-.62-3.09c.43-.96 1.37-1.64 2.49-1.64m-5.5 3.5c0-.96.79-1.75 1.75-1.75s1.75.79 1.75 1.75s-.79 1.75-1.75 1.75s-1.75-.79-1.75-1.75"/></svg>
+                                <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="#14213d" d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0H21.3C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7h42.7C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352H378.7C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z"/></svg>
                                 </span>
                             </div>
-                            <div class="flex-grow-1 overflow-hidden ms-4">
-                                <p class="text-muted text-truncate font-size-15 mb-2"> Total Clients</p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">{{$client_count}}
-                                </h3>
+                            <div class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5 ms-2">
+                                <p class="text-truncate font-size-18 mb-0 fw-bold"> Clients</p>
+                                <h5 class="mb-0">{{$client_count}}
+                                </h5>
                                 {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-danger text-danger font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p> --}}
@@ -91,21 +91,56 @@
                 </div>
             </div>
 
-            <div class="col-xl-4 col-md-6">
+            <div class="col-md-4 col-xl-3">
                 <div class="card overflow-hidden">
-                    <div class="card-body overflow-hidden">
+                    <div class="card-body overflow-hidden" style="position: relative;">
                         <div class="ag-courses-item_bg"></div>
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
-                                <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:50px; color:#14213d" viewBox="0 0 24 24"><path fill="currentColor" d="M4 21q-.825 0-1.412-.587T2 19V8q0-.825.588-1.412T4 6h4V4q0-.825.588-1.412T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v11q0 .825-.587 1.413T20 21zm6-15h4V4h-4z"/></svg>
+                                <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:30px; color:#14213d" viewBox="0 0 24 24"><path fill="currentColor" d="M4 21q-.825 0-1.412-.587T2 19V8q0-.825.588-1.412T4 6h4V4q0-.825.588-1.412T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v11q0 .825-.587 1.413T20 21zm6-15h4V4h-4z"/></svg>
                                 </span>
                             </div>
-                            <div class="flex-grow-1 overflow-hidden ms-4">
-                                <p class="text-dark text-truncate font-size-15 mb-2">Ongoing Projects</p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">15 <span
-                                    class="text-muted font-size-16"> </span>
-                                </h3>
+                            <div class="flex-grow-1 overflow-hidden ms-2 d-flex justify-content-between align-items-center gap-5">
+                                <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Projects</p>
+                                <h5 class="mb-0">15 </h5>
+                                {{-- <span>Jan, 2024</span> --}}
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
+                                        class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
+                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p> --}}
+                            </div>
+                            {{-- <div class="flex-shrink-0 align-self-start">
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle btn-icon border rounded-circle" href="#"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="ri-more-2-fill text-muted font-size-16"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" href="#">Yearly</a>
+                                        <a class="dropdown-item" href="#">Monthly</a>
+                                        <a class="dropdown-item" href="#">Weekly</a>
+                                        <a class="dropdown-item" href="#">Today</a>
+                                    </div>
+                                </div>
+                            </div> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xl-3">
+                <div class="card overflow-hidden">
+                    <div class="card-body overflow-hidden" style="position: relative;">
+                        <div class="ag-courses-item_bg"></div>
+                        <div class="d-flex align-items-center position-relative" style="z-index: 10">
+                            <div class="avatar-md flex-shrink-0">
+                                <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#14213d" d="M320 96H192L144.6 24.9C137.5 14.2 145.1 0 157.9 0H354.1c12.8 0 20.4 14.2 13.3 24.9L320 96zM192 128H320c3.8 2.5 8.1 5.3 13 8.4C389.7 172.7 512 250.9 512 416c0 53-43 96-96 96H96c-53 0-96-43-96-96C0 250.9 122.3 172.7 179 136.4l0 0 0 0c4.8-3.1 9.2-5.9 13-8.4zm84 88c0-11-9-20-20-20s-20 9-20 20v14c-7.6 1.7-15.2 4.4-22.2 8.5c-13.9 8.3-25.9 22.8-25.8 43.9c.1 20.3 12 33.1 24.7 40.7c11 6.6 24.7 10.8 35.6 14l1.7 .5c12.6 3.8 21.8 6.8 28 10.7c5.1 3.2 5.8 5.4 5.9 8.2c.1 5-1.8 8-5.9 10.5c-5 3.1-12.9 5-21.4 4.7c-11.1-.4-21.5-3.9-35.1-8.5c-2.3-.8-4.7-1.6-7.2-2.4c-10.5-3.5-21.8 2.2-25.3 12.6s2.2 21.8 12.6 25.3c1.9 .6 4 1.3 6.1 2.1l0 0 0 0c8.3 2.9 17.9 6.2 28.2 8.4V424c0 11 9 20 20 20s20-9 20-20V410.2c8-1.7 16-4.5 23.2-9c14.3-8.9 25.1-24.1 24.8-45c-.3-20.3-11.7-33.4-24.6-41.6c-11.5-7.2-25.9-11.6-37.1-15l0 0-.7-.2c-12.8-3.9-21.9-6.7-28.3-10.5c-5.2-3.1-5.3-4.9-5.3-6.7c0-3.7 1.4-6.5 6.2-9.3c5.4-3.2 13.6-5.1 21.5-5c9.6 .1 20.2 2.2 31.2 5.2c10.7 2.8 21.6-3.5 24.5-14.2s-3.5-21.6-14.2-24.5c-6.5-1.7-13.7-3.4-21.1-4.7V216z"/></svg>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1 overflow-hidden ms-2 d-flex align-items-center justify-content-between gap-5">
+                                <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Revenue</p>
+                                <h5 class="mb-0">$5000
+                                </h5>
                                 {{-- <span>Jan, 2024</span> --}}
                                 {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
@@ -245,7 +280,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Attendance - Day Shift  </h4>
+                        <h4 class="card-title mb-0 flex-grow-1">Attendance </h4>
                         <div>
                             {{-- <div class="dropdown">
                                 <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
@@ -271,6 +306,7 @@
                                         <th>EMP ID</th>
                                         <th>Employee Name</th>
                                         <th>Status</th>
+                                        <th>Shift</th>
                                         {{-- <th>Order Date</th>
                                         <th>Total</th> --}}
                                         {{-- <th>Payment Method</th>
@@ -284,25 +320,31 @@
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
                                                 class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                                <td><span class="alert btn-outline-success">Present</span></td>
+                                                <td><span class="text-danger">Absent</span></td>
+                                                <td><span class="text-dark fw-bold">Morning</span></td>
                                     </tr>
                                     <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
                                                 class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                                <td><span class="alert btn-outline-success">Present</span></td>
+                                                <td><span class="text-success">Present</span></td>
+                                                <td><span class="text-dark fw-bold">Evening</span></td>
                                     </tr>
                                     <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
                                                 class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                                <td><span class="alert btn-outline-success">Present</span></td>
+                                        <td><span class="text-success">Present</span></td>
+                                        <td><span class="text-dark fw-bold">Morning</span></td>
                                     </tr>
 
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="text-center pt-3">
+                            <a href="javascript:void()" class=" w-md">View All</a>
                         </div>
                         <!-- end table-responsive -->
                     </div>
@@ -369,6 +411,9 @@
 
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="text-center pt-3">
+                            <a href="javascript:void()" class=" w-md">View All</a>
                         </div>
                         <!-- end table-responsive -->
                     </div>
@@ -446,6 +491,9 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="text-center pt-3">
+                            <a href="javascript:void()" class="w-md">View All</a>
+                        </div>
                         <!-- end table-responsive -->
                     </div>
                 </div>
@@ -517,6 +565,9 @@
 
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="text-center pt-3">
+                            <a href="javascript:void()" class=" w-md">View All</a>
                         </div>
                         <!-- end table-responsive -->
                     </div>
@@ -595,6 +646,9 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="text-center pt-3">
+                            <a href="javascript:void()" class=" w-md">View All</a>
+                        </div>
                         <!-- end table-responsive -->
                     </div>
                 </div>
@@ -625,7 +679,7 @@
                                 <thead>
                                     <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
-                                        <th>EMP Id</th>
+                                        <th>EMP ID</th>
                                         <th>Employee Name</th>
                                         <th>Tasks</th>
                                         <th>See Details</th>
@@ -666,6 +720,9 @@
 
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="text-center pt-3">
+                            <a href="javascript:void()" class=" w-md">View All</a>
                         </div>
                         <!-- end table-responsive -->
                     </div>

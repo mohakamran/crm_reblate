@@ -9,14 +9,14 @@ $(document).ready(function() {
     $('#datatable').DataTable({
         "language": {
             "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
+                "previous": "<i class='mdi mdi-chevron-left'style='color:#14213d'>",
+                "next": "<i class='mdi mdi-chevron-right'style='color:#14213d'>"
             }
         },
         "drawCallback": function () {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
         }
-        
+
     });
 
     //Buttons examples
@@ -24,8 +24,8 @@ $(document).ready(function() {
         lengthChange: false,
         "language": {
             "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
+                "previous": "<i class='mdi mdi-chevron-left' style='color:#14213d'>",
+                "next": "<i class='mdi mdi-chevron-right' style='color:#14213d'>"
             }
         },
         "drawCallback": function () {
@@ -46,8 +46,8 @@ $(document).ready(function() {
         },
         "language": {
             "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
+                "previous": "<i class='mdi mdi-chevron-left' style='color:#14213d'>",
+                "next": "<i class='mdi mdi-chevron-right' style='color:#14213d'>"
             }
         },
         "drawCallback": function () {
@@ -60,8 +60,8 @@ $(document).ready(function() {
         keys: true,
         "language": {
             "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
+                "previous": "<i class='mdi mdi-chevron-left' style='color:#14213d'>",
+                "next": "<i class='mdi mdi-chevron-right' style='color:#14213d'>"
             }
         },
         "drawCallback": function () {
@@ -92,8 +92,8 @@ $(document).ready(function() {
         "paging":         false,
         "language": {
             "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
+                "previous": "<i class='mdi mdi-chevron-left' style='color:#14213d'>",
+                "next": "<i class='mdi mdi-chevron-right' style='color:#14213d'>"
             }
         },
         "drawCallback": function () {
@@ -105,8 +105,8 @@ $(document).ready(function() {
     $('#complex-header-datatable').DataTable({
         "language": {
             "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
+                "previous": "<i class='mdi mdi-chevron-left' style='color:#14213d'>",
+                "next": "<i class='mdi mdi-chevron-right' style='color:#14213d'>"
             }
         },
         "drawCallback": function () {
@@ -124,13 +124,13 @@ $(document).ready(function() {
         stateSave: true,
         "language": {
             "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
+                "previous": "<i class='mdi mdi-chevron-left' style='color:#14213d'>",
+                "next": "<i class='mdi mdi-chevron-right' style='color:#14213d'>"
             }
         },
         "drawCallback": function () {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-            $(".dataTables_length select").addClass('form-select form-select-sm'); 
+            $(".dataTables_length select").addClass('form-select form-select-sm');
         }
     });
 } );
