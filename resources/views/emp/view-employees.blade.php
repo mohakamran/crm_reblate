@@ -39,7 +39,7 @@
 
                         <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                            <thead>
+                            <thead style="background-color: #e3e3e3">
                                 <tr>
                                     <th>SR</th>
                                     <th>EMP ID</th>
