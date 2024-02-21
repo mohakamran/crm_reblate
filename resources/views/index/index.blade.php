@@ -244,7 +244,7 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Attendance - Day Shift  </h4>
                         <div>
                             {{-- <div class="dropdown">
@@ -310,7 +310,7 @@
             </div>
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Attendance - Night Shift   </h4>
                         <div>
                             {{-- <div class="dropdown">
@@ -380,7 +380,7 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Tasks - Day Shift</h4>
                         <div>
                             {{-- <div class="dropdown">
@@ -452,7 +452,7 @@
             </div>
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Tasks - Night Shift</h4>
                         <div>
                             {{-- <div class="dropdown">
@@ -529,7 +529,7 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Reports - Day Shift</h4>
                         <div>
                             {{-- <div class="dropdown">
@@ -601,7 +601,7 @@
             </div>
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Reports - Night Shift</h4>
                         <div>
                             {{-- <div class="dropdown">
