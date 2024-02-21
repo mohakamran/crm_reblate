@@ -18,12 +18,13 @@
     @section('content')
         <div class="row">
             <div class="col-xl-4 col-md-6">
-                <div class="card">
-                    <div class="card-body ">
-                        <div class="d-flex align-items-center">
+                <div class="card overflow-hidden">
+                    <div class="card-body overflow-hidden">
+                        <div class="ag-courses-item_bg"></div>
+                        <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:50px;" viewBox="0 0 512 512"><path fill="currentColor" d="M256 256a112 112 0 1 0-112-112a112 112 0 0 0 112 112m0 32c-69.42 0-208 42.88-208 128v64h416v-64c0-85.12-138.58-128-208-128"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:50px; color:#14213d" viewBox="0 0 512 512"><path fill="currentColor" d="M256 256a112 112 0 1 0-112-112a112 112 0 0 0 112 112m0 32c-69.42 0-208 42.88-208 128v64h416v-64c0-85.12-138.58-128-208-128"/></svg>
                                 </span>
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
@@ -54,12 +55,13 @@
             </div>
 
             <div class="col-xl-4 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
+                <div class="card overflow-hidden">
+                    <div class="card-body overflow-hidden">
+                        <div class="ag-courses-item_bg"></div>
+                        <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:50px;" viewBox="0 0 20 20"><path fill="currentColor" d="M0 3h20v12h-.75c0-1.79-1.46-3.25-3.25-3.25c-1.31 0-2.42.79-2.94 1.91c-.25-.1-.52-.16-.81-.16c-.98 0-1.8.63-2.11 1.5H0zm8.37 3.11c-.06.15-.1.31-.11.47s-.01.33.01.5l.02.08c.01.06.02.14.05.23c.02.1.06.2.1.31c.03.11.09.22.15.33c.07.12.15.22.23.31s.18.17.31.23c.12.06.25.09.4.09c.14 0 .27-.03.39-.09s.22-.14.3-.22c.09-.09.16-.2.22-.32c.07-.12.12-.23.16-.33s.07-.2.09-.31c.03-.11.04-.18.05-.22s.01-.07.01-.09c.05-.29.03-.56-.04-.82s-.21-.48-.41-.66c-.21-.18-.47-.27-.79-.27c-.19 0-.36.03-.52.1c-.15.07-.28.16-.38.28c-.09.11-.17.25-.24.4m4.48 6.04v-1.14c0-.33-.1-.66-.29-.98s-.45-.59-.77-.79c-.32-.21-.66-.31-1.02-.31l-1.24.84l-1.28-.82c-.37 0-.72.1-1.04.3c-.31.2-.56.46-.74.77c-.18.32-.27.65-.27.99v1.14l.18.05c.12.04.29.08.51.14c.23.05.47.1.74.15c.26.05.57.09.91.13c.34.03.67.05.99.05c.3 0 .63-.02.98-.05c.34-.04.64-.08.89-.13c.25-.04.5-.1.76-.16l.5-.12c.08-.02.14-.04.19-.06m3.15.1c1.52 0 2.75 1.23 2.75 2.75s-1.23 2.75-2.75 2.75c-.73 0-1.38-.3-1.87-.77a2.235 2.235 0 0 0-.62-3.09c.43-.96 1.37-1.64 2.49-1.64m-5.5 3.5c0-.96.79-1.75 1.75-1.75s1.75.79 1.75 1.75s-.79 1.75-1.75 1.75s-1.75-.79-1.75-1.75"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:50px; color:#14213d" viewBox="0 0 20 20"><path fill="currentColor" d="M0 3h20v12h-.75c0-1.79-1.46-3.25-3.25-3.25c-1.31 0-2.42.79-2.94 1.91c-.25-.1-.52-.16-.81-.16c-.98 0-1.8.63-2.11 1.5H0zm8.37 3.11c-.06.15-.1.31-.11.47s-.01.33.01.5l.02.08c.01.06.02.14.05.23c.02.1.06.2.1.31c.03.11.09.22.15.33c.07.12.15.22.23.31s.18.17.31.23c.12.06.25.09.4.09c.14 0 .27-.03.39-.09s.22-.14.3-.22c.09-.09.16-.2.22-.32c.07-.12.12-.23.16-.33s.07-.2.09-.31c.03-.11.04-.18.05-.22s.01-.07.01-.09c.05-.29.03-.56-.04-.82s-.21-.48-.41-.66c-.21-.18-.47-.27-.79-.27c-.19 0-.36.03-.52.1c-.15.07-.28.16-.38.28c-.09.11-.17.25-.24.4m4.48 6.04v-1.14c0-.33-.1-.66-.29-.98s-.45-.59-.77-.79c-.32-.21-.66-.31-1.02-.31l-1.24.84l-1.28-.82c-.37 0-.72.1-1.04.3c-.31.2-.56.46-.74.77c-.18.32-.27.65-.27.99v1.14l.18.05c.12.04.29.08.51.14c.23.05.47.1.74.15c.26.05.57.09.91.13c.34.03.67.05.99.05c.3 0 .63-.02.98-.05c.34-.04.64-.08.89-.13c.25-.04.5-.1.76-.16l.5-.12c.08-.02.14-.04.19-.06m3.15.1c1.52 0 2.75 1.23 2.75 2.75s-1.23 2.75-2.75 2.75c-.73 0-1.38-.3-1.87-.77a2.235 2.235 0 0 0-.62-3.09c.43-.96 1.37-1.64 2.49-1.64m-5.5 3.5c0-.96.79-1.75 1.75-1.75s1.75.79 1.75 1.75s-.79 1.75-1.75 1.75s-1.75-.79-1.75-1.75"/></svg>
                                 </span>
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
@@ -90,16 +92,17 @@
             </div>
 
             <div class="col-xl-4 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
+                <div class="card overflow-hidden">
+                    <div class="card-body overflow-hidden">
+                        <div class="ag-courses-item_bg"></div>
+                        <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:50px;" viewBox="0 0 24 24"><path fill="currentColor" d="M4 21q-.825 0-1.412-.587T2 19V8q0-.825.588-1.412T4 6h4V4q0-.825.588-1.412T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v11q0 .825-.587 1.413T20 21zm6-15h4V4h-4z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:50px; color:#14213d" viewBox="0 0 24 24"><path fill="currentColor" d="M4 21q-.825 0-1.412-.587T2 19V8q0-.825.588-1.412T4 6h4V4q0-.825.588-1.412T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v11q0 .825-.587 1.413T20 21zm6-15h4V4h-4z"/></svg>
                                 </span>
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
-                                <p class="text-muted text-truncate font-size-15 mb-2">Ongoing Projects</p>
+                                <p class="text-dark text-truncate font-size-15 mb-2">Ongoing Projects</p>
                                 <h3 class="fs-4 flex-grow-1 mb-3">15 <span
                                     class="text-muted font-size-16"> </span>
                                 </h3>
@@ -241,7 +244,7 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex pb-0">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Attendance - Day Shift  </h4>
                         <div>
                             {{-- <div class="dropdown">
@@ -263,7 +266,7 @@
                         <div class="table-responsive">
                             <table class="table align-middle table-nowrap mb-0">
                                 <thead>
-                                    <tr>
+                                    <tr style="border-bottom: 1px solid #e3e3e3;">
 
                                         <th>EMP ID</th>
                                         <th>Employee Name</th>
@@ -276,26 +279,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
                                                 class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                                <td><span class="alert alert-success">Present</span></td>
+                                                <td><span class="alert btn-outline-success">Present</span></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
                                                 class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                                <td><span class="alert alert-success">Present</span></td>
+                                                <td><span class="alert btn-outline-success">Present</span></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
                                                 class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                                <td><span class="alert alert-success">Present</span></td>
+                                                <td><span class="alert btn-outline-success">Present</span></td>
                                     </tr>
 
                                 </tbody>
@@ -307,7 +310,7 @@
             </div>
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex pb-0">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Attendance - Night Shift   </h4>
                         <div>
                             {{-- <div class="dropdown">
@@ -329,7 +332,7 @@
                         <div class="table-responsive">
                             <table class="table align-middle table-nowrap mb-0">
                                 <thead>
-                                    <tr>
+                                    <tr style="border-bottom: 1px solid #e3e3e3;">
 
                                         <th>EMP ID</th>
                                         <th>Employee Name</th>
@@ -342,26 +345,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
                                                 class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                                <td><span class="alert alert-danger">Absent</span></td>
+                                                <td><span class="alert btn-outline-danger">Absent</span></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
                                                 class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                                <td><span class="alert alert-danger">Absent</span></td>
+                                                <td><span class="alert btn-outline-danger">Absent</span></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
                                                 class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                                <td><span class="alert alert-danger">Absent</span></td>
+                                                <td><span class="alert btn-outline-danger">Absent</span></td>
                                     </tr>
 
                                 </tbody>
@@ -377,7 +380,7 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex pb-0">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Tasks - Day Shift</h4>
                         <div>
                             {{-- <div class="dropdown">
@@ -399,7 +402,7 @@
                         <div class="table-responsive">
                             <table class="table align-middle table-nowrap mb-0">
                                 <thead>
-                                    <tr>
+                                    <tr style="border-bottom: 1px solid #e3e3e3;">
 
                                         <th>EMP ID</th>
                                         <th>Employee Name</th>
@@ -413,7 +416,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
@@ -421,7 +424,7 @@
                                                 <td>Task 1 ....</td>
                                                 <td><a href="#">see more</a></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
@@ -430,7 +433,7 @@
                                                 <td>Task 1 ....</td>
                                                 <td><a href="#">see more</a></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
@@ -449,7 +452,7 @@
             </div>
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex pb-0">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Tasks - Night Shift</h4>
                         <div>
                             {{-- <div class="dropdown">
@@ -471,7 +474,7 @@
                         <div class="table-responsive">
                             <table class="table align-middle table-nowrap mb-0">
                                 <thead>
-                                    <tr>
+                                    <tr style="border-bottom: 1px solid #e3e3e3;">
 
                                         <th>EMP ID</th>
                                         <th>Employee Name</th>
@@ -485,7 +488,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
@@ -493,7 +496,7 @@
                                                 <td>Task 1 ....</td>
                                                 <td><a href="#">see more</a></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
@@ -502,7 +505,7 @@
                                                 <td>Task 1 ....</td>
                                                 <td><a href="#">see more</a></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
@@ -526,7 +529,7 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex pb-0">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Reports - Day Shift</h4>
                         <div>
                             {{-- <div class="dropdown">
@@ -548,7 +551,7 @@
                         <div class="table-responsive">
                             <table class="table align-middle table-nowrap mb-0">
                                 <thead>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <th>EMP ID</th>
                                         <th>Employee Name</th>
@@ -562,7 +565,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
@@ -570,7 +573,7 @@
                                                 <td>Task 1 ....</td>
                                                 <td><a href="#">see more</a></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
@@ -579,7 +582,7 @@
                                                 <td>Task 1 ....</td>
                                                 <td><a href="#">see more</a></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
@@ -598,7 +601,7 @@
             </div>
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex pb-0">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Reports - Night Shift</h4>
                         <div>
                             {{-- <div class="dropdown">
@@ -620,9 +623,9 @@
                         <div class="table-responsive">
                             <table class="table align-middle table-nowrap mb-0">
                                 <thead>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
-                                        <th>EMP ID</th>
+                                        <th>EMP Id</th>
                                         <th>Employee Name</th>
                                         <th>Tasks</th>
                                         <th>See Details</th>
@@ -634,7 +637,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
@@ -642,7 +645,7 @@
                                                 <td>Task 1 ....</td>
                                                 <td><a href="#">see more</a></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
@@ -651,7 +654,7 @@
                                                 <td>Task 1 ....</td>
                                                 <td><a href="#">see more</a></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
                                         <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
