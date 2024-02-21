@@ -6,6 +6,9 @@
     Attendence
 @endsection
 @section('body')
+    @php
+        use Illuminate\Support\Str;
+    @endphp
 
     <body data-sidebar="colored">
     @endsection
@@ -138,20 +141,25 @@
                 font-size: 2em;
                 margin: 20px;
             }
+
             .font-text {
                 font-size: 16px;
             }
 
             /* Override default colors */
-.calendarjs {
-    background-color: #f0f0f0; /* Change background color */
-    color: #333; /* Change text color */
-}
+            .calendarjs {
+                background-color: #f0f0f0;
+                /* Change background color */
+                color: #333;
+                /* Change text color */
+            }
 
-.calendarjs .event {
-    background-color: #ff0000; /* Change event background color */
-    color: #fff; /* Change event text color */
-}
+            .calendarjs .event {
+                background-color: #ff0000;
+                /* Change event background color */
+                color: #fff;
+                /* Change event text color */
+            }
         </style>
         <div class="row">
             <div class="col-xl-1"></div>
@@ -160,17 +168,12 @@
                     <div class="card-body">
                         <h3 class="text-center font-size-header">Your Attendence</h3>
                         {{-- show check in time if it is done  --}}
-                        @if (isset($check_in_time) && $check_in_time != '')
-                            <h3 class="check_in_time">Check In Time: {{ $check_in_time }}</h3>
-                        @endif
-                        @if (isset($check_out_time) && $check_out_time != '')
-                            <h3 class="check_in_time">Check Out Time: {{ $check_out_time }}</h3>
-                        @endif
-                        @if (isset($total_time) && $total_time != '')
-                            <h3 class="check_in_time">Total Worked Today: {{ $total_time }}</h3>
-                        @endif
-                        @if (isset($attendence_status) && $attendence_status == 'show-break-start')
-                        @endif
+                        {{-- @if (session()->has('check_in_time') && session('check_in_time') != '')
+                            <h3 class="check_in_time">Check In Time: {{ session('check_in_time') }}</h3>
+                        @endif --}}
+
+
+
 
                         <div id="timer" class="text-center">00:00:00</div>
 
@@ -179,7 +182,7 @@
 
 
                         @if (isset($day_message) && $day_message != '')
-                            <span class="text-center text-danger" >{{ $day_message }}</span>
+                            <span class="text-center text-danger">{{ $day_message }}</span>
                         @endif
                         @if (isset($check_in_already_message) && $check_in_already_message != '')
                             <span class="font-text text-danger">{{ $check_in_already_message }}</span>
@@ -187,6 +190,7 @@
                         @if (isset($success_message) && $success_message != '')
                             <span class="text-center green-text">{{ $success_message }}</span>
                         @endif
+
                         <div class="break-time">
                             <h4>Instructions</h4>
                             <ul>
@@ -194,11 +198,15 @@
 
                                 @if (isset($shift_time) && $shift_time == 'morning')
                                     <li>For Morning Shift: 10:00 AM - 6:00 PM</li>
+                                    <li>Break Time: 1:15 PM- 2:00 PM</li>
+
                                 @else
                                     <li>For Evening Shift: 6:30 AM - 2:00 PM</li>
+                                    <li>Break Time: 9:30 PM - 10:00 PM</li>
                                 @endif
                                 <li>When you Reach Office, Mark Check In and When you leave Office Mark Check Out</li>
-                                <li>Make Sure When you go to break then click on break start and when you comeback then click break end!</li>
+                                <li>Make Sure When you go to break then click on break start and when you comeback then
+                                    click break end!</li>
                                 <li>Make sure to reach on time in office</li>
                                 <li>If portal does not work, Please note down your time manually and forward it to your
                                     manager!</li>
@@ -206,12 +214,23 @@
                             </ul>
                         </div>
                         <div class="break-time">
-                            @if (isset($shift_time) && $shift_time == 'morning')
-                                <p>Day Shift Break Time: <span style="float: right;">1:15 PM- 2:00 PM</span></p>
-                            @else
-                                <p>Night Shift Break Time: <span style="float: right;">9:30 PM - 10:00 PM</span></p>
-                            @endif
                             <p>Target Working Hours: <span style="float: right;">7:00 / Day</span></p>
+
+                            @if (session()->has('check_in_time') && session('check_in_time') != '')
+                            <p>Check in Time: <span style="float: right;">{{ session('check_in_time') }}</span></p>
+                            @endif
+
+                            @if (session()->has('break_start_time') && session('break_start_time') != '')
+                            <p>Break Start Time: <span style="float: right;">{{ session('break_start_time') }}</span></p>
+                            @endif
+
+                            @if (session()->has('break_end_time') && session('break_end_time') != '')
+                            <p>Break End Time: <span style="float: right;">{{ session('break_end_time') }}</span></p>
+                            @endif
+                            @if (session()->has('check_out_time') && session('check_out_time') != '')
+                            <p>Check Out Time: <span style="float: right;">{{ session('check_out_time') }}</span></p>
+                            @endif
+
                         </div>
                         {{-- {{$attendence_status}} --}}
                         {{-- @if (isset($attendence_status) && $attendence_status == 'complete')
@@ -335,58 +354,17 @@
 
 
 
-                            @if (isset($attendence_status) && $attendence_status == 'complete')
-                                <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
-                                        width="1em" height="1em" viewBox="0 0 24 24">
-                                        <path fill="#3e7213"
-                                            d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
-                                    </svg> Attendence Marked Successfully!</span>
-                            @elseif (isset($show_check_out) && $show_check_out=="show")
+                        @if (session()->has('attendence_status') && session('attendence_status') === true)
+                            <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
+                                    width="1em" height="1em" viewBox="0 0 24 24">
+                                    <path fill="#3e7213"
+                                        d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
+                                </svg> Attendence Marked Successfully!</span>
+                        @else
                             <div class="row">
                                 <div class="col-xl-6">
-                                    <a class="btn btn-success my-btn" href="/check-out">Check Out
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                            viewBox="0 0 16 16">
-                                            <g fill="currentColor" fill-rule="evenodd">
-                                                <path
-                                                    d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                                <path
-                                                    d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                                            </g>
-                                        </svg>
-                                    </a>
-                                </div>
-                                <div class="col-xl-6">
-                                    <a class="btn btn-danger my-btn" href="/break-start">Break Start
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                            viewBox="0 0 16 16">
-                                            <g fill="currentColor" fill-rule="evenodd">
-                                                <path
-                                                    d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                                <path
-                                                    d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                                            </g>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            @else
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <a class="btn btn-success my-btn" href="/check-in">CheckIn
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                viewBox="0 0 16 16">
-                                                <g fill="currentColor" fill-rule="evenodd">
-                                                    <path
-                                                        d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z" />
-                                                    <path
-                                                        d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z" />
-                                                </g>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <a class="btn btn-danger my-btn" href="/check-out">Break Start
+                                    @if (session()->has('show_check_out') && session('show_check_out') === true)
+                                        <a class="btn btn-danger my-btn" href="/check-out/">Check Out
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                 viewBox="0 0 16 16">
                                                 <g fill="currentColor" fill-rule="evenodd">
@@ -397,21 +375,57 @@
                                                 </g>
                                             </svg>
                                         </a>
-                                    </div>
-
-
-
-
+                                    @else
+                                        <a class="btn btn-success my-btn" href="/check-in">Check In
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                viewBox="0 0 21 21">
+                                                <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
+                                                    <path
+                                                        d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
+                                                </g>
+                                            </svg>
+                                        </a>
+                                    @endif
                                 </div>
-                            @endif
 
+                                <div class="col-xl-6">
+                                    @if (session()->has('show_break_end') && session('show_break_end') === true)
+                                        <a class="btn btn-danger my-btn" href="/break-end">Break End
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                viewBox="0 0 16 16">
+                                                <g fill="currentColor" fill-rule="evenodd">
+                                                    <path
+                                                        d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                                    <path
+                                                        d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                                </g>
+                                            </svg>
+                                        </a>
+                                    @else
+                                        <a class="btn btn-success my-btn" href="/break-start">Break Start
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                viewBox="0 0 16 16">
+                                                <g fill="currentColor" fill-rule="evenodd">
+                                                    <path
+                                                        d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                                    <path
+                                                        d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                                </g>
+                                            </svg>
+                                        </a>
+                                    @endif
+                                </div>
+
+                            </div>
+                        @endif
 
                     </div>
                     <!-- end card body -->
                 </div>
                 <!-- end card -->
             </div>
-
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-body">
@@ -443,8 +457,7 @@
                 </div>
                 <!-- end card -->
             </div>
-            <div col-xl-1></div>
-            <!-- end col -->
+            <div class="col-xl-1"></div>
         </div>
         <!-- end row -->
         <script>
@@ -462,7 +475,7 @@
                 hours = hours ? hours : 12; // 0 should be displayed as 12
                 const minutes = pad(now.getMinutes());
                 const seconds = pad(now.getSeconds());
-                document.getElementById('timer').innerText =  hours + ":" + minutes + ":" + seconds +
+                document.getElementById('timer').innerText = hours + ":" + minutes + ":" + seconds +
                     " " + ampm;
             }
 

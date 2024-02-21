@@ -161,6 +161,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/check-in',[AttendenceController::class,'checkInTime']);
     Route::get('/check-out',[AttendenceController::class,'checkOutTime']);
     Route::get('/break-start',[AttendenceController::class,'breakStart']);
+    Route::get('/break-end',[AttendenceController::class,'breakEnd']);
 
 });
 
