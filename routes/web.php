@@ -11,6 +11,7 @@ use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SecurityController;
+use App\Http\Controllers\AttendenceController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -155,6 +156,11 @@ Route::group(['middleware' => 'admin'], function () {
 
     //google 2fa
     Route::get('/google-2fa',[SecurityController::class,'google2FA']);
+
+    Route::get('/mark-attendence',[AttendenceController::class,'index']);
+    Route::get('/check-in',[AttendenceController::class,'checkInTime']);
+    Route::get('/check-out',[AttendenceController::class,'checkOutTime']);
+    Route::get('/break-start',[AttendenceController::class,'breakStart']);
 
 });
 
