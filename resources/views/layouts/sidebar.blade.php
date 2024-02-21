@@ -483,48 +483,6 @@
         <!-- Sidebar -->
     </div>
 
-    <div class="dropdown px-3 sidebar-user sidebar-user-info">
-        <button type="button" class="btn w-100 px-0 border-0" id="page-header-user-dropdown"
-            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="d-flex align-items-center">
-                <div class="flex-shrink-0">
-                    <img src="{{ url('user.png') }}" class="img-fluid header-profile-user rounded-circle"
-                        alt="">
-                </div>
-
-                <div class="flex-grow-1 ms-2 text-start">
-                    <span class="ms-1 fw-medium user-name-text">{{ auth()->user()->user_name }}</span>
-                </div>
-
-                <div class="flex-shrink-0 text-end">
-                    <i class="mdi mdi-dots-vertical font-size-16"></i>
-                </div>
-            </span>
-        </button>
-        <div class="dropdown-menu dropdown-menu-end">
-            <!-- item-->
-            <a class="dropdown-item" href="{{ Route('user.chang-password')}}"><i
-                    class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Change Password</span></a>
-            {{-- <a class="dropdown-item" href="apps-chat"><i
-                    class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Messages</span></a> --}}
-            {{-- <a class="dropdown-item" href="pages-faq"><i
-                    class="mdi mdi-lifebuoy text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Help</span></a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="pages-profile"><i
-                    class="mdi mdi-wallet text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Balance : <b>$5971.67</b></span></a>
-            <a class="dropdown-item" href="#"><span class="badge bg-primary mt-1 float-end">New</span><i
-                    class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Settings</span></a> --}}
-            <a class="dropdown-item" href="javascript:void()" onclick="confirmLogout()"><i
-                    class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Logout</span></a>
-
-        </div>
-    </div>
 
     <style>
         body[data-sidebar=colored] .vertical-menu {

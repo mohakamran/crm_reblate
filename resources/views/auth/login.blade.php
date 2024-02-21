@@ -68,12 +68,12 @@
                                 <div class="card my-auto overflow-hidden">
                                     <div class="row g-0" style="min-height: 500px;">
                                         <div class="col-lg-6">
-                                            <img src="{{ url('office.png') }}"
+                                            <img src="{{ url('generalLogin.jpg') }}"
                                                 style="width:100%; object-fit:cover;height:100%;" alt="">
                                         </div>
 
                                         <div class="col-lg-6"
-                                            style="    display: flex;
+                                            style=" background-color:#fff;   display: flex;
                                         align-items: center;
                                         justify-content: center;
                                         flex-direction: column;

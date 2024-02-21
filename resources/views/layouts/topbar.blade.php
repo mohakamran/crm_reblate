@@ -145,12 +145,50 @@
                     </div>
                 </div>
             </div> --}}
+            <div class="dropdown px-3 sidebar-user" style="background-color: #e3e3e3; border-radius: 10px;">
+                <button type="button" class="btn w-100 px-0 border-0" id="page-header-user-dropdown"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <img src="{{ url('user.png') }}" class="img-fluid header-profile-user rounded-circle"
+                                alt="">
+                        </div>
 
-            <div class="dropdown d-none d-lg-inline-block ms-1">
+                        <div class="flex-grow-1 ms-2 text-start">
+                            <span class="ms-1 fw-medium user-name-text">{{ auth()->user()->user_name }}</span>
+                        </div>
+                    </span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <!-- item-->
+                    <a class="dropdown-item" href="{{ Route('user.chang-password')}}"><i
+                            class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Change Password</span></a>
+                    {{-- <a class="dropdown-item" href="apps-chat"><i
+                            class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Messages</span></a> --}}
+                    {{-- <a class="dropdown-item" href="pages-faq"><i
+                            class="mdi mdi-lifebuoy text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Help</span></a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="pages-profile"><i
+                            class="mdi mdi-wallet text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Balance : <b>$5971.67</b></span></a>
+                    <a class="dropdown-item" href="#"><span class="badge bg-primary mt-1 float-end">New</span><i
+                            class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Settings</span></a> --}}
+                    <a class="dropdown-item" href="javascript:void()" onclick="confirmLogout()"><i
+                            class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Logout</span></a>
+
+                </div>
+            </div>
+
+            {{-- <div class="dropdown d-none d-lg-inline-block ms-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
                     <i class="ri-fullscreen-line"></i>
                 </button>
-            </div>
+            </div> --}}
 
             {{-- <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
@@ -241,11 +279,11 @@
                 </div>
             </div> --}}
 
-            <div class="dropdown d-inline-block">
+            {{-- <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
                     <i class="ri-settings-2-line"></i>
                 </button>
-            </div>
+            </div> --}}
 
         </div>
     </div>
