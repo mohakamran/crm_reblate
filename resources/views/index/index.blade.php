@@ -625,7 +625,7 @@
                                 <thead>
                                     <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
-                                        <th>EMP ID</th>
+                                        <th>EMP Id</th>
                                         <th>Employee Name</th>
                                         <th>Tasks</th>
                                         <th>See Details</th>
