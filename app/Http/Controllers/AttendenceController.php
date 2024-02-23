@@ -11,6 +11,41 @@ use Illuminate\Support\Carbon;
 
 class AttendenceController extends Controller
 {
+   // searcj details
+   public function searchAttendenceEmp(Request $req) {
+        $validate = $req->validate([
+            'date_controller' => 'required'
+        ]);
+        $date = $req->date_controller;
+        $month_attendence = $req->month_attendence;
+        $year_attendence = $req->year_attendence;
+        $id = auth()->user()->user_code;
+
+        $emp = DB::table('employees')->where('Emp_Code', $id)->first();
+        if($emp) {
+            if($date!="") {
+                $check_attendence = DB::table('attendence')->where('emp_id',$id)->where('date',$date)->get();
+                $show_back = "yes";
+                return view('attendence.view-individual',compact('check_attendence','show_back'));
+            }
+        } else {
+            return back();
+        }
+
+   }
+   // view attendence details
+   public function viewAttendenceEmp() {
+    $id = auth()->user()->user_code;
+    $emp = DB::table('employees')->where('Emp_Code', $id)->first();
+    if($emp) {
+        $check_attendence = DB::table('attendence')->where('emp_id', $id)->get();
+        // dd($check_attendence->date);
+        return view('attendence.view-individual',compact('check_attendence'));
+    } else {
+        return back();
+    }
+
+   }
 
    public function breakEnd(){
     $id = auth()->user()->user_code;
@@ -24,8 +59,9 @@ class AttendenceController extends Controller
         $breakStartTime = $currentDateTime->format('h:i A');
 
         if ($dayFullName == "Sunday" || $dayFullName == "sunday" || $dayFullName == "Saturday" || $dayFullName == "saturday") {
-            $check_in_already_message = "No Break Start/End on Saturday and Sunday!";
-            return view('attendence.index', compact('shift_time', 'check_in_already_message'));
+            // $check_in_already_message = "No Break Start/End on Saturday and Sunday!";
+            // return view('attendence.index', compact('shift_time', 'check_in_already_message'));
+            return back();
         }
 
         if ($shift_time == "Morning") {
@@ -34,18 +70,26 @@ class AttendenceController extends Controller
             $shift_time = "night";
         }
 
+        $check = DB::table('attendence')->where('emp_id', $id)->first();
+
+        if($check->break_end !="") {
+            return back();
+        }
+
         DB::table('attendence')->where('emp_id', $id)->update([
             'emp_id' => $id,
             'break_end' => $breakStartTime,
             'date' => $todayDate
         ]);
 
-        $success_message = "Your Break Ended at " . $breakStartTime;
+        // $success_message = "Your Break Ended at " . $breakStartTime;
         session()->put('break_end_time', $breakStartTime);
-        return view('attendence.index', compact('shift_time', 'success_message'));
+        // return view('attendence.index', compact('shift_time', 'success_message'));
+        return back();
     } else {
-        $check_in_already_message = "Employee Not Found!";
-        return view('attendence.index', compact('check_in_already_message'));
+        // $check_in_already_message = "Employee Not Found!";
+        // return view('attendence.index', compact('check_in_already_message'));
+        return back();
     }
 
 
@@ -63,33 +107,35 @@ class AttendenceController extends Controller
             // $dayFullName = "Sunday";
              // dd($shift->Emp_Shift_Time);
             if($dayFullName == "Sunday" || $dayFullName == "sunday" || $dayFullName == "saturday" || $dayFullName == "Saturday") {
-                $check_in_already_message = "No Break Start/End on Saturday and Sunday!";
-                return view('attendence.index',compact('shift_time','check_in_already_message'));
+                // $check_in_already_message = "No Break Start/End on Saturday and Sunday!";
+                // return view('attendence.index',compact('shift_time','check_in_already_message'));
+                return back();
             }
             if($shift_time == "Morning") {
                 $shift_time = "morning";
-                $currentDateTime = Carbon::now();
-                $currentDateTimeWithAMPM = $currentDateTime->format('h:i A');
-                $startTime = Carbon::createFromTime(13, 15); // 1:15 PM
-                if ($currentDateTime < $startTime) {
-                    $check_in_already_message = "Your Break Time Will Start from 1:15 PM, Current Time, ".$currentDateTimeWithAMPM;
-                    return view('attendence.index',compact('shift_time','check_in_already_message'));
-                }
+                // $currentDateTime = Carbon::now();
+                // $currentDateTimeWithAMPM = $currentDateTime->format('h:i A');
+                // $startTime = Carbon::createFromTime(13, 15); // 1:15 PM
+                // if ($currentDateTime < $startTime) {
+                //     $check_in_already_message = "Your Break Time Will Start from 1:15 PM, Current Time, ".$currentDateTimeWithAMPM;
+                //     return view('attendence.index',compact('shift_time','check_in_already_message'));
+                // }
             } else {
                 $shift_time = "night";
-                $currentDateTime = Carbon::now();
-                $currentDateTimeWithAMPM = $currentDateTime->format('h:i A');
-                $startTime = Carbon::createFromTime(21, 30); // 9:30 PM
-                if ($currentDateTime < $startTime) {
-                    $check_in_already_message = "Your Break Time Will Start from 9:30 PM, Current Time, ".$currentDateTimeWithAMPM;
-                    return view('attendence.index',compact('shift_time','check_in_already_message'));
-                }
+                // $currentDateTime = Carbon::now();
+                // $currentDateTimeWithAMPM = $currentDateTime->format('h:i A');
+                // $startTime = Carbon::createFromTime(21, 30); // 9:30 PM
+                // if ($currentDateTime < $startTime) {
+                //     $check_in_already_message = "Your Break Time Will Start from 9:30 PM, Current Time, ".$currentDateTimeWithAMPM;
+                //     return view('attendence.index',compact('shift_time','check_in_already_message'));
+                // }
             }
 
             $check = DB::table('attendence')->where('emp_id',$id)->where('check_in_status','done')->where('date',$todayDate)->first();
             if($check ==null) {
-                $check_in_already_message = "You did not Check In! First CheckIn!";
-                return view('attendence.index',compact('shift_time','check_in_already_message'));
+                // $check_in_already_message = "You did not Check In, Please Check In first!";
+                // return view('attendence.index',compact('shift_time','check_in_already_message'));
+                return back();
             }
 
             DB::table('attendence')->where('emp_id',$id)->update([
@@ -97,9 +143,10 @@ class AttendenceController extends Controller
                 'break_start' => $breakStartTime,
                 'date' => $todayDate
             ]);
-            $success_message = "Your Break Started at".$breakStartTime;
+            // $success_message = "Your Break Started at".$breakStartTime;
             session::put('break_start_time',$breakStartTime);
-            return view('attendence.index',compact('shift_time','success_message'));
+            // return view('attendence.index',compact('shift_time','success_message'));
+            return back();
 
       } else {
         $check_in_already_message = "Employee Not Found!";
@@ -193,13 +240,13 @@ class AttendenceController extends Controller
             }
             // dd($shift->Emp_Shift_Time);
             if($dayFullName == "Sunday" || $dayFullName == "sunday" || $dayFullName == "saturday" || $dayFullName == "Saturday") {
-                $check_in_already_message = "You can not check-in On Saturday and Sunday!";
-                return view('attendence.index',compact('shift_time','check_in_already_message'));
+               return back();
             }
             $check = DB::table('attendence')->where('emp_id',$id)->where('date', $todayDate)->first();
             if($check!=null && $check->check_in_status =="done") {
                 $check_in_already_message = "You have already check In!";
-                return view('attendence.index',compact('shift_time','check_in_already_message'));
+                // return view('attendence.index',compact('shift_time','check_in_already_message'));
+                return back();
             } else {
                 DB::table('attendence')->insert([
                     'emp_id' => $id,
@@ -212,18 +259,19 @@ class AttendenceController extends Controller
                     'total_time' => '',
                     'date' => $todayDate
                 ]);
-                $success_message = "Successfully Checked In!";
+                // $success_message = "Successfully Checked In!";
                 Session::put('check_in_time',$checkInTime);
                 Session::put('show_check_out', true);
-                return view('attendence.index',compact('shift_time','success_message'));
+                return redirect('/');
+                // return view('emp-dashboard.index',compact('shift_time','success_message'));
             }
         } else {
             Session::put('show_break_end', false);
             Session::put('attendence_status', false);
             Session::put('show_check_out', false);
-            $check_in_already_message = "Employee Not Found!";
-            $check_in_already_message = "";
-            return view('attendence.index',compact('shift_time','check_in_already_message'));
+            // $check_in_already_message = "Employee Not Found!";
+            // $check_in_already_message = "";
+            return redirect('/');
         }
 
     }
@@ -236,29 +284,60 @@ class AttendenceController extends Controller
         $dayFullName = $currentDateTime->format('l'); // get full day name
         $todayDate = $currentDateTime->toDateString(); // 'Y-m-d'
         $checkOutTime = $currentDateTime->format('h:i A'); // get time now 11:01 AM/PM
+
         if($emp) {
             $shift_time = $emp->Emp_Shift_Time;
             if($shift_time == "Morning") {
                 $shift_time = "morning";
                 $check_morning = DB::table('attendence')->where('date',$todayDate)->where('emp_id',$id)->first();
                 if($check_morning) {
-                    if($check_morning->break_start !="" && $check_morning->break_end !="" && $check_morning->check_in_status =="done"  ) {
+
+                    if( $check_morning->check_in_status =="done"  && $check_morning->check_out_status =="") {
+                        // if($check_morning->break_start !="" && $check_morning->break_end =="")  {
+                        //     $check_in_already_message = "Please Break End, Then Check Out!";
+                        //     return back()->with('check_in_already_message',$check_in_already_message);
+                        // }
+
+                        Session::put('attendence_status', true);
+                        Session::put('check_out_time', $checkOutTime);
+                        $check_in_time = $check_morning->check_in_time;
+                        $check_out_time = $checkOutTime;
+                        $break_start_time = $check_morning->break_start;
+                        $break_end_time = $check_morning->break_end;
+
+                        $checkIn = Carbon::createFromFormat('h:i A', $check_in_time);
+                        $checkOut = Carbon::createFromFormat('h:i A', $check_out_time);
+
+
+
+                        if($break_end_time!="" && $break_start_time !="") {
+                            $totalWorkHours = $checkOut->diffInHours($checkIn);
+                            $breakStart = Carbon::createFromFormat('h:i A', $break_start_time);
+                            $breakEnd = Carbon::createFromFormat('h:i A', $break_end_time);
+
+                            if ($breakStart >= $checkIn && $breakEnd <= $checkOut) {
+                                $totalWorkHours -= $breakEnd->diffInHours($breakStart);
+                            }
+                        } else {
+                            // Initialize total work hours
+                            $totalWorkHours = $checkOut->diffInHours($checkIn);
+                        }
+
+                        session::put('total_hours',$totalWorkHours);
                         DB::table('attendence')
                         ->where('emp_id', $id) // Filter the query to only update rows where emp_id matches $id
                         ->update([
                             'check_out_time' => $checkOutTime,
                             'check_out_status' => "done",
+                            'total_time' => $totalWorkHours
                         ]);
-                        Session::put('attendence_status', true);
-                        Session::put('check_out_time', $checkOutTime);
-                        return redirect('/mark-attendence');
+
+                        return back();
                     } else {
-                        $check_in_already_message = "You can not check out!";
-                        return view('attendence.index',compact('shift_time','check_in_already_message'));
+                        return back();
                     }
                 } else {
-                    $check_in_already_message = "You can not check out!";
-                    return view('attendence.index',compact('shift_time','check_in_already_message'));
+                    return back();
                 }
             } else {
                 $shift_time = "night";
@@ -266,32 +345,65 @@ class AttendenceController extends Controller
                 $yesterday = $today->subDay();
                 $check_night = DB::table('attendence')->where('date',$yesterday)->where('emp_id',$id)->first();
                 if($check_night) {
-                        if($check_night->break_start !="" && $check_night->break_end !="" && $check_night->check_in_status =="done"  ) {
+                        if($check_night->check_in_status =="done" && $check_night->check_out_status =="") {
+                            // if($check_morning->break_start !="" && $check_morning->break_end =="")  {
+                            //     $check_in_already_message = "Please Break End, Then Check Out!";
+                            //     return back()->with('check_in_already_message',$check_in_already_message);
+                            // }
+
+                            Session::put('attendence_status', true);
+                            Session::put('check_out_time', $checkOutTime);
+                            Session::put('attendence_status', true);
+                            Session::put('check_out_time', $checkOutTime);
+                            $check_in_time = $check_night->check_in_time;
+                            $check_out_time = $checkOutTime;
+                            $break_start_time = $check_night->break_start;
+                            $break_end_time = $check_night->break_end;
+
+                            $checkIn = Carbon::createFromFormat('h:i A', $check_in_time);
+                            $checkOut = Carbon::createFromFormat('h:i A', $check_out_time)->addDay();
+
+
+
+                            if($break_end_time!="" && $break_start_time !="") {
+                                $totalWorkHours = $checkOut->diffInHours($checkIn);
+                                $breakStart = Carbon::createFromFormat('h:i A', $break_start_time);
+                                $breakEnd = Carbon::createFromFormat('h:i A', $break_end_time);
+
+                                if ($breakStart >= $checkIn && $breakEnd <= $checkOut) {
+                                    $totalWorkHours -= $breakEnd->diffInHours($breakStart);
+                                }
+                            } else {
+                                // Initialize total work hours
+                                $totalWorkHours = $checkOut->diffInHours($checkIn);
+                            }
+
+                            session::put('total_hours',$totalWorkHours);
+
                             DB::table('attendence')
                             ->where('emp_id', $id) // Filter the query to only update rows where emp_id matches $id
                             ->update([
                                 'check_out_time' => $checkOutTime,
                                 'check_out_status' => "done",
+                                'total_time' => $totalWorkHours
                             ]);
-                            Session::put('attendence_status', true);
-                            Session::put('check_out_time', $checkOutTime);
-                            return redirect('/mark-attendence');
+
+                            return back();
+
                         } else {
-                            $check_in_already_message = "You can not check out!";
-                            return view('attendence.index',compact('shift_time','check_in_already_message'));
+                            return back();
                         }
                 } else {
-                    $check_in_already_message = "You can not check out!";
-                    return view('attendence.index',compact('shift_time','check_in_already_message'));
+                    return back();
                 }
             }
         } else {
             Session::put('show_break_end', false);
             Session::put('attendence_status', false);
             Session::put('show_check_out', false);
-            $check_in_already_message = "Employee Not Found!";
+            // $check_in_already_message = "Employee Not Found!";
             // $check_in_already_message = "";
-            return view('attendence.index',compact('shift_time','check_in_already_message'));
+            return back();
         }
 
     }

@@ -150,8 +150,13 @@
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                            <img src="{{ url('user.png') }}" class="img-fluid header-profile-user rounded-circle"
+                            @if (isset($emp_det->Emp_Image) && $emp_det!="")
+                                <img src="{{$emp_det->Emp_Image}}" class="img-fluid header-profile-user rounded-circle" alt="">
+                                @else
+                                <img src="{{ url('user.png') }}" class="img-fluid header-profile-user rounded-circle"
                                 alt="">
+                            @endif
+
                         </div>
 
                         <div class="flex-grow-1 ms-2 text-start">

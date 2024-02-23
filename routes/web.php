@@ -157,11 +157,15 @@ Route::group(['middleware' => 'admin'], function () {
     //google 2fa
     Route::get('/google-2fa',[SecurityController::class,'google2FA']);
 
-    Route::get('/mark-attendence',[AttendenceController::class,'index']);
+    // Route::get('/mark-attendence',[AttendenceController::class,'index']);
     Route::get('/check-in',[AttendenceController::class,'checkInTime']);
     Route::get('/check-out',[AttendenceController::class,'checkOutTime']);
     Route::get('/break-start',[AttendenceController::class,'breakStart']);
     Route::get('/break-end',[AttendenceController::class,'breakEnd']);
+
+    // attendence
+    Route::get('/view-attendence',[AttendenceController::class,'viewAttendenceEmp']);
+    Route::post('/search-emp-details',[AttendenceController::class,'searchAttendenceEmp']);
 
 });
 

@@ -14,6 +14,8 @@ use App\Models\Employee;
 use App\Models\Client;
 use DB;
 
+use Carbon\Carbon;
+
 use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Response;
@@ -190,6 +192,71 @@ class AuthController extends Controller
                ->with('error', 'Email or Password Incorrect!');
     }
 
+    // attenden check employee
+    public function indexEmployee()
+    {
+        // Session::put('attendence_status', false);
+      $id = Auth()->user()->user_code;
+      $currentDateTime = now();
+      $dayFullName = $currentDateTime->format('l'); // get full day name
+      $todayDate = $currentDateTime->toDateString(); // 'Y-m-d'
+      // check employee shift time
+      $emp = DB::table('employees')->where('Emp_Code',$id)->first();
+      if($emp) {
+        $shift_time = $emp->Emp_Shift_Time;
+        if($shift_time == "Morning") {
+            $shift_time = "morning";
+        } else {
+            $shift_time = "night";
+        }
+        $check_status = DB::table('attendence')->where('emp_id',$id)->where('date',$todayDate)->first();
+        // dd($check_status);
+        if($check_status!=null) {
+            if($check_status->check_in_status == "done" && $check_status->break_start =="" && $check_status->check_out_status =="") {
+                // $show_check_out = "yes";
+                // dd("this working");
+                Session::put('show_check_out', true);
+                // dd("yes show");
+                // return view('attendence.index',compact('shift_time'));
+
+            } else if($check_status->check_in_status == "done" && $check_status->break_start !="" && $check_status->check_out_status =="") {
+                // dd("i this is working");
+                Session::put('show_break_end', true);
+                // return view('attendence.index',compact('shift_time'));
+            } else if($check_status->check_in_status == "done"  && $check_status->check_out_status =="done") {
+                Session::put('attendence_status', true);
+
+                // return view('attendence.index',compact('shift_time'));
+            } else {
+                Session::put('show_break_end', false);
+                Session::put('attendence_status', false);
+                Session::put('show_check_out', false);
+                session()->forget('check_in_time');
+                session()->forget('break_start_time');
+                session()->forget('break_end_time');
+                session()->forget('check_out_time');
+                // return view('attendence.index',compact('shift_time'));
+            }
+        } else {
+                Session::put('show_break_end', false);
+                Session::put('attendence_status', false);
+                Session::put('show_check_out', false);
+                session()->forget('check_in_time');
+                session()->forget('break_start_time');
+                session()->forget('break_end_time');
+                session()->forget('check_out_time');
+                session()->forget('total_hours');
+                // return view('attendence.index',compact('shift_time'));
+        }
+      }
+
+
+
+
+    }
+
+
+
     public function indexHomePage() {
         $user_type = auth()->user()->user_type;
         // dd($user_type);
@@ -200,7 +267,7 @@ class AuthController extends Controller
             // dd($count);
             $clients = Client::all();
             $client_count = count($clients);
-            $data = compact('emp_count','client_count');
+
             // create session for
             $check_permissions = DB::table('table_login_details')->where('emp_code',$user_code)->where('employee_type','employee')->first();
             // dd($check_permissions);
@@ -215,6 +282,9 @@ class AuthController extends Controller
                 Session::put('attendance_access', $check_permissions->attendance_access);
             }
 
+            // calling function of attence for employee
+            $this->indexEmployee();
+
             //
             // $check_active_status = DB::table('employees')->where('Emp_Code',$user_code)->first();
             // if($check_active_status) {
@@ -222,6 +292,13 @@ class AuthController extends Controller
             // }
 
             // dd($employees_access);
+
+            $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
+            $t_date = Carbon::now()->format('l, d F Y');
+            // dd($t_date);
+            $data = compact('emp_count','client_count','emp_det','t_date');
+
+
             return view('index.emp-dashboard',$data);
         }
         else if($user_type == "manager") {

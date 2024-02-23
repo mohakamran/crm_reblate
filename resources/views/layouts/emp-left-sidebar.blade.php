@@ -64,12 +64,12 @@
                         <span>Info</span>
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="/mark-attendence" class="waves-effect">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 12h5v5h-5zm7-9h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m0 2v2H5V5zM5 19V9h14v10z"/></svg>
                         <span>Attendence</span>
                     </a>
-                </li>
+                </li> --}}
 
                 {{-- employee access --}}
                 @if (Session::has('employees_access'))
@@ -751,7 +751,7 @@
         <!-- Sidebar -->
     </div>
 
-    <div class="dropdown px-3 sidebar-user sidebar-user-info">
+    {{-- <div class="dropdown px-3 sidebar-user sidebar-user-info">
         <button type="button" class="btn w-100 px-0 border-0" id="page-header-user-dropdown"
             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="d-flex align-items-center">
@@ -770,29 +770,17 @@
             </span>
         </button>
         <div class="dropdown-menu dropdown-menu-end">
-            <!-- item-->
+
             <a class="dropdown-item" href="{{ Route('user.chang-password') }}"><i
                     class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
                     class="align-middle">Change Password</span></a>
-            {{-- <a class="dropdown-item" href="apps-chat"><i
-                    class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Messages</span></a> --}}
-            {{-- <a class="dropdown-item" href="pages-faq"><i
-                    class="mdi mdi-lifebuoy text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Help</span></a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="pages-profile"><i
-                    class="mdi mdi-wallet text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Balance : <b>$5971.67</b></span></a>
-            <a class="dropdown-item" href="#"><span class="badge bg-primary mt-1 float-end">New</span><i
-                    class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Settings</span></a> --}}
             <a class="dropdown-item" href="javascript:void()" onclick="confirmLogout()"><i
                     class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
                     class="align-middle">Logout</span></a>
 
         </div>
-    </div>
+    </div> --}}
+
 
     <style>
         body[data-sidebar=colored] .vertical-menu {
