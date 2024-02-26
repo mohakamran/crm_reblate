@@ -165,7 +165,12 @@ Route::group(['middleware' => 'admin'], function () {
 
     // attendence
     Route::get('/view-attendence',[AttendenceController::class,'viewAttendenceEmp']);
+    Route::post('/view-attendence-emp',[AttendenceController::class,'viewEachAttendenceEmp']);
     Route::post('/search-emp-details',[AttendenceController::class,'searchAttendenceEmp']);
+    Route::get('/view-emp-attendence',[AttendenceController::class,'viewEmpAttendence']);
+    // Route::get('/view-attendence-emp', [AttendenceController::class, 'viewAttendanceEmployee']);
+    Route::post('/search-emp-attendence', [AttendenceController::class, 'searchEmpAttendenceAdmin'])->name('view-attendence');
+
 
 });
 

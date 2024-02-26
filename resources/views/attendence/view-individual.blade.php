@@ -39,8 +39,8 @@
             }
         </style>
         <div class="row">
-            <form action="/search-emp-details" method="post">
-                @csrf
+
+
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
@@ -51,24 +51,61 @@
                                 buttons on a page that will interact with a DataTable. The core library
                                 provides the based framework upon which plug-ins can built.
                             </p> --}}
+                            <form method="post" action="/search-emp-details" >
+                                @csrf
+                                <div class="row mt-3 mb-3">
+                                    <div class="col-md-3">
+                                        <input placeholder="Select date" type="date" name="date_controller"
+                                            class="form-control" value="{{ old('date_controller') }}">
+                                        <span>
+                                            @error('date_controller')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </span>
+                                    </div>
 
-                            <div class="row mt-3 mb-3">
-                                <div class="col-md-3">
-                                    <input placeholder="Select date" type="date" name="date_controller"
-                                        class="form-control" value="{{ old('date_controller') }}">
-                                    <span>
-                                        @error('date_controller')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </span>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <button class="btn btn-success">Search</button>
-                                    @if (isset($show_back) && $show_back=="yes")
-                                    <a href="/view-attendence" class="btn btn-success -right-3">Go Back</a>
+                                    @if (isset($id) && $id!="")
+                                       <input type="hidden" name="emp_search_date" value="{{$id}}">
                                     @endif
-                                </div>
+
+
+
+                                    <div class="col-md-3">
+                                        <button class="btn btn-success">Search</button>
+                                        @if (isset($show_back) && $show_back=="yes")
+                                          {{-- <a href="{{ url()->previous() }}" class="btn btn-success -right-3">Go Back</a> --}}
+                                        @endif
+                                    </div>
+                            </form>
+
+                            <!-- Bootstrap modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateModalLabel">Update Attendance</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Form fields for updating attendance -->
+          <form id="updateForm">
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input type="text" class="form-control" id="date" name="date" readonly>
+            </div>
+            <div class="form-group">
+              <label for="checkIn">Check In Time</label>
+              <input type="text" class="form-control" id="checkIn" name="checkIn">
+            </div>
+            <!-- Add more form fields for other attendance data -->
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
@@ -136,6 +173,9 @@
                                         <th> Break End</th>
                                         <th> Total Time Worked</th>
                                         <th> Over Time</th>
+                                        @if (auth()->user()->user_type == "admin")
+                                            <th> Action</th>
+                                        @endif
 
                                     </tr>
                                 </thead>
@@ -167,6 +207,10 @@
                                             <td>{{ $emp->break_end }}</td>
                                             <td>{{ $emp->total_time }}</td>
                                             <td>0 Hrs</td>
+                                            @if (auth()->user()->user_type == "admin")
+                                              {{-- <td><a class="open-popup" href="#" data-emp-id="{{ $emp->emp_id }}"><svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" viewBox="0 0 24 24"><path fill="currentColor" d="m14.06 9l.94.94L5.92 19H5v-.92zm3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z"/></svg></a></td> --}}
+                                              <td><a href="#" class="open-popup" data-emp-id="{{ $emp->emp_id }}">Edit</a></td>
+                                              @endif
 
 
                                         </tr>
@@ -179,15 +223,109 @@
                         </div>
                     </div>
                 </div> <!-- end col -->
-            </form>
-        </div> <!-- end row -->
 
-        <script>
-            // Data Picker Initialization
-            $('.datepicker').datepicker({
-                inline: true
+                <!-- Bootstrap modal for the popup form -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Employee Attendance</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Your form content goes here -->
+                <form id="editForm">
+                    <div class="form-group">
+                        <label for="editCheckIn">Check In Time</label>
+                        <input type="text" class="form-control" id="editCheckIn" name="checkInTime">
+                    </div>
+                    <div class="form-group">
+                        <label for="editCheckOut">Check Out Time</label>
+                        <input type="text" class="form-control" id="editCheckOut" name="checkOutTime">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBreakStart">Break Start</label>
+                        <input type="text" class="form-control" id="editBreakStart" name="breakStart">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBreakEnd">Break End</label>
+                        <input type="text" class="form-control" id="editBreakEnd" name="breakEnd">
+                    </div>
+                    <!-- Add more fields as needed -->
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the modal element
+        var modal = document.getElementById("editModal");
+
+        // Get the form fields within the modal
+        var checkInField = document.getElementById("editCheckIn");
+        var checkOutField = document.getElementById("editCheckOut");
+        var breakStartField = document.getElementById("editBreakStart");
+        var breakEndField = document.getElementById("editBreakEnd");
+
+        // Get all edit links
+        var editLinks = document.querySelectorAll(".edit-link");
+
+        // Add click event listener to each edit link
+        editLinks.forEach(function (link) {
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                // Extract data from the clicked link's parent row
+                var row = link.closest("tr");
+                var empId = row.querySelector("td:nth-child(1)").innerText.trim();
+                var checkIn = row.querySelector("td:nth-child(5)").innerText.trim();
+                var checkOut = row.querySelector("td:nth-child(6)").innerText.trim();
+                var breakStart = row.querySelector("td:nth-child(7)").innerText.trim();
+                var breakEnd = row.querySelector("td:nth-child(8)").innerText.trim();
+
+                // Populate the form fields with the extracted data
+                checkInField.value = checkIn;
+                checkOutField.value = checkOut;
+                breakStartField.value = breakStart;
+                breakEndField.value = breakEnd;
+
+                // Show the modal
+                $(modal).modal("show");
             });
-        </script>
+        });
+
+        // Handle form submission
+        var editForm = document.getElementById("editForm");
+        editForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            // Perform form submission using AJAX or any other method you prefer
+            // You can access form data using editForm.elements
+            // For example:
+            // var formData = new FormData(editForm);
+            // fetch('your-update-url', {
+            //     method: 'POST',
+            //     body: formData
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     console.log('Success:', data);
+            // })
+            // .catch((error) => {
+            //     console.error('Error:', error);
+            // });
+
+            // Close the modal after submission
+            $(modal).modal("hide");
+        });
+    });
+</script>
+
+
     @endsection
     @section('scripts')
         <!-- Required datatable js -->
