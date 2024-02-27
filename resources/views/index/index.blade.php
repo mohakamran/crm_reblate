@@ -210,9 +210,63 @@
 
 
         <div class="row">
+
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex pb-0">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
+                        <h4 class="card-title mb-0 flex-grow-1">Attendance </h4>
+                    </div>
+                    <div class="card-body pt-2">
+                        <div class="table-responsive">
+                            <table class="table align-middle table-nowrap mb-0">
+                                <thead>
+                                    <tr style="border-bottom: 1px solid #e3e3e3;">
+
+                                        <th>EMP ID</th>
+                                        <th>Employee Name</th>
+                                        <th>Status</th>
+                                        <th>Shift</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
+
+                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
+                                        <td><span class="text-danger">Absent</span></td>
+                                        <td><span class="text-dark fw-bold">Morning</span></td>
+                                    </tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
+
+                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
+                                        <td><span class="text-success">Present</span></td>
+                                        <td><span class="text-dark fw-bold">Evening</span></td>
+                                    </tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
+
+                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
+                                        <td><span class="text-success">Present</span></td>
+                                        <td><span class="text-dark fw-bold">Morning</span></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center pt-3">
+                            <a href="javascript:void()" class=" w-md">View All</a>
+                        </div>
+                        <!-- end table-responsive -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Overall Attendence</h4>
                     </div>
                     <div class="card-body pt-0">
@@ -487,59 +541,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6">
-                <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Attendance </h4>
-                    </div>
-                    <div class="card-body pt-2">
-                        <div class="table-responsive">
-                            <table class="table align-middle table-nowrap mb-0">
-                                <thead>
-                                    <tr style="border-bottom: 1px solid #e3e3e3;">
-
-                                        <th>EMP ID</th>
-                                        <th>Employee Name</th>
-                                        <th>Status</th>
-                                        <th>Shift</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
-
-                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                        <td><span class="text-danger">Absent</span></td>
-                                        <td><span class="text-dark fw-bold">Morning</span></td>
-                                    </tr>
-                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
-
-                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                        <td><span class="text-success">Present</span></td>
-                                        <td><span class="text-dark fw-bold">Evening</span></td>
-                                    </tr>
-                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
-
-                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                        <td><span class="text-success">Present</span></td>
-                                        <td><span class="text-dark fw-bold">Morning</span></td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="text-center pt-3">
-                            <a href="javascript:void()" class=" w-md">View All</a>
-                        </div>
-                        <!-- end table-responsive -->
                     </div>
                 </div>
             </div>
