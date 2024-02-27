@@ -95,6 +95,120 @@
                 margin-top: 17px;
                 text-decoration: underline;
             }
+
+            .timeliner {
+                border-left: 3px solid #727cf5;
+                border-bottom-right-radius: 4px;
+                border-top-right-radius: 4px;
+                background: rgba(114, 124, 245, 0.09);
+                margin: 0 auto;
+                letter-spacing: 0.2px;
+                position: relative;
+                line-height: 1.4em;
+                font-size: 1.03em;
+                padding: 50px;
+                list-style: none;
+                text-align: left;
+
+            }
+
+            @media (max-width: 767px) {
+                .timeliner {
+                    max-width: 98%;
+                    padding: 25px;
+                }
+            }
+
+            .timeliner h1 {
+                font-weight: 300;
+                font-size: 1.4em;
+            }
+
+            .timeliner h2,
+            .timeliner h3 {
+                font-weight: 600;
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+
+            .timeliner .event {
+                border-bottom: 1px dashed #e8ebf1;
+                padding-bottom: 25px;
+                margin-bottom: -35px;
+                position: relative;
+            }
+
+            @media (max-width: 767px) {
+                .timeliner .event {
+                    padding-top: 30px;
+                }
+            }
+
+            .timeliner .event:last-of-type {
+                padding-bottom: 0;
+                margin-bottom: 0;
+                border: none;
+            }
+
+            .timeliner .event:before,
+            .timeliner .event:after {
+                position: absolute;
+                display: block;
+                top: 0;
+            }
+
+            .timeliner .event:before {
+                left: -207px;
+                content: attr(data-date);
+                text-align: right;
+                font-weight: 100;
+                font-size: 0.9em;
+                min-width: 120px;
+            }
+
+            @media (max-width: 767px) {
+                .timeliner .event:before {
+                    left: 0px;
+                    text-align: left;
+                }
+            }
+
+            .timeliner .event:after {
+                -webkit-box-shadow: 0 0 0 3px #727cf5;
+                box-shadow: 0 0 0 3px #727cf5;
+                left: -55.8px;
+                background: #fff;
+                border-radius: 50%;
+                height: 9px;
+                width: 9px;
+                content: "";
+                top: 5px;
+            }
+
+            @media (max-width: 767px) {
+                .timeliner .event:after {
+                    left: -31.8px;
+                }
+            }
+
+            .rtl .timeliner {
+                text-align: right;
+                border-bottom-right-radius: 0;
+                border-top-right-radius: 0;
+                border-bottom-left-radius: 4px;
+                border-top-left-radius: 4px;
+                border-right: 3px solid #727cf5;
+            }
+
+            .rtl .timeliner .event::before {
+                left: 0;
+                right: -170px;
+            }
+
+            .rtl .timeliner .event::after {
+                left: 0;
+                right: -55.8px;
+            }
         </style>
 
 
@@ -247,17 +361,13 @@
 
 
         <div class="row">
-            <div class="col-xl-4 col-md-6">
+            <div class="col-md-4 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24">
-                                        <path fill="currentColor"
-                                            d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
-                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 48 48"><g fill="none" stroke="#14213d" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M42 20v19a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h21"/><path d="m16 20l10 8L41 7"/></g></svg>
                                 </span>
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
@@ -284,12 +394,100 @@
                             </div> --}}
                         </div>
                     </div>
+                    <div class="card-body mt-3">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-md flex-shrink-0">
+                                <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 48 48"><defs><mask id="ipTWrongUser0"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><circle cx="24" cy="12" r="8" fill="#555"/><path d="M42 44c0-9.941-8.059-18-18-18S6 34.059 6 44m14-8l8 8m0-8l-8 8"/></g></mask></defs><path fill="#14213d" d="M0 0h48v48H0z" mask="url(#ipTWrongUser0)"/></svg>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1 overflow-hidden ms-4">
+                                <p class="text-muted text-truncate font-size-15 mb-2"> Number of Absent </p>
+                                <h3 class="fs-4 flex-grow-1 mb-3">20
+                                </h3>
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
+                                        class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
+                                            class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p> --}}
+                            </div>
+                            {{-- <div class="flex-shrink-0 align-self-start">
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle btn-icon border rounded-circle" href="#"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="ri-more-2-fill text-muted font-size-16"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" href="#">Yearly</a>
+                                        <a class="dropdown-item" href="#">Monthly</a>
+                                        <a class="dropdown-item" href="#">Weekly</a>
+                                        <a class="dropdown-item" href="#">Today</a>
+                                    </div>
+                                </div>
+                            </div> --}}
+                        </div>
+                    </div>
+                    <div class="card-body mt-3">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-md flex-shrink-0">
+                                <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 1024 1024"><path fill="#14213d" d="m960 95.888l-256.224.001V32.113c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76h-256v-63.76c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76H64c-35.344 0-64 28.656-64 64v800c0 35.343 28.656 64 64 64h896c35.344 0 64-28.657 64-64v-800c0-35.329-28.656-63.985-64-63.985m0 863.985H64v-800h255.776v32.24c0 17.679 14.32 32 32 32s32-14.321 32-32v-32.224h256v32.24c0 17.68 14.32 32 32 32s32-14.32 32-32v-32.24H960zM736 511.888h64c17.664 0 32-14.336 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32m0 255.984h64c17.664 0 32-14.32 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.696 14.336 32 32 32m-192-128h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32m0-255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32m-256 0h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32m0 255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32"/></svg>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1 overflow-hidden ms-4">
+                                <p class="text-muted text-truncate font-size-15 mb-2"> Leaves </p>
+                                <h3 class="fs-4 flex-grow-1 mb-3">20
+                                </h3>
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
+                                        class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
+                                            class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p> --}}
+                            </div>
+                            {{-- <div class="flex-shrink-0 align-self-start">
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle btn-icon border rounded-circle" href="#"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="ri-more-2-fill text-muted font-size-16"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" href="#">Yearly</a>
+                                        <a class="dropdown-item" href="#">Monthly</a>
+                                        <a class="dropdown-item" href="#">Weekly</a>
+                                        <a class="dropdown-item" href="#">Today</a>
+                                    </div>
+                                </div>
+                            </div> --}}
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-4"></div>
+            <div class="col-md-4  col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Timeline</h6>
+                        <div id="content">
+                            <ul class="timeliner">
+                                <li class="event" >
+                                    <h3>Check In</h3>
+                                    <p>10:12 AM</p>
+                                </li>
+                                <li class="event" >
+                                    <h3>Check In</h3>
+                                    <p>10:12 AM</p>
+                                </li>
+                                <li class="event">
+                                    <h3>Check In</h3>
+                                    <p>10:12 AM</p>
+                                </li>
+                                <li class="event" >
+                                    <h3>Check In</h3>
+                                    <p>10:12 AM</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <div class="col-xl-4 col-xl-4">
+            <div class="col-md-4 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <h3 class=" font-size-header">Timesheet <span
@@ -306,9 +504,9 @@
                         <div class="punch-info">
                             <div class="punch-hours">
                                 @if (session()->has('total_hours') && session('total_hours') != '')
-                                   <span style="float: right;">{{ session('total_hours') }} hrs</span>
-                                   @else
-                                   <span>0 hrs</span>
+                                    <span style="float: right;">{{ session('total_hours') }} hrs</span>
+                                @else
+                                    <span>0 hrs</span>
                                 @endif
 
 
@@ -1039,7 +1237,109 @@
         <!-- END ROW -->
 
         <div class="row">
-            <div class="col-xl-12">
+            <div class="col-xl-6">
+                <div class="card">
+                    {{-- <div class="card-header border-0 align-items-center d-flex pb-0">
+                        <h4 class="card-title mb-0 flex-grow-1">Latest Transaction</h4>
+                        <div>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <span class="fw-semibold">Sort By:</span>
+                                    <span class="text-muted">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="#">Yearly</a>
+                                    <a class="dropdown-item" href="#">Monthly</a>
+                                    <a class="dropdown-item" href="#">Weekly</a>
+                                    <a class="dropdown-item" href="#">Today</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                    <div class="card-body pt-2">
+                        <h4>Weekly Tasks</h4>
+                        <div class="table-responsive">
+                            <table class="table align-middle table-nowrap mb-0">
+                                <thead>
+                                    <tr>
+                                        {{-- <th style="width: 20px;">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="customCheck1">
+                                                <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                                            </div>
+                                        </th> --}}
+                                        <th>Task</th>
+                                        <th>Task Due Date</th>
+                                        <th>Task Assigned By</th>
+                                        <th>Status</th>
+                                        {{-- <th>Order Date</th>
+                                        <th>Total</th>
+                                        <th>Payment Method</th>
+                                        <th>Payment Status</th>
+                                        <th>Action</th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Task .... 1</td>
+                                        <td>23, 12, 2023</td>
+                                        <td>Fredrick</td>
+                                        <td><a href="javascript:void()"
+                                                style="display:block;text-align:center;width:120px"
+                                                class="alert alert-danger">Pending</a></td>
+                                        {{-- <td>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td> --}}
+                                        {{-- <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
+                                        <td>
+                                            <p class="mb-0">cs562xf452dd</p>
+                                        </td>
+                                        <td>
+                                            07 Oct, 2022
+                                        </td>
+                                        <td>
+                                            $400
+                                        </td>
+                                        <td>
+                                            <i class="fab fa-cc-mastercard me-1"></i> Mastercard
+                                        </td>
+                                        <td>
+                                            <span class="badge rounded badge-soft-success font-size-12">Completed</span>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-3">
+                                                <a href="javascript:void(0);" class="btn btn-success btn-sm"><i
+                                                        class="mdi mdi-pencil"></i></a>
+                                                <a href="javascript:void(0);" class="btn btn-danger btn-sm"><i
+                                                        class="mdi mdi-delete"></i></a>
+                                            </div>
+                                        </td> --}}
+                                    </tr>
+
+                                    <tr>
+                                        <td>Task .... 1</td>
+                                        <td>23, 12, 2023</td>
+                                        <td>Fredrick</td>
+                                        <td><a href="javascript:void()"
+                                                style="display:block;text-align:center;width:120px"
+                                                class="alert alert-success">Completed</a></td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table-responsive -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
                 <div class="card">
                     {{-- <div class="card-header border-0 align-items-center d-flex pb-0">
                         <h4 class="card-title mb-0 flex-grow-1">Latest Transaction</h4>
@@ -1145,7 +1445,107 @@
         <!-- END ROW -->
 
         <div class="row">
-            <div class="col-xl-12">
+            <div class="col-xl-6">
+                <div class="card">
+                    {{-- <div class="card-header border-0 align-items-center d-flex pb-0">
+                        <h4 class="card-title mb-0 flex-grow-1">Latest Transaction</h4>
+                        <div>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <span class="fw-semibold">Sort By:</span>
+                                    <span class="text-muted">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="#">Yearly</a>
+                                    <a class="dropdown-item" href="#">Monthly</a>
+                                    <a class="dropdown-item" href="#">Weekly</a>
+                                    <a class="dropdown-item" href="#">Today</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                    <div class="card-body pt-2">
+                        <h4>Reports</h4>
+                        <div class="table-responsive">
+                            <table class="table align-middle table-nowrap mb-0">
+                                <thead>
+                                    <tr>
+                                        {{-- <th style="width: 20px;">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="customCheck1">
+                                                <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                                            </div>
+                                        </th> --}}
+                                        <th>Task</th>
+                                        <th>Task Due Date</th>
+                                        {{-- <th>Task Assigned By</th> --}}
+                                        <th>Status</th>
+                                        {{-- <th>Order Date</th>
+                                        <th>Total</th>
+                                        <th>Payment Method</th>
+                                        <th>Payment Status</th>
+                                        <th>Action</th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Task .... 1</td>
+                                        <td>23, 12, 2023</td>
+                                        {{-- <td>Fredrick</td> --}}
+                                        <td><a href="javascript:void()" style="display:block;width:120px;"
+                                                class="alert alert-danger">Pending</a></td>
+                                        {{-- <td>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td> --}}
+                                        {{-- <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
+                                        <td>
+                                            <p class="mb-0">cs562xf452dd</p>
+                                        </td>
+                                        <td>
+                                            07 Oct, 2022
+                                        </td>
+                                        <td>
+                                            $400
+                                        </td>
+                                        <td>
+                                            <i class="fab fa-cc-mastercard me-1"></i> Mastercard
+                                        </td>
+                                        <td>
+                                            <span class="badge rounded badge-soft-success font-size-12">Completed</span>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-3">
+                                                <a href="javascript:void(0);" class="btn btn-success btn-sm"><i
+                                                        class="mdi mdi-pencil"></i></a>
+                                                <a href="javascript:void(0);" class="btn btn-danger btn-sm"><i
+                                                        class="mdi mdi-delete"></i></a>
+                                            </div>
+                                        </td> --}}
+                                    </tr>
+
+                                    <tr>
+                                        <td>Task .... 1</td>
+                                        <td>23, 12, 2023</td>
+                                        {{-- <td>Fredrick</td> --}}
+                                        <td><a href="javascript:void()" style="display:block;width:120px;"
+                                                class="alert alert-success">Submitted</a></td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table-responsive -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
                 <div class="card">
                     {{-- <div class="card-header border-0 align-items-center d-flex pb-0">
                         <h4 class="card-title mb-0 flex-grow-1">Latest Transaction</h4>
@@ -1248,34 +1648,9 @@
         </div>
         {{-- END ROW  --}}
 
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    {{-- <div class="card-header border-0 align-items-center d-flex pb-0">
-                    <h4 class="card-title mb-0 flex-grow-1">Audiences Metrics</h4>
-                    <div>
-                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                            ALL
-                        </button>
-                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                            1M
-                        </button>
-                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                            6M
-                        </button>
-                        <button type="button" class="btn btn-soft-primary btn-sm">
-                            1Y
-                        </button>
-                    </div>
-                </div> --}}
-                    <div class="card-body">
-                        <div class="row">
-                            {{-- <div class="col-xl-8 audiences-border">
-                            <div id="column-chart" class="apex-charts"></div>
-                        </div>
-                        <div class="col-xl-4">
-                            <div id="donut-chart" class="apex-charts"></div>
-                        </div> --}}
                             <div class="col-md-2" style="display: flex;align-items:center">
                                 <h6>See Who is Present Today</h6>
                             </div>
@@ -1301,30 +1676,11 @@
                                 <img src="{{ url('user.png') }}"
                                     class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
                             </div>
-
-
-
                         </div>
                     </div>
                 </div>
             </div>
-
-            {{-- <div class="col-xl-4">
-            <div class="card">
-                <div class="card-header border-0 align-items-center d-flex pb-1">
-                    <h4 class="card-title mb-0 flex-grow-1">Live Users By Country</h4>
-                    <div>
-                        <button type="button" class="btn btn-soft-primary btn-sm">
-                            Export Report
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div id="world-map-markers" style="height: 346px;"></div>
-                </div>
-            </div>
         </div> --}}
-        </div>
         <!-- END ROW -->
 
 
