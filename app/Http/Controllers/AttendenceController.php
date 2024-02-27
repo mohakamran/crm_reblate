@@ -11,15 +11,108 @@ use Illuminate\Support\Carbon;
 
 class AttendenceController extends Controller
 {
+    // view records of each employee
+    public function viewEachAttendenceEmp(Request $req) {
+        $id = $req->hidden_emp_value;
+        if($id) {
+            $emp = DB::table('employees')->where('Emp_Code', $id)->first();
+            if($emp) {
+                $check_attendence = DB::table('attendence')->where('emp_id', $id)->get();
+                // dd($check_attendence->date);
+                return view('attendence.view-individual',compact('check_attendence','id'));
+            } else {
+                return back();
+            }
+        }
+        return back();
+
+    }
+    // search button admin view by name, id or designation
+    public function searchEmpAttendenceAdmin(Request $req) {
+       $emp_id = $req->emp_id;
+       $emp_name = $req->emp_name;
+       $emp_designation = $req->emp_designation;
+       $emp_shift = $req->emp_shift;
+
+       if($emp_id!=null) {
+           $latestEmployees = DB::table('employees')->where('Emp_Code',$emp_id)->first();
+
+           if($latestEmployees) {
+            $full_name_emp = $latestEmployees->Emp_Full_Name;
+            $Emp_Image = $latestEmployees->Emp_Image;
+            $Emp_Designation = $latestEmployees->Emp_Designation;
+            $Emp_Shift_Time = $latestEmployees->Emp_Shift_Time;
+            $Emp_code = $latestEmployees->Emp_Code;
+            $data = compact('full_name_emp','Emp_Designation','Emp_Shift_Time','Emp_code','Emp_Image');
+            // dd($Emp_Image);
+              return view('attendence.search-results',$data);
+           } else {
+                $latestEmployees = DB::table('employees')->get();
+                $error = "Employee ID Not Found!";
+                return view('attendence.emp-cards-attendence',compact('latestEmployees','error'));
+           }
+       }
+
+       if($emp_name!=null) {
+           $latestEmployees = DB::table('employees')->where('Emp_Full_Name', 'like', '%' . $emp_name . '%')->get();
+           if($latestEmployees) {
+            // $full_name_emp = $latestEmployees->Emp_Full_Name;
+            // $Emp_Image = $latestEmployees->Emp_Image;
+            // $Emp_Designation = $latestEmployees->Emp_Designation;
+            // $Emp_Shift_Time = $latestEmployees->Emp_Shift_Time;
+            // $Emp_code = $latestEmployees->Emp_Code;
+            // $data = compact('full_name_emp','Emp_Designation','Emp_Shift_Time','Emp_code','Emp_Image');
+            return view('attendence.emp-cards-attendence',compact('latestEmployees'));
+         } else {
+              $latestEmployees = DB::table('employees')->get();
+              $error = "Employee Name Not Found!";
+              return view('attendence.emp-cards-attendence',compact('latestEmployees','error'));
+         }
+       }
+       if($emp_designation!=null) {
+           $latestEmployees = DB::table('employees')->where('Emp_Designation',$emp_designation)->get();
+           if($latestEmployees) {
+            return view('attendence.emp-cards-attendence',compact('latestEmployees'));
+         } else {
+              $latestEmployees = DB::table('employees')->get();
+              $error = "Employee ID Not Found!";
+              return view('attendence.emp-cards-attendence',compact('latestEmployees','error'));
+         }
+
+       }
+
+       if($emp_shift!=null) {
+        $latestEmployees = DB::table('employees')->where('Emp_Shift_Time',$emp_shift)->get();
+        if($latestEmployees) {
+            return view('attendence.emp-cards-attendence',compact('latestEmployees'));
+        } else {
+             $latestEmployees = DB::table('employees')->get();
+             $error = "Employee ID Not Found!";
+             return view('attendence.emp-cards-attendence',compact('latestEmployees','error'));
+        }
+    }
+
+       $latestEmployees = DB::table('employees')->get();
+       return view('attendence.emp-cards-attendence',compact('latestEmployees'));
+    }
+   // admin can see the the employees card for attendence
+   public function viewEmpAttendence() {
+        $latestEmployees = DB::table('employees')->get();
+        // dd($latestEmployees);
+        if ($latestEmployees) {
+            return view('attendence.emp-cards-attendence',compact('latestEmployees'));
+        } else {
+            return back();
+        }
+   }
    // searcj details
    public function searchAttendenceEmp(Request $req) {
         $validate = $req->validate([
             'date_controller' => 'required'
         ]);
         $date = $req->date_controller;
-        $month_attendence = $req->month_attendence;
-        $year_attendence = $req->year_attendence;
-        $id = auth()->user()->user_code;
+        // dd($date);
+        $id =  $req->emp_search_date;
 
         $emp = DB::table('employees')->where('Emp_Code', $id)->first();
         if($emp) {
@@ -40,7 +133,7 @@ class AttendenceController extends Controller
     if($emp) {
         $check_attendence = DB::table('attendence')->where('emp_id', $id)->get();
         // dd($check_attendence->date);
-        return view('attendence.view-individual',compact('check_attendence'));
+        return view('attendence.view-individual',compact('check_attendence','id'));
     } else {
         return back();
     }
