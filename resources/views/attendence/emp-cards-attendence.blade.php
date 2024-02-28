@@ -36,15 +36,15 @@
                     <div class="card-body">
                         <form action="/search-emp-attendence" method="post">
                             @csrf
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <input class="form-control" type="text" name="emp_id" placeholder="Employee ID">
+                            <div class="row justify-content-center" >
+                                <div class="col-md-2" style="padding: 5px; background-color: #e3e3e3; border-radius:10px; margin-right:5px;">
+                                    <input class="form-control" type="text" name="emp_id" placeholder="Employee ID" style="background-color: transparent; border:none;">
                                 </div>
-                                <div class="col-md-2">
-                                    <input class="form-control" type="text" name="emp_name" placeholder="Employee Name">
+                                <div class="col-md-2" style="padding: 5px; background-color: #e3e3e3; border-radius:10px; margin-right:5px;">
+                                    <input class="form-control" type="text" name="emp_name" placeholder="Employee Name" style="background-color: transparent; border:none;">
                                 </div>
-                                <div class="col-md-2">
-                                    <select name="emp_designation" class="form-control" id="">
+                                <div class="col-md-2" style="padding: 5px; background-color: #e3e3e3; border-radius:10px; margin-right:5px;">
+                                    <select name="emp_designation" class="form-control" id="" style="background-color: transparent; border:none;">
                                         <option value="" selected disabled>Select a designation</option>
                                         <option value="Operations Manager">Operations Manager</option>
                                         <option value="Web Development">Web Development</option>
@@ -52,15 +52,20 @@
                                         <option value="Virtual Assistant">Virtual Assistant</option>
                                     </select>
                                 </div>
-                                <div class="col-md-2">
-                                    <select name="emp_shift" class="form-control" id="">
+                                <div class="col-md-2" style="padding: 5px; background-color: #e3e3e3; border-radius:10px;">
+                                    <select name="emp_shift" class="form-control" id="" style="background-color: transparent; border:none;">
                                         <option value="" selected disabled>Select Shift</option>
                                         <option value="Morning">Morning</option>
                                         <option value="Night">Night</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3">
-                                    <button class="btn btn-success w-100">Search</button>
+                                <div class="col-md-3 d-flex gap-2">
+                                    <button class="reblateBtn w-75"><span style="width: 15px; height: 15px; margin-right: 5px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                      </svg></span> Search</button>
+                                    <button class="reblateBtn w-75"><span style="width: 15px; height: 15px; margin-right: 5px;"><svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                                      </svg></span> Add New</button>
                                 </div>
                             </div>
                         </form>
@@ -74,6 +79,7 @@
                         <div class="row mt-5">
                             @foreach ($latestEmployees as $emp)
                                 <div class="col-md-3">
+
                                     <div class="card">
                                         <div class="card-body">
                                             @if ($emp->Emp_Image !=null &&  file_exists(public_path($emp->Emp_Image)))
@@ -95,8 +101,8 @@
                                             <form action="/view-attendence-emp" method="post">
                                                 @csrf
                                                 <input type="hidden" name="hidden_emp_value" value="{{$emp->Emp_Code}}">
-                                                <div class="text-center mt-3">
-                                                    <button class="btn btn-success d-block">View Attendence</button>
+                                                <div class="text-center mt-3 container">
+                                                    <button class="reblateBtn w-75 p-2 d-block">View Attendence</button>
                                                 </div>
                                             </form>
                                         </div>
