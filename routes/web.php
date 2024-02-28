@@ -178,6 +178,8 @@ Route::group(['middleware' => 'admin'], function () {
     // office time controller
 
     Route::get('/office-time', [TimeController::class, 'indexPage']);
+    Route::post('/office-times-morning', [TimeController::class, 'setMorningShift']);
+    Route::post('/office-times-night', [TimeController::class, 'setEveningShift']);
 
 });
 
