@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    View Attendence Details
+    View Leaves Details
 @endsection
 @section('css')
     <!-- DataTables -->
@@ -16,7 +16,7 @@
         rel="stylesheet" type="text/css" />
 @endsection
 @section('page-title')
-    View Attendence Details
+    View Leaves Details
 @endsection
 @section('body')
 
@@ -45,14 +45,15 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <h4 class="card-title">View Attendence Details</h4>
+                        <h4 class="card-title">View Leaves Details</h4>
                         {{-- <p class="card-title-desc">The Buttons extension for DataTables
                                 provides a common set of options, API methods and styling to display
                                 buttons on a page that will interact with a DataTable. The core library
                                 provides the based framework upon which plug-ins can built.
                             </p> --}}
-                        <form method="post" action="/search-emp-details">
+                        <form method="post" action="/search-emp-leaves">
                             @csrf
+                            {{-- <input type="hidden" value="{{$user_code}}" name="emp_search_date"> --}}
                             <div class="row mt-3 mb-3">
                                 <div class="col-md-3">
                                     <input placeholder="Select date" type="date" name="date_controller"
@@ -73,7 +74,7 @@
                                 <div class="col-md-3">
                                     <button class="btn btn-success">Search</button>
                                     @if (isset($show_back) && $show_back == 'yes')
-                                        <a href="/view-attendence" class="btn btn-success -right-3">View All</a>
+                                        <a href="/leave-records" class="btn btn-success">View All</a>
                                     @endif
                                 </div>
                         </form>
@@ -169,12 +170,8 @@
                                 <th> Date</th>
                                 <th> Month</th>
                                 <th> Year</th>
-                                <th> Check In</th>
-                                <th> Check Out</th>
-                                <th> Break Start</th>
-                                <th> Break End</th>
-                                <th> Total Time Worked</th>
-                                <th> Over Time</th>
+                                <th> Status</th>
+
                                 @if (auth()->user()->user_type == 'admin')
                                     <th> Action</th>
                                 @endif
@@ -184,7 +181,7 @@
 
                         <tbody id="table-body">
 
-                            @foreach ($check_attendence as $emp)
+                            @foreach ($emp_records as $emp)
                                 <tr>
 
                                     @php
@@ -197,18 +194,17 @@
                                         // echo "$monthName $year";
                                     @endphp
 
-                                    <td>{{ $emp->emp_id }}</td>
+                                    <td>{{ $emp->emp_code }}</td>
                                     <td>{{ $emp->date }}</td>
                                     <td>{{ $monthName }}</td>
                                     <td>{{ $year }}</td>
-                                    {{-- <td>{{ ( $emp->Emp_Code < 10) ? '00'.$emp->Emp_Code : $emp->Emp_Code }}sols</td> --}}
-                                    {{-- <td><a href="{{ Route('view-client-detail', $client->client_id) }}">{{ $client->client_name }} </a></td> --}}
-                                    <td>{{ $emp->check_in_time }} </a></td>
-                                    <td>{{ $emp->check_out_time }} </a></td>
-                                    <td>{{ $emp->break_start }}</td>
-                                    <td>{{ $emp->break_end }}</td>
-                                    <td>{{ $emp->total_time }}</td>
-                                    <td>0 Hrs</td>
+                                    <td>
+                                        @if ($emp->status == "pending")
+                                            <span class="text-danger">pending</span>
+                                            @else
+                                            <span class="text-success">approved</span>
+                                        @endif
+                                       </td>
                                     @if (auth()->user()->user_type == 'admin')
                                         {{-- <td><a class="open-popup" href="#" data-emp-id="{{ $emp->emp_id }}"><svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" viewBox="0 0 24 24"><path fill="currentColor" d="m14.06 9l.94.94L5.92 19H5v-.92zm3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z"/></svg></a></td> --}}
                                         <td><a href="#" class="open-popup" data-emp-id="{{ $emp->emp_id }}">Edit</a>
