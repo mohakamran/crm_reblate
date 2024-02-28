@@ -12,6 +12,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SecurityController;
 use App\Http\Controllers\AttendenceController;
+use App\Http\Controllers\TimeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -170,7 +171,13 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/view-emp-attendence',[AttendenceController::class,'viewEmpAttendence']);
     // Route::get('/view-attendence-emp', [AttendenceController::class, 'viewAttendanceEmployee']);
     Route::post('/search-emp-attendence', [AttendenceController::class, 'searchEmpAttendenceAdmin'])->name('view-attendence');
+    Route::post('/apply-for-leave', [AttendenceController::class, 'empApplyForLeave']);
+    Route::get('/leave-records', [AttendenceController::class, 'empLeaveRecords']);
+    Route::post('/search-emp-leaves', [AttendenceController::class, 'empSearchRecords']);
 
+    // office time controller
+
+    Route::get('/office-time', [TimeController::class, 'indexPage']);
 
 });
 

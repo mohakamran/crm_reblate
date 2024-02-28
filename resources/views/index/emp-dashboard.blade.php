@@ -348,7 +348,7 @@
                         </span>
 
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
 
                         <span class="p-3 rounded-2" style="background-color: #e3e3e3">
                             {{ isset($t_date) ? $t_date : '' }}
@@ -367,7 +367,14 @@
                         <div class="d-flex align-items-center">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 48 48"><g fill="none" stroke="#14213d" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M42 20v19a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h21"/><path d="m16 20l10 8L41 7"/></g></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem"
+                                        viewBox="0 0 48 48">
+                                        <g fill="none" stroke="#14213d" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="4">
+                                            <path d="M42 20v19a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h21" />
+                                            <path d="m16 20l10 8L41 7" />
+                                        </g>
+                                    </svg>
                                 </span>
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
@@ -398,7 +405,20 @@
                         <div class="d-flex align-items-center">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 48 48"><defs><mask id="ipTWrongUser0"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><circle cx="24" cy="12" r="8" fill="#555"/><path d="M42 44c0-9.941-8.059-18-18-18S6 34.059 6 44m14-8l8 8m0-8l-8 8"/></g></mask></defs><path fill="#14213d" d="M0 0h48v48H0z" mask="url(#ipTWrongUser0)"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem"
+                                        viewBox="0 0 48 48">
+                                        <defs>
+                                            <mask id="ipTWrongUser0">
+                                                <g fill="none" stroke="#fff" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="4">
+                                                    <circle cx="24" cy="12" r="8" fill="#555" />
+                                                    <path
+                                                        d="M42 44c0-9.941-8.059-18-18-18S6 34.059 6 44m14-8l8 8m0-8l-8 8" />
+                                                </g>
+                                            </mask>
+                                        </defs>
+                                        <path fill="#14213d" d="M0 0h48v48H0z" mask="url(#ipTWrongUser0)" />
+                                    </svg>
                                 </span>
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
@@ -429,17 +449,22 @@
                         <div class="d-flex align-items-center">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 1024 1024"><path fill="#14213d" d="m960 95.888l-256.224.001V32.113c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76h-256v-63.76c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76H64c-35.344 0-64 28.656-64 64v800c0 35.343 28.656 64 64 64h896c35.344 0 64-28.657 64-64v-800c0-35.329-28.656-63.985-64-63.985m0 863.985H64v-800h255.776v32.24c0 17.679 14.32 32 32 32s32-14.321 32-32v-32.224h256v32.24c0 17.68 14.32 32 32 32s32-14.32 32-32v-32.24H960zM736 511.888h64c17.664 0 32-14.336 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32m0 255.984h64c17.664 0 32-14.32 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.696 14.336 32 32 32m-192-128h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32m0-255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32m-256 0h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32m0 255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem"
+                                        viewBox="0 0 1024 1024">
+                                        <path fill="#14213d"
+                                            d="m960 95.888l-256.224.001V32.113c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76h-256v-63.76c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76H64c-35.344 0-64 28.656-64 64v800c0 35.343 28.656 64 64 64h896c35.344 0 64-28.657 64-64v-800c0-35.329-28.656-63.985-64-63.985m0 863.985H64v-800h255.776v32.24c0 17.679 14.32 32 32 32s32-14.321 32-32v-32.224h256v32.24c0 17.68 14.32 32 32 32s32-14.32 32-32v-32.24H960zM736 511.888h64c17.664 0 32-14.336 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32m0 255.984h64c17.664 0 32-14.32 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.696 14.336 32 32 32m-192-128h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32m0-255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32m-256 0h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32m0 255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32" />
+                                    </svg>
                                 </span>
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
-                                <p class="text-muted text-truncate font-size-15 mb-2"> Leaves </p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">20
+                                <p class="text-muted text-truncate font-size-15 mb-2"> Allowed Leaves Per Year: 15 </p>
+                                <h3 class="fs-4 flex-grow-1 mb-3">15
                                 </h3>
                                 {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p> --}}
                             </div>
+
                             {{-- <div class="flex-shrink-0 align-self-start">
                                 <div class="dropdown">
                                     <a class="dropdown-toggle btn-icon border rounded-circle" href="#"
@@ -456,30 +481,89 @@
                             </div> --}}
                         </div>
                     </div>
+                    {{-- leave button  --}}
+                    <div class="container d-flex justify-content-between">
+                        <button type="button" class="btn btn-success mt-3 mr-2" data-toggle="modal"
+                            data-target="#exampleModal">Apply for Leave</button>
+                        <a href="/leave-records" class="btn btn-success mt-3 ml-2">Leave Records</a>
+                    </div>
+
+                    {{-- apply leave modal  --}}
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Leave Application form</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="leaveForm" action="">
+                                        <div id="messageBox"></div>
+                                        <div class="form-group mt-3">
+                                            <label for="date">Date</label>
+                                            <input type="date" class="form-control" id="date" name="date">
+                                            <span class="text-danger" id="dateBox" style="display: none">Please Select
+                                                a date!</span>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <label for="reason">Reason:</label>
+                                            <textarea class="form-control" id="reason" name="reason" placeholder="Reason:" rows="5"></textarea>
+                                            <span class="text-danger" id="reasonBox" style="display: none">Please Write a
+                                                reason!</span>
+                                        </div>
+
+                                    </form>
+                                    <button type="submit" class="btn btn-primary mt-3"
+                                        onclick="submitForm(event)">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
             <div class="col-md-4  col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Timeline</h6>
+                        <h6 class="card-title">Today Activity</h6>
                         <div id="content">
                             <ul class="timeliner">
-                                <li class="event" >
-                                    <h3>Check In</h3>
-                                    <p>10:12 AM</p>
-                                </li>
-                                <li class="event" >
-                                    <h3>Check In</h3>
-                                    <p>10:12 AM</p>
-                                </li>
                                 <li class="event">
                                     <h3>Check In</h3>
-                                    <p>10:12 AM</p>
+                                    @if (session()->has('check_in_time') && session('check_in_time') != '')
+                                        <p>{{ session('check_in_time') }}</p>
+                                    @else
+                                        <p>No Check In</p>
+                                    @endif
                                 </li>
-                                <li class="event" >
-                                    <h3>Check In</h3>
-                                    <p>10:12 AM</p>
+                                <li class="event">
+                                    <h3>Break Start Time</h3>
+                                    @if (session()->has('break_start_time') && session('break_start_time') != '')
+                                        <p>{{ session('break_start_time') }}</p>
+                                    @else
+                                        <p>No Break Start</p>
+                                    @endif
+                                </li>
+                                <li class="event">
+                                    <h3>Break End Time</h3>
+                                    @if (session()->has('break_end_time') && session('break_end_time') != '')
+                                        <p>{{ session('break_end_time') }}</p>
+                                    @else
+                                        <p>No Break End Time</p>
+                                    @endif
+                                </li>
+                                <li class="event">
+                                    <h3>Check Out</h3>
+                                    @if (session()->has('check_out_time') && session('check_out_time') != '')
+                                        <p>{{ session('check_out_time') }}</p>
+                                    @else
+                                        <p>No Checkout</p>
+                                    @endif
                                 </li>
                             </ul>
                         </div>
@@ -1708,17 +1792,66 @@
 
             // Update current time every second
             setInterval(updateCurrentTime, 1000);
+
+            function submitForm(event) {
+                event.preventDefault();
+
+                var dateValue = document.getElementById('date').value;
+                var reasonValue = document.getElementById('reason').value;
+                var dateBox = document.getElementById('dateBox');
+                var reasonBox = document.getElementById('reasonBox');
+                var messageBox = document.getElementById('messageBox');
+
+                dateBox.style.display = "none";
+                reasonBox.style.display = "none"; // Corrected line
+
+                if (dateValue === '') {
+                    dateBox.style.display = "block";
+                    return;
+                }
+                if (reasonValue === '') {
+                    reasonBox.style.display = "block";
+                    return;
+                }
+
+                var formData = {
+                    _token: '{{ csrf_token() }}',
+                    date: dateValue,
+                    reason: reasonValue
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/apply-for-leave',
+                    data: formData,
+                    success: function(response) {
+                        console.log('AJAX request successful');
+
+                        $('#messageBox').text(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+
+                        $('#messageBox').text(errorMessage); // Set the error message from the server response
+                                }
+                            });
+            }
         </script>
     @endsection
     @section('scripts')
         <!-- apexcharts -->
-        <script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
+        {{-- <script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script> --}}
 
         <!-- Vector map-->
-        <script src="{{ URL::asset('build/libs/jsvectormap/js/jsvectormap.min.js') }}"></script>
-        <script src="{{ URL::asset('build/libs/jsvectormap/maps/world-merc.js') }}"></script>
+        {{-- <script src="{{ URL::asset('build/libs/jsvectormap/js/jsvectormap.min.js') }}"></script> --}}
+        {{-- <script src="{{ URL::asset('build/libs/jsvectormap/maps/world-merc.js') }}"></script> --}}
 
         <script src="{{ URL::asset('build/js/pages/dashboard.init.js') }}"></script>
         <!-- App js -->
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     @endsection

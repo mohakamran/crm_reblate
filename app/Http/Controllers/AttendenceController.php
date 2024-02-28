@@ -11,6 +11,85 @@ use Illuminate\Support\Carbon;
 
 class AttendenceController extends Controller
 {
+    // search employee records
+    public function empSearchRecords(Request $req) {
+        $validate = $req->validate([
+            'date_controller' => 'required'
+        ]);
+        $date = $req->date_controller;
+        // dd($date);
+        $id = Auth()->user()->user_code;
+
+        $emp = DB::table('employees')->where('Emp_Code', $id)->first();
+        if($emp) {
+            if($date!="") {
+                $emp_records = DB::table('leaves')->where('emp_code',$id)->where('date',$date)->get();
+                $show_back = "yes";
+                return view('attendence.leaves',compact('emp_records','show_back'));
+            }
+        } else {
+            return back();
+        }
+    }
+    // employee clicks to see records from employee dashboard
+    public function empLeaveRecords() {
+        $user_code = Auth()->user()->user_code;
+        $emp_records = DB::table('leaves')->where('emp_code',$user_code)->get();
+        return view('attendence.leaves',compact('emp_records','user_code'));
+    }
+    // apply for leave admin
+    public function empApplyForLeave(Request $request) {
+        $validatedData = $request->validate([
+            'date' => 'required|date',
+            'reason' => 'required|string',
+        ]);
+        // dd("fuc");
+
+        $date = $request->input('date');
+        $reason = $request->input('reason');
+        $user_code = Auth()->user()->user_code;
+        $status  =  "pending";
+        $currentYear = date('Y');
+        $dayName = date('l', strtotime($date));
+        if($dayName == "Sunday" || $dayName == "Saturday") {
+            return response()->json(['message' => "You can not apply for leave on saturday or sunday!"], 200);
+        }
+        // return response()->json(['message' => $dayName], 200);
+        // $check   = DB::table('leaves')->('emp_code',$user_code)->where('year',$currentYear)->first();
+        $check = DB::table('leaves')->where('emp_code',$user_code)->where('year',$currentYear)->first();
+        if($check == null) {
+            DB::table('leaves')->insert([
+                'status' => $status,
+                'date'   => $date,
+                'remaining'   => "15",
+                'reason'   => $reason,
+                'year'   => $currentYear,
+                'emp_code'   => $user_code
+            ]);
+            return response()->json(['message' => 'Leave application submitted successfully.Wait for the approval'], 200);
+        }
+
+        if($check->remaining <=0) {
+            return response()->json(['message' => 'You have no remaining leaves'], 400);
+        }
+        else {
+            $check = DB::table('leaves')->where('emp_code',$user_code)->where('date',$date)->first();
+            if($check) {
+                return response()->json(['message' => 'You have already applied for the leave on same date!'], 400);
+            } else {
+                DB::table('leaves')->insert([
+                    'status' => $status,
+                    'date'   => $date,
+                    'remaining'   => "15",
+                    'reason'   => $reason,
+                    'year'   => $currentYear,
+                    'emp_code'   => $user_code
+                ]);
+                return response()->json(['message' => 'Leave application submitted successfully.Wait for the approval'], 200);
+            }
+        }
+
+    }
     // view records of each employee
     public function viewEachAttendenceEmp(Request $req) {
         $id = $req->hidden_emp_value;
