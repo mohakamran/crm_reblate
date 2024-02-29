@@ -14,8 +14,7 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title">Fill below form to add your data as new employee in our database system. Fields with(<span
-                                style="color:red;">*</span>) are mandatory to fill, remaining are optional.</p>
+                        <p class="card-title">update your info!</p>
                         <br>
                         <h4>Personal Details
                             <hr>
@@ -24,7 +23,7 @@
 
                         <div class="form-floating mb-3">
                             @isset($emp_data->Emp_Image)
-                            <p> Old Image: </p>
+
                                 <a href="{{ asset($emp_data->Emp_Image) }}" target="_blank">
                                     <img src="{{ asset($emp_data->Emp_Image) }}" style="width:150px;height:150px">
                                 </a>
@@ -33,7 +32,7 @@
                         </div>
 
 
-                        <form method="post" action="{{ $route }}" enctype="multipart/form-data">
+                        <form method="post" action="/update-emp-info" enctype="multipart/form-data">
                             @csrf
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show" id="close-now">
@@ -72,15 +71,24 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <input class="form-control" placeholder="employee email"
-                                        value="{{ isset($emp_data->employee_email) ? $emp_data->employee_email : old('employee_email') }}"
-                                            type="email" name="employee_email" >
+                                        value="{{ isset(auth()->user()->emp_email) ? auth()->user()->emp_email : '' }}"
+                                            type="email" name="employee_email" disabled>
                                         @error('employee_email')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                         <label for="">Email address <span class="text-danger">*</span></label>
+                                    </div>
+                                </div> --}}
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <textarea name="employee_address" placeholder="Employee Address" class="form-control">{{ isset($emp_data->Emp_Address) ? $emp_data->Emp_Address : old('employee_address') }}</textarea>
+                                        @error('employee_address')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <label for="">Home address <span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -90,30 +98,20 @@
                                         @error('employee_img')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
-                                        <label for="">Image <span class="text-danger">*</span></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-floating mb-3">
-                                        <textarea name="employee_address" placeholder="Employee Address" class="form-control">{{ isset($emp_data->Emp_Address) ? $emp_data->Emp_Address : old('employee_address') }}</textarea>
-                                        @error('employee_address')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                        <label for="">Home address <span class="text-danger">*</span></label>
+                                        <label for="">Image </label>
                                     </div>
                                 </div>
                             </div>
 
 
-                            {{-- company details --}}
+
+                            {{-- company details
                             <br>
                             <h4>Company Details
                                 <hr>
-                            </h4>
+                            </h4> --}}
 
-                         <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <input class="form-control " placeholder="Employee code: 200sols"
@@ -189,7 +187,7 @@
                                         <label for="">Emp Joining Date <span class="text-danger">*</span></label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             {{-- company details --}}
                             <br>
                             <h4>

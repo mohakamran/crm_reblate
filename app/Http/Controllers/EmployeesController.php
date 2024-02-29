@@ -15,6 +15,95 @@ use DB;
 
 class EmployeesController extends Controller
 {
+    // update info employee dashboard
+    public function updateEmpInfo(Request $req) {
+        $user_code = auth()->user()->user_code;
+        $emp_data = DB::table('employees')->where('Emp_Code', $user_code)->first();
+        if($emp_data) {
+            $validate = $req->validate([
+                'employee_name' => 'required|string|max:255',
+                'employee_phone' => 'required|numeric',
+                'employee_address' => 'required|string',
+                'employee_img' => 'image|mimes:jpeg,png,jpg,gif|max:5000',
+                'employee_relation' => 'required',
+                'employee_relative_name' => 'required',
+                'employee_relative_phone_num' => 'required',
+                'employee_relative_address' => 'required',
+            ]);
+            $bank_name = "";
+            $bank_iban = "";
+
+            if($req->employee_bank_name == "") {
+                $bank_name = "no_bank";
+            } else {
+                $bank_name = $req->employee_bank_name;
+            }
+            if($req->employee_bank_iban =="") {
+                $bank_iban = "no_iban";
+            } else {
+                $bank_iban = $req->employee_bank_iban;
+            }
+
+                    // check if image is uploaded or not
+            if( $req->hasFile('employee_img') ) {
+                $image = $req->file('employee_img');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('employee_images'), $imageName);
+
+                //  check if there is bank account name or details
+
+                DB::table('employees')->where('Emp_Code',$user_code)->update([
+                    'Emp_Image' => 'employee_images/' . $imageName,
+                    'Emp_Full_Name' => $req->employee_name,
+                    'Emp_Phone' => $req->employee_phone,
+                    'Emp_Address' => $req->employee_address,
+                    'Emp_Relation' => $req->employee_relation,
+                    'Emp_Relation_Name' => $req->employee_relative_name,
+                    'Emp_Relation_Phone' => $req->employee_relative_phone_num,
+                    'Emp_Relation_Address' => $req->employee_relative_address,
+                    'Emp_Bank_Name' => $bank_name,
+                    'Emp_Bank_IBAN' => $bank_iban
+                ]);
+
+                session()->flash('success', 'Data Updated successfully!');
+                return back();
+            } else {
+                DB::table('employees')->where('Emp_Code',$user_code)->update([
+                    // 'Emp_Image' => 'employee_images/' . $imageName,
+                    'Emp_Full_Name' => $req->employee_name,
+                    'Emp_Phone' => $req->employee_phone,
+                    'Emp_Address' => $req->employee_address,
+                    'Emp_Relation' => $req->employee_relation,
+                    'Emp_Relation_Name' => $req->employee_relative_name,
+                    'Emp_Relation_Phone' => $req->employee_relative_phone_num,
+                    'Emp_Relation_Address' => $req->employee_relative_address,
+                    'Emp_Bank_Name' => $bank_name,
+                    'Emp_Bank_IBAN' => $bank_iban
+                ]);
+                session()->flash('success', 'Data Updated successfully!');
+                return back();
+            }
+        }
+        else {
+            return redirect('/');
+        }
+    }
+    // employee dashboard view
+    public function viewEmpSlips() {
+        $user_code = auth()->user()->user_code;
+        $emp_data = DB::table('employees')->where('Emp_Code', $user_code)->first();
+        // dd($emp_data);
+        if($emp_data) {
+            $title = $emp_data->Emp_Full_Name;
+            $btn_text = "Update Data";
+            $route="/update-employee-data/".$user_code;
+            $data = compact('title', 'emp_data', 'route', 'btn_text');
+            return view('emp.add-new-emp-data')->with($data);
+        }
+        else {
+            return redirect('/');
+        }
+    }
 
     public function viewInfo() {
         $user_code = auth()->user()->user_code;
@@ -62,12 +151,12 @@ class EmployeesController extends Controller
         // $title = "Update Employee Details";
         // $data = compact('title');
         // $rec = Employee::orderBy('id', 'desc')->get();
-        $rec = DB::table('employees')->orderBy('id', 'desc')->get();
+        $latestEmployees = DB::table('employees')->orderBy('id', 'desc')->get();
         // dd($rec);
         //$count = Employee::where('Emp_Status', 'active')->orderBy('id', 'desc')->count();
-        if($rec !=null) {
+        if($latestEmployees !=null) {
             $emp="Reblate Solutions Employees";
-            return view('emp.view-employees',compact('rec','emp'));
+            return view('emp.view-employees',compact('latestEmployees','emp'));
         } else {
             return redirect('add-new-employee');
         }

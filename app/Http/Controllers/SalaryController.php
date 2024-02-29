@@ -22,6 +22,7 @@ use PDF;
 
 class SalaryController extends Controller
 {
+
     // view slips
     public function viewSlips(){
         $emp_id = auth()->user()->user_code;

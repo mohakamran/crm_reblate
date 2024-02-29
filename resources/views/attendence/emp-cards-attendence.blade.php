@@ -11,14 +11,14 @@
     @endsection
     @section('content')
         <style>
-            .image-center {
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                display: block;
-                margin: 0 auto;
+        .image-center {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: relative;
+            left: 32%;
 
-            }
+        }
 
             .card-text-center {
                 font-size: 16px;
@@ -83,9 +83,9 @@
                                     <div class="card">
                                         <div class="card-body">
                                             @if ($emp->Emp_Image !=null &&  file_exists(public_path($emp->Emp_Image)))
-                                                <a href="{{ $emp->Emp_Image }}" target="_blank">
+
                                                     <img class="image-center" src="{{ $emp->Emp_Image }}" alt="" >
-                                                </a>
+
                                                 @else
                                                 <a href="{{ url('user.png') }}" target="_blank">
                                                     <img class="image-center" src="{{ url('user.png') }}" alt="" >
@@ -95,12 +95,17 @@
                                                 <p class="emp-name"> {{ $emp->Emp_Full_Name }}</p>
                                                 <p>Designation: {{ $emp->Emp_Designation }}</p>
                                                 <p>Shift: {{ $emp->Emp_Shift_Time }}</p>
+                                                <p>Employee Code: {{ $emp->Emp_Code }}</p>
                                             </div>
 
 
                                             <form action="/view-attendence-emp" method="post">
                                                 @csrf
+
+
                                                 <input type="hidden" name="hidden_emp_value" value="{{$emp->Emp_Code}}">
+
+
                                                 <div class="text-center mt-3 container">
                                                     <button class="reblateBtn w-75 p-2 d-block">View Attendence</button>
                                                 </div>
