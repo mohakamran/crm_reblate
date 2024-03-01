@@ -122,7 +122,8 @@ class AttendenceController extends Controller
             $Emp_Designation = $latestEmployees->Emp_Designation;
             $Emp_Shift_Time = $latestEmployees->Emp_Shift_Time;
             $Emp_code = $latestEmployees->Emp_Code;
-            $data = compact('full_name_emp','Emp_Designation','Emp_Shift_Time','Emp_code','Emp_Image');
+            // dd($Emp_code);
+            $data = compact('latestEmployees','full_name_emp','Emp_Designation','Emp_Shift_Time','Emp_code','Emp_Image');
             // dd($Emp_Image);
               return view('attendence.search-results',$data);
            } else {

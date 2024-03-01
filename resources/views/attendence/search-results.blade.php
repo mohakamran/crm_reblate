@@ -87,7 +87,8 @@
 
 
                                             <form action="/view-attendence-emp" method="post">
-                                                <input type="hidden" name="hidden_emp_value" value="{{$Emp_Code}}">
+                                                @csrf
+                                                <input type="hidden" name="hidden_emp_value" value="{{$Emp_code}}">
                                                 <div class="text-center mt-3">
                                                     <button class="btn btn-success d-block">View Attendence</button>
                                                 </div>
