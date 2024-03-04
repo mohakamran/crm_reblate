@@ -8,6 +8,8 @@
     <title>Invoice</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* * {
@@ -298,548 +300,49 @@ aside h1 {
     border-color: #999;
     border-bottom-style: solid;
 } */
-:root {
-  --theme-color: #2D7CFE;
-  --title-color: #111111;
-  --body-color: #6E6E6E;
-  --smoke-color: #f3f3f3;
-  --smoke-dark: #E1ECFF;
-  --black-color: #000000;
-  --white-color: #ffffff;
-  --light-color: #72849B;
-  --border-color: #E3E3E3;
-  --title-font: 'Inter', sans-serif;
-  --body-font: 'Inter', sans-serif;
-  --main-container: 1380px;
-  --container-gutters: 24px;
-  --section-space: 50px;
-  --section-title-space: 70px;
-  --ripple-ani-duration: 5s;
-}
-
-
-/* Template 2 ---------------------------------- */
-.invoice_style2 {
-    .invoice-note {
-        padding-top: 0;
-        padding-bottom: 0;
-        border-top: none;
-        border-bottom: 1px solid $border-color;
-        padding-bottom: 20px;
-        margin-bottom: 20px;
-        margin-top: 20px;
-    }
-    .invoice-table {
-        th, td {
-            &:nth-child(2) {
-                text-align: center;
-            }
-        }
-    }
-}
-.header-bottom {
-    &_left,
-    &_right {
-        position: relative;
-        display: flex;
-        p {
-            margin-bottom: 0;
-
-            padding: 11px 20px;
-            width: 270px;
-            position: relative;
-            z-index: 2;
-        }
-        .shape {
-            display: inline-block;
-            min-height: 44px;
-            height: 100%;
-            width: 10px;
-            margin-left: 6px;
-            transform: skewX(33deg);
-        }
-    }
-    &_left {
-        p {
-            clip-path: polygon(0 0, calc(100% - 30px) 0%, 100% 100%, 0% 100%);
-        }
-        .shape {
-            &:first-of-type {
-                margin-left: -9px;
-            }
-        }
-    }
-    &_right {
-        p {
-            text-align: right;
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 30px 100%);
-        }
-        .shape {
-            &:last-of-type {
-                margin-right: -8px;
-            }
-        }
-    }
-}
-
-.booking-info {
-    margin-top: 5px;
-    margin-bottom: 25px;
-    position: relative;
-    &::before {
-        content: '';
-        height: 34px;
-        width: 2px;
-        position: absolute;
-        left: 5px;
-        top: 12px;
-        background-color: $smoke-dark;
-    }
-    p {
-        margin-bottom: 12px;
-        position: relative;
-        padding-left: 20px;
-        &:before {
-            content: '';
-            height: 12px;
-            width: 12px;
-            background-color: $smoke-dark;
-            border-radius: 99px;
-            position: absolute;
-            top: 5px;
-            left: 0;
-        }
-        &:last-of-type {
-            margin-bottom: 0;
-        }
-    }
-}
-
-.address-box {
-    margin-bottom: 30px;
-    padding: 25px 30px;
-    border: 1px solid $border-color;
-    address {
-        margin-bottom: 0;
-    }
-}
-.address-left {
-    border-right: none;
-    border-radius: 10px 0 0 10px;
-}
-.address-right {
-    border-radius: 0 10px 10px 0;
-}
-
-.company-address {
-    text-align: center;
-    background-color: $smoke-color;
-    padding: 13px 30px;
-    border-radius: 999px;
-    margin-top: 15px;
-    margin-bottom: 26px;
-}
-
-
-html,
-body {
-  scroll-behavior: auto !important;
-}
-
-body {
-  font-family: var(--title-font);
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--body-color);
-  line-height: 22px;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  background-color: #e7e7e7;
-}
-
-iframe {
-  border: none;
-  width: 100%;
-}
-
-.slick-slide:focus,
-button:focus,
-a:focus,
-a:active,
-input,
-input:hover,
-input:focus,
-input:active,
-textarea,
-textarea:hover,
-textarea:focus,
-textarea:active {
-  outline: none;
-}
-
-input:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-img:not([draggable]),
-embed,
-object,
-video {
-  max-width: 100%;
-  height: auto;
-}
-
-ul {
-  list-style-type: disc;
-}
-
-ol {
-  list-style-type: decimal;
-}
-
-table {
-  margin: 0 0 1.5em;
-  width: 100%;
-  border-collapse: collapse;
-  border-spacing: 0;
-  border: 1px solid var(--border-color);
-}
-
-th {
-  font-weight: 700;
-  color: var(--title-color);
-}
-
-td,
-th {
-  border: 1px solid var(--border-color);
-  padding: 9px 12px;
-}
-
-a {
-  color: var(--theme-color);
-  text-decoration: none;
-  outline: 0;
-  -webkit-transition: all ease 0.4s;
-  transition: all ease 0.4s;
-}
-
-a:hover {
-  color: var(--title-color);
-}
-
-a:active, a:focus, a:hover, a:visited {
-  text-decoration: none;
-  outline: 0;
-}
-
-button {
-  -webkit-transition: all ease 0.4s;
-  transition: all ease 0.4s;
-}
-
-
-
-
-
-.invoice-container {
-  width: 880px;
-  padding: 20px 15px;
-  margin: 15px auto;
-  position: relative;
-  z-index: 5;
-}
-
 .invoice-container-wrap {
-  overflow: auto;
+    overflow: auto;
 }
-
-
+.invoice-container {
+    width: 880px;
+    padding: 20px 15px;
+    margin: 15px auto;
+    position: relative;
+    z-index: 5;
+}
 .themeholy-invoice {
-  position: relative;
-  z-index: 4;
-  background-color: var(--white-color);
+    position: relative;
+    z-index: 4;
+    background-color: #fff;
 }
-
 .themeholy-invoice .download-inner {
-  padding: 50px;
+    padding: 50px;
 }
-
-.themeholy-invoice b {
-  color: var(--title-color);
-}
-
-.themeholy-invoice .big-title {
-  font-size: 44px;
-  margin-bottom: 0;
-  text-align: right;
-}
-
 .themeholy-invoice .header-bottom {
-  margin-top: 22px;
-  margin-bottom: 19px;
+    margin-top: 22px;
+    margin-bottom: 19px;
+}
+.header-bottom_left, .header-bottom_right {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.header-bottom_left p {
+    -webkit-clip-path: polygon(0 0, calc(100% - 30px) 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(0 0, calc(100% - 30px) 0%, 100% 100%, 0% 100%);
 }
 
-.themeholy-invoice address {
-  margin-bottom: 0;
+.header-bottom_left p, .header-bottom_right p {
+    margin-bottom: 0;
+    background-color: var(--smoke-color);
+    padding: 11px 20px;
+    width: 270px;
+    position: relative;
+    z-index: 2;
 }
-
-.invoice-right {
-  text-align: right;
-}
-
-.invoice-table {
-  border: none;
-  margin-bottom: 25px;
-}
-
-.invoice-table th {
-  color: var(--title-color);
-}
-
-.invoice-table th,
-.invoice-table td {
-  padding: 11px 20px;
-  border: none;
-}
-
-.invoice-table th:last-child,
-.invoice-table td:last-child {
-  text-align: right;
-}
-
-.invoice-table tr {
-  border-bottom: 1px solid var(--border-color);
-  position: relative;
-}
-
-.invoice-table thead th,
-.invoice-table thead td {
-  background-color: var(--smoke-dark);
-}
-
-.invoice-table thead th:first-child,
-.invoice-table thead td:first-child {
-  border-radius: 0;
-}
-
-.invoice-table thead th:last-child,
-.invoice-table thead td:last-child {
-  border-radius: 0;
-}
-
-.invoice-table thead tr {
-  border-bottom: none;
-}
-
-.table-stripe thead th,
-.table-stripe thead td {
-  background-color: var(--smoke-dark);
-}
-
-.table-stripe tr {
-  border-bottom: none;
-}
-
-.table-stripe tr:nth-child(2n) th,
-.table-stripe tr:nth-child(2n) td {
-  background-color: var(--smoke-color);
-}
-
-.table-stripe tr:nth-child(2n) th:first-child,
-.table-stripe tr:nth-child(2n) td:first-child {
-  border-radius: 0;
-}
-
-.table-stripe tr:nth-child(2n) th:last-child,
-.table-stripe tr:nth-child(2n) td:last-child {
-  border-radius: 0;
-}
-
-.total-table {
-  border: none;
-  margin-bottom: 0;
-  margin-top: -4px;
-}
-
-.total-table th,
-.total-table td {
-  border: none;
-  padding: 4px 20px;
-}
-
-.total-table th:nth-child(2),
-.total-table td:nth-child(2) {
-  text-align: right;
-}
-
-.total-table tr:last-child {
-  border-top: 1px solid var(--border-color);
-}
-
-.total-table tr:last-child th,
-.total-table tr:last-child td {
-  padding: 15px 20px;
-}
-
-.total-table tr:nth-last-child(2) th,
-.total-table tr:nth-last-child(2) td {
-  padding: 4px 20px 16px 20px;
-}
-
-hr.style1 {
-  margin-top: 24px;
-  margin-bottom: 24px;
-  background-color: var(--border-color);
-  opacity: 1;
-}
-
-.table-title {
-  font-size: 16px;
-  margin-bottom: 7px;
-}
-
-.text-title {
-  color: var(--title-color);
-  font-weight: 500;
-}
-
-.invoice-note {
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
-  padding-top: 15px;
-  padding-bottom: 15px;
-  text-align: center;
-}
-
-.invoice-note svg {
-  margin-right: 5px;
-  margin-top: -3px;
-}
-
-.invoice-note b {
-  margin-right: 5px;
-}
-
-.body-shape1 {
-  height: 5px;
-  width: 100%;
-  background-color: var(--smoke-dark);
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
-.body-shape1:before {
-  content: "";
-  height: 16px;
-  width: 50%;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background-color: var(--smoke-dark);
-  border-radius: 99px 0 0 0;
-}
-
-.body-shape2 {
-  position: absolute;
-  bottom: 65px;
-  right: 0;
-}
-
-.body-shape2 .shape {
-  height: 20px;
-  width: 35px;
-  background-color: var(--smoke-color);
-  border-radius: 99px 0 0 99px;
-  margin-bottom: 10px;
-}
-
-.body-shape3 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  height: 117px;
-  overflow: hidden;
-}
-
-.body-shape3 svg {
-  max-width: 100%;
-}
-
-.invoice-buttons {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  gap: 3px;
-  padding: 3px;
-  overflow: hidden;
-  margin-top: 12px;
-  position: relative;
-  top: -50px;
-  background-color: var(--white-color);
-  box-shadow: 0px 0px 15px rgba(119, 119, 119, 0.25);
-  border-radius: 10px;
-  max-width: 129px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.invoice-buttons a,
-.invoice-buttons button {
-  border: none;
-  height: 40px;
-  width: 60px;
-  line-height: 37px;
-  text-align: center;
-  background-color: #CFFFEA;
-  border-radius: 7px 0 0 7px;
-  -webkit-transition: 0.3s ease-in-out;
-  transition: 0.3s ease-in-out;
-}
-
-.invoice-buttons a svg path,
-.invoice-buttons button svg path {
-  -webkit-transition: 0.3s ease-in-out;
-  transition: 0.3s ease-in-out;
-}
-
-.invoice-buttons a:hover,
-.invoice-buttons button:hover {
-  background-color: #00C764;
-}
-
-.invoice-buttons a:hover svg path,
-.invoice-buttons button:hover svg path {
-  fill: #fff;
-}
-
-.invoice-buttons .download_btn {
-  background-color: #E1ECFF;
-  border-radius: 0 7px 7px 0;
-}
-
-.invoice-buttons .download_btn:hover {
-  background-color: var(--theme-color);
-}
-.invoice-color{
-    padding: 5px;
-    background-color: #14213d1c;
-    border-radius: 10px;
-    margin-right: 5px;
-}
-.darkcolor{
+.darkcolor {
     display: inline-block;
     min-height: 44px;
     height: 100%;
@@ -850,16 +353,151 @@ hr.style1 {
     -ms-transform: skewX(33deg);
     transform: skewX(33deg);
 }
-.invoiceNote{
+.header-bottom_right p {
+    text-align: right;
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 30px 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 30px 100%);
+}
+.address-left {
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+}
+.address-box {
+    margin-bottom: 30px;
+    padding: 25px 30px;
+    border: 1px solid #E3E3E3;
+}
+.themeholy-invoice b {
+    color: #111111;
+}
+.address-box address {
+    margin-bottom: 0;
+}
+.address-right {
+    border-radius: 0 10px 10px 0;
+}
+.invoice-table {
+    border: none;
+    margin-bottom: 25px;
+}
+table {
+    margin: 0 0 1.5em;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #E3E3E3;
+}
+.invoice-table thead tr {
+    border-bottom: none;
+}
+.invoice-table tr {
+    border-bottom: 1px solid #E3E3E3;
+    position: relative;
+}
+.invoice-table thead th:first-child, .invoice-table thead td:first-child {
+    border-radius: 0;
+}
+.invoice-table thead th, .invoice-table thead td {
+    background-color: #E1ECFF;
+}
+.invoice-table th, .invoice-table td {
+    padding: 11px 20px;
+    border: none;
+}
+.invoice-table th {
+    color: #111111;
+}
+.invoice_style2 .invoice-table th:nth-child(2), .invoice_style2 .invoice-table td:nth-child(2) {
+    text-align: center;
+}
+.invoice-table thead th:last-child, .invoice-table thead td:last-child {
+    border-radius: 0;
+}
+.invoice-table th:last-child, .invoice-table td:last-child {
+    text-align: right;
+}
+.total-table {
+    border: none;
+    margin-bottom: 0;
+    margin-top: -4px;
+}
+.total-table tr:last-child {
+    border-top: 1px solid #E3E3E3;
+}
+.company-address {
+    text-align: center;
+    background-color: #f3f3f3;
+    padding: 13px 30px;
+    border-radius: 999px;
+    margin-top: 15px;
+    margin-bottom: 26px;
+}
+.invoiceNote {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
-.note{
+.note {
     display: flex;
-    align-items:center ;
+    align-items: center;
     gap: 5px;
+}
+.invoice_style2 .invoice-note {
+    padding-top: 0;
+    padding-bottom: 0;
+    border-top: none;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.invoice-buttons {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 3px;
+    overflow: hidden;
+    margin-top: 12px;
+    position: relative;
+    top: -50px;
+    background-color: #fff;
+    box-shadow: 0px 0px 15px rgba(119, 119, 119, 0.25);
+    border-radius: 10px;
+    max-width: 129px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.invoice-buttons a, .invoice-buttons button {
+    border: none;
+    height: 40px;
+    width: 60px;
+    line-height: 37px;
+    text-align: center;
+    background-color: #CFFFEA;
+    border-radius: 7px 0 0 7px;
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+}
+.invoice-buttons .download_btn {
+    background-color: #E1ECFF;
+    border-radius: 0 7px 7px 0;
+}
+.invoice-buttons a:hover, .invoice-buttons button:hover {
+    background-color: #00C764;
+}
+.invoice-buttons .download_btn:hover {
+    background-color: #2D7CFE;
 }
     </style>
 </head>
@@ -873,7 +511,7 @@ hr.style1 {
                             <div class="row align-items-center justify-content-between">
                                 <div class="col-auto">
                                     <div class="header-logo">
-                                        <a href="index.html"><img style="width: 250px; object-fit: contain;" src="assets/img/logo 1.svg" alt="Invar"></a>
+                                        <a href="index.html"><img style="width: 250px; object-fit: contain;" src="{{ URL::asset('assets/img/logo 1.svg')}}" alt="Invar"></a>
                                     </div>
                                 </div>
                                 <div class="col-auto">
@@ -1004,14 +642,14 @@ hr.style1 {
             </main>
         </div>
     </div>
-    <header>
+    {{-- <header>
         <h1 class="main">Reblate Solutions and Service Providers</h1>
         <h1>Invoice</h1>
-    </header>
-    <article>
+    </header> --}}
+    {{-- <article>
         <div class="head">
             <address >
-                {{-- <img class="logo" alt="reblate logo" src="{{url('reblat-logo.png')}}"/> --}}
+                <img class="logo" alt="reblate logo" src="{{url('reblat-logo.png')}}"/>
             </address>
 
             <table class="meta">
@@ -1091,9 +729,9 @@ hr.style1 {
             </tr>
         </table>
 
-    </article>
-    <hr>
-      <div class="contact">
+    </article> --}}
+    {{-- <hr> --}}
+      {{-- <div class="contact">
         <p >
             <span>Website:</span> <a href="https://reblatesols.com"> https://reblatesols.com </a>
         </p>
@@ -1103,7 +741,17 @@ hr.style1 {
       <p class="mt-10"> <span>Issue Date : </span>
         09 May 2023</p>
       <p><span>Payment Method : </span>Payoneer</p>
-    </div>
+    </div> --}}
 
 </body>
+<script src="{{URL::asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
+<!-- Bootstrap -->
+<script src="{{URL::asset('assets/js/bootstrap.min.js') }}"></script>
+<!-- PDF Generator -->
+<script src="{{URL::asset('assets/js/jspdf.min.js') }}"></script>
+<script src="{{URL::asset('assets/js/html2canvas.min.js')}}"></script>
+<!-- Main Js File -->
+<script src="{{ URL::asset('assets/js/main.js') }}"></script>
+
+</script>
 </html>
