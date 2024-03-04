@@ -26,6 +26,7 @@
             border-radius: 50%;
             position: relative;
             left: 32%;
+            object-fit: cover;
 
         }
 
@@ -111,8 +112,23 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="container d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="card-title">{{ $emp }}</h4>
 
                         <h4 class="card-title">{{ $emp }}</h4>
+                            <div>
+                                <button class="reblateBtn w-100 py-1 px-3"><a href="/add-new"
+                                        style="text-decoration: none; color:white;"><span
+                                            style="width: 15px; height: 15px; margin-right: 5px;"><svg
+                                                xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                            </svg></span> Add New </a></button>
+                            </div>
+
+                        </div>
+>>>>>>> Stashed changes
 
 
 
@@ -161,7 +177,7 @@
                                                             $employees_access = Session::get('employees_access');
                                                             // Convert to an array if it's a single value
                                                             if (!is_array($employees_access)) {
-                                                                $employees_access = explode(',', $employees_access);
+                                                               $employees_access = explode(',', $employees_access);
                                                                 // Remove any empty elements resulting from the explode function
                                                                 $employees_access = array_filter($employees_access);
                                                             }
@@ -179,24 +195,23 @@
                                                                 data-original-title="Close">
                                                                 <i class="mdi mdi-delete"></i>
                                                             </a>
-                                                            @elseif (is_array($employees_access) && in_array('update', $employees_access))
+                                                        @elseif (is_array($employees_access) && in_array('update', $employees_access))
                                                             <a href="javascript:void()"
                                                                 onclick="deleteEmployee('{{ $emp->Emp_Code }}')"
                                                                 class="btn btn-danger btn-sm" data-toggle="tooltip"
                                                                 data-original-title="Close">
                                                                 <i class="mdi mdi-delete"></i>
                                                             </a>
-                                                            @elseif (is_array($employees_access) && in_array('delete', $employees_access))
+                                                        @elseif (is_array($employees_access) && in_array('delete', $employees_access))
                                                             <a href="javascript:void()"
                                                                 onclick="deleteEmployee('{{ $emp->Emp_Code }}')"
                                                                 class="btn btn-danger btn-sm" data-toggle="tooltip"
                                                                 data-original-title="Close">
                                                                 <i class="mdi mdi-delete"></i>
                                                             </a>
-                                                            @else
+                                                        @else
                                                             no action allowed
                                                         @endif
-
                                                     @endif
                                                 @else
                                                     <a href="/update-employee/{{ $emp->Emp_Code }}" data-toggle="tooltip"

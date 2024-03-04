@@ -142,6 +142,8 @@
                 {{-- Employees --}}
                 {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <li>
+                    <a href="/manage-employees" class="waves-effect">
                         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
                             <path fill="currentColor"
                                 d="M12 16.14h-.87a8.67 8.67 0 0 0-6.43 2.52l-.24.28v8.28h4.08v-4.7l.55-.62l.25-.29a11 11 0 0 1 4.71-2.86A6.59 6.59 0 0 1 12 16.14Z"
@@ -164,10 +166,7 @@
                         </svg>
                         <span>Employees</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="/manage-employees">View</a></li>
-                        <li><a href="/add-new">Add New</a></li>
-                    </ul>
+
 
                 </li> --}}
                 <li>
