@@ -80,7 +80,7 @@ class InvoiceController extends Controller
         $invoice_method =$req->invoice_method_hidden;
         $invoice_notes =$req->invoice_notes_hidden;
 
-        
+
         // dd($req->invoice_method_hidden);
         $invoice_number = Str::random(8); // Adjust the length as needed
         $data = compact('invoice_notes','invoice_method','invoice_due_date','invoice_amount','invoice_description','invoice_profit','invoice_month','invoice_date','invoice_number','client_phone','client_name','client_email');
@@ -88,6 +88,7 @@ class InvoiceController extends Controller
         $pdf_name = 'invoices/'.$client_name."_".date('m_Y').".pdf";
         $pdf = PDF::loadView('invoices.preview-invoice', $data)->setOptions(['defaultFont' => 'sans-serif']);
         $pdfPath = $pdf->save(public_path($pdf_name));
+        dd("sent");
         $mail_subject = "Invoice for Month of ".$invoice_month;
         $pdfContent = $pdf->output();
         Mail::send('invoices.email-template', $data, function ($message) use ($mail_subject, $client_email, $pdfContent) {

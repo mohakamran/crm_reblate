@@ -26,6 +26,7 @@
             border-radius: 50%;
             position: relative;
             left: 32%;
+            object-fit: cover;
 
         }
 
@@ -114,9 +115,7 @@
                         <div class="container d-flex justify-content-between align-items-center mb-3">
                             <h4 class="card-title">{{ $emp }}</h4>
 
-<<<<<<< Updated upstream
                         <h4 class="card-title">{{ $emp }}</h4>
-=======
                             <div>
                                 <button class="reblateBtn w-100 py-1 px-3"><a href="/add-new"
                                         style="text-decoration: none; color:white;"><span
