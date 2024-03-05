@@ -84,8 +84,7 @@ class InvoiceController extends Controller
         // dd($req->invoice_method_hidden);
         $invoice_number = Str::random(8); // Adjust the length as needed
         $data = compact('invoice_notes','invoice_method','invoice_due_date','invoice_amount','invoice_description','invoice_profit','invoice_month','invoice_date','invoice_number','client_phone','client_name','client_email');
-        return view('invoices.preview-invoice',$data);
-        exit;
+        // return view('invoices.preview-invoice',$data);
         $pdf_name = 'invoices/'.$client_name."_".date('m_Y').".pdf";
         $pdf = PDF::loadView('invoices.preview-invoice', $data)->setOptions(['defaultFont' => 'sans-serif']);
         $pdfPath = $pdf->save(public_path($pdf_name));
