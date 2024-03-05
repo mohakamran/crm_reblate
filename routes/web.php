@@ -13,6 +13,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SecurityController;
 use App\Http\Controllers\AttendenceController;
 use App\Http\Controllers\TimeController;
+use App\Http\Controllers\TaskController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -185,6 +186,11 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/view_info_emp',[EmployeesController::class,'viewEmpSlips']);
     Route::post('/update-emp-info',[EmployeesController::class,'updateEmpInfo']);
 
+    // tasks
+    Route::get('/create-new-task',[TaskController::class,'index']);
+    Route::get('/view-tasks',[TaskController::class,'viewTasks']);
+    Route::post('/add-new-task',[TaskController::class,'addNewTask']);
+    Route::post('/search-emp-tasks',[TaskController::class,'searchEmpAttendenceAdmin']);
 
 });
 

@@ -14,6 +14,7 @@ use Storage;
 use PDF;
 
 
+
 class InvoiceController extends Controller
 {
     public function createNewInvoice() {
@@ -41,7 +42,6 @@ class InvoiceController extends Controller
         $req->validate([
             'invoice_month' => 'required',
             'invoice_description' => 'required',
-            'invoice_profit' => 'required',
             'invoice_amount' => 'required',
             'invoice_due_date' => 'required',
             'invoice_method' => 'required'
@@ -80,10 +80,11 @@ class InvoiceController extends Controller
         $invoice_method =$req->invoice_method_hidden;
         $invoice_notes =$req->invoice_notes_hidden;
 
-
+        // Generate absolute path for the image file
+        $logo_path = public_path('reblat-logo.png');
         // dd($req->invoice_method_hidden);
         $invoice_number = Str::random(8); // Adjust the length as needed
-        $data = compact('invoice_notes','invoice_method','invoice_due_date','invoice_amount','invoice_description','invoice_profit','invoice_month','invoice_date','invoice_number','client_phone','client_name','client_email');
+        $data = compact('logo_path','invoice_notes','invoice_method','invoice_due_date','invoice_amount','invoice_description','invoice_profit','invoice_month','invoice_date','invoice_number','client_phone','client_name','client_email');
         // return view('invoices.preview-invoice',$data);
         $pdf_name = 'invoices/'.$client_name."_".date('m_Y').".pdf";
         $pdf = PDF::loadView('invoices.preview-invoice', $data)->setOptions(['defaultFont' => 'sans-serif']);
@@ -94,11 +95,12 @@ class InvoiceController extends Controller
         Mail::send('invoices.email-template', $data, function ($message) use ($mail_subject, $client_email, $pdfContent) {
             $message->to($client_email)
                     ->subject($mail_subject)
-                    ->bcc('reblatesols.com+0797e8c7fc@invite.trustpilot.com')
+                    // ->bcc('reblatesols.com+0797e8c7fc@invite.trustpilot.com')
                     ->attachData($pdfContent, 'invoice.pdf', [
                         'mime' => 'application/pdf',
                     ]);
         });
+
 
         $invoice = new Invoice();
         $invoice->invoice_id = $invoice_number;
@@ -110,12 +112,14 @@ class InvoiceController extends Controller
         $invoice->amount = $invoice_amount;
         $invoice->save();
 
+
         $message = "Invoice has been sent to ".$client_name;
+
 
         return redirect('/create-new-invoice')->with('email_sent',$message);
 
-    }
 
+    }
     public function viewInvoices() {
         $rec = Invoice::orderBy('id', 'desc')->get();
         if($rec) {

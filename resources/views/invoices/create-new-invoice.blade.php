@@ -142,13 +142,13 @@
 
                                 <div class="col-md-3">
                                     <div class="form-floating mb-3">
-                                        <input type="number"  min="0" {{old('invoice_profit')}}" class="form-control" name="invoice_profit">
-                                        <label for="">Profit($) <span style="color:red">*</span> </label>
-                                        <div class="text-danger">
+                                        <input type="number"  min="0" value="{{old('invoice_profit')}}" class="form-control" name="invoice_profit">
+                                        <label for="">Profit($)   </label>
+                                        {{-- <div class="text-danger">
                                             @error('invoice_profit')
                                                 {{$message}}
                                             @enderror
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
 

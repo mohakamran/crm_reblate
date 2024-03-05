@@ -315,6 +315,13 @@
                     </a>
                 </li>
 
+                <li>
+                    <a  class="waves-effect" href="/view-tasks">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24"><path fill="none" stroke="white" stroke-width="2" d="M12 20h12m-12-8h12M12 4h12M1 19l3 3l5-5m-8-6l3 3l5-5m0-8L4 6L1 3"/></svg>
+                        Tasks
+                    </a>
+                </li>
+
                 {{--
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

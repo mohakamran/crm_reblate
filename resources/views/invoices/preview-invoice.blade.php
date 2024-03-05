@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    {{-- <link rel="stylesheet" href="style.css"> --}}
 
     <title>Invoice</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -255,7 +255,11 @@ table {
     <header style="margin-bottom: 20px;">
         <div class="logoHeader" style="margin-bottom: 20px;">
                 <div class="header-logo" style="float: left">
-                    {{-- <img style="width: 250px; object-fit: contain;" src="{{ URL::asset('assets/img/logo 1.svg')}}" alt="ReblateSols Logo"> --}}
+                     <span style="color:#14213d;font-size:30px;">Reblate</span>
+                     <span style="color:#fca311;font-size:30px;">Solutions</span>
+                     <br>
+                     <span style="color:black;font-size:20px;letter-spacing:3px;">& Service Providers</span>
+                    {{-- <img style="width: 250px; object-fit: contain;" src="{{$logo_path}}" alt="ReblateSols Logo"> --}}
                 </div>
             <div class="invoice" style="float:right;">
                 <p class="mb-0"><span class="invoice-color"><b> INVOICE NO :</b> </span> {{$invoice_number}}</b></p>
@@ -297,8 +301,9 @@ table {
                 <address style="margin-top: 10px;font-size: 16px;color: gray;">
                     <span style="font-weight: 700; color: black;">{{$client_name}}</span>
                      <br>
+                     {{$client_phone}} <br>
                      {{$client_email}}<br>
-                    NewYork, United States.
+
                 </address>
             </div>
 
@@ -308,19 +313,23 @@ table {
             <tr >
                 <th>Name</th>
                 <th>Service</th>
-                <th>Profit</th>
+                @if ($invoice_profit != "")
+                  <th>Profit</th>
+                @endif
                 <th>Amount</th>
             </tr>
         </thead>
         <tbody>
-            <tr style="width: auto; border-bottom:1px solid gray;">
+            <tr style="width: auto; ">
                 <td style="text-align: center;">{{$client_name}}</td>
                 <td style="text-align: center;">{{$invoice_description}}</td>
-                <td style="text-align: center;">${{$invoice_profit}}</td>
+                @if ($invoice_profit != "")
+                  <td>{{$invoice_profit}}</td>
+                @endif
                 <td style="text-align: center;">${{$invoice_amount}}</td>
             </tr>
 
-            <tr style="border-bottom:1px solid gray;">
+            <tr style="">
                 <td colspan="3">&nbsp;</td>
             </tr>
         </tbody>
@@ -329,12 +338,18 @@ table {
 
             <div class="invoice-left" style="float: left;">
                 <span class="invoice-color mb-5 big">Please Note:</span>
-                <p class="mt-4">Amount payable is inclusive of central & state <br>
-                    goods & services Tax act applicable slab rates. <br>
-                    Please ask Hotel for invoice at the time of check-out.
-                    <br>
-                    {{$invoice_notes}}
-                </p>
+                <div class="invoice-left" style="float: left;">
+                    <span class="invoice-color mb-5 big">Please Note:</span>
+                    </p>
+                    @if($invoice_notes!="")
+                        <p class="mt-4">{{$invoice_notes}}</p>
+                        @else
+                        <p class="mt-4">
+                            Total amount payable includes applicable central <br> and state Goods & Services Tax (GST) rates
+
+                        </p>
+                    @endif
+                </div>
             </div>
 
 
