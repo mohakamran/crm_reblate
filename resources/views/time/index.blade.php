@@ -14,7 +14,6 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-body">
-                        <br>
                         <form method="post" action="/office-times-morning" enctype="multipart/form-data">
                             @csrf
 
@@ -29,50 +28,56 @@
                             @endif
 
 
-                            <h4>Morning Shift </h4>
+                            <h4 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Morning Shift </h4>
 
-                            <div class="form-floating mb-3">
-                                <input class="form-control" name="shift_start_morning" type="time"
-                                    value=""  >
-                                <label for="">Shift Start <span class="text-danger">*</span></label>
-                                @error('shift_start_morning')
-                                    <span style="color:red">{{$message}}</span>
-                                @enderror
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control inputboxcolor" style="border: none;" name="shift_start_morning" type="time"
+                                            value=""  >
+                                        <label for="">Shift Start <span class="text-danger">*</span></label>
+                                        @error('shift_start_morning')
+                                            <span style="color:red">{{$message}}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control inputboxcolor" style="border: none;" name="break_start_morning" type="time"
+                                            value=""  >
+                                        <label for="">Break Start <span class="text-danger">*</span></label>
+                                        @error('break_start_morning')
+                                        <span style="color:red">{{$message}}</span>
+                                    @enderror
+                                    </div>
+                                </div>
+
                             </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control inputboxcolor" style="border: none;" name="break_end_morning" type="time"
+                                            value=""  >
+                                        <label for="">Break End <span class="text-danger">*</span></label>
+                                        @error('break_end_morning')
+                                        <span style="color:red">{{$message}}</span>
+                                    @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control inputboxcolor" style="border: none;" name="shift_end_morning" type="time"
+                                            value=""  >
+                                        <label for="">Shift Start <span class="text-danger">*</span></label>
+                                        @error('shift_end_morning')
+                                        <span style="color:red">{{$message}}</span>
+                                        @enderror
+                                    </div>
+                                </div>
 
-                            <div class="form-floating mb-3">
-                                <input class="form-control" name="break_start_morning" type="time"
-                                    value=""  >
-                                <label for="">Break Start <span class="text-danger">*</span></label>
-                                @error('break_start_morning')
-                                <span style="color:red">{{$message}}</span>
-                            @enderror
                             </div>
-                            <div class="form-floating mb-3">
-                                <input class="form-control" name="break_end_morning" type="time"
-                                    value=""  >
-                                <label for="">Break End <span class="text-danger">*</span></label>
-                                @error('break_end_morning')
-                                <span style="color:red">{{$message}}</span>
-                            @enderror
-                            </div>
-
-                            <div class="form-floating mb-3">
-                                <input class="form-control" name="shift_end_morning" type="time"
-                                    value=""  >
-                                <label for="">Shift Start <span class="text-danger">*</span></label>
-                                @error('shift_end_morning')
-                                <span style="color:red">{{$message}}</span>
-                                @enderror
-                            </div>
-
-
-
-
-
                             <div>
-                                <button type="submit" class="btn btn-primary  w-md"
-                                    style="background-color: #14213D ; border-color: #fff;">Update</button>
+                                <button type="submit" class="reblateBtn w-md py-2 px-4">Update</button>
                             </div>
                         </form>
                     </div>
@@ -83,7 +88,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-body">
-                        <br>
+
                         <form method="post" action="/office-times-night" enctype="multipart/form-data">
                             @csrf
 
@@ -98,50 +103,55 @@
                             @endif
 
 
-                            <h4>Night Shift</h4>
+                            <h4 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Evening Shift</h4>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control inputboxcolor" style="border: none;" name="shift_start_night" type="time"
+                                                value=""  >
+                                            <label for="">Shift Start <span class="text-danger">*</span></label>
+                                            @error('shift_start_night')
+                                            <span style="color:red">{{$message}}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control inputboxcolor" style="border: none;" type="time" name="break_start_night"
+                                                value=""  >
+                                            <label for="">Break Start <span class="text-danger">*</span></label>
+                                            @error('break_start_night')
+                                            <span style="color:red">{{$message}}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
 
-                            <div class="form-floating mb-3">
-                                <input class="form-control" name="shift_start_night" type="time"
-                                    value=""  >
-                                <label for="">Shift Start <span class="text-danger">*</span></label>
-                                @error('shift_start_night')
-                                <span style="color:red">{{$message}}</span>
-                                @enderror
-                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control inputboxcolor" style="border: none;" type="time" name="break_end_night"
+                                                value=""  >
+                                            <label for="">Break End <span class="text-danger">*</span></label>
+                                            @error('break_end_night')
+                                            <span style="color:red">{{$message}}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control inputboxcolor" style="border: none;" type="time" name="shift_end_night"
+                                                value=""  >
+                                            <label for="">Shift End <span class="text-danger">*</span></label>
+                                            @error('shift_end_night')
+                                            <span style="color:red">{{$message}}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
 
-                            <div class="form-floating mb-3">
-                                <input class="form-control" type="time" name="break_start_night"
-                                    value=""  >
-                                <label for="">Break Start <span class="text-danger">*</span></label>
-                                @error('break_start_night')
-                                <span style="color:red">{{$message}}</span>
-                                @enderror
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input class="form-control" type="time" name="break_end_night"
-                                    value=""  >
-                                <label for="">Break End <span class="text-danger">*</span></label>
-                                @error('break_end_night')
-                                <span style="color:red">{{$message}}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-floating mb-3">
-                                <input class="form-control" type="time" name="shift_end_night"
-                                    value=""  >
-                                <label for="">Shift End <span class="text-danger">*</span></label>
-                                @error('shift_end_night')
-                                <span style="color:red">{{$message}}</span>
-                                @enderror
-                            </div>
-
-
-
-
-
+                                </div>
                             <div>
-                                <button type="submit" class="btn btn-primary  w-md"
-                                    style="background-color: #14213D ; border-color: #fff;">Update</button>
+                                <button type="submit" class="reblateBtn w-md py-2 px-4">Update</button>
                             </div>
                         </form>
                     </div>
