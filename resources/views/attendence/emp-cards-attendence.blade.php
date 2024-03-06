@@ -105,7 +105,7 @@
 
 
                                                 <div class="text-center mt-3 container">
-                                                    <button class="reblateBtn w-75 p-2 d-block">View Attendence</button>
+                                                    <button class="reblateBtn w-75 p-2 d-block">View Details</button>
                                                 </div>
                                             </form>
                                         </div>
