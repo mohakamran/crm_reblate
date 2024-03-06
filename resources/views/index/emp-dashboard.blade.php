@@ -892,6 +892,52 @@
         </div>
         <!-- END ROW -->
 
+        <div class="row">
+            <div class="col-md-4  col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Shift Time</h6>
+                        <div id="content">
+                            <ul class="timeliner">
+                                <li class="event">
+                                    <h3>Shift Start</h3>
+                                   @if (isset($office_start_time) && $office_start_time!="")
+                                       <p>{{$office_start_time}}</p>
+                                       @else
+                                       <p>Not Set</p>
+                                   @endif
+                                </li>
+                                <li class="event">
+                                    <h3>Break Start Time</h3>
+                                    @if (isset($break_start) && $break_start!="")
+                                    <p>{{$break_start}}</p>
+                                    @else
+                                    <p>Not Set</p>
+                                @endif
+                                </li>
+                                <li class="event">
+                                    <h3>Break End Time</h3>
+                                    @if (isset($break_end) && $break_end!="")
+                                    <p>{{$break_end}}</p>
+                                    @else
+                                    <p>Not Set</p>
+                                @endif
+                                </li>
+                                <li class="event">
+                                    <h3>Shift End </h3>
+                                    @if (isset($office_end_time) && $office_end_time!="")
+                                    <p>{{$office_end_time}}</p>
+                                    @else
+                                    <p>Not Set</p>
+                                @endif
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         {{-- <div class="row">
                 <div class="col-md-12">

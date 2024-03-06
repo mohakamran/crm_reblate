@@ -111,8 +111,14 @@ class LoginController extends Controller
         $user_check = UserEmployee::where('emp_code', $login_user_code)->first();
         $email_check = DB::table('users')->where('user_email',$login_user_email)->first();
         if($email_check) {
-            session()->flash('fail', 'Email Already Exists!');
-            return back();
+            $check =  DB::table('table_login_details')->where('email',$login_user_email)->first();
+            if($check) {
+                session()->flash('fail', 'Email Already Exists!');
+                session()->flash('fail', 'Email Already Exists!');
+                return back();
+            }
+                session()->flash('fail', 'Email Already Exists!');
+                return back();
         }
         if($user_check) {
             session()->flash('fail', 'Employee ID already exists!');

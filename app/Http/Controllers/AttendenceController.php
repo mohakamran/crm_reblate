@@ -6,11 +6,81 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
+use Illuminate\Support\Facades\Redirect;
+
 use Illuminate\Support\Carbon;
 
 
 class AttendenceController extends Controller
 {
+    // approval request
+    public function approveLeaveRequest($id) {
+        $leave = DB::table('leaves')->where('emp_code',$id)->first();
+        if($leave) {
+            DB::table('leaves')->where('emp_code',$id)->update([
+                'status' => 'approved'
+            ]);
+            return Redirect::back()->with('success', 'Leave request approved successfully!');
+        } else {
+            return redirect()->back()->with('error', 'No Leave Records found!');
+        }
+        // dd($leave);
+    }
+    // decline request
+    public function declineLeaveRequest($id) {
+        $leave = DB::table('leaves')->where('emp_code',$id)->first();
+        if($leave) {
+            DB::table('leaves')->where('emp_code',$id)->update([
+                'status' => 'declined'
+            ]);
+            return Redirect::back()->with('success', 'Leave request declined successfully!');
+        } else {
+            return redirect()->back()->with('error', 'No Leave Records found!');
+        }
+    }
+    public function leaveRequests() {
+        $user_type = Auth()->user()->user_type;
+        if ($user_type != "" && $user_type == "manager") {
+            $records = DB::table('leaves')->where('user_type', 'employee')->where('status','pending')->get();
+            $emp = [];
+
+            foreach ($records as $rec) {
+                $employees = DB::table('employees')->where('Emp_Code', $rec->emp_code)->get();
+
+                // Loop through each employee record and append to $emp array
+                foreach ($employees as $employee) {
+                    $emp[] = $employee;
+                }
+            }
+
+
+            // if ($records->isEmpty()) {
+            //     dd("empty!");
+            // }
+            // dd($records);
+            return view('attendence.approval', compact('records', 'emp'));
+        }
+        if ($user_type != "" && $user_type == "admin") {
+            $records = DB::table('leaves')->where('status','pending')->get();
+            $emp = [];
+
+            foreach ($records as $rec) {
+                $employees = DB::table('employees')->where('Emp_Code', $rec->emp_code)->get();
+
+                // Loop through each employee record and append to $emp array
+                foreach ($employees as $employee) {
+                    $emp[] = $employee;
+                }
+            }
+
+
+            // if ($records->isEmpty()) {
+            //     dd("empty!");
+            // }
+            // dd($records);
+            return view('attendence.approval', compact('records', 'emp'));
+        }
+    }
     // search employee records
     public function empSearchRecords(Request $req) {
         $validate = $req->validate([
@@ -44,6 +114,7 @@ class AttendenceController extends Controller
             'reason' => 'required|string',
         ]);
         // dd("fuc");
+        $user_type = Auth()->user()->user_type;
 
         $date = $request->input('date');
         $reason = $request->input('reason');
@@ -63,6 +134,7 @@ class AttendenceController extends Controller
                 'date'   => $date,
                 'remaining'   => "15",
                 'reason'   => $reason,
+                'user_type'   => $user_type,
                 'year'   => $currentYear,
                 'emp_code'   => $user_code
             ]);
@@ -82,6 +154,7 @@ class AttendenceController extends Controller
                     'date'   => $date,
                     'remaining'   => "15",
                     'reason'   => $reason,
+                    'user_type'   => $user_type,
                     'year'   => $currentYear,
                     'emp_code'   => $user_code
                 ]);
@@ -452,24 +525,19 @@ class AttendenceController extends Controller
 
     public function checkOutTime() {
         $id = Auth()->user()->user_code;
-        $emp = DB::table('employees')->where('Emp_Code',$id)->first();
+        $emp = DB::table('employees')->where('Emp_Code', $id)->first();
         $currentDateTime = now();
         $dayFullName = $currentDateTime->format('l'); // get full day name
         $todayDate = $currentDateTime->toDateString(); // 'Y-m-d'
         $checkOutTime = $currentDateTime->format('h:i A'); // get time now 11:01 AM/PM
 
-        if($emp) {
+        if ($emp) {
             $shift_time = $emp->Emp_Shift_Time;
-            if($shift_time == "Morning") {
+            if ($shift_time == "Morning") {
                 $shift_time = "morning";
-                $check_morning = DB::table('attendence')->where('date',$todayDate)->where('emp_id',$id)->first();
-                if($check_morning) {
-
-                    if( $check_morning->check_in_status =="done"  && $check_morning->check_out_status =="") {
-                        // if($check_morning->break_start !="" && $check_morning->break_end =="")  {
-                        //     $check_in_already_message = "Please Break End, Then Check Out!";
-                        //     return back()->with('check_in_already_message',$check_in_already_message);
-                        // }
+                $check_morning = DB::table('attendence')->where('date', $todayDate)->where('emp_id', $id)->first();
+                if ($check_morning) {
+                    if ($check_morning->check_in_status == "done" && $check_morning->check_out_status == "") {
 
                         Session::put('attendence_status', true);
                         Session::put('check_out_time', $checkOutTime);
@@ -481,29 +549,30 @@ class AttendenceController extends Controller
                         $checkIn = Carbon::createFromFormat('h:i A', $check_in_time);
                         $checkOut = Carbon::createFromFormat('h:i A', $check_out_time);
 
+                        $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to hours
 
-
-                        if($break_end_time!="" && $break_start_time !="") {
-                            $totalWorkHours = $checkOut->diffInHours($checkIn);
+                        if ($break_end_time != "" && $break_start_time != "") {
                             $breakStart = Carbon::createFromFormat('h:i A', $break_start_time);
                             $breakEnd = Carbon::createFromFormat('h:i A', $break_end_time);
 
                             if ($breakStart >= $checkIn && $breakEnd <= $checkOut) {
-                                $totalWorkHours -= $breakEnd->diffInHours($breakStart);
+                                $totalWorkHours -= $breakEnd->diffInMinutes($breakStart) / 60; // Subtract break time in hours
                             }
-                        } else {
-                            // Initialize total work hours
-                            $totalWorkHours = $checkOut->diffInHours($checkIn);
                         }
 
-                        session::put('total_hours',$totalWorkHours);
+                        // Format total worked hours into HH:MM format
+                        $hours = floor($totalWorkHours);
+                        $minutes = ($totalWorkHours - $hours) * 60;
+                        $formattedTotalWorkHours = sprintf('%02d:%02d', $hours, $minutes);
+
+                        Session::put('total_hours', $formattedTotalWorkHours);
                         DB::table('attendence')
-                        ->where('emp_id', $id) // Filter the query to only update rows where emp_id matches $id
-                        ->update([
-                            'check_out_time' => $checkOutTime,
-                            'check_out_status' => "done",
-                            'total_time' => $totalWorkHours
-                        ]);
+                            ->where('emp_id', $id)
+                            ->update([
+                                'check_out_time' => $checkOutTime,
+                                'check_out_status' => "done",
+                                'total_time' => $formattedTotalWorkHours
+                            ]);
 
                         return back();
                     } else {
@@ -514,58 +583,52 @@ class AttendenceController extends Controller
                 }
             } else {
                 $shift_time = "night";
-                $today = Carbon::today();
-                $yesterday = $today->subDay();
-                $check_night = DB::table('attendence')->where('date',$yesterday)->where('emp_id',$id)->first();
-                if($check_night) {
-                        if($check_night->check_in_status =="done" && $check_night->check_out_status =="") {
-                            // if($check_morning->break_start !="" && $check_morning->break_end =="")  {
-                            //     $check_in_already_message = "Please Break End, Then Check Out!";
-                            //     return back()->with('check_in_already_message',$check_in_already_message);
-                            // }
+                $yesterday = Carbon::yesterday(); // Get yesterday's date
+                $check_night = DB::table('attendence')->where('date', $yesterday)->where('emp_id', $id)->first();
+                if ($check_night) {
+                    if ($check_night->check_in_status == "done" && $check_night->check_out_status == "") {
 
-                            Session::put('attendence_status', true);
-                            Session::put('check_out_time', $checkOutTime);
-                            Session::put('attendence_status', true);
-                            Session::put('check_out_time', $checkOutTime);
-                            $check_in_time = $check_night->check_in_time;
-                            $check_out_time = $checkOutTime;
-                            $break_start_time = $check_night->break_start;
-                            $break_end_time = $check_night->break_end;
+                        Session::put('attendence_status', true);
+                        Session::put('check_out_time', $checkOutTime);
+                        $check_in_time = $check_night->check_in_time;
+                        $check_out_time = $checkOutTime;
+                        $break_start_time = $check_night->break_start;
+                        $break_end_time = $check_night->break_end;
 
-                            $checkIn = Carbon::createFromFormat('h:i A', $check_in_time);
-                            $checkOut = Carbon::createFromFormat('h:i A', $check_out_time)->addDay();
+                        $checkIn = Carbon::createFromFormat('h:i A', $check_in_time);
+                        $checkOut = Carbon::createFromFormat('h:i A', $check_out_time)->addDay(); // Add a day to checkout time
 
+                        $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to hours
 
+                        if ($break_end_time != "" && $break_start_time != "") {
+                            $breakStart = Carbon::createFromFormat('h:i A', $break_start_time);
+                            $breakEnd = Carbon::createFromFormat('h:i A', $break_end_time);
 
-                            if($break_end_time!="" && $break_start_time !="") {
-                                $totalWorkHours = $checkOut->diffInHours($checkIn);
-                                $breakStart = Carbon::createFromFormat('h:i A', $break_start_time);
-                                $breakEnd = Carbon::createFromFormat('h:i A', $break_end_time);
-
-                                if ($breakStart >= $checkIn && $breakEnd <= $checkOut) {
-                                    $totalWorkHours -= $breakEnd->diffInHours($breakStart);
-                                }
-                            } else {
-                                // Initialize total work hours
-                                $totalWorkHours = $checkOut->diffInHours($checkIn);
+                            if ($breakStart >= $checkIn && $breakEnd <= $checkOut) {
+                                $totalWorkHours -= $breakEnd->diffInMinutes($breakStart) / 60; // Subtract break time in hours
                             }
+                        }
 
-                            session::put('total_hours',$totalWorkHours);
+                        // Format total worked hours into HH:MM format
+                        $hours = floor($totalWorkHours);
+                        $minutes = ($totalWorkHours - $hours) * 60;
+                        $formattedTotalWorkHours = sprintf('%02d:%02d', $hours, $minutes);
 
-                            DB::table('attendence')
-                            ->where('emp_id', $id) // Filter the query to only update rows where emp_id matches $id
+                        Session::put('total_hours', $formattedTotalWorkHours);
+
+                        DB::table('attendence')
+                            ->where('emp_id', $id)
                             ->update([
                                 'check_out_time' => $checkOutTime,
                                 'check_out_status' => "done",
-                                'total_time' => $totalWorkHours
+                                'total_time' => $formattedTotalWorkHours
                             ]);
 
-                            return back();
+                        return back();
 
-                        } else {
-                            return back();
-                        }
+                    } else {
+                        return back();
+                    }
                 } else {
                     return back();
                 }
@@ -578,6 +641,7 @@ class AttendenceController extends Controller
             // $check_in_already_message = "";
             return back();
         }
-
     }
+
+
 }

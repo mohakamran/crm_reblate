@@ -293,23 +293,35 @@ class AuthController extends Controller
 
             // dd($employees_access);
 
+            $check_shift_time = DB::table('employees')->where('Emp_Code',$user_code)->first();
+            if($check_shift_time->Emp_Shift_Time == "Morning") {
+                $office_time = DB::table('office_times')->where('shift_type','morning')->first();
+            } else {
+                $office_time = DB::table('office_times')->where('shift_type','night')->first();
+            }
+
+            $office_start_time = $office_time->shift_start;
+            $break_start = $office_time->break_start;
+            $break_end = $office_time->break_end;
+            $office_end_time = $office_time->shift_end;
+
             $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
             $t_date = Carbon::now()->format('l, d F Y');
             // dd($t_date);
-            $data = compact('emp_count','client_count','emp_det','t_date');
+            $data = compact('office_start_time','break_start','break_end','office_end_time','emp_count','client_count','emp_det','t_date');
 
 
             return view('index.emp-dashboard',$data);
         }
         else if($user_type == "manager") {
-            // dd($user_type);
             $employees = Employee::all();
             $emp_count = count($employees);
             // dd($count);
             $clients = Client::all();
             $client_count = count($clients);
-            $data = compact('emp_count','client_count');
-            $check_permissions = DB::table('table_login_details')->where('emp_code',$user_code)->where('employee_type','manager')->first();
+
+            // create session for
+            $check_permissions = DB::table('table_login_details')->where('emp_code',$user_code)->where('employee_type','employee')->first();
             // dd($check_permissions);
             if($check_permissions) {
                 Session::put('employees_access', $check_permissions->employees_access);
@@ -321,7 +333,34 @@ class AuthController extends Controller
                 Session::put('tasks_access', $check_permissions->tasks_access);
                 Session::put('attendance_access', $check_permissions->attendance_access);
             }
-            return view('index.manager-dashboard',$data);
+
+            // calling function of attence for employee
+            $this->indexEmployee();
+
+            //
+            // $check_active_status = DB::table('employees')->where('Emp_Code',$user_code)->first();
+            // if($check_active_status) {
+            //     Session::put('emp_status', $check_active_status->Emp_Status);
+            // }
+
+            // dd($employees_access);
+
+            $check_shift_time = DB::table('employees')->where('Emp_Code',$user_code)->first();
+            if($check_shift_time->Emp_Shift_Time == "Morning") {
+                $office_time = DB::table('office_times')->where('shift_type','morning')->first();
+            } else {
+                $office_time = DB::table('office_times')->where('shift_type','night')->first();
+            }
+
+            $office_start_time = $office_time->shift_start;
+            $break_start = $office_time->break_start;
+            $break_end = $office_time->break_end;
+            $office_end_time = $office_time->shift_end;
+
+            $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
+            $t_date = Carbon::now()->format('l, d F Y');
+            // dd($t_date);
+            $data = compact('office_start_time','break_start','break_end','office_end_time','emp_count','client_count','emp_det','t_date');
         }
          else if($user_type == "admin") {
             $employees = Employee::all();
