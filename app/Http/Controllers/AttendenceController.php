@@ -17,8 +17,13 @@ class AttendenceController extends Controller
     public function approveLeaveRequest($id) {
         $leave = DB::table('leaves')->where('emp_code',$id)->first();
         if($leave) {
+            $remaining = $leave->remaining;
+            if($remaining >=1) {
+                $remaining = $remaining - 1;
+            }
             DB::table('leaves')->where('emp_code',$id)->update([
-                'status' => 'approved'
+                'status' => 'approved',
+                'remaining' => $remaining
             ]);
             return Redirect::back()->with('success', 'Leave request approved successfully!');
         } else {
