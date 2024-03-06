@@ -20,6 +20,9 @@ div.dataTables_wrapper {
     input {
       margin-left: 0.5em;
       margin-right: 0;
+      padding: 10px;
+      background-color: #e3e3e3;
+      border-radius: 10px;
     }
   }
 }
@@ -96,7 +99,7 @@ table.dataTable {
 
     > tr.selected, >tr>.selected {
         background-color: rgba($primary,.2);
-        
+
         td {
             border-color: rgba($primary,.2);
             color: $primary;
