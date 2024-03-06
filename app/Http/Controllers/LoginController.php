@@ -111,8 +111,14 @@ class LoginController extends Controller
         $user_check = UserEmployee::where('emp_code', $login_user_code)->first();
         $email_check = DB::table('users')->where('user_email',$login_user_email)->first();
         if($email_check) {
-            session()->flash('fail', 'Email Already Exists!');
-            return back();
+            $check =  DB::table('table_login_details')->where('email',$login_user_email)->first();
+            if($check) {
+                session()->flash('fail', 'Email Already Exists!');
+                session()->flash('fail', 'Email Already Exists!');
+                return back();
+            }
+                session()->flash('fail', 'Email Already Exists!');
+                return back();
         }
         if($user_check) {
             session()->flash('fail', 'Employee ID already exists!');
@@ -318,23 +324,31 @@ class LoginController extends Controller
     }
 
     public function delviewLoginEmp($id) {
+        // Sanitize the input $id
+        $id = intval($id);
 
-        // $emp_data = UserEmployee::where('emp_code', $id)->first();
+        // Check if the user exists
+        $emp_data = DB::table('users')->where('user_code', $id)->first();
 
-        $emp_data = DB::table('users')->where('user_code',$id)->first();
-        // console.log($id);
+        if ($emp_data) {
+            // Check if login details exist for the user
+            $emp_login = DB::table('table_login_details')->where('emp_code', $id)->first();
 
-        if($emp_data) {
-            // $emp = Login::where('emp_code',$id)->first();
-            $emp = DB::table('table_login_details')->where('emp_code',$id)->first();
-            if($emp) {
-                DB::table('table_login_details')->where('emp_code',$id)->delete();
+            if ($emp_login) {
+                // Delete login details
+                DB::table('table_login_details')->where('emp_code', $id)->delete();
             }
-            DB::table('users')->where('user_code',$id)->delete();
-            return response()->json(['message' => 'success']);
-        }
 
+            // Delete user
+            DB::table('users')->where('user_code', $id)->delete();
+
+            return response()->json(['message' => 'User and associated login details successfully deleted.']);
+        } else {
+            // User does not exist
+            return response()->json(['message' => 'User not found.'], 404);
+        }
     }
+
 
     public function updateLoginEmp($id) {
 

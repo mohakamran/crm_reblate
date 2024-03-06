@@ -192,6 +192,11 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/add-new-task',[TaskController::class,'addNewTask']);
     Route::post('/search-emp-tasks',[TaskController::class,'searchEmpAttendenceAdmin']);
 
+    // leaves
+    Route::get('/leave-requests',[AttendenceController::class,'leaveRequests']);
+    Route::get('/leave-request/approve/{empCode}', [AttendenceController::class, 'approveLeaveRequest']);
+    Route::get('/leave-request/decline/{empCode}', [AttendenceController::class, 'declineLeaveRequest']);
+
 });
 
 Auth::routes();
