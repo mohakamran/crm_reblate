@@ -191,11 +191,13 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/view-tasks',[TaskController::class,'viewTasks']);
     Route::post('/add-new-task',[TaskController::class,'addNewTask']);
     Route::post('/search-emp-tasks',[TaskController::class,'searchEmpAttendenceAdmin']);
+    Route::post('/view-tasks-employees', [TaskController::class, 'viewTaskEachEmployee']);
 
     // leaves
     Route::get('/leave-requests',[AttendenceController::class,'leaveRequests']);
     Route::get('/leave-request/approve/{empCode}', [AttendenceController::class, 'approveLeaveRequest']);
     Route::get('/leave-request/decline/{empCode}', [AttendenceController::class, 'declineLeaveRequest']);
+
 
 });
 

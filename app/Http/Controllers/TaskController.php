@@ -7,6 +7,14 @@ use DB;
 
 class TaskController extends Controller
 {
+        // admin can see all tasks assigned of each employee
+        public function viewTaskEachEmployee(Request $req) {
+            $emp_id = $req->hidden_emp_value;
+            $tasks  = DB::table('tasks')->where('emp_id',$emp_id)->orderBy('id','desc')->get();
+            // dd($tasks);
+            return view('tasks.tasks-cards-of-each-employee',compact('tasks'));
+            // dd($emp_id);
+        }
         // search button admin view by name, id or designation
         public function searchEmpAttendenceAdmin(Request $req) {
             $emp_id = $req->emp_id;
@@ -80,11 +88,16 @@ class TaskController extends Controller
 
     // view tasks
     public function viewTasks() {
+        // Fetch latest employees
         $latestEmployees = DB::table('employees')->get();
-        // dd($latestEmployees);
-        if ($latestEmployees) {
-            return view('tasks.view',compact('latestEmployees'));
+
+        if ($latestEmployees->isNotEmpty()) {
+            // $latestTasks = DB::table('tasks')->get();
+            // Pass the data to the view
+            // dd($latestTasks);
+            return view('tasks.view', compact('latestEmployees'));
         } else {
+            // If no employees found, redirect back
             return back();
         }
     }
