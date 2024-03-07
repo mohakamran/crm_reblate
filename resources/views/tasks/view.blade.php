@@ -1,9 +1,9 @@
 @extends('layouts.master')
 @section('title')
-    Employee Attendence
+    Employee Tasks
 @endsection
 @section('page-title')
-    Employee Attendence
+Employee Tasks
 @endsection
 @section('body')
 
@@ -86,34 +86,24 @@
                         <div class="row mt-5">
                             @foreach ($latestEmployees as $emp)
                                 <div class="col-md-3">
-
                                     <div class="card">
                                         <div class="card-body">
-                                            @if ($emp->Emp_Image !=null &&  file_exists(public_path($emp->Emp_Image)))
-
-                                                    <img class="image-center" src="{{ $emp->Emp_Image }}" alt="" >
-
-                                                @else
+                                            @if ($emp->Emp_Image != null && file_exists(public_path($emp->Emp_Image)))
+                                                <img class="image-center" src="{{ $emp->Emp_Image }}" alt="">
+                                            @else
                                                 <a href="{{ url('user.png') }}" target="_blank">
-                                                    <img class="image-center" src="{{ url('user.png') }}" alt="" >
+                                                    <img class="image-center" src="{{ url('user.png') }}" alt="">
                                                 </a>
                                             @endif
                                             <div class="card-text-center">
-                                                <p class="emp-name"> {{ $emp->Emp_Full_Name }}</p>
+                                                <p class="emp-name">{{ $emp->Emp_Full_Name }}</p>
                                                 <p>Designation: {{ $emp->Emp_Designation }}</p>
                                                 <p>Shift: {{ $emp->Emp_Shift_Time }}</p>
                                                 <p>Employee Code: {{ $emp->Emp_Code }}</p>
-                                                <p>Task 1: Pending</p>
                                             </div>
-
-
-                                            <form action="/view-attendence-emp" method="post">
+                                            <form action="/view-tasks-employees" method="post">
                                                 @csrf
-
-
                                                 <input type="hidden" name="hidden_emp_value" value="{{$emp->Emp_Code}}">
-
-
                                                 <div class="text-center mt-3 container">
                                                     <button class="reblateBtn w-75 p-2 d-block">View Details</button>
                                                 </div>
@@ -123,6 +113,7 @@
                                 </div>
                             @endforeach
                         </div>
+
                     </div>
                     <!-- end card body -->
                 </div>
