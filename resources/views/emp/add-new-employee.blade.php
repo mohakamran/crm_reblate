@@ -115,7 +115,7 @@
                                                 <div class="form-floating mb-3 inputboxcolor">
                                                     <input class="form-control " placeholder="Employee code: 200sols" style="background-color: transparent; border:none;"
                                                         value="{{ isset(auth()->user()->emp_code) ? auth()->user()->emp_code : '' }}"
-                                                        type="text" name="employee_code" disabled>
+                                                        type="text" name="employee_code" >
 
                                                     <label for="">Emp Code <span class="text-danger">*</span></label>
                                                     @error('employee_code')
