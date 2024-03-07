@@ -7,12 +7,49 @@ use DB;
 
 class TaskController extends Controller
 {
+        // update each task of employe in database
+        public function updateEachTask(Request $req) {
+            $emp_id = $req->emp_id;
+            $task_id = $req->task_id;
+            // $task_date = $req->task_date;
+            // echo $emp_id."<br>";
+            // echo $task_id."<br>";
+            // return;
+
+            $tasks = DB::table('tasks')
+                ->where('emp_id', $emp_id)
+                ->where('id', $task_id)
+                ->first();
+            // dd($tasks->task_title);
+
+            $emp = DB::table('employees')->where('Emp_Code',$emp_id)->first();
+            $emp_name = $emp->Emp_Full_Name;
+            $Emp_Designation = $emp->Emp_Designation;
+            $Emp_Image = $emp->Emp_Image;
+            $Emp_Shift_Time = $emp->Emp_Shift_Time;
+
+            return view('tasks.update-form',compact('task_id','tasks','emp_name','emp_id','Emp_Designation','Emp_Image','Emp_Shift_Time'));
+        }
+        // update task of each employee
+        public function updateTaskEachEmployee($id) {
+            // dd($id);
+            $emp = DB::table('employees')->where('Emp_Code',$id)->first();
+            $emp_name = $emp->Emp_Full_Name;
+            $emp_id = $id;
+            $tasks = DB::table('tasks')->where('emp_id',$id)->orderBy('id','desc')->get();
+            return view('tasks.update-task',compact('tasks','emp_name','emp_id'));
+        }
         // admin can see all tasks assigned of each employee
         public function viewTaskEachEmployee(Request $req) {
             $emp_id = $req->hidden_emp_value;
+            $emp = DB::table('employees')->where('Emp_Code',$emp_id)->first();
+            $emp_name = $emp->Emp_Full_Name;
+            $Emp_Designation = $emp->Emp_Designation;
+            $Emp_Image = $emp->Emp_Image;
+            $Emp_Shift_Time = $emp->Emp_Shift_Time;
             $tasks  = DB::table('tasks')->where('emp_id',$emp_id)->orderBy('id','desc')->get();
             // dd($tasks);
-            return view('tasks.tasks-cards-of-each-employee',compact('tasks'));
+            return view('tasks.tasks-cards-of-each-employee',compact('tasks','emp_name','emp_id','Emp_Designation','Emp_Image','Emp_Shift_Time'));
             // dd($emp_id);
         }
         // search button admin view by name, id or designation
@@ -127,6 +164,7 @@ class TaskController extends Controller
             'task_description' => $first_task_description,
             'task_date' => $first_task_deadline,
             'task_status' => "pending",
+            'task_percentage' => "0",
             'assigned_by' => $name, // Assuming admin is the default assigned_by value
         ]);
 
@@ -146,6 +184,7 @@ class TaskController extends Controller
                     'task_description' => $descriptions[$index],
                     'task_date' => $deadlines[$index],
                     'task_status' => 'pending',
+                    'task_percentage' => "0",
                     'assigned_by' => 'admin', // Assuming admin is the default assigned_by value
                 ];
             }
