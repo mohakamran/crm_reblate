@@ -321,7 +321,7 @@ class AuthController extends Controller
             $client_count = count($clients);
 
             // create session for
-            $check_permissions = DB::table('table_login_details')->where('emp_code',$user_code)->where('employee_type','employee')->first();
+            $check_permissions = DB::table('table_login_details')->where('emp_code',$user_code)->where('employee_type','manager')->first();
             // dd($check_permissions);
             if($check_permissions) {
                 Session::put('employees_access', $check_permissions->employees_access);
