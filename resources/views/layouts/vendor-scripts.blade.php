@@ -7,6 +7,5 @@
 <!-- Icon -->
 <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @yield('scripts')
-
-

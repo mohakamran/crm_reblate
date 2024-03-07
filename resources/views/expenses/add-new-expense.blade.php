@@ -34,8 +34,8 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="number" placeholder="User Name" name="ex_amount"
+                                    <div class="form-floating mb-3 inputboxcolor">
+                                        <input class="form-control" style="background-color: transparent; border:none;" type="number" placeholder="User Name" name="ex_amount"
                                             value="{{ old('ex_amount') }}" min="0">
                                         @error('ex_amount')
                                             <span class="text-danger">{{ $message }}</span>
@@ -45,8 +45,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="date" placeholder="email" name="ex_date"
+                                    <div class="form-floating mb-3 inputboxcolor">
+                                        <input class="form-control" style="background-color: transparent; border:none;" type="date" placeholder="email" name="ex_date"
                                             value="{{ old('ex_date') }}">
                                         @error('ex_date')
                                             <span class="text-danger">{{ $message }}</span>
@@ -57,8 +57,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select id="ex_parent_category" class="form-control" name="ex_parent_category">
+                                    <div class="form-floating mb-3 inputboxcolor">
+                                        <select id="ex_parent_category" class="form-control" name="ex_parent_category" style="background-color: transparent; border:none;">
                                             <option value="" disabled selected >Select a category</option>
 
                                             <option value="Office" {{ old('ex_parent_category') === 'Office' ? 'selected' : '' }}>Office</option>
@@ -74,8 +74,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select id="ex_child_category" class="form-control" name="ex_child_category">
+                                    <div class="form-floating mb-3 inputboxcolor">
+                                        <select id="ex_child_category" class="form-control"  name="ex_child_category" style="background-color: transparent; border:none;">
                                             <option value="" disabled selected >Select a subctegory</option>
                                             <option value="none" {{ old('ex_child_category') === 'none' ? 'selected' : '' }}>None</option>
                                             <option value="Day Shift" {{ old('ex_child_category') === 'Day Shift' ? 'selected' : '' }}>Day Shift</option>
@@ -97,8 +97,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-floating mb-3">
-                                        <textarea class="form-control" style="height: 80px;" name="ex_description" placeholder="expense description"></textarea>
+                                    <div class="form-floating mb-3 inputboxcolor">
+                                        <textarea class="form-control" style="height: 80px;  background-color: transparent; border:none;" name="ex_description" placeholder="expense description"></textarea>
                                         @error('ex_description')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -108,8 +108,7 @@
                             </div>
 
                             <div>
-                                <button type="submit" class="btn btn-primary  w-md"
-                                    style="background-color: #14213D ; border-color: #fff;">{{ $btn_text }}</button>
+                                <button type="submit" class="reblateBtn w-md py-2 px-4">{{ $btn_text }}</button>
                             </div>
                         </form>
                     </div>

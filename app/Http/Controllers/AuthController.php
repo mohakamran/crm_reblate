@@ -366,9 +366,13 @@ class AuthController extends Controller
             $employees = Employee::all();
             $emp_count = count($employees);
             // dd($count);
+            $data_chart = [
+                'labels' => ['January', 'February', 'March', 'April', 'May'],
+                'data' => [65, 59, 80, 81, 56],
+            ];
             $clients = Client::all();
             $client_count = count($clients);
-            $data = compact('emp_count','client_count');
+            $data = compact('emp_count','client_count','data_chart');
             return view('index.index',$data);
         } else if($user_type == "client") {
             $employees = Employee::all();
