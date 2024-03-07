@@ -21,19 +21,22 @@
                         <form method="post" action="{{$route}}" enctype="multipart/form-data">
                             @csrf
                             @if (session('success'))
-                                <div class="alert alert-success alert-dismissible fade show" id="close-now">
+                            <div class="container-fluid d-flex justify-content-end">
+                                <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" style="max-width: 300px;" id="close-now">
                                     {{ session('success') }}
+
                                     <a type="button" onclick="hideNow()" class="close" data-dismiss="alert"
-                                        aria-label="Close" style="float: right;">
+                                        aria-label="Close" style="float: right; font-size:20px; margin-left:10px;">
                                         <span aria-hidden="true">&times;</span>
                                     </a>
                                 </div>
+                            </div>
                             @endif
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 inputboxcolor">
                                         <input class="form-control @error('client_name') is-invalid @enderror"
-                                            type="text" placeholder="User Name" name="client_name"
+                                            type="text" placeholder="User Name" name="client_name" style="background-color: transparent; border:none;"
                                             value="{{ isset($client_data->client_name) ? $client_data->client_name :  old('client_name') }}"
                                             min="0">
                                         @error('client_name')
@@ -44,9 +47,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 inputboxcolor">
                                         <input class="form-control @error('project_client_name') is-invalid @enderror"
-                                            type="text" placeholder="email" name="project_client_name"
+                                            type="text" placeholder="email" name="project_client_name" style="background-color: transparent; border:none;"
                                             value="{{ isset($client_data->project_name) ? $client_data->project_name :  old('project_client_name') }}">
                                         @error('project_client_name')
                                             <span class="text-danger">{{ $message }}</span>
@@ -58,9 +61,9 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 inputboxcolor">
                                         <input class="form-control @error('project_start_date') is-invalid @enderror"
-                                            type="date" placeholder="User Name" name="project_start_date"
+                                            type="date" placeholder="User Name" name="project_start_date" style="background-color: transparent; border:none;"
                                             value="{{ isset($client_data->project_start_date) ? $client_data->project_start_date :  old('project_start_date') }}"
                                             min="0">
                                         @error('project_start_date')
@@ -71,8 +74,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select id="" class="form-control" name="client_project_type">
+                                    <div class="form-floating mb-3 inputboxcolor">
+                                        <select id="" class="form-control" name="client_project_type" style="background-color: transparent; border:none;">
                                             <option value="" disabled selected >Select a project type</option>
                                             <option value="one time" {{ (isset($client_data->project_type) && $client_data->project_type == "one time") ? 'selected' : '' }}
                                                 >One Time</option>
@@ -88,9 +91,9 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 inputboxcolor">
                                         <input class="form-control @error('client_email') is-invalid @enderror"
-                                            type="email" placeholder="User Name" name="client_email"
+                                            type="email" placeholder="User Name" name="client_email" style="background-color: transparent; border:none;"
                                             value="{{ isset($client_data->client_email) ? $client_data->client_email : old('client_email') }}"
                                             min="0">
                                         @error('client_email')
@@ -101,9 +104,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 inputboxcolor">
                                         <input class="form-control " type="tel" placeholder="User Name"
-                                            name="client_phone"
+                                            name="client_phone" style="background-color: transparent; border:none;"
                                             value="{{ isset($client_data->client_phone)  ?  $client_data->client_phone : old('client_phone') }}"
                                             min="0">
 
@@ -114,8 +117,8 @@
                             </div>
 
                             <div class="col-md-12">
-                                <div class="form-floating mb-3">
-                                    <textarea class="form-control" style="height: 80px;" name="client_description" placeholder="project description">{{ isset($client_data->project_description)  ?  $client_data->project_description : old('client_phone') }}</textarea>
+                                <div class="form-floating mb-3 inputboxcolor">
+                                    <textarea class="form-control" style="height: 80px; resize: none; background-color: transparent; border:none;" name="client_description" placeholder="project description">{{ isset($client_data->project_description)  ?  $client_data->project_description : old('client_phone') }}</textarea>
                                     @error('client_description')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -126,8 +129,7 @@
 
 
                             <div>
-                                <button type="submit" class="btn btn-primary  w-md"
-                                    style="background-color: #14213D ; border-color: #fff;">{{ $btn_text }}</button>
+                                <button type="submit" class="reblateBtn py-2 px-4 w-md">{{ $btn_text }}</button>
                             </div>
                         </form>
                     </div>

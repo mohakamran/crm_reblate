@@ -310,16 +310,8 @@
                     @foreach ($latestEmployees as $emp)
                         <div class="col-md-3">
 
-                            <div class="card hovering" style="box-shadow:0px 0px 10px 10px #00000021; overflow: hidden;">
-                                <div style="width: 150px;
-                                height: 150px;
-                                position: absolute;
-                                z-index: 100;
-                                background-color: #fca311;
-                                border-radius: 100px;
-                                right: -75px;
-                                top: -70px;
-                            }"></div>
+                            <div class="card hovering" style="box-shadow:0px 0px 10px 10px #00000021; overflow: hidden; cursor: pointer; border-radius: 10px;">
+                                <div style="width: 150px;height: 150px;position: absolute;z-index: 100;background-color: #fca311;border-radius: 100px;right: -75px;top: -70px;"></div>
                                 <div class="card-body" style="box-shadow: none; ">
                                    <div class="options">
                                     <div class="group-menu" onclick="toggleFun()">
@@ -336,7 +328,7 @@
 
                                    </div>
                                     @if ($emp->Emp_Image != null && file_exists(public_path($emp->Emp_Image)))
-                                    <a href="{{ url('user.png') }}" target="_blank" style="display: flex; justify-content: center;">
+                                    <a href="{{$emp->Emp_Image }}" target="_blank" style="display: flex; justify-content: center;">
                                         <img class="image-center" src="{{ $emp->Emp_Image }}" alt="">
                                     </a>
                                     @else
@@ -346,9 +338,18 @@
                                     @endif
                                     <div class="card-text-center">
                                         <p class="emp-name"> {{ $emp->Emp_Full_Name }}</p>
-                                        <p>Designation: {{ $emp->Emp_Designation }}</p>
-                                        <p>Shift: {{ $emp->Emp_Shift_Time }}</p>
-                                        <p>Employee Code: {{ $emp->Emp_Code }}</p>
+                                        <div class="d-flex gap-1 align-items-center mb-2">
+                                            <p style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d;">Designation:</p>
+                                            <span style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">{{ $emp->Emp_Designation }} </span>
+                                        </div>
+                                        <div class="d-flex gap-1 align-items-center mb-2">
+                                            <p style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d; ">Shift:</p>
+                                            <span style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">{{ $emp->Emp_Shift_Time }} </span>
+                                        </div>
+                                        <div class="d-flex gap-1 align-items-center mb-2">
+                                            <p style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d; ">Employee Code:</p>
+                                            <span style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">{{ $emp->Emp_Code }} </span>
+                                        </div>
                                     </div>
 
 
