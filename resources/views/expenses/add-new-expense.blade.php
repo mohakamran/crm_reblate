@@ -20,15 +20,17 @@
 
                         <form method="post" action="{{ $route }}" enctype="multipart/form-data">
                             @csrf
-
                             @if (session('success'))
-                                <div class="alert alert-success alert-dismissible fade show" id="close-now">
+                            <div class="container-fluid d-flex justify-content-end">
+                                <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" style="max-width: 300px;" id="close-now">
                                     {{ session('success') }}
+
                                     <a type="button" onclick="hideNow()" class="close" data-dismiss="alert"
-                                        aria-label="Close" style="float: right;">
+                                        aria-label="Close" style="float: right; font-size:20px; margin-left:10px;">
                                         <span aria-hidden="true">&times;</span>
                                     </a>
                                 </div>
+                            </div>
                             @endif
 
 
