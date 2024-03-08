@@ -305,6 +305,49 @@ class AuthController extends Controller
             $break_end = $office_time->break_end;
             $office_end_time = $office_time->shift_end;
 
+            // show attendence time
+
+           $attendance  = DB::table('attendence')->where('emp_id',$user_code)->orderBy('id','desc')->first();
+
+           if ($attendance && $attendance->check_in_time != null) {
+            // If check_in_time exists, set session data and indicate to show the check out button
+                Session::put('check_in_time', $attendance->check_in_time);
+                Session::put('show_check_out', true);
+            } else {
+                // If check_in_time does not exist, remove session data and indicate not to show the check out button
+                Session::forget('check_in_time');
+                Session::put('show_check_out', false);
+            }
+
+
+           if ($attendance && $attendance->break_start != null) {
+                Session::put('break_start_time', $attendance->break_start);
+            } else {
+                Session::forget('break_start_time');
+            }
+
+           if ($attendance && $attendance->break_end != null) {
+                Session::put('break_end_time', $attendance->break_end);
+            } else {
+                Session::forget('break_end_time');
+            }
+
+
+            if ($attendance && $attendance->check_out_time != null) {
+                Session::put('attendence_status', true);
+                Session::put('check_out_time', $attendance->check_out_time);
+            } else {
+                Session::put('attendence_status', false);
+                Session::forget('check_out_time');
+            }
+
+            if ($attendance && $attendance->total_time != null) {
+               Session::put('total_hours', $attendance->total_time);
+            } else {
+                Session::forget('total_hours');
+            }
+
+
             $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
             $t_date = Carbon::now()->format('l, d F Y');
             // dd($t_date);
@@ -357,10 +400,51 @@ class AuthController extends Controller
             $break_end = $office_time->break_end;
             $office_end_time = $office_time->shift_end;
 
+            $attendance  = DB::table('attendence')->where('emp_id',$user_code)->orderBy('id','desc')->first();
+
+            if ($attendance && $attendance->check_in_time != null) {
+             // If check_in_time exists, set session data and indicate to show the check out button
+                 Session::put('check_in_time', $attendance->check_in_time);
+                 Session::put('show_check_out', true);
+             } else {
+                 // If check_in_time does not exist, remove session data and indicate not to show the check out button
+                 Session::forget('check_in_time');
+                 Session::put('show_check_out', false);
+             }
+
+
+            if ($attendance && $attendance->break_start != null) {
+                 Session::put('break_start_time', $attendance->break_start);
+             } else {
+                 Session::forget('break_start_time');
+             }
+
+             if ($attendance && $attendance->break_end != null) {
+                Session::put('break_end_time', $attendance->break_end);
+            } else {
+                Session::forget('break_end_time');
+            }
+
+
+             if ($attendance && $attendance->check_out_time != null) {
+                 Session::put('attendence_status', true);
+                 Session::put('check_out_time', $attendance->check_out_time);
+             } else {
+                 Session::put('attendence_status', false);
+                 Session::forget('check_out_time');
+             }
+
+             if ($attendance && $attendance->total_time != null) {
+                Session::put('total_hours', $attendance->total_time);
+             } else {
+                 Session::forget('total_hours');
+             }
+
             $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
             $t_date = Carbon::now()->format('l, d F Y');
             // dd($t_date);
             $data = compact('office_start_time','break_start','break_end','office_end_time','emp_count','client_count','emp_det','t_date');
+            return view('index.manager-dashboard',$data);
         }
          else if($user_type == "admin") {
             $employees = Employee::all();

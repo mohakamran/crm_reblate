@@ -13,7 +13,7 @@
         <div class="float-right">
             <a href="/view-tasks" class="btn btn-primary ">Go back</a>
             <a href="/create-new-task" class="btn btn-primary ">Assign New Task</a>
-            <a href="/update-tasks/{{$emp_id}}" class="btn btn-primary ">Update Tasks</a>
+            <a href="/update-tasks/{{ $emp_id }}" class="btn btn-primary ">Update Tasks</a>
         </div>
         <div class="row mt-2">
             <div class="col-md-3">
@@ -21,7 +21,7 @@
                     <div class="card-body text-center">
                         <!-- Using a dummy CDN link for the image -->
 
-                        @if ($Emp_Image != '')
+                        @if (isset($Emp_Image) && $Emp_Image != '')
                             <img class="img-fluid rounded-circle mb-3" style="width:100px;height:100px;"
                                 src="{{ $Emp_Image }}">
                         @else
@@ -54,9 +54,10 @@
 
                                         <div class="progress mb-2">
                                             <div class="progress-bar bg-success" role="progressbar" style="width: 90%;"
-                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{$task->task_percentage}}% Complete</div>
+                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                {{ $task->task_percentage }}% Complete</div>
                                         </div>
-                                        <p style="font-size:12px;margin-top:10x;">deadline: {{$task->task_date}}</p>
+                                        <p style="font-size:12px;margin-top:10x;">deadline: {{ $task->task_date }}</p>
                                     </div>
                                 @endif
                             @endforeach
@@ -81,10 +82,12 @@
                                         <h5 class="card-title ">{{ $task->task_title }}</h5>
                                         <P class="task-description">{{ $task->task_description }}</P>
                                         <div class="progress mb-2">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: {{$task->task_percentage}}%;"
-                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{$task->task_percentage}}% Complete</div>
+                                            <div class="progress-bar bg-success" role="progressbar"
+                                                style="width: {{ $task->task_percentage }}%;" aria-valuenow="100"
+                                                aria-valuemin="0" aria-valuemax="100">{{ $task->task_percentage }}%
+                                                Complete</div>
                                         </div>
-                                        <p style="font-size:12px;margin-top:10x;">deadline: {{$task->task_date}}</p>
+                                        <p style="font-size:12px;margin-top:10x;">deadline: {{ $task->task_date }}</p>
 
                                     </div>
                                 @endif
@@ -111,9 +114,10 @@
                                         <P class="task-description">Task Desc: {{ $task->task_description }}</P>
                                         <div class="progress mb-2">
                                             <div class="progress-bar bg-success" role="progressbar" style="width: 80%;"
-                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{$task->task_percentage}}% Complete</div>
+                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                {{ $task->task_percentage }}% Complete</div>
                                         </div>
-                                        <p style="font-size:12px;margin-top:10x;">deadline: {{$task->task_date}}</p>
+                                        <p style="font-size:12px;margin-top:10x;">deadline: {{ $task->task_date }}</p>
                                     </div>
                                 @endif
                             @endforeach

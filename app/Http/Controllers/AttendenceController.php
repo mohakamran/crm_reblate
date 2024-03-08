@@ -8,11 +8,43 @@ use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Redirect;
 
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 
 
 class AttendenceController extends Controller
 {
+    // get form updated check in, check out, data and save in database
+    public function updateEmpAttendenceDetails(Request $req) {
+        // dd($req->attendence_id);
+
+        $attendence_id = $req->attendence_id;
+        $check_in_time = $req->check_in_time;
+        $check_out_time = $req->check_out_time;
+        $break_start = $req->break_start;
+        $break_end = $req->break_end;
+        // DB::table('attendence')->
+    }
+    // show attendence form
+    public function showUpdateAttendenceForm(Request $req){
+        $attendence_id = $req->attendence_id;
+        $emp_id = $req->emp_id;
+        // dd($attendence_id);
+        $index = DB::table('attendence')->where('id',$attendence_id)->first();
+        // dd($attendece);
+        $emp = DB::table('employees')->where('Emp_Code',$emp_id)->first();
+        // dd($emp);
+        $emp_name = $emp->Emp_Full_Name;
+        $Emp_Designation = $emp->Emp_Designation;
+        $Emp_Image = $emp->Emp_Image;
+        $Emp_Shift_Time = $emp->Emp_Shift_Time;
+        $date = $index->date;
+        // Convert the date to DateTime object
+        $dateObj = new \DateTime($date);
+        // Format the date as desired (e.g., "3 March 2024")
+        $formattedDate = $dateObj->format('j F Y');
+        // dd($formattedDate);
+        return view('attendence.show-update-form',compact('attendence_id','emp_id','formattedDate','index','emp_name','Emp_Designation','Emp_Image','Emp_Shift_Time'));
+    }
     // approval request
     public function approveLeaveRequest($id) {
         $leave = DB::table('leaves')->where('emp_code',$id)->first();
@@ -174,9 +206,10 @@ class AttendenceController extends Controller
         if($id) {
             $emp = DB::table('employees')->where('Emp_Code', $id)->first();
             if($emp) {
+                $emp_name = $emp->Emp_Full_Name;
                 $check_attendence = DB::table('attendence')->where('emp_id', $id)->get();
                 // dd($check_attendence->date);
-                return view('attendence.view-individual',compact('check_attendence','id'));
+                return view('attendence.view-individual',compact('check_attendence','id','emp_name'));
             } else {
                 return back();
             }
@@ -275,9 +308,10 @@ class AttendenceController extends Controller
         $emp = DB::table('employees')->where('Emp_Code', $id)->first();
         if($emp) {
             if($date!="") {
+                $emp_name = $emp->Emp_Full_Name;
                 $check_attendence = DB::table('attendence')->where('emp_id',$id)->where('date',$date)->get();
                 $show_back = "yes";
-                return view('attendence.view-individual',compact('check_attendence','show_back'));
+                return view('attendence.view-individual',compact('check_attendence','show_back','emp_name'));
             }
         } else {
             return back();

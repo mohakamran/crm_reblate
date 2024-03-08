@@ -72,9 +72,9 @@
 
                                 <div class="col-md-3">
                                     <button class="btn btn-success">Search</button>
-                                    @if (isset($show_back) && $show_back == 'yes')
+                                    {{-- @if (isset($show_back) && $show_back == 'yes')
                                         <a href="/view-attendence" class="btn btn-success -right-3">View All</a>
-                                    @endif
+                                    @endif --}}
                                 </div>
                         </form>
 
@@ -165,8 +165,10 @@
                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                             <tr>
-                                <th> Emp ID</th>
+                                {{-- <th> Emp ID</th> --}}
+                                <th> Name</th>
                                 <th> Date</th>
+                                <th> Day</th>
                                 <th> Month</th>
                                 <th> Year</th>
                                 <th> Check In</th>
@@ -174,7 +176,7 @@
                                 <th> Break Start</th>
                                 <th> Break End</th>
                                 <th> Total Time Worked</th>
-                                <th> Over Time</th>
+                                {{-- <th> Over Time</th> --}}
                                 @if (auth()->user()->user_type == 'admin')
                                     <th> Action</th>
                                 @endif
@@ -195,10 +197,16 @@
                                         $year = $carbonDate->year;
                                         // Output the month name and year
                                         // echo "$monthName $year";
+                                        // Extract day name
+                                        $dayName = $carbonDate->englishDayOfWeek;
+                                        $dayName = $carbonDate->dayName;
+                                        $formattedDate = $carbonDate->format('j F Y');
                                     @endphp
 
-                                    <td>{{ $emp->emp_id }}</td>
-                                    <td>{{ $emp->date }}</td>
+                                    {{-- <td>{{ $emp->emp_id }}</td> --}}
+                                    <td>{{ $emp_name }}</td>
+                                    <td>{{ $formattedDate }}</td>
+                                    <td>{{ $dayName }}</td>
                                     <td>{{ $monthName }}</td>
                                     <td>{{ $year }}</td>
                                     {{-- <td>{{ ( $emp->Emp_Code < 10) ? '00'.$emp->Emp_Code : $emp->Emp_Code }}sols</td> --}}
@@ -208,11 +216,18 @@
                                     <td>{{ $emp->break_start }}</td>
                                     <td>{{ $emp->break_end }}</td>
                                     <td>{{ $emp->total_time }}</td>
-                                    <td>0 Hrs</td>
+                                    {{-- <td>0 Hrs</td> --}}
                                     @if (auth()->user()->user_type == 'admin')
                                         {{-- <td><a class="open-popup" href="#" data-emp-id="{{ $emp->emp_id }}"><svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" viewBox="0 0 24 24"><path fill="currentColor" d="m14.06 9l.94.94L5.92 19H5v-.92zm3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z"/></svg></a></td> --}}
-                                        <td><a href="#" class="open-popup" data-emp-id="{{ $emp->emp_id }}">Edit</a>
-                                        </td>
+                                        <form action="/show-update-attendence-form" method="post">
+                                            @csrf
+                                            <input type="hidden" value="{{ $emp->id }}" name="attendence_id">
+                                            <input type="hidden" value="{{ $emp->emp_id }}" name="emp_id">
+                                            <td>
+                                                {{-- <button>Edit</button> --}}
+                                                <input type="submit" value="edit">
+                                            </td>
+                                        </form>
                                     @endif
 
 

@@ -638,7 +638,7 @@
                         <div class="break-time">
                             <p>Target Working Hours <span style="float: right;">7:00 / Day</span></p>
 
-                            @if (session()->has('check_in_time') && session('check_in_time') != '')
+                            {{-- @if (session()->has('check_in_time') && session('check_in_time') != '')
                                 <p>Check in Time: <span style="float: right;">{{ session('check_in_time') }}</span></p>
                             @endif
 
@@ -652,7 +652,7 @@
                             @endif
                             @if (session()->has('check_out_time') && session('check_out_time') != '')
                                 <p>Check Out Time: <span style="float: right;">{{ session('check_out_time') }}</span></p>
-                            @endif
+                            @endif --}}
 
                         </div>
                         {{-- {{$attendence_status}} --}}

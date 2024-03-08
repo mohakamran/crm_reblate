@@ -175,6 +175,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/apply-for-leave', [AttendenceController::class, 'empApplyForLeave']);
     Route::get('/leave-records', [AttendenceController::class, 'empLeaveRecords']);
     Route::post('/search-emp-leaves', [AttendenceController::class, 'empSearchRecords']);
+    Route::post('/show-update-attendence-form', [AttendenceController::class, 'showUpdateAttendenceForm']);
+    Route::post('/update-emp-attendence-details', [AttendenceController::class, 'updateEmpAttendenceDetails']);
 
     // office time controller
 
