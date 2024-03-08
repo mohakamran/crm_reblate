@@ -21,94 +21,43 @@
                             @csrf
 
                             @if (session('success'))
-                                <div class="alert alert-success alert-dismissible fade show" id="close-now">
+                            <div class="container-fluid d-flex justify-content-end">
+                                <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" style="max-width: 300px; padding-right:20px;" id="close-now">
                                     {{ session('success') }}
+
                                     <a type="button" onclick="hideNow()" class="close" data-dismiss="alert"
-                                        aria-label="Close" style="float: right;">
+                                        aria-label="Close" style="float: right; font-size:20px; margin-left:10px;">
                                         <span aria-hidden="true">&times;</span>
                                     </a>
                                 </div>
+                            </div>
                             @endif
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-control select2" name="emp_name" id="selectBox">
+                            <div class="row mb-3">
+                                <div class="col-md-6" style="width: 49%;">
+                                    <div class="form-floating inputboxcolor">
+                                        <select style="background-color: transparent; border:none; width: 100%; padding: 10px;" name="emp_name" id="selectBox">
                                             @foreach ($emp as $employee)
-                                                <option value="{{ $employee->Emp_Code }}">
+                                                <option style="padding: 10px;" value="{{ $employee->Emp_Code }}">
                                                     <img src="{{ asset($employee->Emp_Image) }}"
                                                         style="width:50px;height:50px;border-radius:50%;" alt="">
                                                     {{ $employee->Emp_Full_Name }}
                                                 </option>
                                             @endforeach
                                         </select>
+                                        {{-- <select style="background-color: transparent; border:none;" class="form-control select2" name="emp_name" id="selectBox">
+
+                                        </select> --}}
                                         @error('emp_name')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    {{-- <div class="form-floating mb-3">
-
-                                        <select class="form-control" name="emp_name" >
-                                            <option value="" disabled selected>Select Employee Name</option>
-                                            @foreach ($emp as $employee)
-                                                <option value="{{ $employee->Emp_Code }}">
-                                                    <img src="{{ asset($employee->Emp_Image) }}" style="width:50px;height:50px;border-radius:50%;" alt="">
-                                                    {{ $employee->Emp_Full_Name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <label for="selectBox">Employee Name <span style="color:red;">*</span></label>
-                                        @error('emp_name')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div> --}}
-
-                                    {{-- <div class="form-group">
-                                        <label for="selectBox">Select Options:</label>
-                                        <select class="form-control select2" name="emp_name" id="selectBox" style="width: 100%;">
-                                            @foreach ($emp as $emp)
-                                                <option value="{{$emp->Emp_Code}}">
-                                                 <img src="{{$emp->Emp_Image}}" style="width:50px;height:50px;border-radius:50%;" alt="">
-                                                 {{$emp->Emp_Full_Name}}
-                                             </option>
-                                            @endforeach
-
-                                         </select>
-
-                                    </div> --}}
-
-
-                                </div>
-                                {{-- <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="date" placeholder="email" name="dead_line"
-                                            value="{{ old('dead_line') }}">
-                                        @error('dead_line')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                        <label for="">Deadline Date<span class="text-danger">*</span></label>
-                                    </div>
-                                </div> --}}
-                            </div>
-
-                            {{-- <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <div id="inputContainer">
-                                        <!-- Existing input field -->
-                                        <input type="text" class="form-control" name="task_first"
-                                            placeholder="Task Title">
-                                        @error('task_first')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
 
                                 </div>
-                            </div> --}}
-                            <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-6 inputboxcolor">
 
                                     <!-- Existing input field -->
-                                    <input type="text" class="form-control mt-2" name="first_task_title"
+                                    <input  type="text" class="form-control" name="first_task_title" style="background-color: transparent; border:none;"
                                         placeholder="Task Title">
 
                                     @error('first_task_title')
@@ -116,39 +65,40 @@
                                     @enderror
 
                                 </div>
-                                <div class="col-md-6">
 
-                                    <!-- Existing input field -->
-                                    <input type="date" class="form-control mt-2" name="first_task_deadline"
-                                        placeholder="Task Title" value="{{ old('first_task_deadline') }}">
-                                    @error('first_task_deadline')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                            </div>
+
+
+                            <div class="row mb-3">
+                                <div class="col-md-6" style="width:49%;">
+                                  <!-- Existing input field -->
+                                  <div class="inputboxcolor">
+
+                                      <input style="background-color: transparent; border:none;" type="date" class="form-control inputboxcolor" name="first_task_deadline"
+                                          placeholder="Task Title" value="{{ old('first_task_deadline') }}">
+                                      @error('first_task_deadline')
+                                          <span class="text-danger">{{ $message }}</span>
+                                      @enderror
+                                  </div>
 
                                 </div>
 
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 ">
+                                    <div class="inputboxcolor">
+                                        <textarea style="background-color: transparent; border:none;" class="form-control" name="first_task_description" placeholder="task description">{{ old('first_task_description') }}</textarea>
+                                        @error('first_task_description')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
 
-                                    <textarea class="form-control" name="first_task_description" placeholder="task description">{{ old('first_task_description') }}</textarea>
-                                    @error('first_task_description')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                    <button type="button" class="btn btn-primary mt-3" id="addInputButton"
-                                        style="float:right;">Add New
-                                        Task</button>
 
                                 </div>
                             </div>
-
-
-                            <div id="inputContainer"></div>
-
-
-                            <div>
-                                <button type="submit" class="btn btn-primary  w-md"
-                                    style="background-color: #14213D ; border-color: #fff;">Assign Task</button>
+                            <div class="mt-3 d-flex justify-content-between align-items-center">
+                                <button type="button" class="reblateBtn px-4 py-2" id="addInputButton">Add New Task</button>
+                                <button type="submit" class="reblateBtn px-4 py-2" style="background-color: #fca311 ; border:#fca311; color: #000;">Assign Task</button>
                             </div>
                         </form>
                     </div>

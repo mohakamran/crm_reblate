@@ -115,16 +115,19 @@
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#14213d" class="bi bi-calendar-range" viewBox="0 0 16 16">
-                                        <path d="M9 7a1 1 0 0 1 1-1h5v2h-5a1 1 0 0 1-1-1M1 9h4a1 1 0 0 1 0 2H1z"/>
-                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
-                                      </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#14213d"
+                                        class="bi bi-calendar-range" viewBox="0 0 16 16">
+                                        <path d="M9 7a1 1 0 0 1 1-1h5v2h-5a1 1 0 0 1-1-1M1 9h4a1 1 0 0 1 0 2H1z" />
+                                        <path
+                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                    </svg>
                                 </span>
                             </div>
                             <div class="d-flex flex-column ms-2">
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
-                                    <input type="text" name="datetimes" style="padding: 5px; background-color:transparent; border:none;" />
+                                    <input type="text" name="datetimes"
+                                        style="padding: 5px; background-color:transparent; border:none;" />
 
                                 </div>
 
@@ -174,7 +177,10 @@
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#14213d" d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V192c0-35.3-28.7-64-64-64H80c-8.8 0-16-7.2-16-16s7.2-16 16-16H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H64zM416 272a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <path fill="#14213d"
+                                            d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V192c0-35.3-28.7-64-64-64H80c-8.8 0-16-7.2-16-16s7.2-16 16-16H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H64zM416 272a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+                                    </svg>
                                 </span>
                             </div>
                             <div class="d-flex flex-column ms-2">
@@ -202,7 +208,16 @@
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
-                                    <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#142134" stroke="#142134"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#14213d" d="M268.383 22.168l-55.918 84.482 29.717 3.733c-9.22 30.13-11.095 50.878-8.885 92.12 14.138-2.23 25.56-3.025 40.586 1.39-9.877-36.84-8.844-49.427-4.88-89.768l32.622 2.277-33.242-94.234zm218.482 2.21l-108.36 30.03 20.915 25.975c-49.512 31.019-80.331 55.548-104.74 123.164 13.201-.152 28.098 2.921 44.174 9.004 5.728-44.666 33.74-76.14 79.302-108.918l19.983 24.816 48.726-104.07zm-463.574 2.31L89.17 129.173l19.084-28.711c35.554 32.44 58.145 76.33 57.308 107.43 18.568-8.696 29.927-9.527 49.735-3.778-8.105-31.203-43.577-108.722-91.639-129.103l16.57-26.037L23.292 26.687zm276.117 214.667c-5.28.12-10.21 2.415-16.937 9.594l-6.565 6.969-6.812-6.72c-7.387-7.28-13.216-9.29-19.125-9.03-5.908.26-12.855 3.367-20.625 9.656l-6.217 5.03-5.906-5.374c-8.9-8.052-16.485-10.439-23.75-10.064-5.288.274-10.775 2.266-16.25 5.75l40.966 73.69c15.454 9.451 47.034 13.006 68.75 2.062l39.594-73.344c-7.51-3.062-14.26-6.202-20.094-7.406-2.112-.437-4.07-.756-5.968-.813-.354-.01-.71-.008-1.06 0zm-89.97 96.188v.002c-18.035 12.742-32.516 34.717-38.125 66.904-5.435 31.196 3.129 52.266 18.283 66.625 15.155 14.36 37.902 21.736 61 21.436 23.1-.3 46.136-8.31 61.625-22.936 15.49-14.627 24.249-35.425 19.281-65.187-5.137-30.757-18.4-52.148-35.19-65.094-28.482 15.056-64.095 11.856-86.875-1.75z"></path></g></svg>
+                                    <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#142134"
+                                        stroke="#142134">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path fill="#14213d"
+                                                d="M268.383 22.168l-55.918 84.482 29.717 3.733c-9.22 30.13-11.095 50.878-8.885 92.12 14.138-2.23 25.56-3.025 40.586 1.39-9.877-36.84-8.844-49.427-4.88-89.768l32.622 2.277-33.242-94.234zm218.482 2.21l-108.36 30.03 20.915 25.975c-49.512 31.019-80.331 55.548-104.74 123.164 13.201-.152 28.098 2.921 44.174 9.004 5.728-44.666 33.74-76.14 79.302-108.918l19.983 24.816 48.726-104.07zm-463.574 2.31L89.17 129.173l19.084-28.711c35.554 32.44 58.145 76.33 57.308 107.43 18.568-8.696 29.927-9.527 49.735-3.778-8.105-31.203-43.577-108.722-91.639-129.103l16.57-26.037L23.292 26.687zm276.117 214.667c-5.28.12-10.21 2.415-16.937 9.594l-6.565 6.969-6.812-6.72c-7.387-7.28-13.216-9.29-19.125-9.03-5.908.26-12.855 3.367-20.625 9.656l-6.217 5.03-5.906-5.374c-8.9-8.052-16.485-10.439-23.75-10.064-5.288.274-10.775 2.266-16.25 5.75l40.966 73.69c15.454 9.451 47.034 13.006 68.75 2.062l39.594-73.344c-7.51-3.062-14.26-6.202-20.094-7.406-2.112-.437-4.07-.756-5.968-.813-.354-.01-.71-.008-1.06 0zm-89.97 96.188v.002c-18.035 12.742-32.516 34.717-38.125 66.904-5.435 31.196 3.129 52.266 18.283 66.625 15.155 14.36 37.902 21.736 61 21.436 23.1-.3 46.136-8.31 61.625-22.936 15.49-14.627 24.249-35.425 19.281-65.187-5.137-30.757-18.4-52.148-35.19-65.094-28.482 15.056-64.095 11.856-86.875-1.75z">
+                                            </path>
+                                        </g>
+                                    </svg>
                                 </span>
                             </div>
                             <div class="d-flex flex-column ms-2">
@@ -228,7 +243,33 @@
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
-                                    <svg viewBox="0 0 512 512" id="svg2793" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:serif="http://www.serif.com/" xmlns:svg="http://www.w3.org/2000/svg" fill="#14213d" stroke="#14213d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <defs id="defs2797"></defs> <g id="_03-Profit" style="display:inline" transform="translate(-2048,7.53847e-4)"> <g id="g2756" transform="translate(2132.93,29.6336)"> <path d="m 0,166.206 c 1.848,0 3.727,-0.344 5.548,-1.069 L 245.19,69.65 234.235,95.126 c -3.272,7.61 0.244,16.433 7.855,19.706 1.931,0.83 3.941,1.224 5.919,1.224 5.812,0 11.345,-3.4 13.787,-9.079 l 25.26,-58.739 c 0.019,-0.046 0.032,-0.092 0.05,-0.137 0.172,-0.41 0.33,-0.825 0.464,-1.249 0.073,-0.226 0.123,-0.455 0.184,-0.682 0.065,-0.245 0.139,-0.487 0.191,-0.735 0.056,-0.26 0.09,-0.521 0.132,-0.781 0.035,-0.222 0.078,-0.443 0.104,-0.668 0.029,-0.258 0.039,-0.515 0.054,-0.773 0.014,-0.233 0.036,-0.463 0.038,-0.696 0.003,-0.246 -0.012,-0.488 -0.02,-0.732 -0.009,-0.246 -0.012,-0.492 -0.032,-0.739 -0.021,-0.239 -0.06,-0.475 -0.091,-0.711 -0.033,-0.248 -0.059,-0.496 -0.106,-0.744 -0.048,-0.267 -0.119,-0.53 -0.183,-0.793 -0.051,-0.212 -0.092,-0.425 -0.153,-0.636 -0.136,-0.475 -0.294,-0.941 -0.478,-1.4 V 36.76 c -0.183,-0.459 -0.391,-0.908 -0.617,-1.348 -0.104,-0.2 -0.224,-0.387 -0.335,-0.581 -0.132,-0.229 -0.258,-0.463 -0.403,-0.686 -0.141,-0.219 -0.298,-0.423 -0.451,-0.633 -0.134,-0.186 -0.262,-0.376 -0.406,-0.557 -0.161,-0.201 -0.335,-0.389 -0.506,-0.582 -0.155,-0.174 -0.304,-0.354 -0.467,-0.521 -0.171,-0.176 -0.354,-0.337 -0.534,-0.504 -0.179,-0.167 -0.353,-0.339 -0.543,-0.498 -0.185,-0.157 -0.381,-0.297 -0.574,-0.444 -0.196,-0.15 -0.387,-0.305 -0.592,-0.447 -0.23,-0.158 -0.471,-0.297 -0.71,-0.442 -0.179,-0.11 -0.352,-0.227 -0.538,-0.33 -0.434,-0.24 -0.88,-0.46 -1.336,-0.656 L 220.461,3.272 C 212.854,0 204.028,3.516 200.755,11.126 c -3.273,7.61 0.244,16.433 7.854,19.706 l 25.468,10.952 -239.634,95.484 c -7.695,3.066 -11.448,11.791 -8.382,19.487 2.341,5.874 7.979,9.451 13.939,9.451" id="path2754" style="fill-rule:nonzero"></path> </g> <g id="g2760" transform="translate(2078,242.827)"> <path d="m 0,104.978 c 0,-9.826 7.994,-17.819 17.82,-17.819 9.826,0 17.82,7.993 17.82,17.819 V 207.489 H 0 Z M 138.79,41.869 c 0,-4.77 1.85,-9.243 5.225,-12.613 3.353,-3.358 7.826,-5.208 12.595,-5.208 4.763,0 9.232,1.85 12.602,5.226 3.365,3.359 5.218,7.832 5.218,12.595 v 165.62 h -35.64 z m 138.78,-52.88 c 0,-9.826 7.994,-17.821 17.82,-17.821 9.826,0 17.82,7.995 17.82,17.821 v 218.5 h -35.64 z m 138.79,-73.681 c 0,-9.826 7.994,-17.819 17.82,-17.819 9.826,0 17.82,7.993 17.82,17.819 v 292.181 h -35.64 z m 17.82,-47.819 c -26.368,0 -47.82,21.452 -47.82,47.819 v 292.181 h -43.15 v -218.5 c 0,-26.368 -21.452,-47.821 -47.82,-47.821 -26.368,0 -47.82,21.453 -47.82,47.821 v 218.5 H 204.43 V 41.869 c 0,-12.786 -4.98,-24.799 -14.005,-33.808 -9.02,-9.036 -21.029,-14.013 -33.815,-14.013 -12.792,0 -24.805,4.977 -33.808,13.995 -9.036,9.022 -14.012,21.035 -14.012,33.826 v 165.62 H 65.64 V 104.978 C 65.64,78.611 44.188,57.159 17.82,57.159 -8.548,57.159 -30,78.611 -30,104.978 v 117.511 c 0,8.284 6.716,15 15,15 h 482 c 8.284,0 15,-6.716 15,-15 V -84.692 c 0,-26.367 -21.452,-47.819 -47.82,-47.819" id="path2758" style="fill-rule:nonzero"></path> </g> </g> </g></svg>
+                                    <svg viewBox="0 0 512 512" id="svg2793"
+                                        style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
+                                        version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:cc="http://creativecommons.org/ns#"
+                                        xmlns:dc="http://purl.org/dc/elements/1.1/"
+                                        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                                        xmlns:serif="http://www.serif.com/" xmlns:svg="http://www.w3.org/2000/svg"
+                                        fill="#14213d" stroke="#14213d">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <defs id="defs2797"></defs>
+                                            <g id="_03-Profit" style="display:inline"
+                                                transform="translate(-2048,7.53847e-4)">
+                                                <g id="g2756" transform="translate(2132.93,29.6336)">
+                                                    <path
+                                                        d="m 0,166.206 c 1.848,0 3.727,-0.344 5.548,-1.069 L 245.19,69.65 234.235,95.126 c -3.272,7.61 0.244,16.433 7.855,19.706 1.931,0.83 3.941,1.224 5.919,1.224 5.812,0 11.345,-3.4 13.787,-9.079 l 25.26,-58.739 c 0.019,-0.046 0.032,-0.092 0.05,-0.137 0.172,-0.41 0.33,-0.825 0.464,-1.249 0.073,-0.226 0.123,-0.455 0.184,-0.682 0.065,-0.245 0.139,-0.487 0.191,-0.735 0.056,-0.26 0.09,-0.521 0.132,-0.781 0.035,-0.222 0.078,-0.443 0.104,-0.668 0.029,-0.258 0.039,-0.515 0.054,-0.773 0.014,-0.233 0.036,-0.463 0.038,-0.696 0.003,-0.246 -0.012,-0.488 -0.02,-0.732 -0.009,-0.246 -0.012,-0.492 -0.032,-0.739 -0.021,-0.239 -0.06,-0.475 -0.091,-0.711 -0.033,-0.248 -0.059,-0.496 -0.106,-0.744 -0.048,-0.267 -0.119,-0.53 -0.183,-0.793 -0.051,-0.212 -0.092,-0.425 -0.153,-0.636 -0.136,-0.475 -0.294,-0.941 -0.478,-1.4 V 36.76 c -0.183,-0.459 -0.391,-0.908 -0.617,-1.348 -0.104,-0.2 -0.224,-0.387 -0.335,-0.581 -0.132,-0.229 -0.258,-0.463 -0.403,-0.686 -0.141,-0.219 -0.298,-0.423 -0.451,-0.633 -0.134,-0.186 -0.262,-0.376 -0.406,-0.557 -0.161,-0.201 -0.335,-0.389 -0.506,-0.582 -0.155,-0.174 -0.304,-0.354 -0.467,-0.521 -0.171,-0.176 -0.354,-0.337 -0.534,-0.504 -0.179,-0.167 -0.353,-0.339 -0.543,-0.498 -0.185,-0.157 -0.381,-0.297 -0.574,-0.444 -0.196,-0.15 -0.387,-0.305 -0.592,-0.447 -0.23,-0.158 -0.471,-0.297 -0.71,-0.442 -0.179,-0.11 -0.352,-0.227 -0.538,-0.33 -0.434,-0.24 -0.88,-0.46 -1.336,-0.656 L 220.461,3.272 C 212.854,0 204.028,3.516 200.755,11.126 c -3.273,7.61 0.244,16.433 7.854,19.706 l 25.468,10.952 -239.634,95.484 c -7.695,3.066 -11.448,11.791 -8.382,19.487 2.341,5.874 7.979,9.451 13.939,9.451"
+                                                        id="path2754" style="fill-rule:nonzero"></path>
+                                                </g>
+                                                <g id="g2760" transform="translate(2078,242.827)">
+                                                    <path
+                                                        d="m 0,104.978 c 0,-9.826 7.994,-17.819 17.82,-17.819 9.826,0 17.82,7.993 17.82,17.819 V 207.489 H 0 Z M 138.79,41.869 c 0,-4.77 1.85,-9.243 5.225,-12.613 3.353,-3.358 7.826,-5.208 12.595,-5.208 4.763,0 9.232,1.85 12.602,5.226 3.365,3.359 5.218,7.832 5.218,12.595 v 165.62 h -35.64 z m 138.78,-52.88 c 0,-9.826 7.994,-17.821 17.82,-17.821 9.826,0 17.82,7.995 17.82,17.821 v 218.5 h -35.64 z m 138.79,-73.681 c 0,-9.826 7.994,-17.819 17.82,-17.819 9.826,0 17.82,7.993 17.82,17.819 v 292.181 h -35.64 z m 17.82,-47.819 c -26.368,0 -47.82,21.452 -47.82,47.819 v 292.181 h -43.15 v -218.5 c 0,-26.368 -21.452,-47.821 -47.82,-47.821 -26.368,0 -47.82,21.453 -47.82,47.821 v 218.5 H 204.43 V 41.869 c 0,-12.786 -4.98,-24.799 -14.005,-33.808 -9.02,-9.036 -21.029,-14.013 -33.815,-14.013 -12.792,0 -24.805,4.977 -33.808,13.995 -9.036,9.022 -14.012,21.035 -14.012,33.826 v 165.62 H 65.64 V 104.978 C 65.64,78.611 44.188,57.159 17.82,57.159 -8.548,57.159 -30,78.611 -30,104.978 v 117.511 c 0,8.284 6.716,15 15,15 h 482 c 8.284,0 15,-6.716 15,-15 V -84.692 c 0,-26.367 -21.452,-47.819 -47.82,-47.819"
+                                                        id="path2758" style="fill-rule:nonzero"></path>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
                                 </span>
                             </div>
                             <div class="d-flex flex-column ms-2">
@@ -593,27 +634,13 @@
 
             <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex pb-0">
-                        <h4 class="card-title mb-0 flex-grow-1">Top Users</h4>
-                        <div>
-                            <div class="dropdown">
-                                <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span class="fw-semibold">Sort By:</span>
-                                    <span class="text-muted">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Yearly</a>
-                                    <a class="dropdown-item" href="#">Monthly</a>
-                                    <a class="dropdown-item" href="#">Weekly</a>
-                                    <a class="dropdown-item" href="#">Today</a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: transparent;">
+                        <h4 class="card-title mb-0 flex-grow-1">Top Clients</h4>
+
                     </div>
                     <div class="card-body pt-2">
                         <div class="table-responsive simplebar-scrollable-y simplebar-scrollable-x" data-simplebar="init"
-                            style="max-height: 358px;">
+                            style="max-height: 300px;">
                             <div class="simplebar-wrapper" style="margin: 0px;">
                                 <div class="simplebar-height-auto-observer-wrapper">
                                     <div class="simplebar-height-auto-observer"></div>
@@ -634,9 +661,6 @@
                                                                 <h6 class="font-size-15 mb-1">Glenn Holden</h6>
                                                                 <p class="text-muted mb-0 font-size-14">
                                                                     glennholden@tocly.com</p>
-                                                            </td>
-                                                            <td class="text-muted"><i
-                                                                    class="mdi mdi-trending-up text-success font-size-18 align-middle me-1"></i>$250.00
                                                             </td>
                                                             <td><span
                                                                     class="badge badge-soft-danger font-size-12">Cancel</span>
@@ -670,9 +694,7 @@
                                                                 <p class="text-muted mb-0 font-size-14">
                                                                     lolitahamill@tocly.com</p>
                                                             </td>
-                                                            <td class="text-muted"><i
-                                                                    class="mdi mdi-trending-down text-danger font-size-18 align-middle me-1"></i>$110.00
-                                                            </td>
+
                                                             <td><span
                                                                     class="badge badge-soft-success font-size-12">Success</span>
                                                             </td>
@@ -705,9 +727,7 @@
                                                                 <p class="text-muted mb-0 font-size-14">
                                                                     robertmercer@tocly.com</p>
                                                             </td>
-                                                            <td class="text-muted"><i
-                                                                    class="mdi mdi-trending-up text-success font-size-18 align-middle me-1"></i>$420.00
-                                                            </td>
+
                                                             <td><span
                                                                     class="badge badge-soft-info font-size-12">Active</span>
                                                             </td>
@@ -740,9 +760,7 @@
                                                                 <p class="text-muted mb-0 font-size-14">mariekim@tocly.com
                                                                 </p>
                                                             </td>
-                                                            <td class="text-muted"><i
-                                                                    class="mdi mdi-trending-down text-danger font-size-18 align-middle me-1"></i>$120.00
-                                                            </td>
+
                                                             <td><span
                                                                     class="badge badge-soft-warning font-size-12">Pending</span>
                                                             </td>
@@ -775,9 +793,7 @@
                                                                 <p class="text-muted mb-0 font-size-14">
                                                                     sonyahenshaw@tocly.com</p>
                                                             </td>
-                                                            <td class="text-muted"><i
-                                                                    class="mdi mdi-trending-up text-success font-size-18 align-middle me-1"></i>$112.00
-                                                            </td>
+
                                                             <td><span
                                                                     class="badge badge-soft-info font-size-12">Active</span>
                                                             </td>
@@ -810,9 +826,7 @@
                                                                 <p class="text-muted mb-0 font-size-14">marikim@tocly.com
                                                                 </p>
                                                             </td>
-                                                            <td class="text-muted"><i
-                                                                    class="mdi mdi-trending-down text-danger font-size-18 align-middle me-1"></i>$120.00
-                                                            </td>
+
                                                             <td><span
                                                                     class="badge badge-soft-success font-size-12">Success</span>
                                                             </td>
@@ -845,9 +859,7 @@
                                                                 <p class="text-muted mb-0 font-size-14">
                                                                     sonyahenshaw@tocly.com</p>
                                                             </td>
-                                                            <td class="text-muted"><i
-                                                                    class="mdi mdi-trending-up text-success font-size-18 align-middle me-1"></i>$112.00
-                                                            </td>
+
                                                             <td><span
                                                                     class="badge badge-soft-danger font-size-12">Cancel</span>
                                                             </td>
@@ -888,9 +900,66 @@
                                 <div class="simplebar-scrollbar"
                                     style="height: 273px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
                             </div>
+                        </div>
+                        <div class="text-center pt-3">
+                            <a href="/view-clients" class=" w-md">View All</a>
                         </div> <!-- enbd table-responsive-->
                     </div>
                 </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
+                        <h4 class="card-title mb-0 flex-grow-1">Total Statistics</h4>
+                    </div>
+                    <div class="card-body pt-2">
+                        <div class="row mt-3">
+                            <div class="col-md-6 col-6 text-center">
+                                <div class="stats-box mb-4" style="border: 1px solid #e3e3e3; border-radius:5px;">
+                                    <p>Total Tasks</p>
+                                    <h3>385</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-6 text-center">
+                                <div class="stats-box mb-4" style="border: 1px solid #e3e3e3; border-radius:5px;">
+                                    <p>Overdue Tasks</p>
+                                    <h3>19</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress mb-4" style="height: 30px;">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple w-25" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">30%</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning w-25" role="progressbar" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100">22%</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success w-50" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100">24%</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger w-25" role="progressbar" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100">21%</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info w-25" role="progressbar" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100">10%</div>
+                            </div>
+                            <div>
+                                <p><svg class="text-purple me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                  </svg>Completed Tasks <span class="float-end">166</span></p>
+                                <p><svg class="text-warning me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                  </svg></i>Inprogress Tasks <span class="float-end">115</span></p>
+                                <p><svg class="text-success me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                  </svg>On Hold Tasks <span class="float-end">31</span></p>
+                                <p><svg class="text-danger me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                  </svg>Pending Tasks <span class="float-end">47</span></p>
+                                <p class="mb-0"><svg class="text-primary me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                  </svg>Review Tasks <span class="float-end">5</span></p>
+                                </div>
+
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -1616,20 +1685,20 @@
 
         <!-- END ROW -->
         <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         <script>
             $('input[name="datetimes"]').daterangepicker();
             $(function() {
-              $('input[name="datetimes"]').daterangepicker({
-                timePicker: true,
-                startDate: moment().startOf('hour'),
-                endDate: moment().startOf('hour').add(32, 'hour'),
-                locale: {
-                  format: 'M/DD hh:mm A'
-                }
-              });
+                $('input[name="datetimes"]').daterangepicker({
+                    timePicker: true,
+                    startDate: moment().startOf('hour'),
+                    endDate: moment().startOf('hour').add(32, 'hour'),
+                    locale: {
+                        format: 'M/DD hh:mm A'
+                    }
+                });
             });
 
             // Dummy data for expenses by month
