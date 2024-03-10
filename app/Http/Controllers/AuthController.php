@@ -306,9 +306,15 @@ class AuthController extends Controller
             $office_end_time = $office_time->shift_end;
 
             // show attendence time
-
-           $attendance  = DB::table('attendence')->where('emp_id',$user_code)->orderBy('id','desc')->first();
-
+            $todayDate = now()->toDateString();  // Get today's date
+            // dd($todayDate);
+            // $todayDate = "2024-03-11";
+            $attendance = DB::table('attendence')
+            ->where('emp_id', $user_code)
+            ->where('date', $todayDate)  // Assuming 'created_at' is the timestamp column
+            ->orderBy('id', 'desc')
+            ->first();
+            // dd($attendance);
            if ($attendance && $attendance->check_in_time != null) {
             // If check_in_time exists, set session data and indicate to show the check out button
                 Session::put('check_in_time', $attendance->check_in_time);
@@ -400,7 +406,16 @@ class AuthController extends Controller
             $break_end = $office_time->break_end;
             $office_end_time = $office_time->shift_end;
 
-            $attendance  = DB::table('attendence')->where('emp_id',$user_code)->orderBy('id','desc')->first();
+            $todayDate = now()->toDateString();  // Get today's date
+
+            // $todayDate = "2024-03-11";
+
+
+            $attendance = DB::table('attendence')
+            ->where('emp_id', $user_code)
+            ->where('date', $todayDate)  // Assuming 'created_at' is the timestamp column
+            ->orderBy('id', 'desc')
+            ->first();
 
             if ($attendance && $attendance->check_in_time != null) {
              // If check_in_time exists, set session data and indicate to show the check out button
