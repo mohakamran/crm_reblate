@@ -24,6 +24,8 @@
             }
 
 
+
+
             .time-list .dash-stats-list {
                 flex-flow: column wrap;
                 flex-grow: 1;
@@ -209,6 +211,13 @@
                 left: 0;
                 right: -55.8px;
             }
+
+
+            /* CSS for styling the chart container */
+            #line_chart {
+                width: 100%;
+                height: 400px;
+            }
         </style>
 
 
@@ -379,7 +388,12 @@
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
                                 <p class="text-muted text-truncate font-size-15 mb-2"> Number of Present </p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">20
+                                <h3 class="fs-4 flex-grow-1 mb-3">
+                                    @if (isset($total_present_day) && $total_present_day != '')
+                                        {{ $total_present_day }}
+                                    @else
+                                        0
+                                    @endif
                                 </h3>
                                 {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
@@ -423,7 +437,12 @@
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
                                 <p class="text-muted text-truncate font-size-15 mb-2"> Number of Absent </p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">20
+                                <h3 class="fs-4 flex-grow-1 mb-3">
+                                    @if (isset($absent_days) && $absent_days != '')
+                                        {{ $absent_days }}
+                                    @else
+                                        0
+                                    @endif
                                 </h3>
                                 {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
@@ -588,7 +607,7 @@
                         <div class="punch-info">
                             <div class="punch-hours">
                                 @if (session()->has('total_hours') && session('total_hours') != '')
-                                    <span style="float: right;">{{ session('total_hours') }} hrs</span>
+                                    <span style="float: right;">{{ session('total_hours') }}</span>
                                 @else
                                     <span>0 hrs</span>
                                 @endif
@@ -892,7 +911,7 @@
         </div>
         <!-- END ROW -->
 
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-4  col-sm-12">
                 <div class="card">
                     <div class="card-body">
@@ -901,7 +920,7 @@
                             <ul class="timeliner">
                                 <li class="event">
                                     <h3>Shift Start</h3>
-                                   @if (isset($office_start_time) && $office_start_time!="")
+                                   @if (isset($office_start_time) && $office_start_time != '')
                                        <p>{{$office_start_time}}</p>
                                        @else
                                        <p>Not Set</p>
@@ -909,7 +928,7 @@
                                 </li>
                                 <li class="event">
                                     <h3>Break Start Time</h3>
-                                    @if (isset($break_start) && $break_start!="")
+                                    @if (isset($break_start) && $break_start != '')
                                     <p>{{$break_start}}</p>
                                     @else
                                     <p>Not Set</p>
@@ -917,7 +936,7 @@
                                 </li>
                                 <li class="event">
                                     <h3>Break End Time</h3>
-                                    @if (isset($break_end) && $break_end!="")
+                                    @if (isset($break_end) && $break_end != '')
                                     <p>{{$break_end}}</p>
                                     @else
                                     <p>Not Set</p>
@@ -925,7 +944,7 @@
                                 </li>
                                 <li class="event">
                                     <h3>Shift End </h3>
-                                    @if (isset($office_end_time) && $office_end_time!="")
+                                    @if (isset($office_end_time) && $office_end_time != '')
                                     <p>{{$office_end_time}}</p>
                                     @else
                                     <p>Not Set</p>
@@ -936,7 +955,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
         {{-- <div class="row">
@@ -1366,6 +1385,12 @@
         </div> --}}
         <!-- END ROW -->
 
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div id="bar_chart"></div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-xl-6">
                 <div class="card">
@@ -1388,7 +1413,7 @@
                         </div>
                     </div> --}}
                     <div class="card-body pt-2">
-                        <h4>Weekly Tasks</h4>
+                        <h4>Tasks</h4>
                         <div class="table-responsive">
                             <table class="table align-middle table-nowrap mb-0">
                                 <thead>
@@ -1490,7 +1515,7 @@
                         </div>
                     </div> --}}
                     <div class="card-body pt-2">
-                        <h4>Weekly Tasks</h4>
+                        <h4>Reporting</h4>
                         <div class="table-responsive">
                             <table class="table align-middle table-nowrap mb-0">
                                 <thead>
@@ -1573,6 +1598,8 @@
             </div>
         </div>
         <!-- END ROW -->
+
+
 
         <div class="row">
             <div class="col-xl-6">
@@ -1814,6 +1841,35 @@
         <!-- END ROW -->
 
 
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Task');
+                data.addColumn('number', 'Count');
+                data.addRows([
+                    ['Completed', <?php echo $completed_count; ?>],
+                    ['Pending', <?php echo $pending_count; ?>],
+                    ['In Progress', <?php echo $in_progress_count; ?>]
+                ]);
+
+                var options = {
+                    title: 'Tasks Status for Current Month',
+                    legend: { position: 'none' },
+                    bars: 'horizontal',
+                    colors: ['#008000', '#FF0000', '#FFFF00'] // Green for completed, Red for pending, Yellow for in-progress
+                };
+
+                var chart = new google.visualization.BarChart(document.getElementById('bar_chart'));
+
+                chart.draw(data, options);
+            }
+        </script>
+
+
         <script>
             // Function to update the current time
             function updateCurrentTime() {
@@ -1876,11 +1932,12 @@
                         $('#messageBox').text(response.message);
                     },
                     error: function(xhr, status, error) {
-                        var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                        var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message :
+                            'An error occurred';
 
                         $('#messageBox').text(errorMessage); // Set the error message from the server response
-                                }
-                            });
+                    }
+                });
             }
         </script>
     @endsection

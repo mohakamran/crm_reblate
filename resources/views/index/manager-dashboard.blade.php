@@ -361,7 +361,7 @@ Manager Dashboard
 
 
         <div class="row">
-            <div class="col-md-3 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
@@ -379,7 +379,12 @@ Manager Dashboard
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
                                 <p class="text-muted text-truncate font-size-15 mb-2"> Number of Present </p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">20
+                                <h3 class="fs-4 flex-grow-1 mb-3">
+                                    @if (isset($total_present_day) && $total_present_day!="")
+                                        {{$total_present_day}}
+                                        @else
+                                        0
+                                    @endif
                                 </h3>
                                 {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
@@ -423,7 +428,12 @@ Manager Dashboard
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
                                 <p class="text-muted text-truncate font-size-15 mb-2"> Number of Absent </p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">20
+                                <h3 class="fs-4 flex-grow-1 mb-3">
+                                    @if (isset($absent_days) && $absent_days!="")
+                                    {{$absent_days}}
+                                    @else
+                                    0
+                                @endif
                                 </h3>
                                 {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
@@ -482,11 +492,10 @@ Manager Dashboard
                         </div>
                     </div>
                     {{-- leave button  --}}
-                    <div class=" d-flex justify-content-between">
-                        <a href="/leave-records" class="btn btn-success mt-3 ml-2">Leave Records</a>
+                    <div class="container d-flex justify-content-between">
                         <button type="button" class="btn btn-success mt-3 mr-2" data-toggle="modal"
                             data-target="#exampleModal">Apply for Leave</button>
-                        <a href="/leave-requests" class="btn btn-success mt-3 ml-2">Leave Requests</a>
+                        <a href="/leave-records" class="btn btn-success mt-3 ml-2">Leave Records</a>
                     </div>
 
                     {{-- apply leave modal  --}}
@@ -528,7 +537,7 @@ Manager Dashboard
                 </div>
             </div>
 
-            <div class="col-md-3  col-sm-12">
+            <div class="col-md-4  col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-title">Today Activity</h6>
@@ -572,7 +581,7 @@ Manager Dashboard
                 </div>
             </div>
 
-            <div class="col-md-3 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <h3 class=" font-size-header">Timesheet <span
@@ -589,7 +598,7 @@ Manager Dashboard
                         <div class="punch-info">
                             <div class="punch-hours">
                                 @if (session()->has('total_hours') && session('total_hours') != '')
-                                    <span style="float: right;">{{ session('total_hours') }} hrs</span>
+                                    <span style="float: right;">{{ session('total_hours') }}</span>
                                 @else
                                     <span>0 hrs</span>
                                 @endif
@@ -855,8 +864,6 @@ Manager Dashboard
             </div>
 
 
-
-
             {{-- <div class="col-xl-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
@@ -895,7 +902,7 @@ Manager Dashboard
         </div>
         <!-- END ROW -->
 
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-4  col-sm-12">
                 <div class="card">
                     <div class="card-body">
@@ -939,7 +946,7 @@ Manager Dashboard
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
         {{-- <div class="row">

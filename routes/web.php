@@ -196,6 +196,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/view-tasks-employees', [TaskController::class, 'viewTaskEachEmployee']);
     Route::get('/update-tasks/{id}', [TaskController::class, 'updateTaskEachEmployee']);
     Route::post('/update-each-task', [TaskController::class, 'updateEachTask']);
+    Route::post('/update-each-task-emp', [TaskController::class, 'updateEachTaskEmp']);
 
     // leaves
     Route::get('/leave-requests',[AttendenceController::class,'leaveRequests']);
