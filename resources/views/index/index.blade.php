@@ -124,12 +124,14 @@
                                 </span>
                             </div>
                             <div class="d-flex flex-column ms-2">
-                                <div
-                                    class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
-                                    <input type="text" name="datetimes"
-                                        style="padding: 5px; background-color:transparent; border:none;" />
 
-                                </div>
+                                    <div
+                                        class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
+                                        <input type="text" name="datetimes"
+                                            style="padding: 5px; background-color:transparent; border:none;" />
+
+                                    </div>
+
 
                             </div>
                         </div>
@@ -157,7 +159,7 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
                                     <p class="text-truncate font-size-18 mb-0 fw-bold">Revenue</p>
-                                    <h5 class="mb-0">{{ $emp_count }}
+                                    <h5 class="mb-0">{{ $total_revenue }}
                                     </h5>
                                 </div>
                                 <p class="text-muted mb-0 text-truncate"><span
@@ -186,8 +188,8 @@
                             <div class="d-flex flex-column ms-2">
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5 ">
-                                    <p class="text-truncate font-size-18 mb-0 fw-bold"> Salery</p>
-                                    <h5 class="mb-0">{{ $client_count }}
+                                    <p class="text-truncate font-size-18 mb-0 fw-bold"> Salaries</p>
+                                    <h5 class="mb-0">{{ $usd_pkr_salary }}
                                     </h5>
                                 </div>
 
@@ -224,8 +226,8 @@
 
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5">
-                                    <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Expence</p>
-                                    <h5 class="mb-0">15 </h5>
+                                    <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Expenses</p>
+                                    <h5 class="mb-0">{{$usd_pkr_expenses}} </h5>
                                 </div>
                                 <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
@@ -276,7 +278,7 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Profit</p>
-                                    <h5 class="mb-0">$5000
+                                    <h5 class="mb-0"> {{$total_profit}}
                                     </h5>
                                 </div>
                                 <p class="text-muted mb-0 text-truncate"><span
@@ -1690,16 +1692,24 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         <script>
             $('input[name="datetimes"]').daterangepicker();
-            $(function() {
-                $('input[name="datetimes"]').daterangepicker({
-                    timePicker: true,
-                    startDate: moment().startOf('hour'),
-                    endDate: moment().startOf('hour').add(32, 'hour'),
-                    locale: {
-                        format: 'M/DD hh:mm A'
-                    }
-                });
+            $(document).ready(function() {
+            $('input[name="datetimes"]').daterangepicker({
+                timePicker: true,
+                startDate: moment().startOf('hour'),
+                endDate: moment().startOf('hour').add(32, 'hour'),
+                locale: {
+                    format: 'M/DD hh:mm A'
+                }
             });
+
+            // Event handler for applying date range
+            $('input[name="datetimes"]').on('apply.daterangepicker', function(ev, picker) {
+                var startDate = picker.startDate.format('YYYY-MM-DD HH:mm:ss');
+                var endDate = picker.endDate.format('YYYY-MM-DD HH:mm:ss');
+
+                console.log("Selected Date Range: " + startDate + ' - ' + endDate);
+               });
+           });
 
             // Dummy data for expenses by month
             var months = ["January", "February", "March", "April", "May"];

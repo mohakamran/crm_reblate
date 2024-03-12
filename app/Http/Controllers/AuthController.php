@@ -14,6 +14,8 @@ use App\Models\Employee;
 use App\Models\Client;
 use DB;
 
+use GuzzleHttp\Client as GuzzleClient;
+
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Session;
@@ -728,9 +730,26 @@ class AuthController extends Controller
                 'labels' => ['January', 'February', 'March', 'April', 'May'],
                 'data' => [65, 59, 80, 81, 56],
             ];
-            $clients = Client::all();
-            $client_count = count($clients);
-            $data = compact('emp_count','client_count','data_chart');
+            // get total revenue record
+            $total_revenue = $this->getTotalRevenue();
+            // get total salary
+            $total_salary = $this->getTotalSalary();
+            // get total expense
+            $total_expense = $this->getTotalExpense();
+            // get usd to pkr total revenue
+            $usd_pkr_expenses = $this->getExchangeRate($total_expense);
+            $usd_pkr_salary = $this->getExchangeRate($total_salary);
+            // total profit
+            $total_profit = $total_revenue - $usd_pkr_expenses - $usd_pkr_salary;
+            $total_profit = number_format($total_profit, 2);
+            $usd_pkr_expenses = number_format($usd_pkr_expenses, 2);
+            $usd_pkr_salary = number_format($usd_pkr_salary, 2);
+            // total revenue in pkr
+            // $total_revenue_pkr = $usd_pkr_revenue - $total_expense - $total_salary;
+            // dd($total_revenue);
+            // $clients = DB::table('clients')->get();
+            $client_count = $clientCount = DB::table('clients')->count();
+            $data = compact('emp_count','client_count','data_chart','total_revenue','usd_pkr_expenses','usd_pkr_salary','total_profit');
             return view('index.index',$data);
         } else if($user_type == "client") {
             $employees = Employee::all();
@@ -744,6 +763,36 @@ class AuthController extends Controller
             return view('auth.login');
         }
 
+    }
+
+    // get totoal revenue
+    public function getTotalRevenue() {
+        $totalAmount = DB::table('invoices')->sum('amount');
+        if($totalAmount <= 0) {
+            $totalAmount = 0;
+        }
+        return $totalAmount;
+    }
+    // get totoal salary
+    public function getTotalSalary() {
+        $totalAmount = DB::table('salaries')->sum('amount');
+        if($totalAmount <= 0) {
+            $totalAmount = 0;
+        }
+        return $totalAmount;
+    }
+    // get totoal expense
+    public function getTotalExpense() {
+        $totalAmount = DB::table('expenses')->sum('expense_amount');
+        if($totalAmount <= 0) {
+            $totalAmount = 0;
+        }
+        return $totalAmount;
+    }
+
+    // datewise expenses, salaries, data
+    public function getData() {
+        dd('this');
     }
 
     public function index() {
@@ -999,6 +1048,24 @@ class AuthController extends Controller
     // admin login view
     public function viewLoginAdmin() {
         return view('auth.admin-login');
+    }
+
+    //get exchange rate prices
+    public function getExchangeRate($amount) {
+        $client = new GuzzleClient(); // Use the alias GuzzleClient
+        $response = $client->get('https://open.er-api.com/v6/latest/USD');
+        $data = json_decode($response->getBody(), true);
+
+        // Get the exchange rate for PKR
+        $usdToPkrRate = $data['rates']['PKR'];
+
+        // Convert PKR to USD using the reciprocal of the exchange rate
+        $pkrToUsdRate = 1 / $usdToPkrRate;
+
+        // Convert amount from PKR to USD
+        $amountInUSD = $amount * $pkrToUsdRate;
+
+        return $amountInUSD;
     }
 
 }

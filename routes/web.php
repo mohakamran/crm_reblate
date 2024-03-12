@@ -203,6 +203,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/leave-request/approve/{empCode}', [AttendenceController::class, 'approveLeaveRequest']);
     Route::get('/leave-request/decline/{empCode}', [AttendenceController::class, 'declineLeaveRequest']);
 
+    // admin front page
+    Route::post('/get-date', [AuthController::class, 'getData']);
+    // Route::get('/exchange-rate', [AuthController::class, 'getExchangeRate']);
+
 
 });
 
