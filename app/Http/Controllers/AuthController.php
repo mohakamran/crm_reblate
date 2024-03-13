@@ -317,6 +317,30 @@ class AuthController extends Controller
         ];
 
     }
+
+    // get latest tasks
+    public function getLatestTasks() {
+        // dd("this");
+        $user_code = auth()->user()->user_code;
+        $latestTasks = DB::table('tasks')
+        ->where('emp_id', $user_code)
+        ->latest('id')
+        ->take(3)
+        ->get();
+        return $latestTasks;
+    }
+    // get latest leaves
+    public function totalLeaves() {
+        $user_code = auth()->user()->user_code;
+        $total_leaves = DB::table('leaves')
+        ->where('emp_code', $user_code)
+        ->where('status', 'approved')
+        ->get();
+        if($total_leaves ==null ) {
+            $total_leaves = 0;
+        }
+        return $total_leaves;
+    }
     public function indexHomePage() {
         $user_type = auth()->user()->user_type;
         // dd($user_type);
@@ -497,11 +521,15 @@ class AuthController extends Controller
                         }
             }
 
+            //get latest tasks for each employee
+            $latest_tasks = $this->getLatestTasks();
+
             // get latest records of absent, leaves,
             $total_present_day = $this->getAttendenceDetails();
             // $total_present_day = 10;
             // dd($dat);
             $absent_days = 22 - $total_present_day;
+            $total_leaves = $this->totalLeaves();
 
             // get latest tasks details
             $task_details = $this->getTasksDetails();
@@ -533,7 +561,9 @@ class AuthController extends Controller
                 't_date' => $t_date,
                 'completed_count' => $completed_count,
                 'pending_count' =>$pending_count,
-                'in_progress_count' =>$in_progress_count
+                'in_progress_count' =>$in_progress_count,
+                'latest_tasks' => $latest_tasks,
+                'total_leaves' => $total_leaves,
             ];
 
             return view('index.emp-dashboard',$data);
@@ -559,16 +589,6 @@ class AuthController extends Controller
                 Session::put('attendance_access', $check_permissions->attendance_access);
             }
 
-            // calling function of attence for employee
-            // $this->indexEmployee();
-
-            //
-            // $check_active_status = DB::table('employees')->where('Emp_Code',$user_code)->first();
-            // if($check_active_status) {
-            //     Session::put('emp_status', $check_active_status->Emp_Status);
-            // }
-
-            // dd($employees_access);
 
             $check_shift_time = DB::table('employees')->where('Emp_Code',$user_code)->first();
             if($check_shift_time->Emp_Shift_Time == "Morning") {
@@ -712,14 +732,48 @@ class AuthController extends Controller
                         }
             }
 
-            // $total_present_day = $this->getAttendenceDetails();
+            //get latest tasks for each employee
+            $latest_tasks = $this->getLatestTasks();
+
+            // get latest records of absent, leaves,
             $total_present_day = $this->getAttendenceDetails();
+            // $total_present_day = 10;
+            // dd($dat);
             $absent_days = 22 - $total_present_day;
+            $total_leaves = $this->totalLeaves();
+
+            // get latest tasks details
+            $task_details = $this->getTasksDetails();
+            // Extract counts from the returned array
+            $completed_count = $task_details['completed_count'];
+            $pending_count = $task_details['pending_count'];
+            $in_progress_count = $task_details['in_progress_count'];
+            // Sample task data
+            $task_data = [
+                ['', $completed_count, $pending_count, $in_progress_count]
+            ];
 
             $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
             $t_date = Carbon::now()->format('l, d F Y');
             // dd($t_date);
-            $data = compact('absent_days','total_present_day','office_start_time','break_start','break_end','office_end_time','emp_count','client_count','emp_det','t_date');
+            $data = [
+                'absent_days' => $absent_days,
+                'total_present_day' => $total_present_day,
+                'office_start_time' => $office_start_time,
+                'break_start' => $break_start,
+                'break_end' => $break_end,
+                'office_end_time' => $office_end_time,
+                'emp_count' => $emp_count,
+                'client_count' => $client_count,
+                'emp_det' => $emp_det,
+                't_date' => $t_date,
+                'completed_count' => $completed_count,
+                'pending_count' =>$pending_count,
+                'in_progress_count' =>$in_progress_count,
+                'latest_tasks' => $latest_tasks,
+                'total_leaves' => $total_leaves,
+            ];
+
             return view('index.manager-dashboard',$data);
         }
          else if($user_type == "admin") {

@@ -8,6 +8,24 @@ use Carbon\Carbon;
 
 class TaskController extends Controller
 {
+       // employee will see cards based tasks
+       public function employeeCanSeeTask() {
+            $emp_id = auth()->user()->user_code;
+            $emp = DB::table('employees')->where('Emp_Code',$emp_id)->first();
+            $emp_name = $emp->Emp_Full_Name;
+            $Emp_Designation = $emp->Emp_Designation;
+            $Emp_Image = $emp->Emp_Image;
+            $Emp_Shift_Time = $emp->Emp_Shift_Time;
+
+            $currentMonth = Carbon::now()->format('m');
+
+            $tasks = DB::table('tasks')
+            ->where('emp_id', $emp_id)
+            ->whereMonth('assigned_date', $currentMonth)
+            // ->orderBy('id', 'desc')
+            ->get();
+            return view('tasks.tasks-cards-of-each-employee',compact('tasks','emp_name','emp_id','Emp_Designation','Emp_Image','Emp_Shift_Time'));
+       }
        // get task details and save in database
        public function updateEachTaskEmp(Request $request) {
         $validatedData = $request->validate([
@@ -200,7 +218,7 @@ class TaskController extends Controller
             'task_status' => "pending",
             'task_percentage' => "0",
             'assigned_by' => $name, // Assuming admin is the default assigned_by value
-            'date_assigned' => $dateAssigned, // Save the current date as date_assigned
+            'assigned_date' => $dateAssigned, // Save the current date as date_assigned
         ]);
 
         // Check if additional tasks were added
@@ -221,7 +239,7 @@ class TaskController extends Controller
                     'task_status' => 'pending',
                     'task_percentage' => "0",
                     'assigned_by' => 'admin', // Assuming admin is the default assigned_by value
-                    'date_assigned' => $dateAssigned, // Save the current date as date_assigned
+                    'assigned_date' => $dateAssigned, // Save the current date as date_assigned
                 ];
             }
             DB::table('tasks')->insert($tasks);

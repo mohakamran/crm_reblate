@@ -1706,7 +1706,6 @@
             $('input[name="datetimes"]').on('apply.daterangepicker', function(ev, picker) {
                 var startDate = picker.startDate.format('YYYY-MM-DD HH:mm:ss');
                 var endDate = picker.endDate.format('YYYY-MM-DD HH:mm:ss');
-
                 console.log("Selected Date Range: " + startDate + ' - ' + endDate);
                });
            });
