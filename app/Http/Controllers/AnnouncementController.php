@@ -21,10 +21,10 @@ class AnnouncementController extends Controller
         // dd($this->checkPermission());
         $type = $this->checkPermission();
         // $type="employee";
-        if($type == "admin") {
+        if($type) {
             return view('announcement.index');
         } else {
-            return view('errors.404');
+            return view('errors.401');
         }
 
     }

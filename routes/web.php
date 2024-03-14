@@ -208,6 +208,10 @@ Route::group(['middleware' => 'admin'], function () {
     // announcement
     Route::get('/announcements',[AnnouncementController::class,'viewindexPage']);
 
+    // attendence time sheets
+    Route::get('/attendence-time-sheet',[AttendenceController::class,'viewTimeSheet']);
+    Route::get('/highest-paid',[SalaryController::class,'viewHighPaidEmployee']);
+
     // admin front page
     Route::post('/get-date', [AuthController::class, 'getData']);
     // Route::get('/exchange-rate', [AuthController::class, 'getExchangeRate']);
