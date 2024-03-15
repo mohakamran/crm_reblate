@@ -22,7 +22,25 @@ use PDF;
 
 class SalaryController extends Controller
 {
+    //view hightest paid employee
+    public function viewHighPaidEmployee() {
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
 
+        $rankedEmployees = DB::table('salaries')
+            ->whereYear('date', $currentYear)
+            ->whereMonth('date', $currentMonth)
+            ->orderByDesc('amount')
+            ->get();
+
+        if ($rankedEmployees->isEmpty()) {
+            echo "No records found for the current month and year.";
+        } else {
+            foreach ($rankedEmployees as $employee) {
+                echo $employee->name . " - Salary: " . $employee->amount . "<br>";
+            }
+        }
+    }
     // view slips
     public function viewSlips(){
         $emp_id = auth()->user()->user_code;

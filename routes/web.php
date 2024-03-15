@@ -14,6 +14,7 @@ use App\Http\Controllers\SecurityController;
 use App\Http\Controllers\AttendenceController;
 use App\Http\Controllers\TimeController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\AnnouncementController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -196,11 +197,24 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/view-tasks-employees', [TaskController::class, 'viewTaskEachEmployee']);
     Route::get('/update-tasks/{id}', [TaskController::class, 'updateTaskEachEmployee']);
     Route::post('/update-each-task', [TaskController::class, 'updateEachTask']);
+    Route::post('/update-each-task-emp', [TaskController::class, 'updateEachTaskEmp']);
+    Route::get('/view-emp-tasks-each', [TaskController::class, 'employeeCanSeeTask']);
 
     // leaves
     Route::get('/leave-requests',[AttendenceController::class,'leaveRequests']);
     Route::get('/leave-request/approve/{empCode}', [AttendenceController::class, 'approveLeaveRequest']);
     Route::get('/leave-request/decline/{empCode}', [AttendenceController::class, 'declineLeaveRequest']);
+
+    // announcement
+    Route::get('/announcements',[AnnouncementController::class,'viewindexPage']);
+
+    // attendence time sheets
+    Route::get('/attendence-time-sheet',[AttendenceController::class,'viewTimeSheet']);
+    Route::get('/highest-paid',[SalaryController::class,'viewHighPaidEmployee']);
+
+    // admin front page
+    Route::post('/get-date', [AuthController::class, 'getData']);
+    // Route::get('/exchange-rate', [AuthController::class, 'getExchangeRate']);
 
 
 });

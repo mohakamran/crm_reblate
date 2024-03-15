@@ -56,9 +56,8 @@
                     <div class="card-body">
 
 
-                        <form method="post" action="/update-each-task-emp">
+                        <form  action="/update-each-task-emp" method="post">
                             @csrf
-
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show" id="close-now">
                                     {{ session('success') }}
@@ -68,6 +67,8 @@
                                     </a>
                                 </div>
                             @endif
+
+                            <input type="hidden" value="{{$task_id}}" name="task_id">
 
                             <div class="row">
                                 <div class="col-md-6">

@@ -16,11 +16,14 @@
                 <div class="card mb-3">
                     <div class="card-body" style="display: flex; align-items: center; justify-content: space-between;">
                         <!-- Using a dummy CDN link for the image -->
-                        <a href="/view-tasks" class="position-absolute top-0 start-1 pt-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#14213d" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
-                              </svg>
-                        </a>
+                        @if (Auth()->user()->user_type == "admin")
+                            <a href="/view-tasks" class="position-absolute top-0 start-1 pt-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#14213d" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                                </svg>
+                            </a>
+                        @endif
+
                         <div class="d-flex align-items-center gap-3" style="margin-left: 15px;">
                             @if ($Emp_Image != '')
                             <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
@@ -35,11 +38,13 @@
 
                         </div>
                         </div>
-                        <div class="d-flex align-items-center p-3 gap-2" style="background-color: #14213d24; border-radius: 10px;">
+                        @if (Auth()->user()->user_type == "admin")
+                                <div class="d-flex align-items-center p-3 gap-2" style="background-color: #14213d24; border-radius: 10px;">
 
-                            <a href="/create-new-task" class="reblateBtn p-2">Assign New</a>
-                            <a href="/update-tasks/{{$emp_id}}" class="reblateBtn p-2">Update</a>
-                        </div>
+                                    <a href="/create-new-task" class="reblateBtn p-2">Assign New</a>
+                                    <a href="/update-tasks/{{$emp_id}}" class="reblateBtn p-2">Update</a>
+                                </div>
+                        @endif
                     </div>
                 </div>
             </div>

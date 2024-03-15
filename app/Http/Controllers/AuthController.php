@@ -14,6 +14,8 @@ use App\Models\Employee;
 use App\Models\Client;
 use DB;
 
+use GuzzleHttp\Client as GuzzleClient;
+
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Session;
@@ -255,8 +257,90 @@ class AuthController extends Controller
 
     }
 
+    // get monthwise attendence details
+    public function getAttendenceDetails() {
+        $user_code = auth()->user()->user_code;
+        $currentMonth = now()->month;
+        $currentYear = now()->year;
 
+        $attendanceCount = DB::table('attendence')
+        ->where('check_out_status', 'done')
+        ->where('emp_id', $user_code)
+        ->whereMonth('date', $currentMonth)
+        ->whereYear('date', $currentYear)
+        ->count();
 
+        return $attendanceCount;
+    }
+
+    // get current month tasks details
+    public function getTasksDetails() {
+        $user_code = auth()->user()->user_code;
+        $currentMonth = now()->month;
+        $currentYear = now()->year;
+
+        $tasks_details = DB::table('tasks')
+            ->where('emp_id', $user_code)
+            ->whereMonth('assigned_date', $currentMonth)
+            ->whereYear('assigned_date', $currentYear)
+            ->get();
+
+        // Initialize counters for each task status
+        $completedCount = 0;
+        $pendingCount = 0;
+        $inProgressCount = 0;
+
+        // Iterate through the tasks details and count the occurrences of each status
+        foreach ($tasks_details as $task) {
+            switch ($task->task_status) {
+                case 'completed':
+                    $completedCount++;
+                    break;
+                case 'pending':
+                    $pendingCount++;
+                    break;
+                case 'in-progress':
+                    $inProgressCount++;
+                    break;
+                // Handle other task statuses if needed
+                default:
+                    // Do nothing or handle appropriately
+                    break;
+            }
+        }
+
+        // Now you have the count of tasks for each status
+        return [
+            'completed_count' => $completedCount,
+            'pending_count' => $pendingCount,
+            'in_progress_count' => $inProgressCount
+        ];
+
+    }
+
+    // get latest tasks
+    public function getLatestTasks() {
+        // dd("this");
+        $user_code = auth()->user()->user_code;
+        $latestTasks = DB::table('tasks')
+        ->where('emp_id', $user_code)
+        ->latest('id')
+        ->take(3)
+        ->get();
+        return $latestTasks;
+    }
+    // get latest leaves
+    public function totalLeaves() {
+        $user_code = auth()->user()->user_code;
+        $total_leaves = DB::table('leaves')
+        ->where('emp_code', $user_code)
+        ->where('status', 'approved')
+        ->get();
+        if($total_leaves ==null ) {
+            $total_leaves = 0;
+        }
+        return $total_leaves;
+    }
     public function indexHomePage() {
         $user_type = auth()->user()->user_type;
         // dd($user_type);
@@ -283,7 +367,7 @@ class AuthController extends Controller
             }
 
             // calling function of attence for employee
-            $this->indexEmployee();
+            // $this->indexEmployee();
 
             //
             // $check_active_status = DB::table('employees')->where('Emp_Code',$user_code)->first();
@@ -305,60 +389,182 @@ class AuthController extends Controller
             $break_end = $office_time->break_end;
             $office_end_time = $office_time->shift_end;
 
-            // show attendence time
-            $todayDate = now()->toDateString();  // Get today's date
-            // dd($todayDate);
-            // $todayDate = "2024-03-11";
-            $attendance = DB::table('attendence')
-            ->where('emp_id', $user_code)
-            ->where('date', $todayDate)  // Assuming 'created_at' is the timestamp column
-            ->orderBy('id', 'desc')
-            ->first();
-            // dd($attendance);
-           if ($attendance && $attendance->check_in_time != null) {
-            // If check_in_time exists, set session data and indicate to show the check out button
-                Session::put('check_in_time', $attendance->check_in_time);
-                Session::put('show_check_out', true);
+
+
+            // dd($shift->Emp_Shift_Time);
+            if($check_shift_time->Emp_Shift_Time == "Morning") {
+                // show attendence time
+                $todayDate = now()->toDateString();  // Get today's date
+                // dd($todayDate);
+                // $todayDate = "2024-03-11";
+                $attendance = DB::table('attendence')
+                ->where('emp_id', $user_code)
+                ->where('date', $todayDate)  // Assuming 'created_at' is the timestamp column
+                ->orderBy('id', 'desc')
+                ->first();
+                // dd($attendance);
+                if ($attendance && $attendance->check_in_time != null) {
+                // If check_in_time exists, set session data and indicate to show the check out button
+                    Session::put('check_in_time', $attendance->check_in_time);
+                    Session::put('show_check_out', true);
+                } else {
+                    // If check_in_time does not exist, remove session data and indicate not to show the check out button
+                    Session::forget('check_in_time');
+                    Session::put('show_check_out', false);
+                }
+
+
+                if ($attendance && $attendance->break_start != null) {
+                    Session::put('break_start_time', $attendance->break_start);
+                    Session::put('show_break_end',true);
+                } else {
+                    Session::forget('break_start_time');
+                    Session::forget('show_break_end');
+                }
+
+                if ($attendance && $attendance->break_end != null) {
+                    Session::put('break_end_time', $attendance->break_end);
+                } else {
+                    Session::forget('break_end_time');
+                }
+
+
+                if ($attendance && $attendance->check_out_time != null) {
+                    Session::put('attendence_status', true);
+                    Session::put('check_out_time', $attendance->check_out_time);
+                } else {
+                    Session::put('attendence_status', false);
+                    Session::forget('check_out_time');
+                }
+
+                if ($attendance && $attendance->total_time != null) {
+                Session::put('total_hours', $attendance->total_time);
+                } else {
+                    Session::forget('total_hours');
+                }
             } else {
-                // If check_in_time does not exist, remove session data and indicate not to show the check out button
-                Session::forget('check_in_time');
-                Session::put('show_check_out', false);
+                // Get the current time
+                    $currentTime = Carbon::now();
+                    // Define the start and end times of the specified time range in 12-hour format
+                    $startTime = Carbon::createFromTimeString("12:00 AM");
+                    $endTime = Carbon::createFromTimeString("12:00 PM");
+
+                    // Format the current time in 12-hour format with AM/PM
+                    $currentFormattedTime = $currentTime->format("h:i A");
+                    // $currentTime = Carbon::createFromFormat('h:i A', "3:00 AM");
+                    // dd($currentFormattedTime);
+                    // Check if the current time falls within the specified time range
+                    // $currentTime = "3:00 AM";
+                    if ($currentTime->between($startTime, $endTime)) {
+                        // dd("if working" . $currentTime);
+                        $yesterdayDate = now()->subDay()->toDateString();
+                        $attendance = DB::table('attendence')
+                        ->where('emp_id', $user_code)
+                        ->where('date', $yesterdayDate)
+                        ->orderBy('id', 'desc')
+                        ->first();
+                    } else {
+
+                        $todayDate = now()->toDateString();
+                        dd($todayDate);
+                        $attendance = DB::table('attendence')
+                        ->where('emp_id', $user_code)
+                        ->where('date', $todayDate)
+                        ->orderBy('id', 'desc')
+                        ->first();
+                    }
+
+                    // $todayDate = "2024-03-12";
+
+                    // Retrieve attendance based on the determined date
+
+                    // dd($attendance);
+
+                    if ($attendance && $attendance->check_in_time != null) {
+                        // If check_in_time exists, set session data and indicate to show the check out button
+                            Session::put('check_in_time', $attendance->check_in_time);
+                            Session::put('show_check_out', true);
+                        } else {
+                            // If check_in_time does not exist, remove session data and indicate not to show the check out button
+                            Session::forget('check_in_time');
+                            Session::put('show_check_out', false);
+                        }
+
+
+                        if ($attendance && $attendance->break_start != null) {
+                            Session::put('break_start_time', $attendance->break_start);
+                            Session::put('show_break_end',true);
+                        } else {
+                            Session::forget('break_start_time');
+                            Session::forget('show_break_end');
+                        }
+
+                        if ($attendance && $attendance->break_end != null) {
+                            Session::put('break_end_time', $attendance->break_end);
+                        } else {
+                            Session::forget('break_end_time');
+                        }
+
+
+                        if ($attendance && $attendance->check_out_time != null) {
+                            Session::put('attendence_status', true);
+                            Session::put('check_out_time', $attendance->check_out_time);
+                        } else {
+                            Session::put('attendence_status', false);
+                            Session::forget('check_out_time');
+                        }
+
+                        if ($attendance && $attendance->total_time != null) {
+                        Session::put('total_hours', $attendance->total_time);
+                        } else {
+                            Session::forget('total_hours');
+                        }
             }
 
+            //get latest tasks for each employee
+            $latest_tasks = $this->getLatestTasks();
 
-           if ($attendance && $attendance->break_start != null) {
-                Session::put('break_start_time', $attendance->break_start);
-            } else {
-                Session::forget('break_start_time');
-            }
+            // get latest records of absent, leaves,
+            $total_present_day = $this->getAttendenceDetails();
+            // $total_present_day = 10;
+            // dd($dat);
+            $absent_days = 22 - $total_present_day;
+            $total_leaves = $this->totalLeaves();
 
-           if ($attendance && $attendance->break_end != null) {
-                Session::put('break_end_time', $attendance->break_end);
-            } else {
-                Session::forget('break_end_time');
-            }
+            // get latest tasks details
+            $task_details = $this->getTasksDetails();
+            // Extract counts from the returned array
+            $completed_count = $task_details['completed_count'];
+            $pending_count = $task_details['pending_count'];
+            $in_progress_count = $task_details['in_progress_count'];
+            // Sample task data
+            $task_data = [
+                ['', $completed_count, $pending_count, $in_progress_count]
+            ];
+            // dd($task_details);
 
-
-            if ($attendance && $attendance->check_out_time != null) {
-                Session::put('attendence_status', true);
-                Session::put('check_out_time', $attendance->check_out_time);
-            } else {
-                Session::put('attendence_status', false);
-                Session::forget('check_out_time');
-            }
-
-            if ($attendance && $attendance->total_time != null) {
-               Session::put('total_hours', $attendance->total_time);
-            } else {
-                Session::forget('total_hours');
-            }
 
 
             $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
             $t_date = Carbon::now()->format('l, d F Y');
             // dd($t_date);
-            $data = compact('office_start_time','break_start','break_end','office_end_time','emp_count','client_count','emp_det','t_date');
-
+            $data = [
+                'absent_days' => $absent_days,
+                'total_present_day' => $total_present_day,
+                'office_start_time' => $office_start_time,
+                'break_start' => $break_start,
+                'break_end' => $break_end,
+                'office_end_time' => $office_end_time,
+                'emp_count' => $emp_count,
+                'client_count' => $client_count,
+                'emp_det' => $emp_det,
+                't_date' => $t_date,
+                'completed_count' => $completed_count,
+                'pending_count' =>$pending_count,
+                'in_progress_count' =>$in_progress_count,
+                'latest_tasks' => $latest_tasks,
+                'total_leaves' => $total_leaves,
+            ];
 
             return view('index.emp-dashboard',$data);
         }
@@ -383,16 +589,6 @@ class AuthController extends Controller
                 Session::put('attendance_access', $check_permissions->attendance_access);
             }
 
-            // calling function of attence for employee
-            $this->indexEmployee();
-
-            //
-            // $check_active_status = DB::table('employees')->where('Emp_Code',$user_code)->first();
-            // if($check_active_status) {
-            //     Session::put('emp_status', $check_active_status->Emp_Status);
-            // }
-
-            // dd($employees_access);
 
             $check_shift_time = DB::table('employees')->where('Emp_Code',$user_code)->first();
             if($check_shift_time->Emp_Shift_Time == "Morning") {
@@ -406,59 +602,178 @@ class AuthController extends Controller
             $break_end = $office_time->break_end;
             $office_end_time = $office_time->shift_end;
 
-            $todayDate = now()->toDateString();  // Get today's date
+            // dd($shift->Emp_Shift_Time);
+            if($check_shift_time->Emp_Shift_Time == "Morning") {
+                // show attendence time
+                $todayDate = now()->toDateString();  // Get today's date
+                // dd($todayDate);
+                // $todayDate = "2024-03-11";
+                $attendance = DB::table('attendence')
+                ->where('emp_id', $user_code)
+                ->where('date', $todayDate)  // Assuming 'created_at' is the timestamp column
+                ->orderBy('id', 'desc')
+                ->first();
+                // dd($attendance);
+                if ($attendance && $attendance->check_in_time != null) {
+                // If check_in_time exists, set session data and indicate to show the check out button
+                    Session::put('check_in_time', $attendance->check_in_time);
+                    Session::put('show_check_out', true);
+                } else {
+                    // If check_in_time does not exist, remove session data and indicate not to show the check out button
+                    Session::forget('check_in_time');
+                    Session::put('show_check_out', false);
+                }
 
-            // $todayDate = "2024-03-11";
+
+                if ($attendance && $attendance->break_start != null) {
+                    Session::put('break_start_time', $attendance->break_start);
+                    Session::put('show_break_end',true);
+                } else {
+                    Session::forget('break_start_time');
+                    Session::forget('show_break_end');
+                }
+
+                if ($attendance && $attendance->break_end != null) {
+                    Session::put('break_end_time', $attendance->break_end);
+                } else {
+                    Session::forget('break_end_time');
+                }
 
 
-            $attendance = DB::table('attendence')
-            ->where('emp_id', $user_code)
-            ->where('date', $todayDate)  // Assuming 'created_at' is the timestamp column
-            ->orderBy('id', 'desc')
-            ->first();
+                if ($attendance && $attendance->check_out_time != null) {
+                    Session::put('attendence_status', true);
+                    Session::put('check_out_time', $attendance->check_out_time);
+                } else {
+                    Session::put('attendence_status', false);
+                    Session::forget('check_out_time');
+                }
 
-            if ($attendance && $attendance->check_in_time != null) {
-             // If check_in_time exists, set session data and indicate to show the check out button
-                 Session::put('check_in_time', $attendance->check_in_time);
-                 Session::put('show_check_out', true);
-             } else {
-                 // If check_in_time does not exist, remove session data and indicate not to show the check out button
-                 Session::forget('check_in_time');
-                 Session::put('show_check_out', false);
-             }
-
-
-            if ($attendance && $attendance->break_start != null) {
-                 Session::put('break_start_time', $attendance->break_start);
-             } else {
-                 Session::forget('break_start_time');
-             }
-
-             if ($attendance && $attendance->break_end != null) {
-                Session::put('break_end_time', $attendance->break_end);
+                if ($attendance && $attendance->total_time != null) {
+                Session::put('total_hours', $attendance->total_time);
+                } else {
+                    Session::forget('total_hours');
+                }
             } else {
-                Session::forget('break_end_time');
+                // Get the current time
+                    $currentTime = Carbon::now();
+                    // Define the start and end times of the specified time range in 12-hour format
+                    $startTime = Carbon::createFromTimeString("12:00 AM");
+                    $endTime = Carbon::createFromTimeString("12:00 PM");
+
+                    // Format the current time in 12-hour format with AM/PM
+                    $currentFormattedTime = $currentTime->format("h:i A");
+                    // $currentTime = Carbon::createFromFormat('h:i A', "3:00 AM");
+                    // dd($currentFormattedTime);
+                    // Check if the current time falls within the specified time range
+                    // $currentTime = "3:00 AM";
+                    if ($currentTime->between($startTime, $endTime)) {
+                        // dd("if working" . $currentTime);
+                        $yesterdayDate = now()->subDay()->toDateString();
+                        $attendance = DB::table('attendence')
+                        ->where('emp_id', $user_code)
+                        ->where('date', $yesterdayDate)
+                        ->orderBy('id', 'desc')
+                        ->first();
+                    } else {
+
+                        $todayDate = now()->toDateString();
+                        dd($todayDate);
+                        $attendance = DB::table('attendence')
+                        ->where('emp_id', $user_code)
+                        ->where('date', $todayDate)
+                        ->orderBy('id', 'desc')
+                        ->first();
+                    }
+
+                    // $todayDate = "2024-03-12";
+
+                    // Retrieve attendance based on the determined date
+
+                    // dd($attendance);
+
+                    if ($attendance && $attendance->check_in_time != null) {
+                        // If check_in_time exists, set session data and indicate to show the check out button
+                            Session::put('check_in_time', $attendance->check_in_time);
+                            Session::put('show_check_out', true);
+                        } else {
+                            // If check_in_time does not exist, remove session data and indicate not to show the check out button
+                            Session::forget('check_in_time');
+                            Session::put('show_check_out', false);
+                        }
+
+
+                        if ($attendance && $attendance->break_start != null) {
+                            Session::put('break_start_time', $attendance->break_start);
+                            Session::put('show_break_end',true);
+                        } else {
+                            Session::forget('break_start_time');
+                            Session::forget('show_break_end');
+                        }
+
+                        if ($attendance && $attendance->break_end != null) {
+                            Session::put('break_end_time', $attendance->break_end);
+                        } else {
+                            Session::forget('break_end_time');
+                        }
+
+
+                        if ($attendance && $attendance->check_out_time != null) {
+                            Session::put('attendence_status', true);
+                            Session::put('check_out_time', $attendance->check_out_time);
+                        } else {
+                            Session::put('attendence_status', false);
+                            Session::forget('check_out_time');
+                        }
+
+                        if ($attendance && $attendance->total_time != null) {
+                        Session::put('total_hours', $attendance->total_time);
+                        } else {
+                            Session::forget('total_hours');
+                        }
             }
 
+            //get latest tasks for each employee
+            $latest_tasks = $this->getLatestTasks();
 
-             if ($attendance && $attendance->check_out_time != null) {
-                 Session::put('attendence_status', true);
-                 Session::put('check_out_time', $attendance->check_out_time);
-             } else {
-                 Session::put('attendence_status', false);
-                 Session::forget('check_out_time');
-             }
+            // get latest records of absent, leaves,
+            $total_present_day = $this->getAttendenceDetails();
+            // $total_present_day = 10;
+            // dd($dat);
+            $absent_days = 22 - $total_present_day;
+            $total_leaves = $this->totalLeaves();
 
-             if ($attendance && $attendance->total_time != null) {
-                Session::put('total_hours', $attendance->total_time);
-             } else {
-                 Session::forget('total_hours');
-             }
+            // get latest tasks details
+            $task_details = $this->getTasksDetails();
+            // Extract counts from the returned array
+            $completed_count = $task_details['completed_count'];
+            $pending_count = $task_details['pending_count'];
+            $in_progress_count = $task_details['in_progress_count'];
+            // Sample task data
+            $task_data = [
+                ['', $completed_count, $pending_count, $in_progress_count]
+            ];
 
             $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
             $t_date = Carbon::now()->format('l, d F Y');
             // dd($t_date);
-            $data = compact('office_start_time','break_start','break_end','office_end_time','emp_count','client_count','emp_det','t_date');
+            $data = [
+                'absent_days' => $absent_days,
+                'total_present_day' => $total_present_day,
+                'office_start_time' => $office_start_time,
+                'break_start' => $break_start,
+                'break_end' => $break_end,
+                'office_end_time' => $office_end_time,
+                'emp_count' => $emp_count,
+                'client_count' => $client_count,
+                'emp_det' => $emp_det,
+                't_date' => $t_date,
+                'completed_count' => $completed_count,
+                'pending_count' =>$pending_count,
+                'in_progress_count' =>$in_progress_count,
+                'latest_tasks' => $latest_tasks,
+                'total_leaves' => $total_leaves,
+            ];
+
             return view('index.manager-dashboard',$data);
         }
          else if($user_type == "admin") {
@@ -469,9 +784,26 @@ class AuthController extends Controller
                 'labels' => ['January', 'February', 'March', 'April', 'May'],
                 'data' => [65, 59, 80, 81, 56],
             ];
-            $clients = Client::all();
-            $client_count = count($clients);
-            $data = compact('emp_count','client_count','data_chart');
+            // get total revenue record
+            $total_revenue = $this->getTotalRevenue();
+            // get total salary
+            $total_salary = $this->getTotalSalary();
+            // get total expense
+            $total_expense = $this->getTotalExpense();
+            // get usd to pkr total revenue
+            $usd_pkr_expenses = $this->getExchangeRate($total_expense);
+            $usd_pkr_salary = $this->getExchangeRate($total_salary);
+            // total profit
+            $total_profit = $total_revenue - $usd_pkr_expenses - $usd_pkr_salary;
+            $total_profit = number_format($total_profit, 2);
+            $usd_pkr_expenses = number_format($usd_pkr_expenses, 2);
+            $usd_pkr_salary = number_format($usd_pkr_salary, 2);
+            // total revenue in pkr
+            // $total_revenue_pkr = $usd_pkr_revenue - $total_expense - $total_salary;
+            // dd($total_revenue);
+            // $clients = DB::table('clients')->get();
+            $client_count = $clientCount = DB::table('clients')->count();
+            $data = compact('emp_count','client_count','data_chart','total_revenue','usd_pkr_expenses','usd_pkr_salary','total_profit');
             return view('index.index',$data);
         } else if($user_type == "client") {
             $employees = Employee::all();
@@ -485,6 +817,36 @@ class AuthController extends Controller
             return view('auth.login');
         }
 
+    }
+
+    // get totoal revenue
+    public function getTotalRevenue() {
+        $totalAmount = DB::table('invoices')->sum('amount');
+        if($totalAmount <= 0) {
+            $totalAmount = 0;
+        }
+        return $totalAmount;
+    }
+    // get totoal salary
+    public function getTotalSalary() {
+        $totalAmount = DB::table('salaries')->sum('amount');
+        if($totalAmount <= 0) {
+            $totalAmount = 0;
+        }
+        return $totalAmount;
+    }
+    // get totoal expense
+    public function getTotalExpense() {
+        $totalAmount = DB::table('expenses')->sum('expense_amount');
+        if($totalAmount <= 0) {
+            $totalAmount = 0;
+        }
+        return $totalAmount;
+    }
+
+    // datewise expenses, salaries, data
+    public function getData() {
+        dd('this');
     }
 
     public function index() {
@@ -740,6 +1102,24 @@ class AuthController extends Controller
     // admin login view
     public function viewLoginAdmin() {
         return view('auth.admin-login');
+    }
+
+    //get exchange rate prices
+    public function getExchangeRate($amount) {
+        $client = new GuzzleClient(); // Use the alias GuzzleClient
+        $response = $client->get('https://open.er-api.com/v6/latest/USD');
+        $data = json_decode($response->getBody(), true);
+
+        // Get the exchange rate for PKR
+        $usdToPkrRate = $data['rates']['PKR'];
+
+        // Convert PKR to USD using the reciprocal of the exchange rate
+        $pkrToUsdRate = 1 / $usdToPkrRate;
+
+        // Convert amount from PKR to USD
+        $amountInUSD = $amount * $pkrToUsdRate;
+
+        return $amountInUSD;
     }
 
 }

@@ -13,6 +13,46 @@ use Carbon\Carbon;
 
 class AttendenceController extends Controller
 {
+    // check permission
+    public function checkPermission() {
+        $user_type = Auth()->user()->user_type;
+        if($user_type == "admin" || $user_type == "manager") {
+            $user = true;
+        } else {
+            $user = false;
+        }
+        return $user;
+    }
+    // manager and admin can see time sheet
+    public function viewTimeSheet() {
+        $check_user = $this->checkPermission();
+        // $check_user = false;
+        if($check_user) {
+            $active_employees = DB::table('employees')->where('Emp_Status','active')->get();
+                // Get current month's attendance records
+            $currentMonth = Carbon::now()->month;
+            $currentYear = Carbon::now()->year;
+
+            // dd($currentYear);
+
+            $attendance = DB::table('attendence')
+                ->whereMonth('date', $currentMonth)
+                ->whereYear('date', $currentYear)
+                ->get();
+             // Transform the attendance data for easier access in the view
+            $attendanceData = [];
+            foreach ($attendance as $record) {
+                $attendanceData[$record->emp_id][$record->date] = $record->check_out_status;
+            }
+            // dd($attendanceData);
+
+            return view('attendence.timesheet', compact('active_employees', 'attendanceData'));
+
+        }
+        else {
+            return view('errors.401');
+        }
+    }
     // get form updated check in, check out, data and save in database
     public function updateEmpAttendenceDetails(Request $req) {
         // dd($req->attendence_id);
@@ -325,7 +365,8 @@ class AttendenceController extends Controller
     if($emp) {
         $check_attendence = DB::table('attendence')->where('emp_id', $id)->get();
         // dd($check_attendence->date);
-        return view('attendence.view-individual',compact('check_attendence','id'));
+        $emp_name = $emp->Emp_Full_Name;
+        return view('attendence.view-individual',compact('check_attendence','id','emp_name' ));
     } else {
         return back();
     }

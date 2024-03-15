@@ -4,9 +4,53 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Carbon\Carbon;
 
 class TaskController extends Controller
 {
+       // employee will see cards based tasks
+       public function employeeCanSeeTask() {
+            $emp_id = auth()->user()->user_code;
+            $emp = DB::table('employees')->where('Emp_Code',$emp_id)->first();
+            $emp_name = $emp->Emp_Full_Name;
+            $Emp_Designation = $emp->Emp_Designation;
+            $Emp_Image = $emp->Emp_Image;
+            $Emp_Shift_Time = $emp->Emp_Shift_Time;
+
+            $currentMonth = Carbon::now()->format('m');
+
+            $tasks = DB::table('tasks')
+            ->where('emp_id', $emp_id)
+            ->whereMonth('assigned_date', $currentMonth)
+            // ->orderBy('id', 'desc')
+            ->get();
+            return view('tasks.tasks-cards-of-each-employee',compact('tasks','emp_name','emp_id','Emp_Designation','Emp_Image','Emp_Shift_Time'));
+       }
+       // get task details and save in database
+       public function updateEachTaskEmp(Request $request) {
+        $validatedData = $request->validate([
+            'task_title' => 'required',
+            'task_date' => 'required',
+            'task_description' => 'required'
+        ]);
+
+        $task_title = $request->task_title;
+        $task_id = $request->task_id;
+        $task_date = $request->task_date;
+        $task_description = $request->task_description;
+        // dd($task_id);
+        // Update task in the database
+        DB::table('tasks')->where('id', $task_id)->update([
+            'task_title' => $task_title,
+            'task_date' => $task_date,
+            'task_description' => $task_description
+        ]);
+
+        // Redirect back with success message
+        return back()->with('success', 'Task updated successfully!');
+
+        // Proceed with your update logic
+    }
         // update each task of employe in database
         public function updateEachTask(Request $req) {
             $emp_id = $req->emp_id;
@@ -47,8 +91,11 @@ class TaskController extends Controller
             $Emp_Designation = $emp->Emp_Designation;
             $Emp_Image = $emp->Emp_Image;
             $Emp_Shift_Time = $emp->Emp_Shift_Time;
-            $tasks  = DB::table('tasks')->where('emp_id',$emp_id)->orderBy('id','desc')->get();
-            // dd($tasks);
+            $tasks = DB::table('tasks')
+            ->where('emp_id', $emp_id)
+            ->orderBy('id', 'desc')
+            ->limit(10)
+            ->get();
             return view('tasks.tasks-cards-of-each-employee',compact('tasks','emp_name','emp_id','Emp_Designation','Emp_Image','Emp_Shift_Time'));
             // dd($emp_id);
         }
@@ -139,12 +186,14 @@ class TaskController extends Controller
         }
     }
     public function addNewTask(Request $request) {
+        // Get the name of the authenticated user
         $name = Auth()->user()->user_name;
+
         // Validate the incoming request data
         $request->validate([
             'emp_name' => 'required',
             'first_task_title' => 'required',
-            'first_task_deadline' => 'required',
+            'first_task_deadline' => 'required|date',
             'first_task_description' => 'required',
             'task_title.*' => 'string',
             'task_deadline.*' => 'date',
@@ -157,6 +206,9 @@ class TaskController extends Controller
         $first_task_description = $request->input('first_task_description');
         $first_task_deadline = $request->input('first_task_deadline');
 
+        // Get the current date and time
+        $dateAssigned = now();
+
         // Insert the first task
         DB::table('tasks')->insert([
             'emp_id' => $empId,
@@ -166,6 +218,7 @@ class TaskController extends Controller
             'task_status' => "pending",
             'task_percentage' => "0",
             'assigned_by' => $name, // Assuming admin is the default assigned_by value
+            'assigned_date' => $dateAssigned, // Save the current date as date_assigned
         ]);
 
         // Check if additional tasks were added
@@ -186,6 +239,7 @@ class TaskController extends Controller
                     'task_status' => 'pending',
                     'task_percentage' => "0",
                     'assigned_by' => 'admin', // Assuming admin is the default assigned_by value
+                    'assigned_date' => $dateAssigned, // Save the current date as date_assigned
                 ];
             }
             DB::table('tasks')->insert($tasks);
@@ -193,5 +247,6 @@ class TaskController extends Controller
 
         return back()->with('success','Task Assigned');
     }
+
 
 }

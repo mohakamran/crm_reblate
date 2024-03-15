@@ -361,7 +361,7 @@ Manager Dashboard
 
 
         <div class="row">
-            <div class="col-md-3 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
@@ -379,7 +379,12 @@ Manager Dashboard
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
                                 <p class="text-muted text-truncate font-size-15 mb-2"> Number of Present </p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">20
+                                <h3 class="fs-4 flex-grow-1 mb-3">
+                                    @if (isset($total_present_day) && $total_present_day!="")
+                                        {{$total_present_day}}
+                                        @else
+                                        0
+                                    @endif
                                 </h3>
                                 {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
@@ -423,7 +428,12 @@ Manager Dashboard
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4">
                                 <p class="text-muted text-truncate font-size-15 mb-2"> Number of Absent </p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">20
+                                <h3 class="fs-4 flex-grow-1 mb-3">
+                                    @if (isset($absent_days) && $absent_days!="")
+                                    {{$absent_days}}
+                                    @else
+                                    0
+                                @endif
                                 </h3>
                                 {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
@@ -482,11 +492,10 @@ Manager Dashboard
                         </div>
                     </div>
                     {{-- leave button  --}}
-                    <div class=" d-flex justify-content-between">
-                        <a href="/leave-records" class="btn btn-success mt-3 ml-2">Leave Records</a>
+                    <div class="container d-flex justify-content-between">
                         <button type="button" class="btn btn-success mt-3 mr-2" data-toggle="modal"
                             data-target="#exampleModal">Apply for Leave</button>
-                        <a href="/leave-requests" class="btn btn-success mt-3 ml-2">Leave Requests</a>
+                        <a href="/leave-records" class="btn btn-success mt-3 ml-2">Leave Records</a>
                     </div>
 
                     {{-- apply leave modal  --}}
@@ -528,7 +537,7 @@ Manager Dashboard
                 </div>
             </div>
 
-            <div class="col-md-3  col-sm-12">
+            <div class="col-md-4  col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-title">Today Activity</h6>
@@ -572,7 +581,7 @@ Manager Dashboard
                 </div>
             </div>
 
-            <div class="col-md-3 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <h3 class=" font-size-header">Timesheet <span
@@ -589,7 +598,7 @@ Manager Dashboard
                         <div class="punch-info">
                             <div class="punch-hours">
                                 @if (session()->has('total_hours') && session('total_hours') != '')
-                                    <span style="float: right;">{{ session('total_hours') }} hrs</span>
+                                    <span style="float: right;">{{ session('total_hours') }}</span>
                                 @else
                                     <span>0 hrs</span>
                                 @endif
@@ -853,298 +862,71 @@ Manager Dashboard
                 </div>
                 <!-- end card -->
             </div>
-
-
-
-
-            {{-- <div class="col-xl-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="avatar-md flex-shrink-0">
-                                <span class="avatar-title bg-subtle-primary text-primary rounded fs-2">
-                                    <i class="uim uim-airplay"></i>
-                                </span>
-                            </div>
-                            <div class="flex-grow-1 overflow-hidden ms-4">
-                                <p class="text-muted text-truncate font-size-15 mb-2"> Total Expense</p>
-                                <h3 class="fs-4 flex-grow-1 mb-3">26,482.46 <span
-                                        class="text-muted font-size-16">USD</span></h3>
-                                <p class="text-muted mb-0 text-truncate"><span
-                                        class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 23% Increase</span> vs last month</p>
-                            </div>
-                            <div class="flex-shrink-0 align-self-start">
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle btn-icon border rounded-circle" href="#"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="ri-more-2-fill text-muted font-size-16"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="#">Yearly</a>
-                                        <a class="dropdown-item" href="#">Monthly</a>
-                                        <a class="dropdown-item" href="#">Weekly</a>
-                                        <a class="dropdown-item" href="#">Today</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
         </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div id="bar_chart"></div>
+            </div>
+            <div class="col-md-6">
+                <div id="chart_div"></div>
+            </div>
+        </div>
+
         <!-- END ROW -->
-
         <div class="row">
-            <div class="col-md-4  col-sm-12">
+            <div class="col-xl-6">
                 <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title">Shift Time</h6>
-                        <div id="content">
-                            <ul class="timeliner">
-                                <li class="event">
-                                    <h3>Shift Start</h3>
-                                   @if (isset($office_start_time) && $office_start_time!="")
-                                       <p>{{$office_start_time}}</p>
-                                       @else
-                                       <p>Not Set</p>
-                                   @endif
-                                </li>
-                                <li class="event">
-                                    <h3>Break Start Time</h3>
-                                    @if (isset($break_start) && $break_start!="")
-                                    <p>{{$break_start}}</p>
-                                    @else
-                                    <p>Not Set</p>
-                                @endif
-                                </li>
-                                <li class="event">
-                                    <h3>Break End Time</h3>
-                                    @if (isset($break_end) && $break_end!="")
-                                    <p>{{$break_end}}</p>
-                                    @else
-                                    <p>Not Set</p>
-                                @endif
-                                </li>
-                                <li class="event">
-                                    <h3>Shift End </h3>
-                                    @if (isset($office_end_time) && $office_end_time!="")
-                                    <p>{{$office_end_time}}</p>
-                                    @else
-                                    <p>Not Set</p>
-                                @endif
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        {{-- <div class="row">
-                <div class="col-md-12">
-                    <div class="welcome-box">
-                        <div class="welcome-img">
-                            @if (isset($emp_det) && $emp_det != '')
-                            <img src="{{$emp_det->Emp_Image}}" style="width:5em;height:5em;border-radius:8px;"  alt="">
-                            @else
-                            <img src="{{ url('user.png') }}" style="width:5em;height:5em;border-radius:8px;"
-                            alt="">
-                            @endif
-                        </div>
-
-                        <h3>Welcome, {{ ( isset($emp_det->Emp_Full_Name) && $emp_det->Emp_Full_Name ) ?  $emp_det->Emp_Full_Name : 'Guest' }}</h3>
-                        <p>Monday, 20 May 2019</p>
-                    </div>
-                </div>
-        </div> --}}
-
-
-
-
-
-        {{-- <div class="row">
-            <div class="col-xl-7">
-                <div class="row">
-
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-header border-0 align-items-center d-flex pb-0">
-                                <h4 class="card-title mb-0 flex-grow-1">Source of Purchases</h4>
-                                <div>
-                                    <div class="dropdown">
-                                        <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            <span class="fw-semibold">Sort By:</span>
-                                            <span class="text-muted">Yearly<i
-                                                    class="mdi mdi-chevron-down ms-1"></i></span>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="#">Yearly</a>
-                                            <a class="dropdown-item" href="#">Monthly</a>
-                                            <a class="dropdown-item" href="#">Weekly</a>
-                                            <a class="dropdown-item" href="#">Today</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body pt-0">
-                                <div id="social-source" class="apex-charts"></div>
-                                <div class="social-content text-center">
-                                    <p class="text-uppercase mb-1">Total Sales</p>
-                                    <h3 class="mb-0">5,685</h3>
-                                </div>
-                                <p class="text-muted text-center w-75 mx-auto mt-4 mb-0">Magnis dis parturient montes
-                                    nascetur ridiculus tincidunt lobortis.</p>
-                                <div class="row gx-4 mt-1">
-                                    <div class="col-md-4">
-                                        <div class="mt-4">
-                                            <div class="progress" style="height: 7px;">
-                                                <div class="progress-bar bg-primary" role="progressbar"
-                                                    style="width: 85%" aria-valuenow="85" aria-valuemin="0"
-                                                    aria-valuemax="85">
-                                                </div>
-                                            </div>
-                                            <p class="text-muted mt-2 pt-2 mb-0 text-uppercase font-size-13 text-truncate">
-                                                E-Commerce
-                                            </p>
-                                            <h4 class="mt-1 mb-0 font-size-20">52,524</h4>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mt-4">
-                                            <div class="progress" style="height: 7px;">
-                                                <div class="progress-bar bg-success" role="progressbar"
-                                                    style="width: 70%" aria-valuenow="70" aria-valuemin="0"
-                                                    aria-valuemax="70">
-                                                </div>
-                                            </div>
-                                            <p class="text-muted mt-2 pt-2 mb-0 text-uppercase font-size-13 text-truncate">
-                                                Facebook
-                                            </p>
-                                            <h4 class="mt-1 mb-0 font-size-20">48,625</h4>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="mt-4">
-                                            <div class="progress" style="height: 7px;">
-                                                <div class="progress-bar bg-warning" role="progressbar"
-                                                    style="width: 60%" aria-valuenow="60" aria-valuemin="0"
-                                                    aria-valuemax="60">
-                                                </div>
-                                            </div>
-                                            <p class="text-muted mt-2 pt-2 mb-0 text-uppercase font-size-13 text-truncate">
-                                                Instagram
-                                            </p>
-                                            <h4 class="mt-1 mb-0 font-size-20">85,745</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-header border-0 align-items-center d-flex pb-0">
-                                <h4 class="card-title mb-0 flex-grow-1">Sales Statistics</h4>
-                                <div>
-                                    <div class="dropdown">
-                                        <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            Today<i class="mdi mdi-chevron-down ms-1"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="#">Yearly</a>
-                                            <a class="dropdown-item" href="#">Monthly</a>
-                                            <a class="dropdown-item" href="#">Weekly</a>
-                                            <a class="dropdown-item" href="#">Today</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="mb-0 mt-2">725,800</h4>
-                                <p class="mb-0 mt-2 text-muted">
-                                    <span class="badge badge-soft-success mb-0">
-                                        <i class="ri-arrow-up-line align-middle"></i>
-                                        15.72 % </span> vs. previous month
-                                </p>
-
-                                <div class="mt-3 pt-1">
-                                    <div class="progress progress-lg rounded-pill px-0">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 48%"
-                                            aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 26%"
-                                            aria-valuenow="26" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-
-                                <div class="table-responsive mt-3">
-                                    <table class="table align-middle table-centered table-nowrap mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Order Status</th>
-                                                <th scope="col">Orders</th>
-                                                <th scope="col">Returns</th>
-                                                <th scope="col">Earnings</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <a href="javascript:void(0);" class="text-dark">Product Pending</a>
-                                                </td>
-                                                <td>17,351</td>
-                                                <td>2,123</td>
-                                                <td><span class="badge bg-subtle-primary text-primary font-size-11 ms-1"><i
-                                                            class="mdi mdi-arrow-up"></i> 45.3%</span></td>
-                                            </tr><!-- end -->
-
-                                            <tr>
-                                                <td>
-                                                    <a href="javascript:void(0);" class="text-dark">Product Cancelled</a>
-                                                </td>
-                                                <td>67,356</td>
-                                                <td>3,652</td>
-                                                <td><span class="badge bg-subtle-danger text-danger font-size-11 ms-1"><i
-                                                            class="mdi mdi-arrow-down"></i> 14.6%</span></td>
-                                            </tr><!-- end -->
-
-
-                                            <tr>
-                                                <td>
-                                                    <a href="javascript:void(0);" class="text-dark">Product Delivered</a>
-                                                </td>
-                                                <td>67,356</td>
-                                                <td>3,652</td>
-                                                <td><span class="badge bg-subtle-primary text-primary font-size-11 ms-1"><i
-                                                            class="mdi mdi-arrow-up"></i> 14.6%</span></td>
-                                            </tr><!-- end -->
-                                        </tbody><!-- end tbody -->
-                                    </table><!-- end table -->
-                                </div>
-
-                                <div class="text-center mt-4"><a href="javascript: void(0);"
-                                        class="btn btn-primary waves-effect waves-light btn-sm">View More <i
-                                            class="mdi mdi-arrow-right ms-1"></i></a></div>
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-
-            <div class="col-xl-5">
-                <div class="card">
-                    <div class="card-header border-0 align-items-center d-flex pb-0">
-                        <h4 class="card-title mb-0 flex-grow-1">Top Users</h4>
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
+                        <h4 class="card-title mb-0 flex-grow-1">Tasks</h4>
                         <div>
-                            <div class="dropdown">
+
+                        </div>
+                    </div>
+                    <div class="card-body pt-2">
+                        <div class="table-responsive">
+                            <table class="table align-middle table-nowrap mb-0">
+                                <thead>
+                                    <tr style="border-bottom: 1px solid #e3e3e3;">
+
+                                        <th>Task Title</th>
+                                        <th>Task Date</th>
+                                        {{-- <th>Tasks</th> --}}
+                                        <th>Task Status</th>
+                                        <th>Task Percentage</th>
+                                        {{-- <th>Order Date</th>
+                                        <th>Total</th> --}}
+                                        {{-- <th>Payment Method</th>
+                                        <th>Payment Status</th>
+                                        <th>Action</th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($latest_tasks as $task)
+                                        <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
+                                           <td>{{$task->task_title}}</td>
+                                           <td>{{$task->task_date}}</td>
+                                           <td>{{$task->task_status}}</td>
+                                           <td>{{$task->task_percentage}}%</td>
+                                           {{-- <td>{{$task->task_title}}</td> --}}
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center pt-3">
+                            <a href="/view-emp-tasks-each" class="w-md">View All</a>
+                        </div>
+                        <!-- end table-responsive -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
+                        <h4 class="card-title mb-0 flex-grow-1">Reports - Tasks</h4>
+                        <div>
+                            {{-- <div class="dropdown">
                                 <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                     <span class="fw-semibold">Sort By:</span>
@@ -1156,226 +938,73 @@ Manager Dashboard
                                     <a class="dropdown-item" href="#">Weekly</a>
                                     <a class="dropdown-item" href="#">Today</a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="card-body pt-2">
-                        <div class="table-responsive" data-simplebar style="max-height: 358px;">
-                            <table class="table table-borderless table-centered align-middle table-nowrap mb-0">
+                        <div class="table-responsive">
+                            <table class="table align-middle table-nowrap mb-0">
+                                <thead>
+                                    <tr style="border-bottom: 1px solid #e3e3e3;">
+
+                                        <th>EMP ID</th>
+                                        <th>Employee Name</th>
+                                        <th>Tasks</th>
+                                        <th>See Details</th>
+                                        {{-- <th>Order Date</th>
+                                        <th>Total</th> --}}
+                                        {{-- <th>Payment Method</th>
+                                        <th>Payment Status</th>
+                                        <th>Action</th> --}}
+                                    </tr>
+                                </thead>
                                 <tbody>
-                                    <tr>
-                                        <td style="width: 20px;"><img src="{{ URL::asset('build/images/users/avatar-4.jpg') }}"
-                                                class="avatar-sm rounded-circle " alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1">Glenn Holden</h6>
-                                            <p class="text-muted mb-0 font-size-14">glennholden@tocly.com</p>
-                                        </td>
-                                        <td class="text-muted"><i
-                                                class="mdi mdi-trending-up text-success font-size-18 align-middle me-1"></i>$250.00
-                                        </td>
-                                        <td><span class="badge badge-soft-danger font-size-12">Cancel</span></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <a class="text-muted dropdown-toggle font-size-20" role="button"
-                                                    data-bs-toggle="dropdown" aria-haspopup="true">
-                                                    <i class="mdi mdi-dots-vertical"></i>
-                                                </a>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#">Separated link</a>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
+                                        <td>Task 1 ....</td>
+                                        <td><a href="#">see more</a></td>
                                     </tr>
-                                    <tr>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-5.jpg') }}" class="avatar-sm rounded-circle "
-                                                alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1">Lolita Hamill</h6>
-                                            <p class="text-muted mb-0 font-size-14">lolitahamill@tocly.com</p>
-                                        </td>
-                                        <td class="text-muted"><i
-                                                class="mdi mdi-trending-down text-danger font-size-18 align-middle me-1"></i>$110.00
-                                        </td>
-                                        <td><span class="badge badge-soft-success font-size-12">Success</span></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <a class="text-muted dropdown-toggle font-size-20" role="button"
-                                                    data-bs-toggle="dropdown" aria-haspopup="true">
-                                                    <i class="mdi mdi-dots-vertical"></i>
-                                                </a>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#">Separated link</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-6.jpg') }}" class="avatar-sm rounded-circle "
-                                                alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1">Robert Mercer</h6>
-                                            <p class="text-muted mb-0 font-size-14">robertmercer@tocly.com</p>
-                                        </td>
-                                        <td class="text-muted"><i
-                                                class="mdi mdi-trending-up text-success font-size-18 align-middle me-1"></i>$420.00
-                                        </td>
-                                        <td><span class="badge badge-soft-info font-size-12">Active</span></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <a class="text-muted dropdown-toggle font-size-20" role="button"
-                                                    data-bs-toggle="dropdown" aria-haspopup="true">
-                                                    <i class="mdi mdi-dots-vertical"></i>
-                                                </a>
+                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
 
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#">Separated link</a>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td>Task 1 ....</td>
+                                        <td><a href="#">see more</a></td>
                                     </tr>
-                                    <tr>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-7.jpg') }}" class="avatar-sm rounded-circle "
-                                                alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1">Marie Kim</h6>
-                                            <p class="text-muted mb-0 font-size-14">mariekim@tocly.com</p>
-                                        </td>
-                                        <td class="text-muted"><i
-                                                class="mdi mdi-trending-down text-danger font-size-18 align-middle me-1"></i>$120.00
-                                        </td>
-                                        <td><span class="badge badge-soft-warning font-size-12">Pending</span></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <a class="text-muted dropdown-toggle font-size-20" role="button"
-                                                    data-bs-toggle="dropdown" aria-haspopup="true">
-                                                    <i class="mdi mdi-dots-vertical"></i>
-                                                </a>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#">Separated link</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-8.jpg') }}" class="avatar-sm rounded-circle "
-                                                alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1">Sonya Henshaw</h6>
-                                            <p class="text-muted mb-0 font-size-14">sonyahenshaw@tocly.com</p>
-                                        </td>
-                                        <td class="text-muted"><i
-                                                class="mdi mdi-trending-up text-success font-size-18 align-middle me-1"></i>$112.00
-                                        </td>
-                                        <td><span class="badge badge-soft-info font-size-12">Active</span></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <a class="text-muted dropdown-toggle font-size-20" role="button"
-                                                    data-bs-toggle="dropdown" aria-haspopup="true">
-                                                    <i class="mdi mdi-dots-vertical"></i>
-                                                </a>
+                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
 
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#">Separated link</a>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td>Task 1 ....</td>
+                                        <td><a href="#">see more</a></td>
                                     </tr>
-                                    <tr>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}" class="avatar-sm rounded-circle "
-                                                alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1">Marie Kim</h6>
-                                            <p class="text-muted mb-0 font-size-14">marikim@tocly.com</p>
-                                        </td>
-                                        <td class="text-muted"><i
-                                                class="mdi mdi-trending-down text-danger font-size-18 align-middle me-1"></i>$120.00
-                                        </td>
-                                        <td><span class="badge badge-soft-success font-size-12">Success</span></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <a class="text-muted dropdown-toggle font-size-20" role="button"
-                                                    data-bs-toggle="dropdown" aria-haspopup="true">
-                                                    <i class="mdi mdi-dots-vertical"></i>
-                                                </a>
 
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#">Separated link</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-1.jpg') }}" class="avatar-sm rounded-circle "
-                                                alt="..."></td>
-                                        <td>
-                                            <h6 class="font-size-15 mb-1">Sonya Henshaw</h6>
-                                            <p class="text-muted mb-0 font-size-14">sonyahenshaw@tocly.com</p>
-                                        </td>
-                                        <td class="text-muted"><i
-                                                class="mdi mdi-trending-up text-success font-size-18 align-middle me-1"></i>$112.00
-                                        </td>
-                                        <td><span class="badge badge-soft-danger font-size-12">Cancel</span></td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <a class="text-muted dropdown-toggle font-size-20" role="button"
-                                                    data-bs-toggle="dropdown" aria-haspopup="true">
-                                                    <i class="mdi mdi-dots-vertical"></i>
-                                                </a>
-
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#">Separated link</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
-                        </div> <!-- enbd table-responsive-->
+                        </div>
+                        <div class="text-center pt-3">
+                            <a href="javascript:void()" class=" w-md">View All</a>
+                        </div>
+                        <!-- end table-responsive -->
                     </div>
                 </div>
             </div>
-
-        </div> --}}
-        <!-- END ROW -->
+        </div>
 
         <div class="row">
             <div class="col-xl-6">
                 <div class="card">
-                    {{-- <div class="card-header border-0 align-items-center d-flex pb-0">
-                        <h4 class="card-title mb-0 flex-grow-1">Latest Transaction</h4>
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
+                        <h4 class="card-title mb-0 flex-grow-1">Projects</h4>
                         <div>
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                     <span class="fw-semibold">Sort By:</span>
@@ -1387,86 +1016,59 @@ Manager Dashboard
                                     <a class="dropdown-item" href="#">Weekly</a>
                                     <a class="dropdown-item" href="#">Today</a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="card-body pt-2">
-                        <h4>Weekly Tasks</h4>
                         <div class="table-responsive">
                             <table class="table align-middle table-nowrap mb-0">
                                 <thead>
-                                    <tr>
-                                        {{-- <th style="width: 20px;">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck1">
-                                                <label class="form-check-label" for="customCheck1">&nbsp;</label>
-                                            </div>
-                                        </th> --}}
-                                        <th>Task</th>
-                                        <th>Task Due Date</th>
-                                        <th>Task Assigned By</th>
-                                        <th>Status</th>
+                                    <tr style="border-bottom: 1px solid #e3e3e3;">
+
+                                        <th>EMP ID</th>
+                                        <th>Employee Name</th>
+                                        <th>Tasks</th>
+                                        <th>See Details</th>
                                         {{-- <th>Order Date</th>
-                                        <th>Total</th>
-                                        <th>Payment Method</th>
+                                        <th>Total</th> --}}
+                                        {{-- <th>Payment Method</th>
                                         <th>Payment Status</th>
                                         <th>Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Task .... 1</td>
-                                        <td>23, 12, 2023</td>
-                                        <td>Fredrick</td>
-                                        <td><a href="javascript:void()"
-                                                style="display:block;text-align:center;width:120px"
-                                                class="alert alert-danger">Pending</a></td>
-                                        {{-- <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                            </div>
-                                        </td> --}}
-                                        {{-- <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
+
+                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
                                                 class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                        <td>
-                                            <p class="mb-0">cs562xf452dd</p>
-                                        </td>
-                                        <td>
-                                            07 Oct, 2022
-                                        </td>
-                                        <td>
-                                            $400
-                                        </td>
-                                        <td>
-                                            <i class="fab fa-cc-mastercard me-1"></i> Mastercard
-                                        </td>
-                                        <td>
-                                            <span class="badge rounded badge-soft-success font-size-12">Completed</span>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-3">
-                                                <a href="javascript:void(0);" class="btn btn-success btn-sm"><i
-                                                        class="mdi mdi-pencil"></i></a>
-                                                <a href="javascript:void(0);" class="btn btn-danger btn-sm"><i
-                                                        class="mdi mdi-delete"></i></a>
-                                            </div>
-                                        </td> --}}
+                                        <td>Task 1 ....</td>
+                                        <td><a href="#">see more</a></td>
                                     </tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
-                                    <tr>
-                                        <td>Task .... 1</td>
-                                        <td>23, 12, 2023</td>
-                                        <td>Fredrick</td>
-                                        <td><a href="javascript:void()"
-                                                style="display:block;text-align:center;width:120px"
-                                                class="alert alert-success">Completed</a></td>
+                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
+
+                                        <td>Task 1 ....</td>
+                                        <td><a href="#">see more</a></td>
                                     </tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
+                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
+
+                                        <td>Task 1 ....</td>
+                                        <td><a href="#">see more</a></td>
+                                    </tr>
 
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="text-center pt-3">
+                            <a href="javascript:void()" class="w-md">View All</a>
                         </div>
                         <!-- end table-responsive -->
                     </div>
@@ -1474,10 +1076,10 @@ Manager Dashboard
             </div>
             <div class="col-xl-6">
                 <div class="card">
-                    {{-- <div class="card-header border-0 align-items-center d-flex pb-0">
-                        <h4 class="card-title mb-0 flex-grow-1">Latest Transaction</h4>
+                    <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
+                        <h4 class="card-title mb-0 flex-grow-1">Projects</h4>
                         <div>
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                     <span class="fw-semibold">Sort By:</span>
@@ -1489,332 +1091,115 @@ Manager Dashboard
                                     <a class="dropdown-item" href="#">Weekly</a>
                                     <a class="dropdown-item" href="#">Today</a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="card-body pt-2">
-                        <h4>Weekly Tasks</h4>
                         <div class="table-responsive">
                             <table class="table align-middle table-nowrap mb-0">
                                 <thead>
-                                    <tr>
-                                        {{-- <th style="width: 20px;">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck1">
-                                                <label class="form-check-label" for="customCheck1">&nbsp;</label>
-                                            </div>
-                                        </th> --}}
-                                        <th>Task</th>
-                                        <th>Task Due Date</th>
-                                        <th>Task Assigned By</th>
-                                        <th>Status</th>
+                                    <tr style="border-bottom: 1px solid #e3e3e3;">
+
+                                        <th>EMP ID</th>
+                                        <th>Employee Name</th>
+                                        <th>Tasks</th>
+                                        <th>See Details</th>
                                         {{-- <th>Order Date</th>
-                                        <th>Total</th>
-                                        <th>Payment Method</th>
+                                        <th>Total</th> --}}
+                                        {{-- <th>Payment Method</th>
                                         <th>Payment Status</th>
                                         <th>Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Task .... 1</td>
-                                        <td>23, 12, 2023</td>
-                                        <td>Fredrick</td>
-                                        <td><a href="javascript:void()"
-                                                style="display:block;text-align:center;width:120px"
-                                                class="alert alert-danger">Pending</a></td>
-                                        {{-- <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                            </div>
-                                        </td> --}}
-                                        {{-- <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
+
+                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
                                         <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
                                                 class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                        <td>
-                                            <p class="mb-0">cs562xf452dd</p>
-                                        </td>
-                                        <td>
-                                            07 Oct, 2022
-                                        </td>
-                                        <td>
-                                            $400
-                                        </td>
-                                        <td>
-                                            <i class="fab fa-cc-mastercard me-1"></i> Mastercard
-                                        </td>
-                                        <td>
-                                            <span class="badge rounded badge-soft-success font-size-12">Completed</span>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-3">
-                                                <a href="javascript:void(0);" class="btn btn-success btn-sm"><i
-                                                        class="mdi mdi-pencil"></i></a>
-                                                <a href="javascript:void(0);" class="btn btn-danger btn-sm"><i
-                                                        class="mdi mdi-delete"></i></a>
-                                            </div>
-                                        </td> --}}
+                                        <td>Task 1 ....</td>
+                                        <td><a href="#">see more</a></td>
                                     </tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
-                                    <tr>
-                                        <td>Task .... 1</td>
-                                        <td>23, 12, 2023</td>
-                                        <td>Fredrick</td>
-                                        <td><a href="javascript:void()"
-                                                style="display:block;text-align:center;width:120px"
-                                                class="alert alert-success">Completed</a></td>
+                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
+
+                                        <td>Task 1 ....</td>
+                                        <td><a href="#">see more</a></td>
                                     </tr>
+                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
+                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
+                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
+
+                                        <td>Task 1 ....</td>
+                                        <td><a href="#">see more</a></td>
+                                    </tr>
 
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="text-center pt-3">
+                            <a href="javascript:void()" class=" w-md">View All</a>
                         </div>
                         <!-- end table-responsive -->
                     </div>
                 </div>
             </div>
         </div>
-        <!-- END ROW -->
 
-        <div class="row">
-            <div class="col-xl-6">
-                <div class="card">
-                    {{-- <div class="card-header border-0 align-items-center d-flex pb-0">
-                        <h4 class="card-title mb-0 flex-grow-1">Latest Transaction</h4>
-                        <div>
-                            <div class="dropdown">
-                                <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span class="fw-semibold">Sort By:</span>
-                                    <span class="text-muted">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Yearly</a>
-                                    <a class="dropdown-item" href="#">Monthly</a>
-                                    <a class="dropdown-item" href="#">Weekly</a>
-                                    <a class="dropdown-item" href="#">Today</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-                    <div class="card-body pt-2">
-                        <h4>Reports</h4>
-                        <div class="table-responsive">
-                            <table class="table align-middle table-nowrap mb-0">
-                                <thead>
-                                    <tr>
-                                        {{-- <th style="width: 20px;">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck1">
-                                                <label class="form-check-label" for="customCheck1">&nbsp;</label>
-                                            </div>
-                                        </th> --}}
-                                        <th>Task</th>
-                                        <th>Task Due Date</th>
-                                        {{-- <th>Task Assigned By</th> --}}
-                                        <th>Status</th>
-                                        {{-- <th>Order Date</th>
-                                        <th>Total</th>
-                                        <th>Payment Method</th>
-                                        <th>Payment Status</th>
-                                        <th>Action</th> --}}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Task .... 1</td>
-                                        <td>23, 12, 2023</td>
-                                        {{-- <td>Fredrick</td> --}}
-                                        <td><a href="javascript:void()" style="display:block;width:120px;"
-                                                class="alert alert-danger">Pending</a></td>
-                                        {{-- <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                            </div>
-                                        </td> --}}
-                                        {{-- <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                        <td>
-                                            <p class="mb-0">cs562xf452dd</p>
-                                        </td>
-                                        <td>
-                                            07 Oct, 2022
-                                        </td>
-                                        <td>
-                                            $400
-                                        </td>
-                                        <td>
-                                            <i class="fab fa-cc-mastercard me-1"></i> Mastercard
-                                        </td>
-                                        <td>
-                                            <span class="badge rounded badge-soft-success font-size-12">Completed</span>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-3">
-                                                <a href="javascript:void(0);" class="btn btn-success btn-sm"><i
-                                                        class="mdi mdi-pencil"></i></a>
-                                                <a href="javascript:void(0);" class="btn btn-danger btn-sm"><i
-                                                        class="mdi mdi-delete"></i></a>
-                                            </div>
-                                        </td> --}}
-                                    </tr>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
 
-                                    <tr>
-                                        <td>Task .... 1</td>
-                                        <td>23, 12, 2023</td>
-                                        {{-- <td>Fredrick</td> --}}
-                                        <td><a href="javascript:void()" style="display:block;width:120px;"
-                                                class="alert alert-success">Submitted</a></td>
-                                    </tr>
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Task');
+                data.addColumn('number', 'Count');
+                data.addRows([
+                    ['Completed', <?php echo $completed_count; ?>],
+                    ['Pending', <?php echo $pending_count; ?>],
+                    ['In Progress', <?php echo $in_progress_count; ?>]
+                ]);
 
+                var options = {
+                    title: 'Tasks Status for Current Month',
+                    legend: { position: 'none' },
+                    bars: 'horizontal',
+                    colors: ['#008000', '#FF0000', '#FFFF00'] // Green for completed, Red for pending, Yellow for in-progress
+                };
 
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- end table-responsive -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6">
-                <div class="card">
-                    {{-- <div class="card-header border-0 align-items-center d-flex pb-0">
-                        <h4 class="card-title mb-0 flex-grow-1">Latest Transaction</h4>
-                        <div>
-                            <div class="dropdown">
-                                <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span class="fw-semibold">Sort By:</span>
-                                    <span class="text-muted">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Yearly</a>
-                                    <a class="dropdown-item" href="#">Monthly</a>
-                                    <a class="dropdown-item" href="#">Weekly</a>
-                                    <a class="dropdown-item" href="#">Today</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-                    <div class="card-body pt-2">
-                        <h4>Reports</h4>
-                        <div class="table-responsive">
-                            <table class="table align-middle table-nowrap mb-0">
-                                <thead>
-                                    <tr>
-                                        {{-- <th style="width: 20px;">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck1">
-                                                <label class="form-check-label" for="customCheck1">&nbsp;</label>
-                                            </div>
-                                        </th> --}}
-                                        <th>Task</th>
-                                        <th>Task Due Date</th>
-                                        {{-- <th>Task Assigned By</th> --}}
-                                        <th>Status</th>
-                                        {{-- <th>Order Date</th>
-                                        <th>Total</th>
-                                        <th>Payment Method</th>
-                                        <th>Payment Status</th>
-                                        <th>Action</th> --}}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Task .... 1</td>
-                                        <td>23, 12, 2023</td>
-                                        {{-- <td>Fredrick</td> --}}
-                                        <td><a href="javascript:void()" style="display:block;width:120px;"
-                                                class="alert alert-danger">Pending</a></td>
-                                        {{-- <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                            </div>
-                                        </td> --}}
-                                        {{-- <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                        <td>
-                                            <p class="mb-0">cs562xf452dd</p>
-                                        </td>
-                                        <td>
-                                            07 Oct, 2022
-                                        </td>
-                                        <td>
-                                            $400
-                                        </td>
-                                        <td>
-                                            <i class="fab fa-cc-mastercard me-1"></i> Mastercard
-                                        </td>
-                                        <td>
-                                            <span class="badge rounded badge-soft-success font-size-12">Completed</span>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-3">
-                                                <a href="javascript:void(0);" class="btn btn-success btn-sm"><i
-                                                        class="mdi mdi-pencil"></i></a>
-                                                <a href="javascript:void(0);" class="btn btn-danger btn-sm"><i
-                                                        class="mdi mdi-delete"></i></a>
-                                            </div>
-                                        </td> --}}
-                                    </tr>
+                var chart = new google.visualization.BarChart(document.getElementById('bar_chart'));
 
-                                    <tr>
-                                        <td>Task .... 1</td>
-                                        <td>23, 12, 2023</td>
-                                        {{-- <td>Fredrick</td> --}}
-                                        <td><a href="javascript:void()" style="display:block;width:120px;"
-                                                class="alert alert-success">Submitted</a></td>
-                                    </tr>
+                chart.draw(data, options);
+            }
 
+            google.charts.load('current', {packages: ['corechart', 'bar']});
+            google.charts.setOnLoadCallback(drawChartBar);
 
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- end table-responsive -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{-- END ROW  --}}
+            function drawChartBar() {
+            var data = google.visualization.arrayToDataTable([
+                ['Category', 'Count'],
+                ['Present', <?php echo $total_present_day; ?>],
+                ['Absent', <?php echo $absent_days; ?>],
+                ['Leaves', <?php echo $total_leaves; ?> ]
+            ]);
 
-        {{-- <div class="row">
-            <div class="col-xl-12">
-                <div class="card">
-                            <div class="col-md-2" style="display: flex;align-items:center">
-                                <h6>See Who is Present Today</h6>
-                            </div>
-                            <div class="col-md-10">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-        <!-- END ROW -->
+      var options = {
+        title: 'Attendance for Current Month',
+        legend: { position: 'none' },
+        bars: 'vertical',
+        vAxis: { format: 'decimal' }
+      };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+        </script>
 
 
         <script>
@@ -1879,11 +1264,12 @@ Manager Dashboard
                         $('#messageBox').text(response.message);
                     },
                     error: function(xhr, status, error) {
-                        var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                        var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message :
+                            'An error occurred';
 
                         $('#messageBox').text(errorMessage); // Set the error message from the server response
-                                }
-                            });
+                    }
+                });
             }
         </script>
     @endsection

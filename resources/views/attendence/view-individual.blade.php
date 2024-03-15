@@ -62,6 +62,7 @@
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </span>
+                                    <input type="hidden" value=""> 
                                 </div>
 
                                 @if (isset($id) && $id != '')
