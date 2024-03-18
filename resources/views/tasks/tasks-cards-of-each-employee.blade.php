@@ -39,10 +39,10 @@
                         </div>
                         </div>
                         @if (Auth()->user()->user_type == "admin")
-                                <div class="d-flex align-items-center p-3 gap-2" style="background-color: #14213d24; border-radius: 10px;">
+                                <div class="d-flex flex-column align-items-center p-3 gap-2" style="">
 
-                                    <a href="/create-new-task" class="reblateBtn p-2">Assign New</a>
-                                    <a href="/update-tasks/{{$emp_id}}" class="reblateBtn p-2">Update</a>
+                                    <a href="/create-new-task" class="text-dark fw-bold p-2">Assign New</a>
+                                    <a href="/update-tasks/{{$emp_id}}" class="text-dark fw-bold p-2">Update</a>
                                 </div>
                         @endif
                     </div>
