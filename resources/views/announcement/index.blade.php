@@ -52,9 +52,11 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Create Announcement</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
+                                        <h5 class="modal-title" style="font-size: 30px;" id="exampleModalLabel">Create Announcement</h5>
+                                        <button type="button" class="close" style="border: none;background-color: transparent;" data-dismiss="modal" aria-label="Close">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                                              </svg>
                                         </button>
                                     </div>
                                     <div class="modal-body">
@@ -62,12 +64,12 @@
                                         <form id="announcementForm">
                                             <div class="form-group mt-2">
                                                 <label for="title">Announcement Title</label>
-                                                <input type="text" class="form-control" id="title"
+                                                <input type="text" class="form-control" style="background-color: #e3e3e3; border:none;" id="title"
                                                     placeholder="Enter title">
                                             </div>
                                             <div class="form-group">
                                                 <label for="recipient ">Recipient</label>
-                                                <select class="form-control mt-2" id="recipient">
+                                                <select class="form-control mt-2" id="recipient" style="background-color: #e3e3e3; border:none;">
                                                     <option value="all">All</option>
                                                     <option value="employees">Employees</option>
                                                     <option value="managers">Managers</option>
@@ -75,13 +77,13 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="description">Description</label>
-                                                <textarea class="form-control mt-2" id="description" rows="3" placeholder="Enter description"></textarea>
+                                                <textarea class="form-control mt-2" style="background-color: #e3e3e3; border:none; resize: none; height: 100px;" id="description" rows="3" placeholder="Enter description"></textarea>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Add
+                                        <button type="button" class="reblateBtn px-4 py-2" style="" data-dismiss="modal">Close</button>
+                                        <button type="button" class="reblateBtn px-4 py-2">Add
                                             Announcement</button>
                                     </div>
                                 </div>
