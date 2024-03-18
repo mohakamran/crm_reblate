@@ -64,6 +64,7 @@
                                                 <label for="title">Announcement Title</label>
                                                 <input type="text" class="form-control" id="title"
                                                     placeholder="Enter title">
+                                                    <span id="title_message" style="color:red;margin:12px 0px;display:none;">Enter title</span>
                                             </div>
                                             <div class="form-group">
                                                 <label for="recipient ">Recipient</label>
@@ -72,10 +73,12 @@
                                                     <option value="employees">Employees</option>
                                                     <option value="managers">Managers</option>
                                                 </select>
+                                                <span id="res_message" style="color:red;margin:12px 0px;display:none;">Select Reciepient</span>
                                             </div>
                                             <div class="form-group">
                                                 <label for="description">Description</label>
                                                 <textarea class="form-control mt-2" id="description" rows="3" placeholder="Enter description"></textarea>
+                                                <span id="desc_message" style="color:red;margin:12px 0px;display:none;">Description</span>
                                             </div>
 
                                             </div>
@@ -129,15 +132,32 @@
     }
     $(document).ready(function() {
     // Event handler for the Add Announcement button
-    $('#announcementForm').on('click', function(event) {
+    $('#submitButton').on('click', function(event) {
         // Prevent the default form submission
         event.preventDefault();
-        alert('my work has been done!');
+        var title_message = document.getElementById('title_message');
+        var res_message = document.getElementById('res_message');
+        var desc_message = document.getElementById('desc_message');
+
+        title_message.style.display = "none";
+        res_message.style.display = "none";
+        desc_message.style.display = "none";
 
         // Get the values from the form fields
         var title = $('#title').val();
         var recipient = $('#recipient').val();
         var description = $('#description').val();
+
+        if(title == "") {
+            title_message.style.display = "block";
+        }
+        if(res_message == "") {
+            res_message.style.display = "block";
+        }
+        if(desc_message == "") {
+            desc_message.style.display = "block";
+        }
+        // alert();
 
         // Log the values to the console (you can do any processing with this data here)
         console.log("Title: " + title);
