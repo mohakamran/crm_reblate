@@ -77,13 +77,14 @@
                                                 <label for="description">Description</label>
                                                 <textarea class="form-control mt-2" id="description" rows="3" placeholder="Enter description"></textarea>
                                             </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="button" id="submitButton" class="btn btn-primary">Add
+                                                    Announcement</button>
+                                            </div>
                                         </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Add
-                                            Announcement</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -126,6 +127,42 @@
       // For demonstration, this function just closes the modal
       $('#exampleModal').modal('hide');
     }
+    $(document).ready(function() {
+    // Event handler for the Add Announcement button
+    $('#announcementForm').on('click', function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+        alert('my work has been done!');
+
+        // Get the values from the form fields
+        var title = $('#title').val();
+        var recipient = $('#recipient').val();
+        var description = $('#description').val();
+
+        // Log the values to the console (you can do any processing with this data here)
+        console.log("Title: " + title);
+        console.log("Recipient: " + recipient);
+        console.log("Description: " + description);
+
+        // Optionally, you can send this data to the server using AJAX
+        // $.ajax({
+        //     url: 'your-server-endpoint',
+        //     method: 'POST',
+        //     data: {
+        //         title: title,
+        //         recipient: recipient,
+        //         description: description
+        //     },
+        //     success: function(response) {
+        //         console.log(response);
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.error(error);
+        //     }
+        // });
+    });
+});
+
   </script>
     @endsection
     @section('scripts')

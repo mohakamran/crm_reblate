@@ -847,9 +847,12 @@ class AuthController extends Controller
             $tasks_count = $this->getTotalTasks();
             // dd($tasks_count);
 
+            $total_clients = $this->getTotalClients();
+            // dd($total_clients);
+
             $data = compact('emp_count','client_count','data_chart','total_revenue',
             'usd_pkr_expenses','usd_pkr_salary','total_profit','emp_present_count',
-            'emp_leave_count','emp_absent_count','tasks_count');
+            'emp_leave_count','emp_absent_count','tasks_count','total_clients');
 
             return view('index.index',$data);
         } else if($user_type == "client") {
@@ -864,6 +867,12 @@ class AuthController extends Controller
             return view('auth.login');
         }
 
+    }
+
+    // get total tasks
+    public function getTotalClients() {
+        $clients = DB::table('clients')->get();
+        return $clients;
     }
 
     // get total tasks
