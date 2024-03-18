@@ -16,10 +16,8 @@
                     <div class="card-body">
                         <p class="card-title">Fill below form to add new employee. Fields with(<span
                                 style="color:red;">*</span>) are mandatory to fill, remaining are optional.</p>
-                        <br>
-                        <h3>Client Details </h3>
-                        <hr>
-                        <form method="post" action="{{ $route }}" enctype="multipart/form-data">
+                                <form method="post" action="{{ $route }}" enctype="multipart/form-data">
+
                             @csrf
 
                             {{-- @if (session('success'))
@@ -35,182 +33,178 @@
 
 
                             <div class="row">
+                                <div class="col-md-6 col-xl-6 ">
+                                    <h3 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Client Details </h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="text" name="emp_code"
+                                                    disabled value="{{ $client->client_name }}">
+                                                <input type="hidden" style="background-color: transparent; border:none;" value="{{ $client->client_name }}" name="emp_code_hidden">
+                                                <label for="">Client Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="User Name" disabled
+                                                    value="{{ $client->project_name }}" min="0" name="emp_name">
+                                                <input type="hidden" style="background-color: transparent; border:none;" value="{{ $client->project_name }}" name="emp_name_hidden">
 
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="text" name="emp_code"
-                                            disabled value="{{ $client->client_name }}">
-                                        <input type="hidden" value="{{ $client->client_name }}" name="emp_code_hidden">
-                                        <label for="">Client Name</label>
+                                                <label for="">Project Name </label>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                <input class="form-control" style="background-color: transparent; border:none;" type="email" placeholder="email" disabled
+                                                    value="{{ $client->project_type }}" name="emp_email">
 
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="User Name" disabled
-                                            value="{{ $client->project_name }}" min="0" name="emp_name">
-                                        <input type="hidden" value="{{ $client->project_name }}" name="emp_name_hidden">
+                                                <input type="hidden" style="background-color: transparent; border:none;" value="{{ $client->project_type }}" name="emp_email_hidden">
+                                                @error('ex_date')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                                <label for="">Project Type</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor" >
+                                                <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="User Name"
+                                                    name="emp_designation" disabled value="{{ $client->client_email }}"
+                                                    min="0">
+                                                <input type="hidden" style="background-color: transparent; border:none;" value="{{ $client->client_email }}"
+                                                    name="emp_date_of_joining_hidden">
+                                                <label for="">Client Email </label>
 
-                                        <label for="">Project Name </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="text" name="emp_code"
+                                                    disabled value="{{ $client->client_phone }}">
+                                                <input type="hidden" style="background-color: transparent; border:none;" value="{{ $client->client_phone }}" name="emp_code_hidden">
+                                                <label for="">Client Phone</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="text" name="emp_code"
+                                                    disabled value="{{ $client->project_start_date }}">
+                                                <input type="hidden" style="background-color: transparent; border:none;" value="{{ $client->project_start_date }}"
+                                                    name="emp_code_hidden">
+                                                <label for="">Project Start Date</label>
+                                            </div>
+                                        </div>
 
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="email" placeholder="email" disabled
-                                            value="{{ $client->project_type }}" name="emp_email">
-
-                                        <input type="hidden" value="{{ $client->project_type }}" name="emp_email_hidden">
-                                        @error('ex_date')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                        <label for="">Project Type</label>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                <textarea name="" class="form-control" style="background-color: transparent; border:none; resize: none; height: 50px" disabled cols="30" rows="10">{{ $client->project_description }}</textarea>
+                                                <label for="">Project Description</label>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="User Name"
-                                            name="emp_designation" disabled value="{{ $client->client_email }}"
-                                            min="0">
-                                        <input type="hidden" value="{{ $client->client_email }}"
-                                            name="emp_date_of_joining_hidden">
-                                        <label for="">Client Email </label>
-
+                                <div class="col-md-6 col-xl-6 ">
+                                    <h3 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Invoice Details</h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                <input type="month"  name="invoice_month" style="background-color: transparent; border:none;" value="{{old('invoice_month')}}" class="form-control">
+                                                <label for="envoice_month">Period <span style="color:red">*</span></label>
+                                                <div class="text-danger">
+                                                    @error('invoice_month')
+                                                        {{$message}}
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                <input type="text" style="background-color: transparent; border:none;" value="{{old('invoice_description')}}" name="invoice_description" class="form-control">
+                                                <label for="">Description <span style="color:red">*</span></label>
+                                                <div class="text-danger">
+                                                    @error('invoice_description')
+                                                        {{$message}}
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="text" name="emp_code"
-                                            disabled value="{{ $client->client_phone }}">
-                                        <input type="hidden" value="{{ $client->client_phone }}" name="emp_code_hidden">
-                                        <label for="">Client Phone</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                <input type="number" style="background-color: transparent; border:none;" min="0" value="{{old('invoice_profit')}}" class="form-control" name="invoice_profit">
+                                                <label for="">Profit($)   </label>
+                                                {{-- <div class="text-danger">
+                                                    @error('invoice_profit')
+                                                        {{$message}}
+                                                    @enderror
+                                                </div> --}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                <input type="number" style="background-color: transparent; border:none;" value="{{old('invoice_amount')}}" min="0" class="form-control" name="invoice_amount">
+                                                <label for="invoice_amount">Amount($) <span style="color:red">*</span></label>
+                                                <div class="text-danger">
+                                                    @error('invoice_amount')
+                                                        {{$message}}
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="text" name="emp_code"
-                                            disabled value="{{ $client->project_start_date }}">
-                                        <input type="hidden" value="{{ $client->project_start_date }}"
-                                            name="emp_code_hidden">
-                                        <label for="">Project Start Date</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                <input type="date" value="{{old('invoice_due_date')}}" class="form-control" style="background-color: transparent; border:none;" name="invoice_due_date">
+                                                <label for="">Due Date <span style="color:red">*</span></label>
+                                                <div class="text-danger">
+                                                    @error('invoice_due_date')
+                                                        {{$message}}
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                <input type="text" value="{{old('invoice_method')}}" style="background-color: transparent; border:none;" class="form-control" name="invoice_method">
+                                                <label for="">Payment Method <span style="color:red">*</span></label>
+                                                <div class="text-danger">
+                                                    @error('invoice_method')
+                                                        {{$message}}
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-floating mb-3">
-                                        <textarea name="" class="form-control" disabled cols="30" rows="10">{{ $client->project_description }}</textarea>
-                                        <label for="">Project Description</label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <h3>Invoice Details</h3>
-                            <hr>
-
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="month"  name="invoice_month" value="{{old('invoice_month')}}" class="form-control">
-                                        <label for="envoice_month">Period <span style="color:red">*</span></label>
-                                        <div class="text-danger">
-                                            @error('invoice_month')
-                                                {{$message}}
-                                            @enderror
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                {{-- <input type="date" value="" class="form-control" name="emp_code_hidden"> --}}
+                                                <textarea class="form-control" style="background-color: transparent; border:none; resize: none; height: 50px" name="invoice_notes" id="" cols="50" rows="20"></textarea>
+                                                <label for="">Additional Notes (optional)</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" value="{{old('invoice_description')}}" name="invoice_description" class="form-control">
-                                        <label for="">Description <span style="color:red">*</span></label>
-                                        <div class="text-danger">
-                                            @error('invoice_description')
-                                                {{$message}}
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="number"  min="0" value="{{old('invoice_profit')}}" class="form-control" name="invoice_profit">
-                                        <label for="">Profit($)   </label>
-                                        {{-- <div class="text-danger">
-                                            @error('invoice_profit')
-                                                {{$message}}
-                                            @enderror
-                                        </div> --}}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="number" value="{{old('invoice_amount')}}" min="0" class="form-control" name="invoice_amount">
-                                        <label for="invoice_amount">Amount($) <span style="color:red">*</span></label>
-                                        <div class="text-danger">
-                                            @error('invoice_amount')
-                                                {{$message}}
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="date" value="{{old('invoice_due_date')}}" class="form-control" name="invoice_due_date">
-                                        <label for="">Due Date <span style="color:red">*</span></label>
-                                        <div class="text-danger">
-                                            @error('invoice_due_date')
-                                                {{$message}}
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" value="{{old('invoice_method')}}" class="form-control" name="invoice_method">
-                                        <label for="">Payment Method <span style="color:red">*</span></label>
-                                        <div class="text-danger">
-                                            @error('invoice_method')
-                                                {{$message}}
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-floating mb-3">
-                                        {{-- <input type="date" value="" class="form-control" name="emp_code_hidden"> --}}
-                                        <textarea class="form-control" name="invoice_notes" id="" cols="50" rows="20"></textarea>
-                                        <label for="">Additional Notes (optional)</label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <br>
-
 
                             <div>
                                 <br>
 
-                                <button type="submit" class="btn btn-primary  w-md" target="_blank"
-                                    style="background-color: #14213D ; border-color: #fff;">{{ $btn_text }}</button>
+                                <button type="submit" class="reblateBtn py-2 px-4 w-md" target="_blank">{{ $btn_text }}</button>
                                 {{-- <a href="/preview-salary/{{$id}}" target="_blank" class="btn btn-danger">Preview</a> --}}
-                                <a href="/create-new-invoice" class="btn btn-danger">Go Back</a>
+                                <button class="reblateBtn py-2 px-4 w-md">
+                                    <a href="/create-new-invoice" class="text-light">Go Back</a>
+                                </button>
 
                             </div>
                         </form>
