@@ -8,6 +8,20 @@ use Carbon\Carbon;
 
 class TaskController extends Controller
 {
+       // to update task open form for task update
+       public function taskUpdateForm($id) {
+        //  dd($id);
+        $task = DB::table('tasks')->where('id',$id)->first();
+        // dd($task);
+        $emp_id = auth()->user()->user_code;
+        $emp = DB::table('employees')->where('Emp_Code',$emp_id)->first();
+        $emp_name = $emp->Emp_Full_Name;
+        $Emp_Designation = $emp->Emp_Designation;
+        $Emp_Image = $emp->Emp_Image;
+        $Emp_Shift_Time = $emp->Emp_Shift_Time;
+
+        return view('tasks.update-task-form',compact('task','emp_name','Emp_Designation','Emp_Image','Emp_Shift_Time'));
+       }
        // employee will see cards based tasks
        public function employeeCanSeeTask() {
             $emp_id = auth()->user()->user_code;

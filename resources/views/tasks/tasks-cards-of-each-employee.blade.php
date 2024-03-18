@@ -63,8 +63,14 @@
                         @else
                             @foreach ($tasks as $task)
                                 @if ($task->task_status == 'completed')
-                                    <div style="border-bottom: 1px solid #e3e3e3;">
-                                        <h5 style="font-size: 20px;">{{ $task->task_title }}</h5>
+                                    <div style="border-bottom: 1px solid #e3e3e3;margin-top:10px;">
+                                        <h5 style="font-size: 20px;">
+                                            @if (Auth()->user()->user_type == "employee" || Auth()->user()->user_type == "manager")
+                                                <a href="/task-update/{{$task->id}}">{{ $task->task_title }}</a>
+                                                @else
+                                                {{ $task->task_title }}
+                                            @endif
+                                        </h5>
                                         <P style="font-size: 15px; margin-bottom: 5px;">Task Desc: {{ $task->task_description }}</P>
 
                                         <div class="progress mb-2" style="height: 20px;">
@@ -92,8 +98,14 @@
                         @else
                             @foreach ($tasks as $task)
                                 @if ($task->task_status == 'pending')
-                                    <div style="border-bottom: 1px solid #e3e3e3;">
-                                        <h5 style="font-size: 20px;">{{ $task->task_title }}</h5>
+                                    <div style="border-bottom: 1px solid #e3e3e3;margin-top:10px;">
+                                        <h5 style="font-size: 20px;">
+                                            @if (Auth()->user()->user_type == "employee" || Auth()->user()->user_type == "manager")
+                                               <a href="/task-update/{{$task->id}}">{{ $task->task_title }}</a>
+                                               @else
+                                               {{ $task->task_title }}
+                                            @endif
+                                        </h5>
                                         <p style="font-size: 15px; margin-bottom: 5px;">{{ $task->task_description }}</p>
                                         <div class="progress mb-2" style="height: 20px;">
                                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: {{$task->task_percentage}}%;"
@@ -121,8 +133,14 @@
                         @else
                             @foreach ($tasks as $task)
                                 @if ($task->task_status == 'in-progress')
-                                    <div style="border-bottom: 1px solid #e3e3e3;">
-                                        <h5 style="font-size: 20px;">{{ $task->task_title }}</h5>
+                                    <div style="border-bottom: 1px solid #e3e3e3; margin-top:10px;">
+                                        <h5 style="font-size: 20px;">
+                                            @if (Auth()->user()->user_type == "employee" || Auth()->user()->user_type == "manager")
+                                               <a href="/task-update/{{$task->id}}">{{ $task->task_title }}</a>
+                                            @else
+                                            {{ $task->task_title }}
+                                         @endif
+                                        </h5>
                                         <P style="font-size: 15px; margin-bottom: 5px;">Task Desc: {{ $task->task_description }}</P>
                                         <div class="progress mb-2" style="height: 20px;">
                                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 80%;"

@@ -26,33 +26,34 @@ class AttendenceController extends Controller
     // manager and admin can see time sheet
     public function viewTimeSheet() {
         $check_user = $this->checkPermission();
-        // $check_user = false;
-        if($check_user) {
-            $active_employees = DB::table('employees')->where('Emp_Status','active')->get();
-                // Get current month's attendance records
+
+        if ($check_user) {
+
+
+            // Get current month and year
             $currentMonth = Carbon::now()->month;
             $currentYear = Carbon::now()->year;
 
-            // dd($currentYear);
+            // Fetch active employees
+            // $employees = Employee::where('Emp_Status', 'active')->get();
+            $employees = DB::table('employees')->where('Emp_Status', 'active')->get();
 
-            $attendance = DB::table('attendence')
-                ->whereMonth('date', $currentMonth)
-                ->whereYear('date', $currentYear)
-                ->get();
-             // Transform the attendance data for easier access in the view
-            $attendanceData = [];
-            foreach ($attendance as $record) {
-                $attendanceData[$record->emp_id][$record->date] = $record->check_out_status;
+            $attendanceData = DB::table('attendence')->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->get()->groupBy('emp_id')->toArray();
+
+            // Create an array of dates for the current month
+            $dates = [];
+            $daysInMonth = Carbon::now()->daysInMonth;
+            for ($i = 1; $i <= $daysInMonth; $i++) {
+                $dates[] = Carbon::createFromDate($currentYear, $currentMonth, $i)->toDateString();
             }
-            // dd($attendanceData);
 
-            return view('attendence.timesheet', compact('active_employees', 'attendanceData'));
-
-        }
-        else {
+            return view('attendence.timesheet', compact('employees', 'attendanceData', 'dates'));
+        } else {
             return view('errors.401');
         }
     }
+
+
     // get form updated check in, check out, data and save in database
     public function updateEmpAttendenceDetails(Request $req) {
         // dd($req->attendence_id);
