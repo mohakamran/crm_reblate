@@ -364,7 +364,7 @@ class AttendenceController extends Controller
     $id = auth()->user()->user_code;
     $emp = DB::table('employees')->where('Emp_Code', $id)->first();
     if($emp) {
-        $check_attendence = DB::table('attendence')->where('emp_id', $id)->get();
+        $check_attendence = DB::table('attendence')->where('emp_id', $id)->where('id','desc')->get();
         // dd($check_attendence->date);
         $emp_name = $emp->Emp_Full_Name;
         return view('attendence.view-individual',compact('check_attendence','id','emp_name' ));
