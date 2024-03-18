@@ -341,6 +341,40 @@ class AuthController extends Controller
         }
         return $total_leaves;
     }
+    // attendence report
+    public function getAttendeceReport() {
+        $date = Carbon::now();
+        $formattedDate = Carbon::now()->format('Y-m-d');
+        // dd($formattedDate);
+        $check_data = DB::table('attendence')->where('date',$formattedDate)->where('check_in_status','done')->where('check_out_status','')->get();
+        $count = $check_data->count();
+        if($count<= 0) {
+            $count = 0;
+        }
+        else {
+            $count = $count;
+        }
+        return $count;
+    }
+
+    // get leaves
+    public function getLeaveReport() {
+        $date = Carbon::now();
+        $formattedDate = Carbon::now()->format('Y-m-d');
+        // dd($formattedDate);
+        $check_data = DB::table('leaves')
+                ->where('date', $formattedDate)
+                ->whereIn('status', ['pending', 'approved']) // Check for pending or approved status
+                ->get();
+        $count = $check_data->count();
+        if($count<= 0) {
+            $count = 0;
+        }
+        else {
+            $count = $count;
+        }
+        return $count;
+    }
     public function indexHomePage() {
         $user_type = auth()->user()->user_type;
         // dd($user_type);
@@ -803,7 +837,20 @@ class AuthController extends Controller
             // dd($total_revenue);
             // $clients = DB::table('clients')->get();
             $client_count = $clientCount = DB::table('clients')->count();
-            $data = compact('emp_count','client_count','data_chart','total_revenue','usd_pkr_expenses','usd_pkr_salary','total_profit');
+            // get attendence report
+            $emp_present_count = $this->getAttendeceReport();
+            $emp_leave_count = $this->getLeaveReport();
+            $emp_absent_count = $emp_count - $emp_present_count - $emp_leave_count;
+
+            // dd($emp_leave_count);
+            // $emp_leave_count = 3;
+            $tasks_count = $this->getTotalTasks();
+            // dd($tasks_count);
+
+            $data = compact('emp_count','client_count','data_chart','total_revenue',
+            'usd_pkr_expenses','usd_pkr_salary','total_profit','emp_present_count',
+            'emp_leave_count','emp_absent_count','tasks_count');
+
             return view('index.index',$data);
         } else if($user_type == "client") {
             $employees = Employee::all();
@@ -817,6 +864,40 @@ class AuthController extends Controller
             return view('auth.login');
         }
 
+    }
+
+    // get total tasks
+    public function getTotalTasks() {
+            // Get the current date
+            $currentDate = Carbon::now();
+
+            // Get the current month and year
+            $currentMonth = $currentDate->month;
+            $currentYear = $currentDate->year;
+
+            // Retrieve counts for total, complete, incomplete, and in-progress tasks
+            $counts = DB::table('tasks')
+                        ->select(
+                            DB::raw('COUNT(*) as total_tasks'),
+                            DB::raw('SUM(CASE WHEN task_status = "completed" THEN 1 ELSE 0 END) as complete_tasks'),
+                            DB::raw('SUM(CASE WHEN task_status = "pending" THEN 1 ELSE 0 END) as incomplete_tasks'),
+                            DB::raw('SUM(CASE WHEN task_status = "in-progress" THEN 1 ELSE 0 END) as in_progress_tasks')
+                        )
+                        ->whereMonth('assigned_date', $currentMonth)
+                        ->whereYear('assigned_date', $currentYear)
+                        ->first();
+
+            // Access counts
+            $totalTasks = $counts->total_tasks;
+            $completeTasks = $counts->complete_tasks;
+            $incompleteTasks = $counts->incomplete_tasks;
+            $inProgressTasks = $counts->in_progress_tasks;
+            // Convert the counts object into an array
+            $countsArray = (array) $counts;
+            return $countsArray;
+            // Return the counts array
+        //    dd($countsArray);
+            // exit;
     }
 
     // get totoal revenue

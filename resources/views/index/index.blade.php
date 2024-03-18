@@ -692,44 +692,44 @@
                             <div class="col-md-6 col-6 text-center">
                                 <div class="stats-box mb-4" style="border: 1px solid #e3e3e3; border-radius:5px;">
                                     <p>Total Tasks</p>
-                                    <h3>385</h3>
+                                    <h3>{{$tasks_count['total_tasks']}}</h3>
                                 </div>
                             </div>
                             <div class="col-md-6 col-6 text-center">
                                 <div class="stats-box mb-4" style="border: 1px solid #e3e3e3; border-radius:5px;">
-                                    <p>Overdue Tasks</p>
-                                    <h3>19</h3>
+                                    <p>Incomplete Tasks</p>
+                                    <h3>{{$tasks_count['incomplete_tasks']}}</h3>
                                 </div>
                             </div>
                         </div>
                         <div class="progress mb-4" style="height: 30px;">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple w-25" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">30%</div>
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning w-25" role="progressbar" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100">22%</div>
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success w-50" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100">24%</div>
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger w-25" role="progressbar" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100">21%</div>
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info w-25" role="progressbar" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100">10%</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple " style="width:{{ number_format($tasks_count['complete_tasks']  / $tasks_count['total_tasks'] * 100) }}%;" role="progressbar" aria-valuenow="{{ number_format($tasks_count['complete_tasks']  / $tasks_count['total_tasks'] * 100) }}" aria-valuemin="0" aria-valuemax="100">{{ number_format($tasks_count['complete_tasks']  / $tasks_count['total_tasks'] * 100) }}%</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning " style="width:{{ number_format($tasks_count['incomplete_tasks']  / $tasks_count['total_tasks'] * 100) }}%;" role="progressbar" aria-valuenow="{{ number_format($tasks_count['incomplete_tasks']  / $tasks_count['total_tasks'] * 100) }}" aria-valuemin="0" aria-valuemax="100">{{ number_format($tasks_count['incomplete_tasks']  / $tasks_count['total_tasks'] * 100) }}%</div>
+                            {{-- <div class="progress-bar progress-bar-striped progress-bar-animated bg-success w-50" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100">24%</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger w-25" role="progressbar" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100">21%</div> --}}
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info " style="width:{{ number_format($tasks_count['in_progress_tasks']  / $tasks_count['total_tasks'] * 100) }}%;" role="progressbar" aria-valuenow="{{ number_format($tasks_count['in_progress_tasks']  / $tasks_count['total_tasks'] * 100) }}" aria-valuemin="0" aria-valuemax="100">{{ number_format($tasks_count['in_progress_tasks']  / $tasks_count['total_tasks'] * 100) }}%</div>
                             </div>
                             <div>
                                 <p><svg class="text-purple me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                     <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                  </svg>Completed Tasks <span class="float-end">166</span></p>
+                                  </svg>Completed Tasks <span class="float-end">{{$tasks_count['complete_tasks'] }}</span></p>
                                 <p><svg class="text-warning me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                     <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                  </svg></i>Inprogress Tasks <span class="float-end">115</span></p>
-                                <p><svg class="text-success me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
+                                  </svg></i>Inprogress Tasks <span class="float-end">{{$tasks_count['in_progress_tasks'] }}</span></p>
+                                {{-- <p><svg class="text-success me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                     <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                   </svg>On Hold Tasks <span class="float-end">31</span></p>
                                 <p><svg class="text-danger me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                     <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                  </svg>Pending Tasks <span class="float-end">47</span></p>
+                                  </svg>Pending Tasks <span class="float-end">47</span></p> --}}
                                 <p class="mb-0"><svg class="text-primary me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                     <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                  </svg>Review Tasks <span class="float-end">5</span></p>
+                                  </svg>Incomplete Tasks <span class="float-end">{{$tasks_count['incomplete_tasks'] }}</span></p>
                                 </div>
 
                     </div>
@@ -1432,9 +1432,9 @@ google.charts.load("current", {packages:["corechart"]});
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Hours per Day'],
-          ['Persent',     10],
-          ['Absent',      3],
-          ['Leave',  2],
+          ['Persent',     <?php echo $emp_present_count; ?>],
+          ['Absent',      <?php echo $emp_absent_count; ?> ],
+          ['Leave',  <?php echo $emp_leave_count; ?> ],
 
         ]);
 
