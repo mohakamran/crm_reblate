@@ -791,8 +791,8 @@ class AuthController extends Controller
             // get total expense
             $total_expense = $this->getTotalExpense();
             // get usd to pkr total revenue
-            $usd_pkr_expenses = $this->getExchangeRate($total_expense);
-            $usd_pkr_salary = $this->getExchangeRate($total_salary);
+            $usd_pkr_expenses = $total_expense;
+            $usd_pkr_salary = $total_salary;
             // total profit
             $total_profit = $total_revenue - $usd_pkr_expenses - $usd_pkr_salary;
             $total_profit = number_format($total_profit, 2);

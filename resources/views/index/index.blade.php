@@ -352,239 +352,12 @@
                         <h4 class="card-title mb-0 flex-grow-1">Overall Attendence</h4>
                     </div>
                     <div class="card-body pt-0">
-                        <div id="social-source" class="apex-charts" style="min-height: 200.7px;">
-                            <div id="apexcharts8rop0virk"
-                                class="apexcharts-canvas apexcharts8rop0virk apexcharts-theme-light"
-                                style="width: 291px; height: 200.7px;">
-                                <svg id="SvgjsSvg1682" width="291" height="200.7" xmlns="http://www.w3.org/2000/svg"
-                                    version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                    xmlns:svgjs="http://svgjs.dev" class="apexcharts-svg" xmlns:data="ApexChartsNS"
-                                    transform="translate(0, 0)" style="background: transparent;">
-
-                                    <g id="SvgjsG1684" class="apexcharts-inner apexcharts-graphical"
-                                        transform="translate(-42.5, 10)">
-                                        <defs id="SvgjsDefs1683">
-                                            <clipPath id="gridRectMask8rop0virk">
-                                                <rect id="SvgjsRect1685" width="384" height="592" x="-3" y="-1"
-                                                    rx="0" ry="0" opacity="1" stroke-width="0"
-                                                    stroke="none" stroke-dasharray="0" fill="#fff"></rect>
-                                            </clipPath>
-                                            <clipPath id="forecastMask8rop0virk"></clipPath>
-                                            <clipPath id="nonForecastMask8rop0virk"></clipPath>
-                                            <clipPath id="gridRectMarkerMask8rop0virk">
-                                                <rect id="SvgjsRect1686" width="382" height="594" x="-2" y="-2"
-                                                    rx="0" ry="0" opacity="1" stroke-width="0"
-                                                    stroke="none" stroke-dasharray="0" fill="#fff"></rect>
-                                            </clipPath>
-                                            <filter id="SvgjsFilter1695" filterUnits="userSpaceOnUse" width="200%"
-                                                height="200%" x="-50%" y="-50%">
-                                                <feFlood id="SvgjsFeFlood1696" flood-color="#000000" flood-opacity="0.45"
-                                                    result="SvgjsFeFlood1696Out" in="SourceGraphic"></feFlood>
-                                                <feComposite id="SvgjsFeComposite1697" in="SvgjsFeFlood1696Out"
-                                                    in2="SourceAlpha" operator="in" result="SvgjsFeComposite1697Out">
-                                                </feComposite>
-                                                <feOffset id="SvgjsFeOffset1698" dx="1" dy="1"
-                                                    result="SvgjsFeOffset1698Out" in="SvgjsFeComposite1697Out"></feOffset>
-                                                <feGaussianBlur id="SvgjsFeGaussianBlur1699" stdDeviation="1 "
-                                                    result="SvgjsFeGaussianBlur1699Out" in="SvgjsFeOffset1698Out">
-                                                </feGaussianBlur>
-                                                <feMerge id="SvgjsFeMerge1700" result="SvgjsFeMerge1700Out"
-                                                    in="SourceGraphic">
-                                                    <feMergeNode id="SvgjsFeMergeNode1701"
-                                                        in="SvgjsFeGaussianBlur1699Out"></feMergeNode>
-                                                    <feMergeNode id="SvgjsFeMergeNode1702" in="[object Arguments]">
-                                                    </feMergeNode>
-                                                </feMerge>
-                                                <feBlend id="SvgjsFeBlend1703" in="SourceGraphic"
-                                                    in2="SvgjsFeMerge1700Out" mode="normal"
-                                                    result="SvgjsFeBlend1703Out"></feBlend>
-                                            </filter>
-                                            <filter id="SvgjsFilter1708" filterUnits="userSpaceOnUse" width="200%"
-                                                height="200%" x="-50%" y="-50%">
-                                                <feFlood id="SvgjsFeFlood1709" flood-color="#000000" flood-opacity="0.45"
-                                                    result="SvgjsFeFlood1709Out" in="SourceGraphic"></feFlood>
-                                                <feComposite id="SvgjsFeComposite1710" in="SvgjsFeFlood1709Out"
-                                                    in2="SourceAlpha" operator="in" result="SvgjsFeComposite1710Out">
-                                                </feComposite>
-                                                <feOffset id="SvgjsFeOffset1711" dx="1" dy="1"
-                                                    result="SvgjsFeOffset1711Out" in="SvgjsFeComposite1710Out"></feOffset>
-                                                <feGaussianBlur id="SvgjsFeGaussianBlur1712" stdDeviation="1 "
-                                                    result="SvgjsFeGaussianBlur1712Out" in="SvgjsFeOffset1711Out">
-                                                </feGaussianBlur>
-                                                <feMerge id="SvgjsFeMerge1713" result="SvgjsFeMerge1713Out"
-                                                    in="SourceGraphic">
-                                                    <feMergeNode id="SvgjsFeMergeNode1714"
-                                                        in="SvgjsFeGaussianBlur1712Out"></feMergeNode>
-                                                    <feMergeNode id="SvgjsFeMergeNode1715" in="[object Arguments]">
-                                                    </feMergeNode>
-                                                </feMerge>
-                                                <feBlend id="SvgjsFeBlend1716" in="SourceGraphic"
-                                                    in2="SvgjsFeMerge1713Out" mode="normal"
-                                                    result="SvgjsFeBlend1716Out"></feBlend>
-                                            </filter>
-                                            <filter id="SvgjsFilter1721" filterUnits="userSpaceOnUse" width="200%"
-                                                height="200%" x="-50%" y="-50%">
-                                                <feFlood id="SvgjsFeFlood1722" flood-color="#000000" flood-opacity="0.45"
-                                                    result="SvgjsFeFlood1722Out" in="SourceGraphic"></feFlood>
-                                                <feComposite id="SvgjsFeComposite1723" in="SvgjsFeFlood1722Out"
-                                                    in2="SourceAlpha" operator="in" result="SvgjsFeComposite1723Out">
-                                                </feComposite>
-                                                <feOffset id="SvgjsFeOffset1724" dx="1" dy="1"
-                                                    result="SvgjsFeOffset1724Out" in="SvgjsFeComposite1723Out"></feOffset>
-                                                <feGaussianBlur id="SvgjsFeGaussianBlur1725" stdDeviation="1 "
-                                                    result="SvgjsFeGaussianBlur1725Out" in="SvgjsFeOffset1724Out">
-                                                </feGaussianBlur>
-                                                <feMerge id="SvgjsFeMerge1726" result="SvgjsFeMerge1726Out"
-                                                    in="SourceGraphic">
-                                                    <feMergeNode id="SvgjsFeMergeNode1727"
-                                                        in="SvgjsFeGaussianBlur1725Out"></feMergeNode>
-                                                    <feMergeNode id="SvgjsFeMergeNode1728" in="[object Arguments]">
-                                                    </feMergeNode>
-                                                </feMerge>
-                                                <feBlend id="SvgjsFeBlend1729" in="SourceGraphic"
-                                                    in2="SvgjsFeMerge1726Out" mode="normal"
-                                                    result="SvgjsFeBlend1729Out"></feBlend>
-                                            </filter>
-                                        </defs>
-                                        <g id="SvgjsG1687" class="apexcharts-pie">
-                                            <g id="SvgjsG1688" transform="translate(0, 0) scale(1)">
-                                                <circle id="SvgjsCircle1689" r="142.71219512195123" cx="189"
-                                                    cy="189" fill="transparent"></circle>
-                                                <g id="SvgjsG1690" class="apexcharts-slices">
-                                                    <g id="SvgjsG1691" class="apexcharts-series apexcharts-pie-series"
-                                                        seriesName="Present" rel="1" data:realIndex="0">
-                                                        <path id="SvgjsPath1692"
-                                                            d="M 10.609756097560961 188.99999999999997 A 178.39024390243904 178.39024390243904 0 0 1 181.81694912292042 10.754430911539998 L 183.25355929833634 46.40354472923198 A 142.71219512195123 142.71219512195123 0 0 0 46.287804878048775 188.99999999999997 L 10.609756097560961 188.99999999999997 z"
-                                                            fill="rgb(1, 50, 32)" fill-opacity="1" stroke-opacity="1"
-                                                            stroke-linecap="butt" stroke-width="2" stroke-dasharray="0"
-                                                            class="apexcharts-pie-area apexcharts-donut-slice-0"
-                                                            index="0" j="0" data:angle="87.6923076923077"
-                                                            data:startAngle="-90" data:strokeWidth="2" data:value="8"
-                                                            data:pathOrig="M 10.609756097560961 188.99999999999997 A 178.39024390243904 178.39024390243904 0 0 1 181.81694912292042 10.754430911539998 L 183.25355929833634 46.40354472923198 A 142.71219512195123 142.71219512195123 0 0 0 46.287804878048775 188.99999999999997 L 10.609756097560961 188.99999999999997 z"
-                                                            stroke="#ffffff"></path>
-                                                    </g>
-                                                    <g id="SvgjsG1704" class="apexcharts-series apexcharts-pie-series"
-                                                        seriesName="Facebook" rel="2" data:realIndex="1">
-                                                        <path id="SvgjsPath1705"
-                                                            d="M 181.81694912292042 10.754430911539998 A 178.39024390243904 178.39024390243904 0 0 1 331.61278954959045 81.83344096008348 L 303.09023163967237 103.26675276806678 A 142.71219512195123 142.71219512195123 0 0 0 183.25355929833634 46.40354472923198 L 181.81694912292042 10.754430911539998 z"
-                                                            fill="rgba(56,199,134,1)" fill-opacity="1" stroke-opacity="1"
-                                                            stroke-linecap="butt" stroke-width="2" stroke-dasharray="0"
-                                                            class="apexcharts-pie-area apexcharts-donut-slice-1"
-                                                            index="0" j="1" data:angle="55.38461538461539"
-                                                            data:startAngle="-2.3076923076923066" data:strokeWidth="2"
-                                                            data:value="24"
-                                                            data:pathOrig="M 181.81694912292042 10.754430911539998 A 178.39024390243904 178.39024390243904 0 0 1 331.61278954959045 81.83344096008348 L 303.09023163967237 103.26675276806678 A 142.71219512195123 142.71219512195123 0 0 0 183.25355929833634 46.40354472923198 L 181.81694912292042 10.754430911539998 z"
-                                                            stroke="#ffffff"></path>
-                                                    </g>
-                                                    <g id="SvgjsG1717" class="apexcharts-series apexcharts-pie-series"
-                                                        seriesName="Leave" rel="3" data:realIndex="2">
-                                                        <path id="SvgjsPath1718"
-                                                            d="M 331.61278954959045 81.83344096008348 A 178.39024390243904 178.39024390243904 0 0 1 367.39024118540027 188.96886502906273 L 331.7121929483202 188.97509202325017 A 142.71219512195123 142.71219512195123 0 0 0 303.09023163967237 103.26675276806678 L 331.61278954959045 81.83344096008348 z"
-                                                            fill="rgba(218,234,238,1)" fill-opacity="1"
-                                                            stroke-opacity="1" stroke-linecap="butt" stroke-width="2"
-                                                            stroke-dasharray="0"
-                                                            class="apexcharts-pie-area apexcharts-donut-slice-2"
-                                                            index="0" j="2" data:angle="36.92307692307692"
-                                                            data:startAngle="53.07692307692308" data:strokeWidth="2"
-                                                            data:value="16"
-                                                            data:pathOrig="M 331.61278954959045 81.83344096008348 A 178.39024390243904 178.39024390243904 0 0 1 367.39024118540027 188.96886502906273 L 331.7121929483202 188.97509202325017 A 142.71219512195123 142.71219512195123 0 0 0 303.09023163967237 103.26675276806678 L 331.61278954959045 81.83344096008348 z"
-                                                            stroke="#ffffff"></path>
-                                                    </g>
-                                                    <g id="SvgjsG1693" class="apexcharts-datalabels"><text
-                                                            id="SvgjsText1694" font-family="Helvetica, Arial, sans-serif"
-                                                            x="73.21006756377089" y="77.78226025823683"
-                                                            text-anchor="middle" dominant-baseline="auto"
-                                                            font-size="12px" font-weight="600" fill="#ffffff"
-                                                            class="apexcharts-text apexcharts-pie-label"
-                                                            filter="url(#SvgjsFilter1695)"
-                                                            style="font-family: Helvetica, Arial, sans-serif;">8</text>
-                                                    </g>
-                                                    <g id="SvgjsG1706" class="apexcharts-datalabels"><text
-                                                            id="SvgjsText1707" font-family="Helvetica, Arial, sans-serif"
-                                                            x="257.82711352906693" y="43.949930954480436"
-                                                            text-anchor="middle" dominant-baseline="auto"
-                                                            font-size="12px" font-weight="600" fill="#ffffff"
-                                                            class="apexcharts-text apexcharts-pie-label"
-                                                            filter="url(#SvgjsFilter1708)"
-                                                            style="font-family: Helvetica, Arial, sans-serif;">5</text>
-                                                    </g>
-                                                    <g id="SvgjsG1719" class="apexcharts-datalabels"><text
-                                                            id="SvgjsText1720" font-family="Helvetica, Arial, sans-serif"
-                                                            x="341.2886825063727" y="138.15856741469338"
-                                                            text-anchor="middle" dominant-baseline="auto"
-                                                            font-size="12px" font-weight="600" fill="#ffffff"
-                                                            class="apexcharts-text apexcharts-pie-label"
-                                                            filter="url(#SvgjsFilter1721)"
-                                                            style="font-family: Helvetica, Arial, sans-serif;">3</text>
-                                                    </g>
-                                                </g>
-                                            </g>
-                                        </g>
-                                        <line id="SvgjsLine1730" x1="0" y1="0" x2="378"
-                                            y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1"
-                                            stroke-linecap="butt" class="apexcharts-ycrosshairs"></line>
-                                        <line id="SvgjsLine1731" x1="0" y1="0" x2="378"
-                                            y2="0" stroke-dasharray="0" stroke-width="0" stroke-linecap="butt"
-                                            class="apexcharts-ycrosshairs-hidden"></line>
-                                    </g>
-                                </svg>
-                                <div class="apexcharts-tooltip apexcharts-theme-dark">
-                                    <div class="apexcharts-tooltip-series-group" style="order: 1;"><span
-                                            class="apexcharts-tooltip-marker"
-                                            style="background-color: rgb(1, 50, 32);"></span>
-                                        <div class="apexcharts-tooltip-text"
-                                            style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
-                                            <div class="apexcharts-tooltip-y-group"><span
-                                                    class="apexcharts-tooltip-text-y-label"></span><span
-                                                    class="apexcharts-tooltip-text-y-value"></span></div>
-                                            <div class="apexcharts-tooltip-goals-group"><span
-                                                    class="apexcharts-tooltip-text-goals-label"></span><span
-                                                    class="apexcharts-tooltip-text-goals-value"></span></div>
-                                            <div class="apexcharts-tooltip-z-group"><span
-                                                    class="apexcharts-tooltip-text-z-label"></span><span
-                                                    class="apexcharts-tooltip-text-z-value"></span></div>
-                                        </div>
-                                    </div>
-                                    <div class="apexcharts-tooltip-series-group" style="order: 2;"><span
-                                            class="apexcharts-tooltip-marker"
-                                            style="background-color: rgb(56, 199, 134);"></span>
-                                        <div class="apexcharts-tooltip-text"
-                                            style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
-                                            <div class="apexcharts-tooltip-y-group"><span
-                                                    class="apexcharts-tooltip-text-y-label"></span><span
-                                                    class="apexcharts-tooltip-text-y-value"></span></div>
-                                            <div class="apexcharts-tooltip-goals-group"><span
-                                                    class="apexcharts-tooltip-text-goals-label"></span><span
-                                                    class="apexcharts-tooltip-text-goals-value"></span></div>
-                                            <div class="apexcharts-tooltip-z-group"><span
-                                                    class="apexcharts-tooltip-text-z-label"></span><span
-                                                    class="apexcharts-tooltip-text-z-value"></span></div>
-                                        </div>
-                                    </div>
-                                    <div class="apexcharts-tooltip-series-group" style="order: 3;"><span
-                                            class="apexcharts-tooltip-marker"
-                                            style="background-color: rgb(218, 234, 238);"></span>
-                                        <div class="apexcharts-tooltip-text"
-                                            style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
-                                            <div class="apexcharts-tooltip-y-group"><span
-                                                    class="apexcharts-tooltip-text-y-label"></span><span
-                                                    class="apexcharts-tooltip-text-y-value"></span></div>
-                                            <div class="apexcharts-tooltip-goals-group"><span
-                                                    class="apexcharts-tooltip-text-goals-label"></span><span
-                                                    class="apexcharts-tooltip-text-goals-value"></span></div>
-                                            <div class="apexcharts-tooltip-z-group"><span
-                                                    class="apexcharts-tooltip-text-z-label"></span><span
-                                                    class="apexcharts-tooltip-text-z-value"></span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div id="donutchart" style="width: 400px; height: 260px;"></div>
                         <div class="social-content text-center">
                             <p class="text-uppercase mb-1">Total Employees</p>
                             <h3 class="mb-0">15</h3>
                         </div>
-                        <div class="row gx-4 mt-1">
+                        {{-- <div class="row gx-4 mt-1">
                             <div class="col-md-4">
                                 <div class="mt-4">
                                     <div class="progress" style="height: 7px;">
@@ -622,7 +395,7 @@
                                     <h4 class="mt-1 mb-0 font-size-20">3</h4>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -976,22 +749,8 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Tasks - Day Shift</h4>
-                        <div>
-                            {{-- <div class="dropdown">
-                                <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span class="fw-semibold">Sort By:</span>
-                                    <span class="text-muted">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Yearly</a>
-                                    <a class="dropdown-item" href="#">Monthly</a>
-                                    <a class="dropdown-item" href="#">Weekly</a>
-                                    <a class="dropdown-item" href="#">Today</a>
-                                </div>
-                            </div> --}}
-                        </div>
+                        <h4 class="card-title mb-0 flex-grow-1">Tasks</h4>
+
                     </div>
                     <div class="card-body pt-2">
                         <div class="table-responsive">
@@ -1003,11 +762,6 @@
                                         <th>Employee Name</th>
                                         <th>Tasks</th>
                                         <th>See Details</th>
-                                        {{-- <th>Order Date</th>
-                                        <th>Total</th> --}}
-                                        {{-- <th>Payment Method</th>
-                                        <th>Payment Status</th>
-                                        <th>Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1051,22 +805,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Tasks - Night Shift</h4>
-                        <div>
-                            {{-- <div class="dropdown">
-                                <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span class="fw-semibold">Sort By:</span>
-                                    <span class="text-muted">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Yearly</a>
-                                    <a class="dropdown-item" href="#">Monthly</a>
-                                    <a class="dropdown-item" href="#">Weekly</a>
-                                    <a class="dropdown-item" href="#">Today</a>
-                                </div>
-                            </div> --}}
-                        </div>
+                        <h4 class="card-title mb-0 flex-grow-1">Tasks Report</h4>
                     </div>
                     <div class="card-body pt-2">
                         <div class="table-responsive">
@@ -1078,11 +817,6 @@
                                         <th>Employee Name</th>
                                         <th>Tasks</th>
                                         <th>See Details</th>
-                                        {{-- <th>Order Date</th>
-                                        <th>Total</th> --}}
-                                        {{-- <th>Payment Method</th>
-                                        <th>Payment Status</th>
-                                        <th>Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1131,7 +865,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Reports - Day Shift</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">Projects</h4>
                         <div>
                             {{-- <div class="dropdown">
                                 <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
@@ -1206,7 +940,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Reports - Night Shift</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">Project Report</h4>
                         <div>
                             {{-- <div class="dropdown">
                                 <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
@@ -1689,8 +1423,30 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         <script>
+
+google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Persent',     10],
+          ['Absent',      3],
+          ['Leave',  2],
+
+        ]);
+
+        var options = {
+          pieHole: 0.4,
+
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+
             $('input[name="datetimes"]').daterangepicker();
             $(document).ready(function() {
             $('input[name="datetimes"]').daterangepicker({
