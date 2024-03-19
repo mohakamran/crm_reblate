@@ -62,30 +62,36 @@
                                     <div class="modal-body">
                                         <!-- Form -->
                                         <form id="announcementForm">
-                                            <div class="form-group mt-2">
+                                            <div id="messageBox" style="display: none" class="alert alert-success alert-dismissible message" role="alert">
+                                                Announcement Created Successfully!
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                            <div class="form-group mt-2" style="margin-top:10px;">
                                                 <label for="title">Announcement Title</label>
                                                 <input type="text" class="form-control" style="background-color: #e3e3e3; border:none;" id="title"
                                                     placeholder="Enter title">
                                                     <span id="title_message" style="color:red;margin:12px 0px;display:none;">Enter title</span>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" style="margin-top:10px;">
                                                 <label for="recipient ">Recipient</label>
                                                 <select class="form-control mt-2" id="recipient" style="background-color: #e3e3e3; border:none;">
+                                                    {{-- <option value="" disabled selected>Select Option</option> --}}
                                                     <option value="all">All</option>
                                                     <option value="employees">Employees</option>
                                                     <option value="managers">Managers</option>
                                                 </select>
                                                 <span id="res_message" style="color:red;margin:12px 0px;display:none;">Select Reciepient</span>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" style="margin-top:10px;">
                                                 <label for="description">Description</label>
                                                 <textarea class="form-control mt-2" style="resize: none; height:100px; background-color:#e3e3e3; border:none;"  id="description" rows="3" placeholder="Enter description"></textarea>
+                                                <span id="desc_message" style="color:red;margin:12px 0px;display:none;">Description box is empty!</span>
                                             </div>
 
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="reblateBtn px-4 py-2" style="" data-dismiss="modal">Close</button>
-                                                <button type="button" class="reblateBtn px-4 py-2">Add
+                                                <button id="submitButton" type="button" class="reblateBtn px-4 py-2">Add
                                                     Announcement</button>
                                             </div>
                                         </form>
@@ -104,16 +110,24 @@
                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                                 <tr>
-                                    <th> ID </th>
+
                                     <th> Title </th>
                                     <th> Date </th>
                                     <th> To </th>
-                                    <th class="text-nowrap">Action</th>
+                                    <th> Description </th>
+                                    {{-- <th class="text-nowrap">Action</th> --}}
                                 </tr>
                             </thead>
 
                             <tbody id="table-body">
-
+                                @foreach ($latestAnnouncements as $ad)
+                                    <tr>
+                                        <td>{{$ad->title}}</td>
+                                        <td>{{$ad->date}}</td>
+                                        <td>{{$ad->to_emp}}</td>
+                                        <td>{{$ad->description}}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
 
 
@@ -137,52 +151,54 @@
     // Event handler for the Add Announcement button
     $('#submitButton').on('click', function(event) {
         // Prevent the default form submission
-        event.preventDefault();
-        var title_message = document.getElementById('title_message');
-        var res_message = document.getElementById('res_message');
-        var desc_message = document.getElementById('desc_message');
-
         title_message.style.display = "none";
         res_message.style.display = "none";
         desc_message.style.display = "none";
+        messageBox.style.display = 'none';
+        event.preventDefault();
+        // alert('not');
+        var title_message = document.getElementById('title_message');
+        var res_message = document.getElementById('res_message');
+        var desc_message = document.getElementById('desc_message');
+        var  = document.getElementById('messageBox');
+
+
 
         // Get the values from the form fields
         var title = $('#title').val();
         var recipient = $('#recipient').val();
         var description = $('#description').val();
+        // alert(title);
 
         if(title == "") {
             title_message.style.display = "block";
         }
-        if(res_message == "") {
+        if(recipient == "") {
             res_message.style.display = "block";
         }
-        if(desc_message == "") {
+        if(description == "") {
             desc_message.style.display = "block";
         }
         // alert();
 
-        // Log the values to the console (you can do any processing with this data here)
-        console.log("Title: " + title);
-        console.log("Recipient: " + recipient);
-        console.log("Description: " + description);
+
 
         // Optionally, you can send this data to the server using AJAX
-        // $.ajax({
-        //     url: 'your-server-endpoint',
-        //     method: 'POST',
-        //     data: {
-        //         title: title,
-        //         recipient: recipient,
-        //         description: description
-        //     },
-        //     success: function(response) {
-        //         console.log(response);
-        //     },
-        //     error: function(xhr, status, error) {
-        //         console.error(error);
-        //     }
-        // });
+        $.ajax({
+            url: '/add-annoucement',
+            method: 'POST',
+            data: {
+                title: title,
+                recipient: recipient,
+                description: description
+            },
+            success: function(response) {
+                messageBox.style.display = 'block';
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
     });
 });
 

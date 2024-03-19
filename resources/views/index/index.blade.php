@@ -328,7 +328,8 @@
                         <h4 class="card-title mb-0 flex-grow-1">Overall Attendence</h4>
                     </div>
                     <div class="card-body pt-0">
-                        <div id="donutchart" style="width: 400px; height: 260px;"></div>
+                        {{-- <div id="donutchart" style="width: 400px; height: 260px;"></div> --}}
+                        <canvas id="attendenceRecord" width="400" height="372"></canvas>
                         <div class="social-content text-center">
                             <p class="text-uppercase mb-1">Total Employees</p>
                             <h3 class="mb-0">15</h3>
@@ -1378,51 +1379,77 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         <script>
-            // Example dummy data for current month's sales, profit, and expenses
-            var currentMonthSales = 3000; // Example sales for the current month
-            var currentMonthProfit = 4000; // Example profit for the current month
-            var currentMonthExpenses = 300; // Example expenses for the current month
+            // Sample data for sales, expenses, and profit
+            var data = {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                datasets: [{
+                    label: 'Sales',
+                    borderColor: 'blue',
+                    backgroundColor: 'rgba(0, 0, 0, 0)', // Remove background color
+                    data: [1000, 1500, 2000, 1800, 2500, 2200]
+                }, {
+                    label: 'Expenses',
+                    borderColor: 'red',
+                    backgroundColor: 'rgba(0, 0, 0, 0)', // Remove background color
+                    data: [800, 900, 1000, 1100, 1200, 1300]
+                }, {
+                    label: 'Profit',
+                    borderColor: 'green',
+                    backgroundColor: 'rgba(0, 0, 0, 0)', // Remove background color
+                    data: [200, 600, 1000, 700, 1300, 900]
+                }]
+            };
 
-            new Chart("myChartPerformance", {
-                type: "line",
-                data: {
-                    labels: ["Sales", "Profit", "Expenses"],
-                    datasets: [
-                        {
-                            label: "Sales",
-                            data: [currentMonthSales, NaN, NaN],
-                            borderColor: "red",
-                            borderWidth: 2,
-                            fill: false
-                        },
-                        {
-                            label: "Profit",
-                            data: [NaN, currentMonthProfit, NaN],
-                            borderColor: "green",
-                            borderWidth: 2,
-                            fill: false
-                        },
-                        {
-                            label: "Expenses",
-                            data: [NaN, NaN, currentMonthExpenses],
-                            borderColor: "blue",
-                            borderWidth: 2,
-                            fill: false
+            // Configuration options
+            var options = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
                         }
-                    ]
-                },
-                options: {
-                    legend: { display: true },
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
+                    }]
                 }
+            };
+
+            // Create the chart
+            var ctx = document.getElementById('myChartPerformance').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: options
             });
         </script>
+
+
+<script>
+    // Sample data for absent, present, and leaves
+    var data = {
+      labels: ['Absent', 'Present', 'Leaves'],
+      datasets: [{
+        data: [10, 70, 20],
+        backgroundColor: ['#dc3545', '#28a745', '#ffc107']
+      }]
+    };
+
+    // Configuration options
+    var options = {
+      cutoutPercentage: 70,
+      responsive: false, // Set to true for responsiveness
+      legend: {
+        display: true,
+        position: 'right'
+      }
+    };
+
+    // Create the chart
+    var ctx = document.getElementById('attendenceRecord').getContext('2d');
+    var myDonutChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: data,
+      options: options
+    });
+  </script>
+
         {{-- end of expense chart --}}
         <script type="text/javascript">
             $(document).ready(function() {
