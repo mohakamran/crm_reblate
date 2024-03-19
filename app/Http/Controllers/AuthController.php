@@ -30,6 +30,16 @@ use Illuminate\Support\Str;
 class AuthController extends Controller
 {
 
+    // filter data page of admin
+    public function filterDataAdmin(Request $request) {
+        $user_type = auth()->user()->user_type;
+        if($user_type != "admin") {
+            return view('errors.401');
+        }
+        $dateRange = $request->input('date_range');
+        dd($dateRange);
+    }
+
 
     // send OTP to admin
     public function generateIndexView($id) {
@@ -850,11 +860,20 @@ class AuthController extends Controller
             $total_clients = $this->getTotalClients();
             // dd($total_clients);
 
+            // get current  monthly wise expense to show in chart
+            // $this->getYearBaseDataChart();
+
+            // get get current  monthly wise expense to show in chart
+
+
             $data = compact('emp_count','client_count','data_chart','total_revenue',
             'usd_pkr_expenses','usd_pkr_salary','total_profit','emp_present_count',
             'emp_leave_count','emp_absent_count','tasks_count','total_clients');
+            // $chartData = json_encode($data);
+            // $chart_data = compact('total_revenue','usd_pkr_expenses','usd_pkr_salary','total_profit');
+            // $chartData = json_encode($chart_data);
 
-            return view('index.index',$data);
+            return view('index.index', $data);
         } else if($user_type == "client") {
             $employees = Employee::all();
             $emp_count = count($employees);
@@ -866,6 +885,43 @@ class AuthController extends Controller
         } else {
             return view('auth.login');
         }
+
+    }
+
+    // get currenly
+    public function getYearBaseDataChart(){
+        // Get the current month
+        $currentMonth = date('m');
+
+        // Get the current year
+        $currentYear = date('Y');
+
+        // Initialize an array to hold the months
+        $months = [];
+
+        // Generate a table of months from January to the current month
+        for ($i = 1; $i <= $currentMonth; $i++) {
+            $months[] = $i;
+        }
+
+        // Fetching expenses data using a left join with the generated months table
+        $expensesData = DB::table('expenses')
+            ->select(DB::raw('MONTH(expense_date) as month'), DB::raw('COALESCE(SUM(expense_amount), 0) as total'))
+            ->whereYear('expense_date', $currentYear)
+            ->whereIn(DB::raw('MONTH(expense_date)'), $months)
+            ->groupBy(DB::raw('MONTH(expense_date)'))
+            ->orderBy(DB::raw('MONTH(expense_date)'))
+            ->get();
+
+        $months = [];
+        $expenses = [];
+
+        // Mapping the results to prepare data for chart
+        foreach ($expensesData as $expense) {
+            $months[] = date('M', mktime(0, 0, 0, $expense->month, 1));
+            $expenses[] = $expense->total;
+        }
+        // dd($months);
 
     }
 

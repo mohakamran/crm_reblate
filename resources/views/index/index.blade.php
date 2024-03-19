@@ -12,8 +12,23 @@
 @section('body')
 
     <body data-sidebar="colored">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
     @endsection
     @section('content')
+        <style>
+            .btn-apply {
+                border: 0px;
+                background: #14213d;
+                color: #fff;
+                padding: 7px;
+                font-size: 13px;
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                border-radius: 7px;
+                margin: 10px;
+            }
+        </style>
+
         <div class="row" style="display: flex; flex-wrap: wrap;">
             <div class="col-md-4 col-xl-3">
                 <div class="card overflow-hidden">
@@ -108,10 +123,11 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-4 col-xl-3">
                 <div class="card overflow-hidden">
                     <div class="card-body overflow-hidden" style="position: relative;">
-                        <div class="ag-courses-item_bg"></div>
+
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
@@ -124,20 +140,18 @@
                                 </span>
                             </div>
                             <div class="d-flex flex-column ms-2">
+    <div class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
+        <input type="text" id="date_range_picker" name="date_range_picker" style="width:135px;padding: 5px; background-color:transparent; border:none;" />
 
-                                    <div
-                                        class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
-                                        <input type="text" name="datetimes"
-                                            style="padding: 5px; background-color:transparent; border:none;" />
+    </div>
 
-                                    </div>
-
-
-                            </div>
+</div>
+<button id="submit_dates" class="btn-apply">Apply</button>
                         </div>
                     </div>
                 </div>
             </div>
+
 
         </div>
         <div class="row" style="display: flex; flex-wrap: wrap;">
@@ -227,7 +241,7 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5">
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Expenses</p>
-                                    <h5 class="mb-0">{{$usd_pkr_expenses}} </h5>
+                                    <h5 class="mb-0">{{ $usd_pkr_expenses }} </h5>
                                 </div>
                                 <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
@@ -278,7 +292,7 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Profit</p>
-                                    <h5 class="mb-0"> {{$total_profit}}
+                                    <h5 class="mb-0"> {{ $total_profit }}
                                     </h5>
                                 </div>
                                 <p class="text-muted mb-0 text-truncate"><span
@@ -299,7 +313,11 @@
                         <h4 class="card-title mb-0 flex-grow-1">Overall Performance </h4>
                     </div>
                     <div class="card-body pt-2">
-                        <div id="chart_div" style="width: 100%; height: 250px; position: relative; left:-15px;"></div>
+                        {{-- <div id="chart_div" style="width: 100%; height: 250px; position: relative; left:-15px;"></div> --}}
+                        <canvas id="myChartPerformance" style="width:100%;width: 730px;
+                        display: block;
+                        height: 365px;
+                        padding: 25px;"></canvas>
                         <!-- end table-responsive -->
                     </div>
                 </div>
@@ -373,7 +391,7 @@
                     </div>
                     <div class="card-body pt-2">
                         <div class="table-responsive simplebar-scrollable-y simplebar-scrollable-x" data-simplebar="init"
-                            style="max-height: 300px;">
+                            style="max-height: 230px;">
                             <div class="simplebar-wrapper" style="margin: 0px;">
                                 <div class="simplebar-height-auto-observer-wrapper">
                                     <div class="simplebar-height-auto-observer"></div>
@@ -389,18 +407,18 @@
                                                         <th>Client Name</th>
                                                         <th>Project Name</th>
                                                         @foreach ($total_clients as $client)
-
                                                         @endforeach
                                                         <tr>
 
                                                             <td>
-                                                                <h6 class="font-size-15 mb-1">{{$client->client_name}}</h6>
+                                                                <h6 class="font-size-15 mb-1">{{ $client->client_name }}
+                                                                </h6>
                                                                 <p class="text-muted mb-0 font-size-14">
-                                                                    {{$client->client_email}}</p>
+                                                                    {{ $client->client_email }}</p>
                                                             </td>
                                                             <td>
                                                                 {{-- <span class="badge badge-soft-danger font-size-12">Cancel</span>  --}}
-                                                                {{$client->project_name}}
+                                                                {{ $client->project_name }}
                                                             </td>
 
                                                         </tr>
@@ -437,33 +455,55 @@
                             <div class="col-md-6 col-6 text-center">
                                 <div class="stats-box mb-4" style="border: 1px solid #e3e3e3; border-radius:5px;">
                                     <p>Total Tasks</p>
-                                    <h3>{{$tasks_count['total_tasks']}}</h3>
+                                    <h3>{{ $tasks_count['total_tasks'] }}</h3>
                                 </div>
                             </div>
                             <div class="col-md-6 col-6 text-center">
                                 <div class="stats-box mb-4" style="border: 1px solid #e3e3e3; border-radius:5px;">
                                     <p>Incomplete Tasks</p>
-                                    <h3>{{$tasks_count['incomplete_tasks']}}</h3>
+                                    <h3>{{ $tasks_count['incomplete_tasks'] }}</h3>
                                 </div>
                             </div>
                         </div>
                         <div class="progress mb-4" style="height: 30px;">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple " style="width:{{ number_format($tasks_count['complete_tasks']  / $tasks_count['total_tasks'] * 100) }}%;" role="progressbar" aria-valuenow="{{ number_format($tasks_count['complete_tasks']  / $tasks_count['total_tasks'] * 100) }}" aria-valuemin="0" aria-valuemax="100">{{ number_format($tasks_count['complete_tasks']  / $tasks_count['total_tasks'] * 100) }}%</div>
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning " style="width:{{ number_format($tasks_count['incomplete_tasks']  / $tasks_count['total_tasks'] * 100) }}%;" role="progressbar" aria-valuenow="{{ number_format($tasks_count['incomplete_tasks']  / $tasks_count['total_tasks'] * 100) }}" aria-valuemin="0" aria-valuemax="100">{{ number_format($tasks_count['incomplete_tasks']  / $tasks_count['total_tasks'] * 100) }}%</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple "
+                                style="width:{{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
+                                role="progressbar"
+                                aria-valuenow="{{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}"
+                                aria-valuemin="0" aria-valuemax="100">
+                                {{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}%
+                            </div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning "
+                                style="width:{{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
+                                role="progressbar"
+                                aria-valuenow="{{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}"
+                                aria-valuemin="0" aria-valuemax="100">
+                                {{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}%
+                            </div>
                             {{-- <div class="progress-bar progress-bar-striped progress-bar-animated bg-success w-50" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100">24%</div>
                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger w-25" role="progressbar" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100">21%</div> --}}
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info " style="width:{{ number_format($tasks_count['in_progress_tasks']  / $tasks_count['total_tasks'] * 100) }}%;" role="progressbar" aria-valuenow="{{ number_format($tasks_count['in_progress_tasks']  / $tasks_count['total_tasks'] * 100) }}" aria-valuemin="0" aria-valuemax="100">{{ number_format($tasks_count['in_progress_tasks']  / $tasks_count['total_tasks'] * 100) }}%</div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info "
+                                style="width:{{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
+                                role="progressbar"
+                                aria-valuenow="{{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}"
+                                aria-valuemin="0" aria-valuemax="100">
+                                {{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}%
                             </div>
-                            <div>
-                                <p><svg class="text-purple me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                  </svg>Completed Tasks <span class="float-end">{{$tasks_count['complete_tasks'] }}</span></p>
-                                <p><svg class="text-warning me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                  </svg></i>Inprogress Tasks <span class="float-end">{{$tasks_count['in_progress_tasks'] }}</span></p>
-                                {{-- <p><svg class="text-success me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
+                        </div>
+                        <div>
+                            <p><svg class="text-purple me-2" xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                </svg>Completed Tasks <span class="float-end">{{ $tasks_count['complete_tasks'] }}</span>
+                            </p>
+                            <p><svg class="text-warning me-2" xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                </svg></i>Inprogress Tasks <span
+                                    class="float-end">{{ $tasks_count['in_progress_tasks'] }}</span></p>
+                            {{-- <p><svg class="text-success me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                     <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                   </svg>On Hold Tasks <span class="float-end">31</span></p>
@@ -471,11 +511,14 @@
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                     <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                   </svg>Pending Tasks <span class="float-end">47</span></p> --}}
-                                <p class="mb-0"><svg class="text-primary me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                  </svg>Incomplete Tasks <span class="float-end">{{$tasks_count['incomplete_tasks'] }}</span></p>
-                                </div>
+                            <p class="mb-0"><svg class="text-primary me-2" xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16" fill="currentColor" class="bi bi-record-circle"
+                                    viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                </svg>Incomplete Tasks <span
+                                    class="float-end">{{ $tasks_count['incomplete_tasks'] }}</span></p>
+                        </div>
 
                     </div>
                 </div>
@@ -483,13 +526,6 @@
             </div>
 
         </div>
-
-
-
-
-
-
-
         <div class="row">
             <div class="col-xl-6">
                 <div class="card">
@@ -526,9 +562,12 @@
                                                             <td style="width: 20px;">#MB2540</td>
                                                             <td>
                                                                 <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                             class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
                                                             </td>
-                                                            <td><h6 class="text-muted mb-0 font-size-14">Task1</h6></td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task1</h6>
+                                                            </td>
                                                             <td><span
                                                                     class="badge badge-soft-primary font-size-12">Day</span>
                                                             </td>
@@ -540,9 +579,12 @@
                                                             <td style="width: 20px;">#MB2540</td>
                                                             <td>
                                                                 <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                             class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
                                                             </td>
-                                                            <td><h6 class="text-muted mb-0 font-size-14">Task2</h6></td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task2</h6>
+                                                            </td>
                                                             <td><span
                                                                     class="badge badge-soft-success font-size-12">Night</span>
                                                             </td>
@@ -554,9 +596,12 @@
                                                             <td style="width: 20px;">#MB2540</td>
                                                             <td>
                                                                 <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                             class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
                                                             </td>
-                                                            <td><h6 class="text-muted mb-0 font-size-14">Task3</h6></td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task3</h6>
+                                                            </td>
                                                             <td><span
                                                                     class="badge badge-soft-primary font-size-12">Day</span>
                                                             </td>
@@ -568,9 +613,12 @@
                                                             <td style="width: 20px;">#MB2540</td>
                                                             <td>
                                                                 <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                             class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
                                                             </td>
-                                                            <td><h6 class="text-muted mb-0 font-size-14">Task4</h6></td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task4</h6>
+                                                            </td>
                                                             <td><span
                                                                     class="badge badge-soft-success font-size-12">Night</span>
                                                             </td>
@@ -582,9 +630,12 @@
                                                             <td style="width: 20px;">#MB2540</td>
                                                             <td>
                                                                 <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                             class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
                                                             </td>
-                                                            <td><h6 class="text-muted mb-0 font-size-14">Task5</h6></td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task5</h6>
+                                                            </td>
                                                             <td><span
                                                                     class="badge badge-soft-primary font-size-12">Day</span>
                                                             </td>
@@ -596,9 +647,12 @@
                                                             <td style="width: 20px;">#MB2540</td>
                                                             <td>
                                                                 <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                             class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
                                                             </td>
-                                                            <td><h6 class="text-muted mb-0 font-size-14">Task6</h6></td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task6</h6>
+                                                            </td>
                                                             <td><span
                                                                     class="badge badge-soft-success font-size-12">Night</span>
                                                             </td>
@@ -728,9 +782,12 @@
                                                             <td style="width: 20px;">#MB2540</td>
                                                             <td>
                                                                 <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                             class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
                                                             </td>
-                                                            <td><h6 class="text-muted mb-0 font-size-14">Task1</h6></td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task1</h6>
+                                                            </td>
                                                             <td><span
                                                                     class="badge badge-soft-primary font-size-12">Day</span>
                                                             </td>
@@ -742,9 +799,12 @@
                                                             <td style="width: 20px;">#MB2540</td>
                                                             <td>
                                                                 <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                             class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
                                                             </td>
-                                                            <td><h6 class="text-muted mb-0 font-size-14">Task2</h6></td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task2</h6>
+                                                            </td>
                                                             <td><span
                                                                     class="badge badge-soft-success font-size-12">Night</span>
                                                             </td>
@@ -756,9 +816,12 @@
                                                             <td style="width: 20px;">#MB2540</td>
                                                             <td>
                                                                 <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                             class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
                                                             </td>
-                                                            <td><h6 class="text-muted mb-0 font-size-14">Task3</h6></td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task3</h6>
+                                                            </td>
                                                             <td><span
                                                                     class="badge badge-soft-primary font-size-12">Day</span>
                                                             </td>
@@ -770,9 +833,12 @@
                                                             <td style="width: 20px;">#MB2540</td>
                                                             <td>
                                                                 <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                             class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
                                                             </td>
-                                                            <td><h6 class="text-muted mb-0 font-size-14">Task4</h6></td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task4</h6>
+                                                            </td>
                                                             <td><span
                                                                     class="badge badge-soft-success font-size-12">Night</span>
                                                             </td>
@@ -784,9 +850,12 @@
                                                             <td style="width: 20px;">#MB2540</td>
                                                             <td>
                                                                 <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                             class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
                                                             </td>
-                                                            <td><h6 class="text-muted mb-0 font-size-14">Task5</h6></td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task5</h6>
+                                                            </td>
                                                             <td><span
                                                                     class="badge badge-soft-primary font-size-12">Day</span>
                                                             </td>
@@ -798,9 +867,12 @@
                                                             <td style="width: 20px;">#MB2540</td>
                                                             <td>
                                                                 <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                             class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
                                                             </td>
-                                                            <td><h6 class="text-muted mb-0 font-size-14">Task6</h6></td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task6</h6>
+                                                            </td>
                                                             <td><span
                                                                     class="badge badge-soft-success font-size-12">Night</span>
                                                             </td>
@@ -1303,73 +1375,112 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+        <script>
+            // Example dummy data for current month's sales, profit, and expenses
+            var currentMonthSales = 3000; // Example sales for the current month
+            var currentMonthProfit = 4000; // Example profit for the current month
+            var currentMonthExpenses = 300; // Example expenses for the current month
+
+            new Chart("myChartPerformance", {
+                type: "line",
+                data: {
+                    labels: ["Sales", "Profit", "Expenses"],
+                    datasets: [
+                        {
+                            label: "Sales",
+                            data: [currentMonthSales, NaN, NaN],
+                            borderColor: "red",
+                            borderWidth: 2,
+                            fill: false
+                        },
+                        {
+                            label: "Profit",
+                            data: [NaN, currentMonthProfit, NaN],
+                            borderColor: "green",
+                            borderWidth: 2,
+                            fill: false
+                        },
+                        {
+                            label: "Expenses",
+                            data: [NaN, NaN, currentMonthExpenses],
+                            borderColor: "blue",
+                            borderWidth: 2,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    legend: { display: true },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        </script>
+        {{-- end of expense chart --}}
         <script type="text/javascript">
-            google.charts.load('current', {'packages':['corechart']});
+            $(document).ready(function() {
+                $('#date_range_picker').daterangepicker({
+                    opens: 'right',
+                    locale: {
+                        format: 'YYYY-MM-DD'
+                    }
+                });
+            });
+
+            $('#submit_dates').on('click', function() {
+                var dateRange = $('#date_range_picker').val();
+// alert(dateRange);
+                // Send the date range to the Laravel backend via AJAX
+                $.ajax({
+                    url: '/filtered-data',
+                    type: 'POST',
+                    headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include CSRF token in headers
+            },
+                    data: {
+                        date_range: dateRange
+                    },
+
+                    success: function(response) {
+                        // Handle success response if needed
+                        console.log('Date range submitted successfully');
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error if needed
+                        console.error('Error submitting date range:', error);
+                    }
+                });
+            });
+
+            google.charts.load("current", {
+                packages: ["corechart"]
+            });
             google.charts.setOnLoadCallback(drawChart);
 
             function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses','Profit'],
-          ['2020',  1000,      400,1300],
-          ['2021',  1170,      460,1500],
-          ['2022',  660,       1120,2533],
-          ['2023',  660,       1120,533],
-          ['2024',  1030,      540, 1214]
-        ]);
+                var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    ['Persent', <?php echo $emp_present_count; ?>],
+                    ['Absent', <?php echo $emp_absent_count; ?>],
+                    ['Leave', <?php echo $emp_leave_count; ?>],
 
-        var options = {
-          title: 'Company Performance',
-          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
-          vAxis: {minValue: 0}
-        };
+                ]);
 
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-          </script>
-          {{-- end of expense chart --}}
-        <script>
+                var options = {
+                    pieHole: 0.4,
 
+                };
 
-google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Persent',     <?php echo $emp_present_count; ?>],
-          ['Absent',      <?php echo $emp_absent_count; ?> ],
-          ['Leave',  <?php echo $emp_leave_count; ?> ],
-
-        ]);
-
-        var options = {
-          pieHole: 0.4,
-
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
-      }
-
-            $('input[name="datetimes"]').daterangepicker();
-            $(document).ready(function() {
-            $('input[name="datetimes"]').daterangepicker({
-                timePicker: true,
-                startDate: moment().startOf('hour'),
-                endDate: moment().startOf('hour').add(32, 'hour'),
-                locale: {
-                    format: 'M/DD hh:mm A'
-                }
-            });
-
-            // Event handler for applying date range
-            $('input[name="datetimes"]').on('apply.daterangepicker', function(ev, picker) {
-                var startDate = picker.startDate.format('YYYY-MM-DD HH:mm:ss');
-                var endDate = picker.endDate.format('YYYY-MM-DD HH:mm:ss');
-                console.log("Selected Date Range: " + startDate + ' - ' + endDate);
-               });
-           });
+                var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+                chart.draw(data, options);
+            }
 
             // Dummy data for expenses by month
             var months = ["January", "February", "March", "April", "May"];
@@ -1393,16 +1504,7 @@ google.charts.load("current", {packages:["corechart"]});
             var columnChart = new ApexCharts(document.querySelector("#expenses-months"), columnChartOptions);
             columnChart.render();
 
-            // You can repeat the process for the second chart if needed
-            /*
-            var chartOptions = {
-                // Options for the second chart
-                // ...
-            };
 
-            var chart = new ApexCharts(document.querySelector("#chart"), chartOptions);
-            chart.render();
-            */
         </script>
     @endsection
     @section('scripts')
@@ -1420,4 +1522,9 @@ google.charts.load("current", {packages:["corechart"]});
         <!-- App js -->
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    @endsection
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+@endsection

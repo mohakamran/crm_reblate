@@ -83,6 +83,9 @@ Route::group(['middleware' => 'admin'], function () {
 
     // Route::view('/demo','pages.demo');
 
+    // filtered data page of admin page
+    Route::post('/filtered-data',[AuthController::class,'filterDataAdmin']);
+
     // Employee Routes
 
     Route::get('/add-new', [EmployeesController::class, 'index'])->name('add-new-employee');
@@ -95,6 +98,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/update-employee-data/{emp_id}', [EmployeesController::class, 'updateEmployeeData']);
     Route::get('/view_emp_details/{emp_id}', [EmployeesController::class, 'viewEmployeeData']);
     Route::get('/view_info', [EmployeesController::class, 'viewInfo']);
+    Route::get('/view_profile', [EmployeesController::class, 'viewProfile']);
 
     // users
 

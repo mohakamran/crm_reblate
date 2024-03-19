@@ -79,22 +79,18 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="description">Description</label>
-                                                <textarea class="form-control mt-2" id="description" rows="3" placeholder="Enter description"></textarea>
+                                                <textarea class="form-control mt-2" style="resize: none; height:100px; background-color:#e3e3e3; border:none;"  id="description" rows="3" placeholder="Enter description"></textarea>
                                             </div>
 
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="button" id="submitButton" class="btn btn-primary">Add
+                                                <button type="button" class="reblateBtn px-4 py-2" style="" data-dismiss="modal">Close</button>
+                                                <button type="button" class="reblateBtn px-4 py-2">Add
                                                     Announcement</button>
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="reblateBtn px-4 py-2" style="" data-dismiss="modal">Close</button>
-                                        <button type="button" class="reblateBtn px-4 py-2">Add
-                                            Announcement</button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>

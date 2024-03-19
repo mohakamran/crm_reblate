@@ -15,6 +15,9 @@ use DB;
 
 class EmployeesController extends Controller
 {
+    public function viewProfile() {
+        return view('emp.profile');
+    }
     // update info employee dashboard
     public function updateEmpInfo(Request $req) {
         $user_code = auth()->user()->user_code;
