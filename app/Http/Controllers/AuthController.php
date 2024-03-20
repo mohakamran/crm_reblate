@@ -29,15 +29,28 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
-
+    public function searchFilteredData($dateRange) {
+        return $dateRange;
+    }
+    public function unauthorized() {
+        return view('errors.401');
+    }
     // filter data page of admin
     public function filterDataAdmin(Request $request) {
         $user_type = auth()->user()->user_type;
-        if($user_type != "admin") {
-            return view('errors.401');
+        // $user_type = "manager";
+        if($user_type == "admin") {
+            // Assuming $request is an instance of Illuminate\Http\Request
+            $dateRange = $request->input('date_range');
+            // Process the date range as needed
+
+            // If the date range processing is successful, return success message
+            return response()->json(['message' => 'Success']);
+        } else {
+            // If the user is not an admin, return a view with a 401 error
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
-        $dateRange = $request->input('date_range');
-        dd($dateRange);
+
     }
 
 
@@ -410,17 +423,6 @@ class AuthController extends Controller
                 Session::put('attendance_access', $check_permissions->attendance_access);
             }
 
-            // calling function of attence for employee
-            // $this->indexEmployee();
-
-            //
-            // $check_active_status = DB::table('employees')->where('Emp_Code',$user_code)->first();
-            // if($check_active_status) {
-            //     Session::put('emp_status', $check_active_status->Emp_Status);
-            // }
-
-            // dd($employees_access);
-
             $check_shift_time = DB::table('employees')->where('Emp_Code',$user_code)->first();
             if($check_shift_time->Emp_Shift_Time == "Morning") {
                 $office_time = DB::table('office_times')->where('shift_type','morning')->first();
@@ -510,7 +512,7 @@ class AuthController extends Controller
                     } else {
 
                         $todayDate = now()->toDateString();
-                        dd($todayDate);
+                        // dd($todayDate);
                         $attendance = DB::table('attendence')
                         ->where('emp_id', $user_code)
                         ->where('date', $todayDate)
