@@ -98,15 +98,12 @@ class LoginController extends Controller
         $employee_designation = $req->employee_designation;
         $employee_shift_time = $req->employee_shift_time;
         $employee_joining_date = $req->employee_joining_date;
-        // $data = compact('employee_department','employee_designation','employee_joining_date','employee_shift_time');
-        // dd($data);
+
 
         $login_user_name = $req->emp_login_name;
         $login_user_email = $req->emp_login_email;
         $login_user_type = $req->emp_login_user_type_hidden;
         $login_user_code = $req->emp_code;
-        // $data = compact('login_user_name','login_user_email','login_user_type','login_user_code');
-        // dd($data);
 
         $user_check = UserEmployee::where('emp_code', $login_user_code)->first();
         $email_check = DB::table('users')->where('user_email',$login_user_email)->first();
@@ -166,16 +163,6 @@ class LoginController extends Controller
 
             $login->save();
 
-
-            // $UserEmployee = new UserEmployee();
-            // $UserEmployee->username = $login_user_name;
-            // $UserEmployee->status = "created";
-            // $UserEmployee->emp_email = $login_user_email;
-            // $UserEmployee->employee_type = $login_user_type;
-            // $UserEmployee->remember_token = '';
-            // $UserEmployee->emp_code = $login_user_code;
-            // $UserEmployee->password = Hash::make($randomPassword);
-            // $UserEmployee->save();
             DB::table('users')->insert([
                 'user_name' => $login_user_name,
                 'user_email' => $login_user_email,

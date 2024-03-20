@@ -5,6 +5,8 @@
 @section('css')
     <!-- jsvectormap css -->
     <link href="{{ URL::asset('build/libs/jsvectormap/css/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+        rel="stylesheet">
 @endsection
 @section('page-title')
     CRM - Dashboard
@@ -28,6 +30,22 @@
                 margin: 10px;
             }
         </style>
+
+        {{-- <div class="row mt-2 mb-4">
+
+            <div class="col-md-3">
+                <input type="date" class="form-control" >
+
+            </div>
+            <div class="col-md-3">
+                <input type="date" class="form-control" >
+
+            </div>
+            <div class="col-md-3">
+                <input type="submit" class="btn btn-primary" value="Apply">
+            </div>
+            <div class="col-md-2"></div>
+        </div> --}}
 
         <div class="row" style="display: flex; flex-wrap: wrap;">
             <div class="col-md-4 col-xl-3">
@@ -140,13 +158,15 @@
                                 </span>
                             </div>
                             <div class="d-flex flex-column ms-2">
-    <div class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
-        <input type="text" id="date_range_picker" name="date_range_picker" style="width:135px;padding: 5px; background-color:transparent; border:none;" />
+                                <div
+                                    class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
+                                    <input type="text" id="date_range_picker" name="date_range_picker"
+                                        style="width:135px;padding: 5px; background-color:transparent; border:none;" />
 
-    </div>
+                                </div>
 
-</div>
-<button id="submit_dates" class="btn-apply">Apply</button>
+                            </div>
+                            <button id="submit_dates" class="btn-apply">Apply</button>
                         </div>
                     </div>
                 </div>
@@ -314,7 +334,8 @@
                     </div>
                     <div class="card-body pt-2">
                         {{-- <div id="chart_div" style="width: 100%; height: 250px; position: relative; left:-15px;"></div> --}}
-                        <canvas id="myChartPerformance" style="width:100%;width: 730px;
+                        <canvas id="myChartPerformance"
+                            style="width:100%;width: 730px;
                         display: block;
                         height: 365px;
                         padding: 25px;"></canvas>
@@ -1420,35 +1441,53 @@
             });
         </script>
 
+        <script>
+            // Check if jQuery is properly loaded
+            if (typeof jQuery === 'undefined') {
+                console.error('jQuery is not loaded.');
+            } else {
+                // jQuery is loaded, initialize the datepicker
+                $(document).ready(function() {
+                    $('#datepicker').datepicker({
+                        format: 'yyyy-mm-dd', // Format the date as you desire
+                        todayBtn: 'linked',
+                        clearBtn: true,
+                        autoclose: true,
+                        todayHighlight: true
+                    });
+                });
+            }
+        </script>
 
-<script>
-    // Sample data for absent, present, and leaves
-    var data = {
-      labels: ['Absent', 'Present', 'Leaves'],
-      datasets: [{
-        data: [10, 70, 20],
-        backgroundColor: ['#dc3545', '#28a745', '#ffc107']
-      }]
-    };
 
-    // Configuration options
-    var options = {
-      cutoutPercentage: 70,
-      responsive: false, // Set to true for responsiveness
-      legend: {
-        display: true,
-        position: 'right'
-      }
-    };
+        <script>
+            // Sample data for absent, present, and leaves
+            var data = {
+                labels: ['Absent', 'Present', 'Leaves'],
+                datasets: [{
+                    data: [10, 70, 20],
+                    backgroundColor: ['#dc3545', '#28a745', '#ffc107']
+                }]
+            };
 
-    // Create the chart
-    var ctx = document.getElementById('attendenceRecord').getContext('2d');
-    var myDonutChart = new Chart(ctx, {
-      type: 'doughnut',
-      data: data,
-      options: options
-    });
-  </script>
+            // Configuration options
+            var options = {
+                cutoutPercentage: 70,
+                responsive: false, // Set to true for responsiveness
+                legend: {
+                    display: true,
+                    position: 'right'
+                }
+            };
+
+            // Create the chart
+            var ctx = document.getElementById('attendenceRecord').getContext('2d');
+            var myDonutChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: options
+            });
+        </script>
 
         {{-- end of expense chart --}}
         <script type="text/javascript">
@@ -1463,25 +1502,20 @@
 
             $('#submit_dates').on('click', function() {
                 var dateRange = $('#date_range_picker').val();
-// alert(dateRange);
-                // Send the date range to the Laravel backend via AJAX
+
                 $.ajax({
                     url: '/filtered-data',
-                    type: 'POST',
-                    headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include CSRF token in headers
-            },
+                    type: 'get',
                     data: {
                         date_range: dateRange
                     },
-
                     success: function(response) {
-                        // Handle success response if needed
-                        console.log('Date range submitted successfully');
+                        // Redirect to the route with the date parameter
+                        window.location.href = '/search-filtered-data?date_range=' + dateRange;
                     },
                     error: function(xhr, status, error) {
                         // Handle error if needed
-                        console.error('Error submitting date range:', error);
+                        window.location.href = '/unauthorized';
                     }
                 });
             });
@@ -1530,8 +1564,6 @@
             // Render the column chart
             var columnChart = new ApexCharts(document.querySelector("#expenses-months"), columnChartOptions);
             columnChart.render();
-
-
         </script>
     @endsection
     @section('scripts')
@@ -1549,9 +1581,9 @@
         <!-- App js -->
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
         <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
-@endsection
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    @endsection
