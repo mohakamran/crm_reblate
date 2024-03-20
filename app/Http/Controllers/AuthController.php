@@ -14,6 +14,8 @@ use App\Models\Employee;
 use App\Models\Client;
 use DB;
 
+use App\Models\Task;
+
 use GuzzleHttp\Client as GuzzleClient;
 
 use Carbon\Carbon;
@@ -30,7 +32,18 @@ use Illuminate\Support\Str;
 class AuthController extends Controller
 {
     public function searchFilteredData($dateRange) {
-        return $dateRange;
+        // Remove the prefix 'date_range='
+        $dateRange = str_replace('date_range=', '', $dateRange);
+
+        // Split the string based on the delimiter ' - '
+        $dateParts = explode(' - ', $dateRange);
+
+        // Extract start and end dates
+        $startDate = $dateParts[0];
+        $endDate = $dateParts[1];
+
+        // Now you have start and end dates in separate variables
+        dd($startDate, $endDate);
     }
     public function unauthorized() {
         return view('errors.401');
@@ -274,10 +287,6 @@ class AuthController extends Controller
                 // return view('attendence.index',compact('shift_time'));
         }
       }
-
-
-
-
     }
 
     // get monthwise attendence details
@@ -587,9 +596,6 @@ class AuthController extends Controller
             $task_data = [
                 ['', $completed_count, $pending_count, $in_progress_count]
             ];
-            // dd($task_details);
-
-
 
             $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
             $t_date = Carbon::now()->format('l, d F Y');
@@ -723,7 +729,7 @@ class AuthController extends Controller
                     } else {
 
                         $todayDate = now()->toDateString();
-                        dd($todayDate);
+                        // dd($todayDate);
                         $attendance = DB::table('attendence')
                         ->where('emp_id', $user_code)
                         ->where('date', $todayDate)
@@ -859,6 +865,10 @@ class AuthController extends Controller
             $tasks_count = $this->getTotalTasks();
             // dd($tasks_count);
 
+            // get employee and tasks
+            $currentTasks = $this->getEmpTasks();
+            // dd($currentTasks);
+
             $total_clients = $this->getTotalClients();
             // dd($total_clients);
 
@@ -870,7 +880,7 @@ class AuthController extends Controller
 
             $data = compact('emp_count','client_count','data_chart','total_revenue',
             'usd_pkr_expenses','usd_pkr_salary','total_profit','emp_present_count',
-            'emp_leave_count','emp_absent_count','tasks_count','total_clients');
+            'emp_leave_count','emp_absent_count','tasks_count','total_clients', 'currentTasks');
             // $chartData = json_encode($data);
             // $chart_data = compact('total_revenue','usd_pkr_expenses','usd_pkr_salary','total_profit');
             // $chartData = json_encode($chart_data);
@@ -887,6 +897,48 @@ class AuthController extends Controller
         } else {
             return view('auth.login');
         }
+
+    }
+
+    //get tasks
+    public function getEmpTasks() {
+        // Get the current month and year
+        $currentMonth = date('m');
+        $currentYear = date('Y');
+
+        // Retrieve all employees
+        $employees = DB::table('employees')->get();
+
+        // Initialize an array to store matched employee data
+        $matchedEmployeesData = [];
+
+        // Iterate over each employee
+        foreach ($employees as $employee) {
+            // Check if there is any task with the employee's code created in the current month
+            $task = DB::table('tasks')
+                        ->where('emp_id', $employee->Emp_Code)
+                        ->whereMonth('task_date', $currentMonth)
+                        ->whereYear('task_date', $currentYear)
+                        ->first();
+
+            // If a task with the employee's code created in the current month is found, store the employee's data
+            if ($task !== null) {
+                // Fetching employee's image (assuming Emp_Image is the field for storing image path)
+                $employeeImage = $employee->Emp_Image;
+
+                // You may need to adjust these field names according to your database structure
+                $matchedEmployeesData[] = [
+                    'id' => $employee->Emp_Code,
+                    'name' => $employee->Emp_Full_Name,
+                    'shift_time' => $employee->Emp_Shift_Time,
+                    'image' => $employeeImage, // Assuming Emp_Image contains image path
+                    'task_title' => $task->task_title,
+                    'task_status' => $task->task_status, // Assuming task_status is the field for task status
+                ];
+            }
+        }
+
+        return $matchedEmployeesData;
 
     }
 

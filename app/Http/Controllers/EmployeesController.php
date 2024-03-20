@@ -15,8 +15,9 @@ use DB;
 
 class EmployeesController extends Controller
 {
-    public function viewProfile() {
-        return view('emp.profile');
+    public function viewProfile($id) {
+        $emp_data = DB::table('employees')->where('Emp_Code', $id)->first();
+        return view('emp.profile',compact('emp_data'));
     }
     // update info employee dashboard
     public function updateEmpInfo(Request $req) {
@@ -154,8 +155,16 @@ class EmployeesController extends Controller
         // $title = "Update Employee Details";
         // $data = compact('title');
         // $rec = Employee::orderBy('id', 'desc')->get();
-        $latestEmployees = DB::table('employees')->orderBy('id', 'desc')->get();
-        // dd($rec);
+        $user_type = Auth()->user()->user_type;
+        if($user_type == "employee") {
+            return view('errors.401');
+        }
+        $latestEmployees = DB::table('employees')
+        ->where('Emp_Status', 'active')
+        ->orderBy('Emp_Code', 'asc')
+        ->get();
+
+        // dd($latestEmployees);
         //$count = Employee::where('Emp_Status', 'active')->orderBy('id', 'desc')->count();
         if($latestEmployees !=null) {
             $emp="Reblate Solutions Employees";

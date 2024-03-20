@@ -85,7 +85,7 @@ Route::group(['middleware' => 'admin'], function () {
 
     // filtered data page of admin page
     Route::get('/filtered-data',[AuthController::class,'filterDataAdmin']);
-    Route::get('/search-filtered-data',[AuthController::class,'searchFilteredData']);
+    Route::get('/search-filtered-data/{dateRange}', [AuthController::class, 'searchFilteredData']);
     Route::get('/unauthorized',[AuthController::class,'unauthorized']);
 
     // Employee Routes
@@ -100,7 +100,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/update-employee-data/{emp_id}', [EmployeesController::class, 'updateEmployeeData']);
     Route::get('/view_emp_details/{emp_id}', [EmployeesController::class, 'viewEmployeeData']);
     Route::get('/view_info', [EmployeesController::class, 'viewInfo']);
-    Route::get('/view_profile', [EmployeesController::class, 'viewProfile']);
+    Route::get('/view_profile/{id}', [EmployeesController::class, 'viewProfile']);
 
     // users
 

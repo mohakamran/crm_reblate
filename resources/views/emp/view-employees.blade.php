@@ -310,7 +310,7 @@
                     @foreach ($latestEmployees as $emp)
                         <div class="col-md-3">
 
-                            <div class="card hovering" style="box-shadow:0px 0px 10px 10px #00000021; overflow: hidden; cursor: pointer; border-radius: 10px;">
+                            <div class="card hovering" style="box-shadow:0px 0px 10px 10px #00000021; overflow: hidden; border-radius: 10px;">
                                 <div style="width: 150px;height: 150px;position: absolute;z-index: 100;background-color: #fca311;border-radius: 100px;right: -75px;top: -70px;"></div>
                                 <div class="card-body" style="box-shadow: none; ">
                                    <div class="options">
@@ -337,7 +337,9 @@
                                         </a>
                                     @endif
                                     <div class="card-text-center">
-                                        <p class="emp-name"> {{ $emp->Emp_Full_Name }}</p>
+                                        <p class="emp-name">
+                                             <a href="/view_profile/{{$emp->Emp_Code}}">{{ $emp->Emp_Full_Name }}</a>
+                                            </p>
                                         <div class="d-flex gap-1 align-items-center mb-2">
                                             <p style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d;">Designation:</p>
                                             <span style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">{{ $emp->Emp_Designation }} </span>
