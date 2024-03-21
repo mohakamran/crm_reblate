@@ -25,7 +25,7 @@
                                 <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" style="max-width: 300px; padding-right:20px;" id="close-now">
                                     {{ session('success') }}
 
-                                    <a type="button" onclick="hideNow()" class="close" data-dismiss="alert"
+                                    <a type="button" onclick="hideNow()" id="close-now" class="close-n" data-dismiss="alert"
                                         aria-label="Close" style="float: right; font-size:20px; margin-left:10px;">
                                         <span aria-hidden="true">&times;</span>
                                     </a>
@@ -84,6 +84,7 @@
                                 </div>
 
                             </div>
+
                             <div class="row">
                                 <div class="col-md-12 ">
                                     <div class="inputboxcolor">
@@ -96,10 +97,14 @@
 
                                 </div>
                             </div>
+                            <div id="inputContainer"></div>
                             <div class="mt-3 d-flex justify-content-between align-items-center">
                                 <button type="button" class="reblateBtn px-4 py-2" id="addInputButton">Add New Task</button>
                                 <button type="submit" class="reblateBtn px-4 py-2" style="background-color: #fca311 ; border:#fca311; color: #000;">Assign Task</button>
                             </div>
+
+
+
                         </form>
                     </div>
                     <!-- end card body -->

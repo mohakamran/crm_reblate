@@ -215,7 +215,7 @@ Route::group(['middleware' => 'admin'], function () {
 
     // announcement
     Route::get('/announcements',[AnnouncementController::class,'viewindexPage']);
-    Route::post('/add-annoucement',[AnnouncementController::class,'addAnnouncement']);
+    Route::post('/add-annoucement', [AnnouncementController::class, 'addAnnouncement']);
 
     // attendence time sheets
     Route::get('/attendence-time-sheet',[AttendenceController::class,'viewTimeSheet']);

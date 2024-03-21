@@ -26,6 +26,8 @@
                 <div class="card">
                     <div class="card-body">
 
+
+
                         <div class="row d-flex justify-content-between mb-5">
                             <h4 class="card-title" style="width:50%">{{$title}}</h4>
                             <div style="width: 13%">
