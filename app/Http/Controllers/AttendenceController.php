@@ -611,12 +611,14 @@ class AttendenceController extends Controller
         $dayFullName = $currentDateTime->format('l'); // get full day name
         $todayDate = $currentDateTime->toDateString(); // 'Y-m-d'
         $checkOutTime = $currentDateTime->format('h:i A'); // get time now 11:01 AM/PM
+        // $checkOutTime = "6:15 PM"; // get time now 11:01 AM/PM
 
         if ($emp) {
             $shift_time = $emp->Emp_Shift_Time;
             if ($shift_time == "Morning") {
                 $shift_time = "morning";
                 $check_morning = DB::table('attendence')->where('date', $todayDate)->where('emp_id', $id)->first();
+                $check_morning_id = $check_morning->id;
                 if ($check_morning) {
                     if ($check_morning->check_in_status == "done" && $check_morning->check_out_status == "") {
 
@@ -649,6 +651,7 @@ class AttendenceController extends Controller
                         Session::put('total_hours', $formattedTotalWorkHours);
                         DB::table('attendence')
                             ->where('emp_id', $id)
+                            ->where('id',$check_morning_id)
                             ->update([
                                 'check_out_time' => $checkOutTime,
                                 'check_out_status' => "done",
@@ -666,6 +669,7 @@ class AttendenceController extends Controller
                 $shift_time = "night";
                 $yesterday = Carbon::yesterday(); // Get yesterday's date
                 $check_night = DB::table('attendence')->where('date', $yesterday)->where('emp_id', $id)->first();
+                $check_night_id = $check_night->id;
                 if ($check_night) {
                     if ($check_night->check_in_status == "done" && $check_night->check_out_status == "") {
 
@@ -699,6 +703,7 @@ class AttendenceController extends Controller
 
                         DB::table('attendence')
                             ->where('emp_id', $id)
+                            ->where('id',$check_night_id)
                             ->update([
                                 'check_out_time' => $checkOutTime,
                                 'check_out_status' => "done",

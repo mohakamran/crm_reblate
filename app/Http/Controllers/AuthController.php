@@ -89,10 +89,22 @@ class AuthController extends Controller
             $check = DB::table('users')
             ->where('user_email', $client_email)
             ->where('user_type', 'employee')
-            ->orWhere('user_type', 'manager')
             ->first();
             if(!$check) {
                 session()->flash('user_role', 'Employee Email not found in Database!');
+                return back()->withInput([
+                    'client_email' => $client_email,
+                    'user_type' => $user_type
+                ]);
+            }
+        }
+        if($user_type == "manager") {
+            $check = DB::table('users')
+            ->where('user_email', $client_email)
+            ->where('user_type', 'manager')
+            ->first();
+            if(!$check) {
+                session()->flash('user_role', 'Manager Email not found in Database!');
                 return back()->withInput([
                     'client_email' => $client_email,
                     'user_type' => $user_type
@@ -185,22 +197,62 @@ class AuthController extends Controller
             'user_password' => 'required',
         ]);
 
-        // $pass = Hash::make($request->user_password);
-        // dd($pass);
 
-        // $credentials = $request->only('user_email', 'password');
-        $remember = $request->has('remember'); // Check if "Remember Me" is selected
+        $check_emp = DB::table('users')->where('user_code',$request->employee_code)->first();
+        if($check_emp->user_type == "employee") {
 
-        if (Auth::attempt(['user_code' => $request->employee_code, 'password' => $request->user_password],$remember)) {
-            // Authentication was successful
-            return redirect('/'); // Redirect to the home page
+             // $credentials = $request->only('user_email', 'password');
+            $remember = $request->has('remember'); // Check if "Remember Me" is selected
+
+            if (Auth::attempt(['user_code' => $request->employee_code, 'password' => $request->user_password],$remember)) {
+                // Authentication was successful
+                return redirect('/'); // Redirect to the home page
+            }
+
+            // Authentication failed
+            return redirect()->route('user.emp')
+                ->withInput(['employee_code' => $request->input('employee_code')])
+                ->with('error', 'Employee Code or Password Incorrect!');
+
+        }
+        else {
+            return redirect()->route('user.emp')
+            ->withInput(['employee_code' => $request->input('employee_code')])
+            ->with('error', 'You are trying to login on Employee Portal');
         }
 
-        // Authentication failed
-        return redirect()->route('user.emp')
-               ->withInput(['employee_code' => $request->input('employee_code')])
-               ->with('error', 'Employee Code or Password Incorrect!');
+    }
 
+    // manager login
+    public function LoginManager(Request $request) {
+        $validate = $request->validate([
+            'employee_code' => 'required',
+            'user_password' => 'required',
+        ]);
+
+
+        $check_emp = DB::table('users')->where('user_code',$request->employee_code)->first();
+        if($check_emp->user_type == "manager") {
+
+             // $credentials = $request->only('user_email', 'password');
+            $remember = $request->has('remember'); // Check if "Remember Me" is selected
+
+            if (Auth::attempt(['user_code' => $request->employee_code, 'password' => $request->user_password],$remember)) {
+                // Authentication was successful
+                return redirect('/'); // Redirect to the home page
+            }
+
+            // Authentication failed
+            return redirect()->route('user.manager')
+                ->withInput(['employee_code' => $request->input('employee_code')])
+                ->with('error', 'Manager Code or Password Incorrect!');
+
+        }
+        else {
+            return redirect()->route('user.manager')
+            ->withInput(['employee_code' => $request->input('employee_code')])
+            ->with('error', 'You are trying to login on Manager Portal');
+        }
     }
 
     public function loginAdmin(Request $request) {
@@ -599,7 +651,8 @@ class AuthController extends Controller
 
             $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
             $t_date = Carbon::now()->format('l, d F Y');
-            // dd($t_date);
+            $emp_img = $emp_det->Emp_Image;
+            Session::put('emp_img', $emp_img);
             $data = [
                 'absent_days' => $absent_days,
                 'total_present_day' => $total_present_day,
@@ -626,6 +679,7 @@ class AuthController extends Controller
             // dd($count);
             $clients = Client::all();
             $client_count = count($clients);
+
 
             // create session for
             $check_permissions = DB::table('table_login_details')->where('emp_code',$user_code)->where('employee_type','manager')->first();
@@ -807,7 +861,8 @@ class AuthController extends Controller
 
             $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
             $t_date = Carbon::now()->format('l, d F Y');
-            // dd($t_date);
+            $emp_img = $emp_det->Emp_Image;
+            Session::put('emp_img', $emp_img);
             $data = [
                 'absent_days' => $absent_days,
                 'total_present_day' => $total_present_day,
@@ -1302,6 +1357,10 @@ class AuthController extends Controller
     // admin login view
     public function viewLoginAdmin() {
         return view('auth.admin-login');
+    }
+    // manager login
+    public function viewLoginManager() {
+        return view('auth.manager-login');
     }
 
     //get exchange rate prices

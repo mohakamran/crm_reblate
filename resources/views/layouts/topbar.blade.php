@@ -120,49 +120,7 @@
                 </div>
             </div> --}}
 
-            <div class="dropdown px-3 sidebar-user" style="background-color: #e3e3e3; border-radius: 10px;margin:10px;">
-                <button type="button" class="btn w-100 px-0 border-0" id="page-header-user-dropdown"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            @if (isset($emp_det->Emp_Image) && $emp_det!="")
-                                <img src="{{$emp_det->Emp_Image}}" class="img-fluid header-profile-user rounded-circle" alt="">
-                                @else
-                                <img src="{{ url('user.png') }}" class="img-fluid header-profile-user rounded-circle"
-                                alt="">
-                            @endif
 
-                        </div>
-
-                        <div class="flex-grow-1 ms-2 text-start">
-                            <span class="ms-1 fw-medium user-name-text">{{ auth()->user()->user_name }}</span>
-                        </div>
-                    </span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-end">
-                    <!-- item-->
-                    <a class="dropdown-item" href="{{ Route('user.chang-password')}}"><i
-                            class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Change Password</span></a>
-                    {{-- <a class="dropdown-item" href="apps-chat"><i
-                            class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Messages</span></a> --}}
-                    {{-- <a class="dropdown-item" href="pages-faq"><i
-                            class="mdi mdi-lifebuoy text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Help</span></a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="pages-profile"><i
-                            class="mdi mdi-wallet text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Balance : <b>$5971.67</b></span></a>
-                    <a class="dropdown-item" href="#"><span class="badge bg-primary mt-1 float-end">New</span><i
-                            class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Settings</span></a> --}}
-                    <a class="dropdown-item" href="javascript:void()" onclick="confirmLogout()"><i
-                            class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Logout</span></a>
-
-                </div>
-            </div>
 
             {{-- <div class="dropdown d-none d-lg-inline-block ms-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
@@ -270,6 +228,48 @@
                 <a href="/clear" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown">
                     <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24"><path fill="#14213d" d="m20.37 8.91l-1 1.73l-12.13-7l1-1.73l3.04 1.75l1.36-.37l4.33 2.5l.37 1.37zM6 19V7h5.07L18 11v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2"/></svg>
                 </a>
+            </div>
+
+            <div class="dropdown px-3 sidebar-user" style="background-color: #e3e3e3; border-radius: 10px;margin:10px;">
+                <button type="button" class="btn w-100 px-0 border-0" id="page-header-user-dropdown"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            @if (Session::has('emp_img') && Session::get('emp_img') != "")
+                            <img src="{{ Session::get('emp_img') }}" class="img-fluid header-profile-user rounded-circle" alt="">
+                            @else
+                                <img src="{{ url('user.png') }}" class="img-fluid header-profile-user rounded-circle" alt="">
+                            @endif
+                        </div>
+
+                        <div class="flex-grow-1 ms-2 text-start">
+                            <span class="ms-1 fw-medium user-name-text">{{ auth()->user()->user_name }}</span>
+                        </div>
+                    </span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <!-- item-->
+                    <a class="dropdown-item" href="{{ Route('user.chang-password')}}"><i
+                            class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Change Password</span></a>
+                    {{-- <a class="dropdown-item" href="apps-chat"><i
+                            class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Messages</span></a> --}}
+                    {{-- <a class="dropdown-item" href="pages-faq"><i
+                            class="mdi mdi-lifebuoy text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Help</span></a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="pages-profile"><i
+                            class="mdi mdi-wallet text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Balance : <b>$5971.67</b></span></a>
+                    <a class="dropdown-item" href="#"><span class="badge bg-primary mt-1 float-end">New</span><i
+                            class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Settings</span></a> --}}
+                    <a class="dropdown-item" href="javascript:void()" onclick="confirmLogout()"><i
+                            class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Logout</span></a>
+
+                </div>
             </div>
 
         </div>

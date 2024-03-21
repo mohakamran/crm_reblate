@@ -24,7 +24,7 @@
                                         box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);
                                         padding: 10px;
                                         /* height: 80px; */
-                                        width: 150px;
+                                        width: 160px;
                                         display: flex;
                                         align-items: center;
                                         justify-content: center;
@@ -87,30 +87,40 @@
                                                 </a>
                                                 {{-- <p class="text-muted mt-2">User Experience & Interface Design Strategy Saas Solution</p> --}}
                                             </div>
-                                            <div class="card-holder">
-                                                <a href="/employee-login" style="font-size:17px;text-align:center;">
-                                                    <button type="button" class="btn card-box">
-                                                        Employee
-                                                    </button>
-                                                </a>
-                                                <a href="/client-login" style="font-size:17px;text-align:center;">
-                                                    <button type="button" class="btn card-box">
-                                                        Client
-                                                    </button>
-                                                </a>
-                                                <a href="/admin-login" style="font-size:17px;text-align:center;">
-                                                    <button type="button" class="btn card-box">
-                                                        Admin
-                                                    </button>
-                                                </a>
-
-                                                {{-- <div class="mt-4 text-center">
-                                                    <p class="mb-0">Don't have an account ? <a
-                                                            href="{{ route('register') }}" class="fw-medium text-primary">
-                                                            Register </a> </p>
-                                                </div> --}}
+                                            <div class="row container">
+                                                <div class="col-md-6 col-sm-12  mt-2 mb-2">
+                                                    <a href="/employee-login" style="font-size:17px;text-align:center;">
+                                                        <button type="button" class="btn card-box">
+                                                            Employee
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-6 col-sm-12  mt-2 mb-2">
+                                                    <a href="/client-login" style="font-size:17px;text-align:center;">
+                                                        <button type="button" class="btn card-box">
+                                                            Client
+                                                        </button>
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
+                                            <div class="row container">
+                                                <div class="col-md-6 col-sm-12 mt-2 mb-2">
+                                                    <a href="/admin-login" style="font-size:17px;text-align:center;">
+                                                        <button type="button" class="btn card-box">
+                                                            Admin
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-6 col-sm-12 mt-2 mb-2">
+                                                    <a href="/manager-login" style="font-size:17px;text-align:center;">
+                                                        <button type="button" class="btn card-box">
+                                                            Manager
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+
                                     </div>
                                 </div>
                                 <!-- end card -->

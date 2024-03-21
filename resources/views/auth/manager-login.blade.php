@@ -1,10 +1,10 @@
 @extends('layouts.master-without-nav')
 @section('title')
-    Forget Password
+    Manager Login
 @endsection
 @section('content')
     <div class="auth-maintenance d-flex align-items-center min-vh-100">
-        <div class="bg-overlay "></div>
+        <div class="bg-overlay"></div>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-10">
@@ -49,12 +49,10 @@
                                         /* Checkmark color */
                                         font-size: 12px;
                                     }
-
                                     .card {
                                         margin-bottom: 24px;
                                         box-shadow: 0px 1px 18px 8px rgba(0, 0, 0, 0.4);
                                         border-radius: 22px;
-                                        position: relative;
                                     }
 
                                     .card-box {
@@ -81,24 +79,22 @@
                                         object-fit: cover;
                                         height: 100%;
                                     }
-
                                     .go-back {
                                         position: absolute;
                                         top: 8px;
                                         right: 20px;
                                         color:#14213d;
                                     }
-
                                 </style>
 
 
                                 <div class="card my-auto overflow-hidden">
                                     <div class="row g-0">
                                         <div class="col-lg-6">
-                                            <img src="{{ url('client.png') }}" class="img-left">
+                                            <img src="{{ url('emp-image.png') }}" class="img-left">
                                         </div>
 
-                                        <div class="col-lg-6" style="background:#fff;">
+                                        <div class="col-lg-6" style="background-color: #fff;">
                                             <div class="text-center  mt-2">
                                                 <a href="https://reblatesols.com" class="" target="_blank">
                                                     <img src="{{ url('reblat-logo.png') }}" alt="" height="60"
@@ -113,29 +109,19 @@
                                             <div class="p-lg-5 p-4">
                                                 <div>
                                                     <div class="text-center mt-1">
-                                                        <h4 class="font-size-18"> Forget Password!</h4>
-                                                        <p class="text-muted">Provide your registered email!
+                                                        <h4 class="font-size-18"> Manager Dashboard!</h4>
+                                                        <p class="text-muted">Sign in to continue to Reblate Solutions
+                                                            Manager Dashboard!
                                                         </p>
                                                     </div>
 
-                                                    <form method="post" action="/forget-password" class="auth-input">
+                                                    <form method="post" action="/manager-login" class="auth-input">
                                                         @csrf
 
-
-                                                        @if (session()->has('user_role'))
+                                                        @if (session()->has('error'))
                                                             <div class="alert alert-danger alert-dismissible fade show"
                                                                 id="close-now">
-                                                                {{ session('user_role') }}
-                                                                {{-- <a type="button" class="close" data-dismiss="alert"
-                                                                    aria-label="Close" style="float: right;">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </a> --}}
-                                                            </div>
-                                                        @endif
-                                                        @if (session()->has('message'))
-                                                            <div class="alert alert-success alert-dismissible fade show"
-                                                                id="close-now">
-                                                                {{ session('message') }}
+                                                                {{ session('error') }}
                                                                 {{-- <a type="button" class="close" data-dismiss="alert"
                                                                     aria-label="Close" style="float: right;">
                                                                     <span aria-hidden="true">&times;</span>
@@ -144,91 +130,41 @@
                                                         @endif
 
                                                         @if (session('error_login'))
-                                                            <div class="alert alert-danger alert-dismissible fade show"
-                                                                id="hideme">
+                                                            <div class="alert alert-danger fade show" id="hideme">
                                                                 {{ session('error_login') }}
-                                                                <a type="button" class="close" data-dismiss="alert"
+                                                                {{-- <a type="button" class="close" data-dismiss="alert"
                                                                     onclick="hideNow()" aria-label="Close"
                                                                     style="float: right;">
                                                                     <span aria-hidden="true">&times;</span>
-                                                                </a>
+                                                                </a> --}}
                                                             </div>
                                                         @endif
 
-                                                        <form action="/forget-password" method="post">
-                                                        @csrf
+                                                        <div class="mb-2">
+                                                            <label for="text" class="form-label">Emp Code</label>
+                                                            <input id="text" type="text"
+                                                                class="form-control @error('employee_code') is-invalid @enderror"
+                                                                name="employee_code" value="{{ old('employee_code') }}"
+                                                                placeholder="Emp Code" maxlength="8">
+                                                            @error('employee_code')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
 
                                                         <div class="mb-3">
-                                                            <label for="user_type" class="mb-3">User Type</label>
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <div class="form-check form-check-inline">
-                                                                        <input class="form-check-input" type="radio" id="client" name="user_type" value="client" {{ old('user_type') == "client" ? 'checked' : '' }}>
-                                                                        <label class="form-check-label" for="client">Client</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <div class="form-check form-check-inline">
-                                                                        <input class="form-check-input" type="radio" id="admin" name="user_type" value="admin" {{ old('user_type') == "admin" ? 'checked' : '' }}>
-                                                                        <label class="form-check-label" for="admin">Admin</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <div class="form-check form-check-inline">
-                                                                        <input class="form-check-input" type="radio" id="employee" name="user_type" value="employee" {{ old('user_type') == "employee" ? 'checked' : '' }}>
-                                                                        <label class="form-check-label" for="employee">Employee</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <div class="form-check form-check-inline">
-                                                                        <input class="form-check-input" type="radio" id="manager" name="user_type" value="manager" {{ old('user_type') == "manager" ? 'checked' : '' }}>
-                                                                        <label class="form-check-label" for="employee">Manager</label>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            @error('user_type ')
-                                                            <span class="invalid-feedback" role="alert">
-                                                              <strong>{{ $message }}</strong>
-                                                            </span>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label for="email" class="form-label">Email</label>
-                                                            <input id="text" type="email"
-                                                                class="form-control @error('client_email') is-invalid @enderror"
-                                                                name="client_email" value="{{ old('client_email') }}"
-                                                                autocomplete="email">
-                                                            @error('client_email')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
-                                                        </div>
-
-                                                        <div class="mt-4">
-                                                            <button class="btn btn-primary w-100"
-                                                                style="background:#14213d;" type="submit">Send Me Password!</button>
-
-                                                        </div>
-
-
-                                                        </form>
-
-
-
-                                                        {{-- <div class="mb-3">
                                                             <label class="form-label" for="password-input">Password</label>
                                                             <input type="password"
-                                                                class="form-control @error('client_password') is-invalid @enderror"
+                                                                class="form-control @error('user_password') is-invalid @enderror"
                                                                 placeholder="Enter password" id="password"
-                                                                name="client_password" autocomplete="current-password">
-                                                            @error('client_password')
+                                                                name="user_password" autocomplete="current-password">
+                                                            @error('user_password')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
                                                                 </span>
                                                             @enderror
-                                                        </div> --}}
+                                                        </div>
 
                                                         {{-- <div class="mb-3">
                                                               <label for="password" class="form-label">Password</label>
@@ -240,12 +176,12 @@
                                                               </div>
                                                             </div> --}}
 
-                                                        {{-- <div class="mb-3">
+                                                        <div class="mb-3">
 
                                                             <input type="checkbox" onclick="togglePasswordVisibility()">
                                                             <label for="showPassword">Show Password</label>
 
-                                                        </div> --}}
+                                                        </div>
 
                                                         {{--
                                                         <div class="mb-3">
@@ -263,7 +199,7 @@
                                                                 </span>
                                                             @enderror
                                                         </div> --}}
-{{--
+
                                                         <div class="form-check d-flex justify-content-between">
                                                             <div>
                                                                 <input class="form-check-input" type="checkbox"
@@ -273,9 +209,13 @@
                                                                     me</label>
                                                             </div>
                                                             <a href="/forget-password" class="text-end">Forget Password?</a>
-                                                        </div> --}}
+                                                        </div>
 
-
+                                                        <div class="mt-4">
+                                                            <button class="btn btn-primary w-100"
+                                                                style="background:#14213d;" type="submit">Sign
+                                                                In</button>
+                                                        </div>
 
                                                         {{-- <div class="mt-4 pt-2 text-center">
                                                             <div class="signin-other-title">
@@ -293,8 +233,7 @@
                                                             </div>
                                                         </div> --}}
                                                     </form>
-
-                                                    <a href="/login" class="go-back"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="#14213d" d="m4 10l-.707.707L2.586 10l.707-.707zm17 8a1 1 0 1 1-2 0zM8.293 15.707l-5-5l1.414-1.414l5 5zm-5-6.414l5-5l1.414 1.414l-5 5zM4 9h10v2H4zm17 7v2h-2v-2zm-7-7a7 7 0 0 1 7 7h-2a5 5 0 0 0-5-5z"/></svg> Main Login</a>
+                                                    <a href="/login" class="go-back"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="#14213d" d="m4 10l-.707.707L2.586 10l.707-.707zm17 8a1 1 0 1 1-2 0zM8.293 15.707l-5-5l1.414-1.414l5 5zm-5-6.414l5-5l1.414 1.414l-5 5zM4 9h10v2H4zm17 7v2h-2v-2zm-7-7a7 7 0 0 1 7 7h-2a5 5 0 0 0-5-5z"/></svg> Go Back</a>
                                                 </div>
 
                                                 {{-- <div class="mt-4 text-center">
@@ -327,12 +266,12 @@
     </div>
 
     <script>
-        // function togglePasswordVisibility() {
-        //     const passwordInput = document.getElementById('password');
-        //     const checkbox = document.querySelector('input[type="checkbox"]');
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const checkbox = document.querySelector('input[type="checkbox"]');
 
-        //     passwordInput.type = checkbox.checked ? 'text' : 'password';
-        // }
+            passwordInput.type = checkbox.checked ? 'text' : 'password';
+        }
 
         function hideNow() {
             var divElement = document.getElementById('close-now');

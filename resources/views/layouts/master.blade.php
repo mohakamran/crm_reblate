@@ -22,8 +22,10 @@
     @include('layouts.topbar')
 
     <!-- sidebar components -->
-    @if (auth()->user()->user_type == 'employee' || auth()->user()->user_type=="manager")
+    @if (auth()->user()->user_type == 'employee' )
         @include('layouts.emp-left-sidebar')
+    @elseif(auth()->user()->user_type=="manager")
+        @include('layouts.manager-left-sidebar')
     @elseif(auth()->user()->user_type == 'admin')
         @include('layouts.sidebar')
     @elseif(auth()->user()->user_type == 'client')

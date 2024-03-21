@@ -36,6 +36,8 @@ Route::get('/employee-login',[AuthController::class,'viewLoginEmployee'])->name(
 Route::post('/employee-login',[AuthController::class,'loginEmployee']);
 Route::get('/client-login',[AuthController::class,'viewLoginClient']);
 Route::get('/admin-login',[AuthController::class,'viewLoginAdmin']);
+Route::get('/manager-login',[AuthController::class,'viewLoginManager'])->name('user.manager');
+Route::post('/manager-login',[AuthController::class,'LoginManager']);
 Route::post('/admin-login',[AuthController::class,'loginAdmin'])->name('user.admin');
 Route::post('/client-login',[AuthController::class,'loginClient'])->name('user.client');
 Route::get('/forget-password',[AuthController::class,'forgetPassword']);
@@ -164,7 +166,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('view-my-slips',[SalaryController::class,'viewSlips']);
 
     //google 2fa
-    Route::get('/google-2fa',[SecurityController::class,'google2FA']);
+    // Route::get('/google-2fa',[SecurityController::class,'google2FA']);
 
     // Route::get('/mark-attendence',[AttendenceController::class,'index']);
     Route::get('/check-in',[AttendenceController::class,'checkInTime']);
