@@ -553,7 +553,7 @@
                             </div>
                         </div>
                         <div class="text-center pt-3">
-                            <a href="/view-clients" class=" w-md">View All</a>
+                            <a href="/view-tasks" class=" w-md">View All</a>
                         </div> <!-- enbd table-responsive-->
                     </div>
 
