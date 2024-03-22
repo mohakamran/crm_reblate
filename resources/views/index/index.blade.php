@@ -31,22 +31,6 @@
             }
         </style>
 
-        {{-- <div class="row mt-2 mb-4">
-
-            <div class="col-md-3">
-                <input type="date" class="form-control" >
-
-            </div>
-            <div class="col-md-3">
-                <input type="date" class="form-control" >
-
-            </div>
-            <div class="col-md-3">
-                <input type="submit" class="btn btn-primary" value="Apply">
-            </div>
-            <div class="col-md-2"></div>
-        </div> --}}
-
         <div class="row" style="display: flex; flex-wrap: wrap;">
             <div class="col-md-4 col-xl-3">
                 <div class="card overflow-hidden">
@@ -355,45 +339,6 @@
                             <p class="text-uppercase mb-1">Total Employees</p>
                             <h3 class="mb-0">15</h3>
                         </div>
-                        {{-- <div class="row gx-4 mt-1">
-                            <div class="col-md-4">
-                                <div class="mt-4">
-                                    <div class="progress" style="height: 7px;">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 85%"
-                                            aria-valuenow="85" aria-valuemin="0" aria-valuemax="85">
-                                        </div>
-                                    </div>
-                                    <p class="text-muted mt-2 pt-2 mb-0 text-uppercase font-size-13 text-truncate">Present
-                                    </p>
-                                    <h4 class="mt-1 mb-0 font-size-20">8</h4>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mt-4">
-                                    <div class="progress" style="height: 7px;">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 70%"
-                                            aria-valuenow="70" aria-valuemin="0" aria-valuemax="70">
-                                        </div>
-                                    </div>
-                                    <p class="text-muted mt-2 pt-2 mb-0 text-uppercase font-size-13 text-truncate">Absent
-                                    </p>
-                                    <h4 class="mt-1 mb-0 font-size-20">4</h4>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="mt-4">
-                                    <div class="progress" style="height: 7px;">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 60%"
-                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="60">
-                                        </div>
-                                    </div>
-                                    <p class="text-muted mt-2 pt-2 mb-0 text-uppercase font-size-13 text-truncate">Leave
-                                    </p>
-                                    <h4 class="mt-1 mb-0 font-size-20">3</h4>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
             </div>
