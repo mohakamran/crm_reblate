@@ -554,9 +554,7 @@
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Tasks</h4>
-                        <div>
 
-                        </div>
                     </div>
                     <div class="card-body pt-2">
                         <div class="table-responsive">
@@ -569,11 +567,7 @@
                                         {{-- <th>Tasks</th> --}}
                                         <th>Task Status</th>
                                         <th>Task Percentage</th>
-                                        {{-- <th>Order Date</th>
-                                        <th>Total</th> --}}
-                                        {{-- <th>Payment Method</th>
-                                        <th>Payment Status</th>
-                                        <th>Action</th> --}}
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -584,6 +578,7 @@
                                            <td>{{$task->task_status}}</td>
                                            <td>{{$task->task_percentage}}%</td>
                                            {{-- <td>{{$task->task_title}}</td> --}}
+
                                         </tr>
                                     @endforeach
                                 </tbody>
