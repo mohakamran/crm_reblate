@@ -106,138 +106,6 @@
     <body data-sidebar="colored">
     @endsection
     @section('content')
-        {{-- <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="container d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="card-title">{{ $emp }}</h4>
-
-                        <h4 class="card-title">{{ $emp }}</h4>
-                            <div>
-                                <button class="reblateBtn w-100 py-1 px-3"><a href="/add-new"
-                                        style="text-decoration: none; color:white;"><span
-                                            style="width: 15px; height: 15px; margin-right: 5px;"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                                            </svg></span> Add New </a></button>
-                            </div>
-
-                        </div>
->>>>>>> Stashed changes
-
-
-
-                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
-                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                            <thead style="background-color: #e3e3e3">
-                                <tr>
-                                    <th>SR</th>
-                                    <th>EMP ID</th>
-                                    <th>Name</th>
-                                    <th>Designation</th>
-                                    <th>Shift</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="table-body">
-                                @php
-                                    $count = 1;
-                                @endphp
-                                @foreach ($rec as $emp)
-                                    <tr>
-
-                                        <td>{{ $count }}</td>
-                                        <td>{{ $emp->Emp_Code }} </td>
-                                        <td><a href="view_emp_details/{{ $emp->Emp_Code }}">{{ $emp->Emp_Full_Name }}</a>
-                                        </td>
-                                        <td>{{ $emp->Emp_Designation }}</td>
-
-                                        <td>
-                                            <a href="javascript:void()" onclick="changeShift({{ $emp->id }})">
-
-                                                @if ($emp->Emp_Shift_Time == 'Morning')
-                                                    <span class="label label-primary"> {{ $emp->Emp_Shift_Time }}</span>
-                                                @else
-                                                    <span class="label label-info"> {{ $emp->Emp_Shift_Time }}</span>
-                                                @endif
-                                            </a>
-                                        </td>
-
-                                        <td class="text-nowrap">
-                                            <div class="d-flex gap-3">
-                                                @if (auth()->user()->user_type == 'employee' || auth()->user()->user_type == 'manager')
-                                                    @if (Session::has('employees_access'))
-                                                        @php
-                                                            $employees_access = Session::get('employees_access');
-                                                            // Convert to an array if it's a single value
-                                                            if (!is_array($employees_access)) {
-                                                               $employees_access = explode(',', $employees_access);
-                                                                // Remove any empty elements resulting from the explode function
-                                                                $employees_access = array_filter($employees_access);
-                                                            }
-                                                        @endphp
-
-                                                        @if (is_array($employees_access) && in_array('update', $employees_access) && in_array('delete', $employees_access))
-                                                            <a href="/update-employee/{{ $emp->Emp_Code }}"
-                                                                data-toggle="tooltip" class="btn btn-success btn-sm"
-                                                                data-original-title="Edit">
-                                                                <i class="mdi mdi-pencil"></i>
-                                                            </a>
-                                                            <a href="javascript:void()"
-                                                                onclick="deleteEmployee('{{ $emp->Emp_Code }}')"
-                                                                class="btn btn-danger btn-sm" data-toggle="tooltip"
-                                                                data-original-title="Close">
-                                                                <i class="mdi mdi-delete"></i>
-                                                            </a>
-                                                        @elseif (is_array($employees_access) && in_array('update', $employees_access))
-                                                            <a href="javascript:void()"
-                                                                onclick="deleteEmployee('{{ $emp->Emp_Code }}')"
-                                                                class="btn btn-danger btn-sm" data-toggle="tooltip"
-                                                                data-original-title="Close">
-                                                                <i class="mdi mdi-delete"></i>
-                                                            </a>
-                                                        @elseif (is_array($employees_access) && in_array('delete', $employees_access))
-                                                            <a href="javascript:void()"
-                                                                onclick="deleteEmployee('{{ $emp->Emp_Code }}')"
-                                                                class="btn btn-danger btn-sm" data-toggle="tooltip"
-                                                                data-original-title="Close">
-                                                                <i class="mdi mdi-delete"></i>
-                                                            </a>
-                                                        @else
-                                                            no action allowed
-                                                        @endif
-                                                    @endif
-                                                @else
-                                                    <a href="/update-employee/{{ $emp->Emp_Code }}" data-toggle="tooltip"
-                                                        class="btn btn-success btn-sm" data-original-title="Edit">
-                                                        <i class="mdi mdi-pencil"></i>
-                                                        <a href="javascript:void()"
-                                                            onclick="deleteEmployee('{{ $emp->Emp_Code }}')"
-                                                            class="btn btn-danger btn-sm" data-toggle="tooltip"
-                                                            data-original-title="Close">
-                                                            <i class="mdi mdi-delete"></i>
-                                                        </a>
-                                                @endif
-
-                                            </div>
-                                        </td>
-                                        @php $count++;  @endphp
-                                    </tr>
-                                @endforeach
-                            </tbody>
-
-
-
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
@@ -275,23 +143,21 @@
                                         <option value="Night">Night</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 d-flex gap-2">
-                                    <button class="reblateBtn w-75"><span
-                                            style="width: 15px; height: 15px; margin-right: 5px;"><svg
+                                <div class="col-md-3 d-flex gap-2 justify-content-end">
+                                    <button class="reblateBtn " style="padding: 10px 13px;"><svg
                                                 xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                                 <path
                                                     d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                            </svg></span> Search</button>
+                                            </svg></button>
+                                            <a href="/add-new" class="reblateBtn " style="padding: 10px 14px;"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                                        class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd"
+                                                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                                    </svg></a>
                         </form>
 
-                        <a href="/add-new" class="reblateBtn w-75" style="padding:10px;text-align:center"><span
-                                style="width: 15px; height: 15px; margin-right: 5px;"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                                </svg></span> Add New</a>
 
                     </div>
 
