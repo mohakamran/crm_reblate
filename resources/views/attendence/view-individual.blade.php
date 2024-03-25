@@ -72,7 +72,7 @@
 
 
                                 <div class="col-md-3">
-                                    <button class="btn btn-success">Search</button>
+                                    <button class="reblateBtn px-3 py-2">Search</button>
                                     {{-- @if (isset($show_back) && $show_back == 'yes')
                                         <a href="/view-attendence" class="btn btn-success -right-3">View All</a>
                                     @endif --}}

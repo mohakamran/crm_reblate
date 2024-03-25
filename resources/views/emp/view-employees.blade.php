@@ -338,7 +338,7 @@
                                     @endif
                                     <div class="card-text-center">
                                         <p class="emp-name">
-                                             <a href="/view_profile/{{$emp->Emp_Code}}">{{ $emp->Emp_Full_Name }}</a>
+                                             <a href="/view_profile/{{$emp->Emp_Code}}" style="color: #14213d;">{{ $emp->Emp_Full_Name }}</a>
                                             </p>
                                         <div class="d-flex gap-1 align-items-center mb-2">
                                             <p style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d;">Designation:</p>

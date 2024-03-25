@@ -63,7 +63,7 @@
 
 
             .punch-info .punch-hours {
-                border: 5px solid #14213d;
+                border: 5px solid #fca311;
                 font-size: 18px;
                 height: 120px;
                 width: 120px;
@@ -87,7 +87,7 @@
                 display: block;
                 /* margin: 0px; */
                 margin-top: 17px;
-                text-decoration: underline;
+
             }
 
             .timeliner {
@@ -343,7 +343,7 @@
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header pb-0">
                             <h5 class="modal-title" id="exampleModalLabel">Leave Application form</h5>
                             <button type="button" class="close" style="border: none; background-color: transparent;" data-dismiss="modal" aria-label="Close">
                                 <span class="fs-3" aria-hidden="true">&times;</span>
@@ -521,8 +521,9 @@
 
                             </div>
                         @endif
-
-                        <a href="/view-attendence" class="view-class-more">View Attendence</a>
+                            <div class="view-class-more">
+                                <a href="/view-attendence" style="color:#fca311; border-bottom:1px solid #14213d;">View Attendence</a>
+                            </div>
 
                     </div>
                 </div>
@@ -554,9 +555,7 @@
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Tasks</h4>
-                        <div>
 
-                        </div>
                     </div>
                     <div class="card-body pt-2">
                         <div class="table-responsive">
@@ -569,11 +568,7 @@
                                         {{-- <th>Tasks</th> --}}
                                         <th>Task Status</th>
                                         <th>Task Percentage</th>
-                                        {{-- <th>Order Date</th>
-                                        <th>Total</th> --}}
-                                        {{-- <th>Payment Method</th>
-                                        <th>Payment Status</th>
-                                        <th>Action</th> --}}
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -584,6 +579,7 @@
                                            <td>{{$task->task_status}}</td>
                                            <td>{{$task->task_percentage}}%</td>
                                            {{-- <td>{{$task->task_title}}</td> --}}
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -678,74 +674,177 @@
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title mb-0 flex-grow-1">Projects</h4>
-                        <div>
-                            {{-- <div class="dropdown">
-                                <a class="dropdown-toggle text-reset" href="#" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span class="fw-semibold">Sort By:</span>
-                                    <span class="text-muted">Yearly<i class="mdi mdi-chevron-down ms-1"></i></span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Yearly</a>
-                                    <a class="dropdown-item" href="#">Monthly</a>
-                                    <a class="dropdown-item" href="#">Weekly</a>
-                                    <a class="dropdown-item" href="#">Today</a>
-                                </div>
-                            </div> --}}
-                        </div>
                     </div>
                     <div class="card-body pt-2">
-                        <div class="table-responsive">
-                            <table class="table align-middle table-nowrap mb-0">
-                                <thead>
-                                    <tr style="border-bottom: 1px solid #e3e3e3;">
+                        <div class="table-responsive simplebar-scrollable-y simplebar-scrollable-x" data-simplebar="init"
+                            style="max-height: 220px;">
+                            <div class="simplebar-wrapper" style="margin: 0px;">
+                                <div class="simplebar-height-auto-observer-wrapper">
+                                    <div class="simplebar-height-auto-observer"></div>
+                                </div>
+                                <div class="simplebar-mask">
+                                    <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                        <div class="simplebar-content-wrapper" tabindex="0" role="region"
+                                            aria-label="scrollable content" style="height: auto; overflow: scroll;">
+                                            <div class="simplebar-content" style="padding: 0px;">
+                                                <table
+                                                    class="table table-borderless table-centered align-middle table-nowrap mb-0">
+                                                    <tbody>
+                                                        <tr style="border-bottom: 1px solid #e3e3e3;">
 
-                                        <th>EMP ID</th>
-                                        <th>Employee Name</th>
-                                        <th>Tasks</th>
-                                        <th>See Details</th>
-                                        {{-- <th>Order Date</th>
-                                        <th>Total</th> --}}
-                                        {{-- <th>Payment Method</th>
-                                        <th>Payment Status</th>
-                                        <th>Action</th> --}}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
+                                                            <th>Project Name</th>
+                                                            <th>Description</th>
+                                                            <th>Deadline</th>
+                                                            <th>Assigned By</th>
+                                                            <th>See Details</th>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task1</h6>
+                                                            </td>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td><span
+                                                                class="badge badge-soft-danger font-size-12">Deadline</span>
+                                                            </td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task2</h6>
+                                                            </td>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td><span
+                                                                    class="badge badge-soft-danger font-size-12">Deadline</span>
+                                                            </td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task3</h6>
+                                                            </td>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td><span
+                                                                class="badge badge-soft-danger font-size-12">Deadline</span>
+                                                            </td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task4</h6>
+                                                            </td>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td><span
+                                                                class="badge badge-soft-danger font-size-12">Deadline</span>
+                                                            </td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task5</h6>
+                                                            </td>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td><span
+                                                                class="badge badge-soft-danger font-size-12">Deadline</span>
+                                                            </td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task6</h6>
+                                                            </td>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td><span
+                                                                class="badge badge-soft-danger font-size-12">Deadline</span>
+                                                            </td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task7</h6>
+                                                            </td>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td><span
+                                                                class="badge badge-soft-danger font-size-12">Deadline</span>
+                                                            </td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
 
-                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                        <td>Task 1 ....</td>
-                                        <td><a href="#">see more</a></td>
-                                    </tr>
-                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
-                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
 
-                                        <td>Task 1 ....</td>
-                                        <td><a href="#">see more</a></td>
-                                    </tr>
-                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
-                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
 
-                                        <td>Task 1 ....</td>
-                                        <td><a href="#">see more</a></td>
-                                    </tr>
 
-                                </tbody>
-                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="simplebar-placeholder" style="width: 440px; height: 469px;"></div>
+                            </div>
+                            <div class="simplebar-track simplebar-horizontal" style="visibility: visible;">
+                                <div class="simplebar-scrollbar"
+                                    style="width: 395px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                            </div>
+                            <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+                                <div class="simplebar-scrollbar"
+                                    style="height: 273px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                            </div>
                         </div>
                         <div class="text-center pt-3">
-                            <a href="javascript:void()" class="w-md">View All</a>
-                        </div>
-                        <!-- end table-responsive -->
+                            <a href="#" class=" w-md">View All</a>
+                        </div> <!-- enbd table-responsive-->
                     </div>
                 </div>
             </div>

@@ -34,7 +34,7 @@
           <!-- end page title -->
         </div>
 
-        <div class="d-flex">
+        <div class="d-flex align-items-center">
 
              {{-- <!-- App Search-->
              <form class="app-search d-none d-lg-block">
@@ -130,7 +130,7 @@
 
             @if(Auth()->user()->user_type == "employee" || Auth()->user()->user_type == "manager")
                 <div class="dropdown d-inline-block">
-                    <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
+                    <button type="button" class="btn noti-icon waves-effect" style="background-color: #14213d17; border-radius: 100px;" id="page-header-notifications-dropdown"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="ri-notification-3-line"></i>
                         <span class="noti-dot"></span>
