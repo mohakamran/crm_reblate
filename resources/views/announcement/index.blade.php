@@ -114,14 +114,8 @@
 
                             </div>
                         </div>
-                    </div>
-                    {{-- <p class="card-title-desc">The Buttons extension for DataTables
-                            provides a common set of options, API methods and styling to display
-                            buttons on a page that will interact with a DataTable. The core library
-                            provides the based framework upon which plug-ins can built.
-                        </p> --}}
 
-                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                             <tr>
@@ -148,6 +142,15 @@
 
 
                     </table>
+
+                    </div>
+                    {{-- <p class="card-title-desc">The Buttons extension for DataTables
+                            provides a common set of options, API methods and styling to display
+                            buttons on a page that will interact with a DataTable. The core library
+                            provides the based framework upon which plug-ins can built.
+                        </p> --}}
+
+
                 </div>
             </div>
         </div> <!-- end col -->
@@ -170,7 +173,8 @@
                     res_message.style.display = "none";
                     desc_message.style.display = "none";
                     messageBox.style.display = 'none';
-                $('#exampleModal').modal('hide');
+
+                    $('#exampleModal').modal('hide');
             }
 
                 // Event handler for the Add Announcement button
@@ -221,14 +225,18 @@
 
                         data: formData,
                         success: function(response) {
+                            $('#title').val('');
+                            $('#recipient').val('');
+                            $('#description').val('');
                             messageBox.style.display = 'block';
+                            // window.location = "/announcements";
                         },
                         error: function(xhr, status, error) {
                             var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message :
                             'An error occurred';
 
                             $('#messageBox').text(errorMessage); // Set the error message from the server response
-                            }
+                        }
                     });
                 }
 

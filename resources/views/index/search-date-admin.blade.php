@@ -193,7 +193,7 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
                                     <p class="text-truncate font-size-18 mb-0 fw-bold">Revenue</p>
-                                    <h5 class="mb-0">${{ $total_revenue }}
+                                    <h5 class="mb-0">{{ $total_revenue }}
                                     </h5>
                                 </div>
                                 <p class="text-muted mb-0 text-truncate"><span
@@ -223,7 +223,7 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5 ">
                                     <p class="text-truncate font-size-18 mb-0 fw-bold"> Salaries</p>
-                                    <h5 class="mb-0">${{ $usd_pkr_salary }}
+                                    <h5 class="mb-0">{{ $usd_pkr_salary }}
                                     </h5>
                                 </div>
 
@@ -261,7 +261,7 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5">
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Expenses</p>
-                                    <h5 class="mb-0">${{ $usd_pkr_expenses }} </h5>
+                                    <h5 class="mb-0">{{ $usd_pkr_expenses }} </h5>
                                 </div>
                                 <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
@@ -312,7 +312,7 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Profit</p>
-                                    <h5 class="mb-0"> ${{ $total_profit }}
+                                    <h5 class="mb-0"> {{ $total_profit }}
                                     </h5>
                                 </div>
                                 <p class="text-muted mb-0 text-truncate"><span
@@ -488,58 +488,29 @@
                             </div>
                         </div>
                         <div class="progress mb-4" style="height: 30px;">
-                            @if ($tasks_count['complete_tasks'] == null)
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple "
-                                    style="width:0%;" role="progressbar" aria-valuenow="0" aria-valuemin="0"
-                                    aria-valuemax="100">
-                                    0%
-                                </div>
-                            @else
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple "
-                                    style="width:{{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
-                                    role="progressbar"
-                                    aria-valuenow="{{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}"
-                                    aria-valuemin="0" aria-valuemax="100">
-                                    {{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}%
-                                </div>
-                            @endif
-
-                            @if ($tasks_count['complete_tasks'] == null)
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple "
-                                    style="width:0%;" role="progressbar" aria-valuenow="0" aria-valuemin="0"
-                                    aria-valuemax="100">
-                                    0%
-                                </div>
-                            @else
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning "
-                                    style="width:{{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
-                                    role="progressbar"
-                                    aria-valuenow="{{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}"
-                                    aria-valuemin="0" aria-valuemax="100">
-                                    {{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}%
-                                </div>
-                            @endif
-
-                            @if ($tasks_count['complete_tasks'] == null)
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple "
-                                    style="width:0%;" role="progressbar" aria-valuenow="0" aria-valuemin="0"
-                                    aria-valuemax="100">
-                                    0%
-                                </div>
-                            @else
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info "
-                                    style="width:{{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
-                                    role="progressbar"
-                                    aria-valuenow="{{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}"
-                                    aria-valuemin="0" aria-valuemax="100">
-                                    {{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}%
-                                </div>
-                            @endif
-
-
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple "
+                                style="width:{{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
+                                role="progressbar"
+                                aria-valuenow="{{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}"
+                                aria-valuemin="0" aria-valuemax="100">
+                                {{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}%
+                            </div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning "
+                                style="width:{{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
+                                role="progressbar"
+                                aria-valuenow="{{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}"
+                                aria-valuemin="0" aria-valuemax="100">
+                                {{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}%
+                            </div>
                             {{-- <div class="progress-bar progress-bar-striped progress-bar-animated bg-success w-50" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100">24%</div>
                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger w-25" role="progressbar" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100">21%</div> --}}
-
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info "
+                                style="width:{{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
+                                role="progressbar"
+                                aria-valuenow="{{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}"
+                                aria-valuemin="0" aria-valuemax="100">
+                                {{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}%
+                            </div>
                         </div>
                         <div>
                             <p><svg class="text-purple me-2" xmlns="http://www.w3.org/2000/svg" width="16"
@@ -585,19 +556,16 @@
 
                     </div>
                     <div class="card-body pt-2">
-                        <div class="table-responsive simplebar-scrollable-y simplebar-scrollable-x" data-simplebar="init"
-                            style="max-height: 220px;">
+                        <div class="table-responsive simplebar-scrollable-y simplebar-scrollable-x" data-simplebar="init" style="max-height: 220px;">
                             <div class="simplebar-wrapper" style="margin: 0px;">
                                 <div class="simplebar-height-auto-observer-wrapper">
                                     <div class="simplebar-height-auto-observer"></div>
                                 </div>
                                 <div class="simplebar-mask">
                                     <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                        <div class="simplebar-content-wrapper" tabindex="0" role="region"
-                                            aria-label="scrollable content" style="height: auto; overflow: scroll;">
+                                        <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: scroll;">
                                             <div class="simplebar-content" style="padding: 0px;">
-                                                <table
-                                                    class="table table-borderless table-centered align-middle table-nowrap mb-0">
+                                                <table class="table table-borderless table-centered align-middle table-nowrap mb-0">
                                                     <tbody>
                                                         <tr style="border-bottom: 1px solid #e3e3e3;">
                                                             <th>EMP ID</th>
@@ -606,27 +574,23 @@
                                                             <th>Shift</th>
                                                             <th>See Details</th>
                                                         </tr>
-                                                        @foreach ($currentTasks as $task)
-                                                            <tr>
-                                                                <td style="width: 20px;">#{{ $task['id'] }}</td>
-                                                                <td>
-                                                                    <img src="{{ $task['image'] }}"
-                                                                        class="avatar-xs rounded-circle me-2"
-                                                                        alt="Employee Image">
-                                                                    {{ $task['name'] }}
-                                                                </td>
-                                                                <td>
-                                                                    <h6 class="text-muted mb-0 font-size-14">
-                                                                        {{ $task['task_title'] }}</h6>
-                                                                </td>
-                                                                <td>
-                                                                    <span
-                                                                        class="badge badge-{{ $task['shift_time'] == 'Morning' ? 'soft-primary' : 'soft-success' }} font-size-12">{{ $task['shift_time'] }}</span>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="#">See more</a>
-                                                                </td>
-                                                            </tr>
+                                                        @foreach($currentTasks as $task)
+                                                        <tr>
+                                                            <td style="width: 20px;">#{{ $task['id'] }}</td>
+                                                            <td>
+                                                                <img src="{{ $task['image'] }}" class="avatar-xs rounded-circle me-2" alt="Employee Image">
+                                                                {{ $task['name'] }}
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">{{ $task['task_title'] }}</h6>
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge badge-{{ $task['shift_time'] == 'Morning' ? 'soft-primary' : 'soft-success' }} font-size-12">{{ $task['shift_time'] }}</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">See more</a>
+                                                            </td>
+                                                        </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>
@@ -637,12 +601,10 @@
                                 <div class="simplebar-placeholder" style="width: 440px; height: 469px;"></div>
                             </div>
                             <div class="simplebar-track simplebar-horizontal" style="visibility: visible;">
-                                <div class="simplebar-scrollbar"
-                                    style="width: 395px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                                <div class="simplebar-scrollbar" style="width: 395px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
                             </div>
                             <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
-                                <div class="simplebar-scrollbar"
-                                    style="height: 273px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                                <div class="simplebar-scrollbar" style="height: 273px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
                             </div>
                         </div>
                         <div class="text-center pt-3">
@@ -1381,7 +1343,7 @@
             var data = {
                 labels: ['Absent', 'Present', 'Leaves'],
                 datasets: [{
-                    data: [<?php echo $emp_absent_count; ?>, <?php echo $emp_present_count; ?>, <?php echo $emp_leave_count; ?>],
+                    data: [<?php echo $emp_absent_count; ?> , <?php echo $emp_present_count; ?> ,<?php echo $emp_leave_count; ?> ],
                     backgroundColor: ['#dc3545', '#28a745', '#ffc107']
                 }]
             };

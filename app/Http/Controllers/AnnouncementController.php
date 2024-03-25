@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Carbon\Carbon;
 
 class AnnouncementController extends Controller
 {
@@ -31,7 +32,12 @@ class AnnouncementController extends Controller
     }
 
     // add announcement and save data in database
-    public function addAnnouncement() {
+    public function addAnnouncement(Request $request) {
+        $request->validate([
+            'title' => 'required', // Ensure that 'title' is required
+            'recipient' => 'required',
+            'description' => 'required'
+        ]);
         // Retrieve data from the request object
         $title = $request->input('title');
         $recipient = $request->input('recipient');

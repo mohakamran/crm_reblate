@@ -166,7 +166,7 @@ class EmployeesController extends Controller
 
         // dd($latestEmployees);
         //$count = Employee::where('Emp_Status', 'active')->orderBy('id', 'desc')->count();
-        if($latestEmployees !=null) {
+        if($latestEmployees != null) {
             $emp="Reblate Solutions Employees";
             return view('emp.view-employees',compact('latestEmployees','emp'));
         } else {

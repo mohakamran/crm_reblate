@@ -314,12 +314,12 @@
                                 <div style="width: 150px;height: 150px;position: absolute;z-index: 100;background-color: #fca311;border-radius: 100px;right: -75px;top: -70px;"></div>
                                 <div class="card-body" style="box-shadow: none; ">
                                    <div class="options">
-                                    <div class="group-menu" onclick="toggleFun()">
+                                    <div class="group-menu" onclick="toggleFun({{$emp->id}})">
                                         <div class="dot"></div>
                                         <div class="dot"></div>
                                         <div class="dot"></div>
                                     </div>
-                                    <div id="frame1" class="frame1">
+                                    <div id={{$emp->id}} class="frame1">
                                         <ul class="info">
                                             <li>Edit</li>
                                             <li>Delete</li>
@@ -510,10 +510,17 @@
                 window.location.href = "/add-new";
             }
 
-            function toggleFun() {
-                document.getElementById("frame1").style.visibility = "visible";
-                document.getElementById("frame1").classList.add("style");
+            function toggleFun(id) {
+                var card = document.getElementById(id);
+                if (card.classList.contains("frame1")) {
+                    card.classList.remove("frame1");
+                    card.classList.add("style");
+                    console.log(card.classList);
+                } else {
+                    card.classList.add("frame1");
+                    card.classList.remove("style");
 
+                }
             }
 
 

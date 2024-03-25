@@ -109,16 +109,21 @@
                                                         @endif
                                                     {{-- else admin action  --}}
                                                     @else
-                                                        <a href="/update-expense/{{ $emp->id }}" data-toggle="tooltip" class="btn btn-success btn-sm"
-                                                            data-original-title="Edit">
-                                                            <i class="mdi mdi-pencil"></i>
-                                                        </a>
-                                                        <a href="javascript:void()" onclick="deleteExpense({{ $emp->id }})" class="btn btn-danger btn-sm"
-                                                            data-toggle="tooltip" data-original-title="Close">
-                                                            <i class="mdi mdi-delete"></i>
-                                                        </a>
+
                                                     @endif
                                                 @endif
+
+                                                @if(auth()->user()->user_type == 'admin')
+                                                <a href="/update-expense/{{ $emp->id }}" data-toggle="tooltip" class="btn btn-success btn-sm"
+                                                    data-original-title="Edit">
+                                                    <i class="mdi mdi-pencil"></i>
+                                                </a>
+                                                <a href="javascript:void()" onclick="deleteExpense({{ $emp->id }})" class="btn btn-danger btn-sm"
+                                                    data-toggle="tooltip" data-original-title="Close">
+                                                    <i class="mdi mdi-delete"></i>
+                                                </a>
+                                                @endif
+
                                             </div>
 
                                         </td>

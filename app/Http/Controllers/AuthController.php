@@ -42,9 +42,130 @@ class AuthController extends Controller
         $startDate = $dateParts[0];
         $endDate = $dateParts[1];
 
-        // Now you have start and end dates in separate variables
-        dd($startDate, $endDate);
+        // dd($startDate);
+
+        // $startDate = date_create_from_format('Y-m-d', $startDate)->format('m/d/Y');
+        // $endDate = date_create_from_format('Y-m-d', $endDate)->format('m/d/Y');
+
+        // dd($startDate);
+        // dd($endDate);
+
+         //get expenses
+
+         $data_chart = [
+            'labels' => ['January', 'February', 'March', 'April', 'May'],
+            'data' => [65, 59, 80, 81, 56],
+        ];
+
+        $emp_count = $this->getEmpCount($startDate,$endDate);
+        $client_count = $this->getClientCount($startDate,$endDate);
+        $total_revenue = $this->getInvoiceAmountSum($startDate,$endDate);
+        $total_revenue = $this->getExchangeRate($total_revenue);
+
+        $usd_pkr_salary = $this->getSalaryAmountSum($startDate,$endDate);
+        $usd_pkr_salary = $this->getExchangeRate($usd_pkr_salary);
+
+        $usd_pkr_expenses = $this->getExpenseSum($startDate,$endDate);
+
+        $usd_pkr_expenses = $this->getExchangeRate($usd_pkr_expenses);
+
+        $total_profit = $total_revenue - $usd_pkr_salary - $usd_pkr_expenses;
+
+        // get emp_present_count
+        $emp_present_count = $this->empPresentCount($startDate,$endDate);
+
+        // emp_leave_count
+        $emp_leave_count = $this->empLeaveCount($startDate,$endDate);
+
+        $emp_absent_count = $emp_count - $emp_present_count - $emp_leave_count;
+
+         // get emp_present_count
+        $tasks_count = $this->getTaskCount($startDate,$endDate);
+        $total_clients = $this->getTotalClients();
+
+        $currentTasks = $this->getEmpTasks();
+
+        $data = compact('emp_count','client_count','data_chart','total_revenue',
+        'usd_pkr_expenses','usd_pkr_salary','total_profit','emp_present_count',
+        'emp_leave_count','emp_absent_count','tasks_count','total_clients', 'currentTasks');
+        return view('index.search-date-admin',$data);
+
+
     }
+
+
+    // public present count
+    public function getTaskCountsInRange($start, $end) {
+        // Retrieve counts for total, complete, incomplete, and in-progress tasks within the date range
+        $counts = DB::table('tasks')
+                    ->select(
+                        DB::raw('COUNT(*) as total_tasks'),
+                        DB::raw('SUM(CASE WHEN task_status = "completed" THEN 1 ELSE 0 END) as complete_tasks'),
+                        DB::raw('SUM(CASE WHEN task_status = "pending" THEN 1 ELSE 0 END) as incomplete_tasks'),
+                        DB::raw('SUM(CASE WHEN task_status = "in-progress" THEN 1 ELSE 0 END) as in_progress_tasks')
+                    )
+                    ->whereBetween('assigned_date', [$start, $end])
+                    ->first();
+
+        // Convert the counts object into an array
+        $countsArray = (array) $counts;
+        return $countsArray;
+    }
+
+
+
+    // public present count
+    public function empLeaveCount($start, $end) {
+        $leaveCount = DB::table('leaves')
+                        ->whereBetween('date', [$start, $end])
+                        ->where('status', 'approved')
+                        ->count();
+        return $leaveCount;
+    }
+
+    // public present count
+    public function empPresentCount($start, $end) {
+        $presentCount = DB::table('attendence')
+                        ->whereBetween('date', [$start, $end])
+                        ->where('check_out_status', 'done')
+                        ->count();
+        return $presentCount;
+    }
+    // public function to get emp count between two dates
+    public function getEmpCount($start, $end) {
+        $empCount = DB::table('employees')
+            ->count();
+        return $empCount;
+    }
+
+    public function getSalaryAmountSum($start, $end) {
+        $salarySum = DB::table('invoices')
+                        ->whereBetween('date', [$start, $end])
+                        ->sum('amount');
+        return $salarySum;
+    }
+
+    // public function to get clients count between two dates
+    public function getClientCount($start, $end) {
+        $empCount = DB::table('clients')
+            ->count();
+        return $empCount;
+    }
+    // public function to get emp count between two dates
+    public function getExpenseSum($start, $end) {
+        $amountSum = DB::table('expenses')
+        ->whereBetween('expense_date', [$start, $end])
+        ->sum('expense_amount');
+        return  $amountSum;
+    }
+
+    public function getInvoiceAmountSum($start, $end) {
+        $salarySum = DB::table('invoices')
+                        ->whereBetween('date', [$start, $end])
+                        ->sum('amount');
+        return $salarySum;
+    }
+
     public function unauthorized() {
         return view('errors.401');
     }
@@ -114,7 +235,7 @@ class AuthController extends Controller
         if($user_type == "admin") {
             $check = DB::table('users')
             ->where('user_email', $client_email)
-            ->where('user_type', 'admin')
+            ->where('user_type', 'client')
             ->first();
             if(!$check) {
                 session()->flash('user_role', 'Admin Email not found in Database!');
@@ -883,7 +1004,7 @@ class AuthController extends Controller
 
             return view('index.manager-dashboard',$data);
         }
-         else if($user_type == "admin") {
+        else if($user_type == "admin") {
             $employees = Employee::all();
             $emp_count = count($employees);
             // dd($count);
@@ -891,20 +1012,31 @@ class AuthController extends Controller
                 'labels' => ['January', 'February', 'March', 'April', 'May'],
                 'data' => [65, 59, 80, 81, 56],
             ];
-            // get total revenue record
+            // get total revenue record (USD)
             $total_revenue = $this->getTotalRevenue();
-            // get total salary
+            // dd($total_revenue);
+            // get total salary (PKR)
             $total_salary = $this->getTotalSalary();
-            // get total expense
+            // get total expense (PKR)
             $total_expense = $this->getTotalExpense();
             // get usd to pkr total revenue
-            $usd_pkr_expenses = $total_expense;
-            $usd_pkr_salary = $total_salary;
-            // total profit
+            $usd_pkr_expenses = $this->getExchangeRate($total_expense);
+            $usd_pkr_salary = $this->getExchangeRate($total_salary);
+            // Convert formatted strings back to float values and round to two decimal places
+            $usd_pkr_expenses = str_replace(',', '', $usd_pkr_expenses);
+            $usd_pkr_salary = str_replace(',', '', $usd_pkr_salary);
+            // dd($usd_pkr_salary);
+            // Perform arithmetic operation
             $total_profit = $total_revenue - $usd_pkr_expenses - $usd_pkr_salary;
+            //  dd($usd_pkr_salary);
+            // $total_profit = $this->getExchangeRate($total_profit);
+            $usd_pkr_expenses = number_format($usd_pkr_expenses,2);
+            $usd_pkr_salary = number_format($usd_pkr_salary,2);
+
             $total_profit = number_format($total_profit, 2);
-            $usd_pkr_expenses = number_format($usd_pkr_expenses, 2);
-            $usd_pkr_salary = number_format($usd_pkr_salary, 2);
+
+            // get data montly wise
+
             // total revenue in pkr
             // $total_revenue_pkr = $usd_pkr_revenue - $total_expense - $total_salary;
             // dd($total_revenue);
@@ -941,7 +1073,8 @@ class AuthController extends Controller
             // $chartData = json_encode($chart_data);
 
             return view('index.index', $data);
-        } else if($user_type == "client") {
+        }
+        else if($user_type == "client") {
             $employees = Employee::all();
             $emp_count = count($employees);
             // dd($count);

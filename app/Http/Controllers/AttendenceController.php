@@ -56,15 +56,72 @@ class AttendenceController extends Controller
 
     // get form updated check in, check out, data and save in database
     public function updateEmpAttendenceDetails(Request $req) {
-        // dd($req->attendence_id);
-
+        // Retrieve data from the request
+        $check_in_time = date('h:i A', strtotime($req->check_in_time));
+        $check_out_time = date('h:i A', strtotime($req->check_out_time));
+        $break_start = date('h:i A', strtotime($req->break_start));
+        $break_start = date('h:i A', strtotime($req->break_end));
+        // $break_end = $req->break_end;
+        // dd($checkInTime);
         $attendence_id = $req->attendence_id;
-        $check_in_time = $req->check_in_time;
-        $check_out_time = $req->check_out_time;
-        $break_start = $req->break_start;
-        $break_end = $req->break_end;
-        // DB::table('attendence')->
+
+        // echo "<br> check_in_time ".$check_in_time;
+        // echo "<br> check_out_time ".$check_out_time;
+        // echo "<br> break_start ".$break_start;
+        // echo "<br> break_start".$break_start;
+        // exit;
+        // dd($check_in_time);
+
+        // Check if time values are null, and set them to empty strings if they are
+        $check_in_time = $check_in_time ?? "";
+        $check_out_time = $check_out_time ?? "";
+        $break_start = $break_start ?? "";
+        $break_end = $break_end ?? "";
+
+
+        // Calculate total work hours
+        $totalWorkHours = 0;
+        if ($check_out_time && $check_in_time) {
+            $checkIn = Carbon::createFromFormat('h:i A', $check_in_time);
+            $checkOut = Carbon::createFromFormat('h:i A', $check_out_time);
+
+            $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to hours
+        }
+
+        // Subtract break time if break start and end times are provided
+        if ($break_start && $break_end && $check_in_time && $check_out_time) {
+            $breakStart = Carbon::createFromFormat('h:i A', $break_start);
+            $breakEnd = Carbon::createFromFormat('h:i A', $break_end);
+
+            if ($breakStart >= $checkIn && $breakEnd <= $checkOut) {
+                $totalWorkHours -= $breakEnd->diffInMinutes($breakStart) / 60; // Subtract break time in hours
+            }
+        }
+
+        // Format total worked hours into HH:MM format
+        $hours = floor($totalWorkHours);
+        $minutes = ($totalWorkHours - $hours) * 60;
+        $formattedTotalWorkHours = sprintf('%02d:%02d', $hours, $minutes);
+
+        // Update attendance record in the database
+        DB::table('attendence')
+            ->where('id', $attendence_id)
+            ->update([
+                'check_in_time' => $check_in_time,
+                'check_out_time' => $check_out_time,
+                'break_start' => $break_start,
+                'break_end' => $break_end,
+                'total_time' => $formattedTotalWorkHours,
+                // Add other fields you need to update here
+            ]);
+
+        // Flash success message to session
+        Session::flash('success', 'Attendance record updated successfully.');
+
+        // Redirect back or to any other route as needed
+        return redirect()->back();
     }
+
     // show attendence form
     public function showUpdateAttendenceForm(Request $req){
         $attendence_id = $req->attendence_id;
@@ -331,8 +388,10 @@ class AttendenceController extends Controller
    public function viewEmpAttendence() {
         $latestEmployees = DB::table('employees')->get();
         // dd($latestEmployees);
+        // dd($latestEmployees);
         if ($latestEmployees) {
-            return view('attendence.emp-cards-attendence',compact('latestEmployees'));
+            $latestattendence  = DB::table('attendence')->orderBy('id','desc')->get();
+            return view('attendence.emp-cards-attendence',compact('latestEmployees','latestattendence'));
         } else {
             return back();
         }

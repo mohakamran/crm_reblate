@@ -970,7 +970,7 @@
                     url: '/apply-for-leave',
                     data: formData,
                     success: function(response) {
-                        console.log('AJAX request successful');
+                        // console.log('AJAX request successful');
 
                         $('#messageBox').text(response.message);
                     },
