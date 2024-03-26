@@ -10,11 +10,11 @@
     <body data-sidebar="colored">
     @endsection
     @section('content')
-        <div class="row">
-            <div class="col-xl-12">
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-6 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title">Fill below form to add new client. Fields with(<span
+                        <p class="card-title" style="color:#6b6b6b;">Fill below form to add new client. Fields with(<span
                                 style="color:red;">*</span>) are mandatory to fill, remaining are optional.</p>
                         <br>
 
@@ -34,7 +34,7 @@
                             @endif
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 inputboxcolor">
+                                    <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
                                         <input class="form-control @error('client_name') is-invalid @enderror"
                                             type="text" placeholder="User Name" name="client_name" style="background-color: transparent; border:none;"
                                             value="{{ isset($client_data->client_name) ? $client_data->client_name :  old('client_name') }}"
@@ -47,7 +47,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 inputboxcolor">
+                                    <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
                                         <input class="form-control @error('project_client_name') is-invalid @enderror"
                                             type="text" placeholder="email" name="project_client_name" style="background-color: transparent; border:none;"
                                             value="{{ isset($client_data->project_name) ? $client_data->project_name :  old('project_client_name') }}">
@@ -61,7 +61,7 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 inputboxcolor">
+                                    <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
                                         <input class="form-control @error('project_start_date') is-invalid @enderror"
                                             type="date" placeholder="User Name" name="project_start_date" style="background-color: transparent; border:none;"
                                             value="{{ isset($client_data->project_start_date) ? $client_data->project_start_date :  old('project_start_date') }}"
@@ -74,7 +74,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 inputboxcolor">
+                                    <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
                                         <select id="" class="form-control" name="client_project_type" style="background-color: transparent; border:none;">
                                             <option value="" disabled selected >Select a project type</option>
                                             <option value="one time" {{ (isset($client_data->project_type) && $client_data->project_type == "one time") ? 'selected' : '' }}
@@ -91,7 +91,7 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 inputboxcolor">
+                                    <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
                                         <input class="form-control @error('client_email') is-invalid @enderror"
                                             type="email" placeholder="User Name" name="client_email" style="background-color: transparent; border:none;"
                                             value="{{ isset($client_data->client_email) ? $client_data->client_email : old('client_email') }}"
@@ -104,7 +104,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 inputboxcolor">
+                                    <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
                                         <input class="form-control " type="tel" placeholder="User Name"
                                             name="client_phone" style="background-color: transparent; border:none;"
                                             value="{{ isset($client_data->client_phone)  ?  $client_data->client_phone : old('client_phone') }}"
@@ -117,7 +117,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                <div class="form-floating mb-3 inputboxcolor">
+                                <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
                                     <textarea class="form-control" style="height: 80px; resize: none; background-color: transparent; border:none;" name="client_description" placeholder="project description">{{ isset($client_data->project_description)  ?  $client_data->project_description : old('client_phone') }}</textarea>
                                     @error('client_description')
                                         <span class="text-danger">{{ $message }}</span>

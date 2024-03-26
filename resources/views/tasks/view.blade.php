@@ -30,7 +30,7 @@ Employee Tasks
         </style>
         <div class="row">
             <div class="col-xl-12">
-                <div class="card">
+                <div class="card" style="box-shadow:none;">
                     <div class="card-body">
                         <form action="/search-emp-tasks" method="post">
                             @csrf
@@ -70,7 +70,7 @@ Employee Tasks
                                           </svg></a>
                                 </div>
                             </form>
-
+                    </div>
                         </div>
 
                         {{-- error message --}}
@@ -84,7 +84,7 @@ Employee Tasks
                             @foreach ($latestEmployees as $emp)
                                 <div class="col-md-3">
 
-                                    <div class="card hovering" style="box-shadow:0px 0px 10px 10px #00000021; overflow: hidden; cursor: pointer; border-radius: 10px;">
+                                    <div class="card hovering" style="overflow: hidden; cursor: pointer; border-radius: 10px;">
                                         <div style="width: 150px;height: 150px;position: absolute;z-index: 100;background-color: #fca311;border-radius: 100px;right: -75px;top: -70px;"></div>
                                         <div class="card-body">
                                             @if ($emp->Emp_Image !=null &&  file_exists(public_path($emp->Emp_Image)))
@@ -134,7 +134,7 @@ Employee Tasks
                                     </div>
                                 </div>
                             @endforeach
-                        </div>
+
                     </div>
                     <!-- end card body -->
                 </div>
