@@ -38,8 +38,8 @@
                                 <input type="hidden" value="{{ $emp_code }}" name="emp_login_code_hidden">
 
                                 <div class="col-md-4">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="text" name="emp_login_name"
+                                    <div class="form-floating mb-3 inputboxcolor">
+                                        <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="text" name="emp_login_name"
                                             disabled value="{{ $full_name }}">
                                         <input type="hidden" value="{{ $full_name }}" name="emp_login_name_hidden">
                                         <label for="">Employee Name</label>
@@ -47,8 +47,8 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="User Name" disabled
+                                    <div class="form-floating mb-3 inputboxcolor">
+                                        <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="User Name" disabled
                                             value="{{ $emp_email }}" min="0" name="emp_login_email">
                                         <input type="hidden" value="{{ $emp_email }}" name="emp_login_email_hidden">
                                         <label for="">Employee Email </label>
@@ -56,8 +56,8 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <div class="form-floating mb-3">
-                                        <select name="emp_login_user_type_hidden" class="form-control" id="">
+                                    <div class="form-floating mb-3 inputboxcolor">
+                                        <select name="emp_login_user_type_hidden" style="background-color: transparent; border:none;" class="form-control" id="">
                                             <option value="employee" {{ $employee_type == 'employee' ? 'selected' : '' }}>
                                                 Employee</option>
                                             <option value="manager" {{ $employee_type == 'manager' ? 'selected' : '' }}>
@@ -278,10 +278,9 @@
                             <div>
                                 <br>
 
-                                <button type="submit" class="btn btn-primary  w-md" target="_blank"
-                                    style="background-color: #14213D ; border-color: #fff;">Update Login</button>
+                                <button type="submit" class="reblateBtn px-4 py-2 w-md" target="_blank">Update Login</button>
                                 {{-- <a href="/preview-salary/{{$id}}" target="_blank" class="btn btn-danger">Preview</a> --}}
-                                <a href="/create-new-login" class="btn btn-danger">Go Back</a>
+                                <a href="/create-new-login" class="reblateBtn px-4 py-2 w-md">Go Back</a>
 
                             </div>
                         </form>

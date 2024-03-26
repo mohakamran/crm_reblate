@@ -33,7 +33,7 @@
                             <div class="row mt-4">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control inputboxcolor" style="border: none;" name="shift_start_morning" type="time"
+                                        <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" name="shift_start_morning" type="time"
                                             value=""  >
                                         <label for="">Shift Start <span class="text-danger">*</span></label>
                                         @error('shift_start_morning')
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control inputboxcolor" style="border: none;" name="break_start_morning" type="time"
+                                        <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" name="break_start_morning" type="time"
                                             value=""  >
                                         <label for="">Break Start <span class="text-danger">*</span></label>
                                         @error('break_start_morning')
@@ -56,7 +56,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control inputboxcolor" style="border: none;" name="break_end_morning" type="time"
+                                        <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" name="break_end_morning" type="time"
                                             value=""  >
                                         <label for="">Break End <span class="text-danger">*</span></label>
                                         @error('break_end_morning')
@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control inputboxcolor" style="border: none;" name="shift_end_morning" type="time"
+                                        <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" name="shift_end_morning" type="time"
                                             value=""  >
                                         <label for="">Shift Start <span class="text-danger">*</span></label>
                                         @error('shift_end_morning')
@@ -107,7 +107,7 @@
                                 <div class="row mt-4">
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3">
-                                            <input class="form-control inputboxcolor" style="border: none;" name="shift_start_night" type="time"
+                                            <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" name="shift_start_night" type="time"
                                                 value=""  >
                                             <label for="">Shift Start <span class="text-danger">*</span></label>
                                             @error('shift_start_night')
@@ -117,7 +117,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3">
-                                            <input class="form-control inputboxcolor" style="border: none;" type="time" name="break_start_night"
+                                            <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" type="time" name="break_start_night"
                                                 value=""  >
                                             <label for="">Break Start <span class="text-danger">*</span></label>
                                             @error('break_start_night')
@@ -130,7 +130,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3">
-                                            <input class="form-control inputboxcolor" style="border: none;" type="time" name="break_end_night"
+                                            <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" type="time" name="break_end_night"
                                                 value=""  >
                                             <label for="">Break End <span class="text-danger">*</span></label>
                                             @error('break_end_night')
@@ -140,7 +140,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3">
-                                            <input class="form-control inputboxcolor" style="border: none;" type="time" name="shift_end_night"
+                                            <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" type="time" name="shift_end_night"
                                                 value=""  >
                                             <label for="">Shift End <span class="text-danger">*</span></label>
                                             @error('shift_end_night')

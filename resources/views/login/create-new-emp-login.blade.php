@@ -59,7 +59,7 @@
                                 </div>
 
                                 <div class="col-md-3">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 ">
                                         <input class="form-control" type="email" placeholder="User Name" min="0"
                                             name="emp_login_email" value="{{ old('emp_login_email') }}">
                                         {{-- <input type="hidden" value="{{ $emp_login_email }}" name="emp_login_email_hidden"> --}}

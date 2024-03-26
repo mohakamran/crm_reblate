@@ -31,22 +31,6 @@
             }
         </style>
 
-        {{-- <div class="row mt-2 mb-4">
-
-            <div class="col-md-3">
-                <input type="date" class="form-control" >
-
-            </div>
-            <div class="col-md-3">
-                <input type="date" class="form-control" >
-
-            </div>
-            <div class="col-md-3">
-                <input type="submit" class="btn btn-primary" value="Apply">
-            </div>
-            <div class="col-md-2"></div>
-        </div> --}}
-
         <div class="row" style="display: flex; flex-wrap: wrap;">
             <div class="col-md-4 col-xl-3">
                 <div class="card overflow-hidden">
@@ -355,45 +339,6 @@
                             <p class="text-uppercase mb-1">Total Employees</p>
                             <h3 class="mb-0">15</h3>
                         </div>
-                        {{-- <div class="row gx-4 mt-1">
-                            <div class="col-md-4">
-                                <div class="mt-4">
-                                    <div class="progress" style="height: 7px;">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 85%"
-                                            aria-valuenow="85" aria-valuemin="0" aria-valuemax="85">
-                                        </div>
-                                    </div>
-                                    <p class="text-muted mt-2 pt-2 mb-0 text-uppercase font-size-13 text-truncate">Present
-                                    </p>
-                                    <h4 class="mt-1 mb-0 font-size-20">8</h4>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mt-4">
-                                    <div class="progress" style="height: 7px;">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 70%"
-                                            aria-valuenow="70" aria-valuemin="0" aria-valuemax="70">
-                                        </div>
-                                    </div>
-                                    <p class="text-muted mt-2 pt-2 mb-0 text-uppercase font-size-13 text-truncate">Absent
-                                    </p>
-                                    <h4 class="mt-1 mb-0 font-size-20">4</h4>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="mt-4">
-                                    <div class="progress" style="height: 7px;">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 60%"
-                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="60">
-                                        </div>
-                                    </div>
-                                    <p class="text-muted mt-2 pt-2 mb-0 text-uppercase font-size-13 text-truncate">Leave
-                                    </p>
-                                    <h4 class="mt-1 mb-0 font-size-20">3</h4>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -578,7 +523,7 @@
                                                         <tr>
                                                             <td style="width: 20px;">#{{ $task['id'] }}</td>
                                                             <td>
-                                                                <img src="{{ $task['image'] }}" class="avatar-xs rounded-circle me-2" alt="Employee Image">
+                                                                <img src="{{ $task['image'] }}" class="avatar-xs rounded-circle me-2" style="object-fit: cover" alt="Employee Image">
                                                                 {{ $task['name'] }}
                                                             </td>
                                                             <td>
@@ -608,7 +553,7 @@
                             </div>
                         </div>
                         <div class="text-center pt-3">
-                            <a href="/view-clients" class=" w-md">View All</a>
+                            <a href="/view-tasks" class=" w-md">View All</a>
                         </div> <!-- enbd table-responsive-->
                     </div>
 
@@ -617,55 +562,160 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Tasks Report</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">Task Report</h4>
                     </div>
                     <div class="card-body pt-2">
-                        <div class="table-responsive">
-                            <table class="table align-middle table-nowrap mb-0">
-                                <thead>
-                                    <tr style="border-bottom: 1px solid #e3e3e3;">
+                        <div class="table-responsive simplebar-scrollable-y simplebar-scrollable-x" data-simplebar="init"
+                            style="max-height: 220px;">
+                            <div class="simplebar-wrapper" style="margin: 0px;">
+                                <div class="simplebar-height-auto-observer-wrapper">
+                                    <div class="simplebar-height-auto-observer"></div>
+                                </div>
+                                <div class="simplebar-mask">
+                                    <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                        <div class="simplebar-content-wrapper" tabindex="0" role="region"
+                                            aria-label="scrollable content" style="height: auto; overflow: scroll;">
+                                            <div class="simplebar-content" style="padding: 0px;">
+                                                <table
+                                                    class="table table-borderless table-centered align-middle table-nowrap mb-0">
+                                                    <tbody>
+                                                        <tr style="border-bottom: 1px solid #e3e3e3;">
 
-                                        <th>EMP ID</th>
-                                        <th>Employee Name</th>
-                                        <th>Tasks</th>
-                                        <th>See Details</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
+                                                            <th>EMP ID</th>
+                                                            <th>Employee Name</th>
+                                                            <th>Tasks</th>
+                                                            <th>Shift</th>
+                                                            <th>See Details</th>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task1</h6>
+                                                            </td>
+                                                            <td><span
+                                                                    class="badge badge-soft-primary font-size-12">Day</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task2</h6>
+                                                            </td>
+                                                            <td><span
+                                                                    class="badge badge-soft-success font-size-12">Night</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task3</h6>
+                                                            </td>
+                                                            <td><span
+                                                                    class="badge badge-soft-primary font-size-12">Day</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task4</h6>
+                                                            </td>
+                                                            <td><span
+                                                                    class="badge badge-soft-success font-size-12">Night</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task5</h6>
+                                                            </td>
+                                                            <td><span
+                                                                    class="badge badge-soft-primary font-size-12">Day</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task6</h6>
+                                                            </td>
+                                                            <td><span
+                                                                    class="badge badge-soft-success font-size-12">Night</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
 
-                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
-                                        <td>Task 1 ....</td>
-                                        <td><a href="#">see more</a></td>
-                                    </tr>
-                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
-                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
 
-                                        <td>Task 1 ....</td>
-                                        <td><a href="#">see more</a></td>
-                                    </tr>
-                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
 
-                                        <td><a href="javascript: void(0);" class="text-body">#MB2540</a> </td>
-                                        <td><img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
-                                                class="avatar-xs rounded-circle me-2" alt="..."> Neal Matthews</td>
 
-                                        <td>Task 1 ....</td>
-                                        <td><a href="#">see more</a></td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="simplebar-placeholder" style="width: 440px; height: 469px;"></div>
+                            </div>
+                            <div class="simplebar-track simplebar-horizontal" style="visibility: visible;">
+                                <div class="simplebar-scrollbar"
+                                    style="width: 395px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                            </div>
+                            <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+                                <div class="simplebar-scrollbar"
+                                    style="height: 273px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                            </div>
                         </div>
                         <div class="text-center pt-3">
-                            <a href="javascript:void()" class=" w-md">View All</a>
-                        </div>
-                        <!-- end table-responsive -->
+                            <a href="/view-clients" class=" w-md">View All</a>
+                        </div> <!-- enbd table-responsive-->
                     </div>
                 </div>
             </div>
@@ -840,27 +890,158 @@
                         <h4 class="card-title mb-0 flex-grow-1">Project Report</h4>
                     </div>
                     <div class="card-body pt-2">
-                        <div class="table-responsive">
-                            <table class="table align-middle table-nowrap mb-0">
-                                <thead>
-                                    <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
-                                        <th>EMP ID</th>
-                                        <th>Employee Name</th>
-                                        <th>Tasks</th>
-                                        <th>See Details</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                        <div class="table-responsive simplebar-scrollable-y simplebar-scrollable-x" data-simplebar="init"
+                            style="max-height: 220px;">
+                            <div class="simplebar-wrapper" style="margin: 0px;">
+                                <div class="simplebar-height-auto-observer-wrapper">
+                                    <div class="simplebar-height-auto-observer"></div>
+                                </div>
+                                <div class="simplebar-mask">
+                                    <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                        <div class="simplebar-content-wrapper" tabindex="0" role="region"
+                                            aria-label="scrollable content" style="height: auto; overflow: scroll;">
+                                            <div class="simplebar-content" style="padding: 0px;">
+                                                <table
+                                                    class="table table-borderless table-centered align-middle table-nowrap mb-0">
+                                                    <tbody>
+                                                        <tr style="border-bottom: 1px solid #e3e3e3;">
 
-                                </tbody>
-                            </table>
+                                                            <th>EMP ID</th>
+                                                            <th>Employee Name</th>
+                                                            <th>Tasks</th>
+                                                            <th>Shift</th>
+                                                            <th>See Details</th>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task1</h6>
+                                                            </td>
+                                                            <td><span
+                                                                    class="badge badge-soft-primary font-size-12">Day</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task2</h6>
+                                                            </td>
+                                                            <td><span
+                                                                    class="badge badge-soft-success font-size-12">Night</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task3</h6>
+                                                            </td>
+                                                            <td><span
+                                                                    class="badge badge-soft-primary font-size-12">Day</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task4</h6>
+                                                            </td>
+                                                            <td><span
+                                                                    class="badge badge-soft-success font-size-12">Night</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task5</h6>
+                                                            </td>
+                                                            <td><span
+                                                                    class="badge badge-soft-primary font-size-12">Day</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 20px;">#MB2540</td>
+                                                            <td>
+                                                                <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}"
+                                                                    class="avatar-xs rounded-circle me-2" alt="...">
+                                                                Neal Matthews
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">Task6</h6>
+                                                            </td>
+                                                            <td><span
+                                                                    class="badge badge-soft-success font-size-12">Night</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">see more</a>
+                                                            </td>
+                                                        </tr>
+
+
+
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="simplebar-placeholder" style="width: 440px; height: 469px;"></div>
+                            </div>
+                            <div class="simplebar-track simplebar-horizontal" style="visibility: visible;">
+                                <div class="simplebar-scrollbar"
+                                    style="width: 395px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                            </div>
+                            <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+                                <div class="simplebar-scrollbar"
+                                    style="height: 273px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                            </div>
                         </div>
                         <div class="text-center pt-3">
-                            <a href="javascript:void()" class=" w-md">View All</a>
-                        </div>
-                        <!-- end table-responsive -->
+                            <a href="/view-clients" class=" w-md">View All</a>
+                        </div> <!-- enbd table-responsive-->
                     </div>
-
                 </div>
             </div>
         </div>

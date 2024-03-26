@@ -52,157 +52,188 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" style="font-size: 30px;" id="exampleModalLabel">Create Announcement</h5>
-                                        <button type="button" class="close" style="border: none;background-color: transparent;" data-dismiss="modal" aria-label="Close">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
-                                              </svg>
+                                        <h5 class="modal-title" style="font-size: 30px;" id="exampleModalLabel">Create
+                                            Announcement</h5>
+                                        <button type="button" class="close"
+                                            style="border: none;background-color: transparent;" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                            </svg>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <!-- Form -->
                                         <form id="announcementForm">
-                                            <div id="messageBox" style="display: none" class="alert alert-success alert-dismissible message" role="alert">
+                                            <div id="messageBox" style="display: none"
+                                                class="alert alert-success alert-dismissible message" role="alert">
                                                 Announcement Created Successfully!
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
                                             </div>
                                             <div class="form-group mt-2" style="margin-top:10px;">
                                                 <label for="title">Announcement Title</label>
-                                                <input type="text" class="form-control" style="background-color: #e3e3e3; border:none;" id="title"
+                                                <input type="text" class="form-control"
+                                                    style="background-color: #e3e3e3; border:none;" id="title"
                                                     placeholder="Enter title">
-                                                    <span id="title_message" style="color:red;margin:12px 0px;display:none;">Enter title</span>
+                                                <span id="title_message"
+                                                    style="color:red;margin:12px 0px;display:none;">Enter title</span>
                                             </div>
                                             <div class="form-group" style="margin-top:10px;">
                                                 <label for="recipient ">Recipient</label>
-                                                <select class="form-control mt-2" id="recipient" style="background-color: #e3e3e3; border:none;">
+                                                <select class="form-control mt-2" id="recipient"
+                                                    style="background-color: #e3e3e3; border:none;">
                                                     {{-- <option value="" disabled selected>Select Option</option> --}}
                                                     <option value="all">All</option>
                                                     <option value="employees">Employees</option>
                                                     <option value="managers">Managers</option>
                                                 </select>
-                                                <span id="res_message" style="color:red;margin:12px 0px;display:none;">Select Reciepient</span>
+                                                <span id="res_message"
+                                                    style="color:red;margin:12px 0px;display:none;">Select Reciepient</span>
                                             </div>
                                             <div class="form-group" style="margin-top:10px;">
                                                 <label for="description">Description</label>
-                                                <textarea class="form-control mt-2" style="resize: none; height:100px; background-color:#e3e3e3; border:none;"  id="description" rows="3" placeholder="Enter description"></textarea>
-                                                <span id="desc_message" style="color:red;margin:12px 0px;display:none;">Description box is empty!</span>
+                                                <textarea class="form-control mt-2" style="resize: none; height:100px; background-color:#e3e3e3; border:none;"
+                                                    id="description" rows="3" placeholder="Enter description"></textarea>
+                                                <span id="desc_message"
+                                                    style="color:red;margin:12px 0px;display:none;">Description box is
+                                                    empty!</span>
                                             </div>
 
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="reblateBtn px-4 py-2" style="" data-dismiss="modal">Close</button>
-                                                <button id="submitButton" type="button" class="reblateBtn px-4 py-2">Add
-                                                    Announcement</button>
-                                            </div>
-                                        </form>
                                     </div>
-
+                                    <div class="modal-footer">
+                                        <button type="button" class="reblateBtn px-4 py-2" style=""
+                                            data-dismiss="modal">Close</button>
+                                        <button onclick="submitAnnounce(event)" id="submitButton" type="button" class="reblateBtn px-4 py-2">Add
+                                            Announcement</button>
+                                    </div>
+                                    </form>
                                 </div>
+
                             </div>
                         </div>
-                        {{-- <p class="card-title-desc">The Buttons extension for DataTables
+                    </div>
+                    {{-- <p class="card-title-desc">The Buttons extension for DataTables
                             provides a common set of options, API methods and styling to display
                             buttons on a page that will interact with a DataTable. The core library
                             provides the based framework upon which plug-ins can built.
                         </p> --}}
 
-                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
-                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                            <thead>
+                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead>
+                            <tr>
+
+                                <th> Title </th>
+                                <th> Date </th>
+                                <th> To </th>
+                                <th> Description </th>
+                                {{-- <th class="text-nowrap">Action</th> --}}
+                            </tr>
+                        </thead>
+
+                        <tbody id="table-body">
+                            @foreach ($latestAnnouncements as $ad)
                                 <tr>
-
-                                    <th> Title </th>
-                                    <th> Date </th>
-                                    <th> To </th>
-                                    <th> Description </th>
-                                    {{-- <th class="text-nowrap">Action</th> --}}
+                                    <td>{{ $ad->title }}</td>
+                                    <td>{{ $ad->date }}</td>
+                                    <td>{{ $ad->to_emp }}</td>
+                                    <td>{{ $ad->description }}</td>
                                 </tr>
-                            </thead>
-
-                            <tbody id="table-body">
-                                @foreach ($latestAnnouncements as $ad)
-                                    <tr>
-                                        <td>{{$ad->title}}</td>
-                                        <td>{{$ad->date}}</td>
-                                        <td>{{$ad->to_emp}}</td>
-                                        <td>{{$ad->description}}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
+                            @endforeach
+                        </tbody>
 
 
 
-                        </table>
-                    </div>
+                    </table>
                 </div>
-            </div> <!-- end col -->
+            </div>
+        </div> <!-- end col -->
         </div> <!-- end row -->
 
-  <!-- Bootstrap JS (optional, if you need JavaScript functionality) -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- Bootstrap JS (optional, if you need JavaScript functionality) -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <script>
-    function submitAnnouncement() {
-      // Handle submission of the announcement form here
-      // For demonstration, this function just closes the modal
-      $('#exampleModal').modal('hide');
-    }
-    $(document).ready(function() {
-    // Event handler for the Add Announcement button
-    $('#submitButton').on('click', function(event) {
-        // Prevent the default form submission
-        title_message.style.display = "none";
-        res_message.style.display = "none";
-        desc_message.style.display = "none";
-        messageBox.style.display = 'none';
-        event.preventDefault();
-        // alert('not');
-        var title_message = document.getElementById('title_message');
-        var res_message = document.getElementById('res_message');
-        var desc_message = document.getElementById('desc_message');
-        var  = document.getElementById('messageBox');
+        <script>
+            function submitAnnouncement() {
+                // Handle submission of the announcement form here
+                // For demonstration, this function just closes the modal
+                var title_message = document.getElementById('title_message');
+                    var res_message = document.getElementById('res_message');
+                    var desc_message = document.getElementById('desc_message');
+                    var messageBox = document.getElementById('messageBox');
 
-
-
-        // Get the values from the form fields
-        var title = $('#title').val();
-        var recipient = $('#recipient').val();
-        var description = $('#description').val();
-        // alert(title);
-
-        if(title == "") {
-            title_message.style.display = "block";
-        }
-        if(recipient == "") {
-            res_message.style.display = "block";
-        }
-        if(description == "") {
-            desc_message.style.display = "block";
-        }
-        // alert();
-
-
-
-        // Optionally, you can send this data to the server using AJAX
-        $.ajax({
-            url: '/add-annoucement',
-            method: 'POST',
-            data: {
-                title: title,
-                recipient: recipient,
-                description: description
-            },
-            success: function(response) {
-                messageBox.style.display = 'block';
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
+                    // Prevent the default form submission
+                    title_message.style.display = "none";
+                    res_message.style.display = "none";
+                    desc_message.style.display = "none";
+                    messageBox.style.display = 'none';
+                $('#exampleModal').modal('hide');
             }
-        });
-    });
-});
 
-  </script>
+                // Event handler for the Add Announcement button
+                function submitAnnounce(event) {
+                    event.preventDefault();
+                    // alert('not');
+                    var title_message = document.getElementById('title_message');
+                    var res_message = document.getElementById('res_message');
+                    var desc_message = document.getElementById('desc_message');
+                    var messageBox = document.getElementById('messageBox');
+
+                    // Prevent the default form submission
+                    title_message.style.display = "none";
+                    res_message.style.display = "none";
+                    desc_message.style.display = "none";
+                    messageBox.style.display = 'none';
+
+                    // Get the values from the form fields
+                    var title = $('#title').val();
+                    var recipient = $('#recipient').val();
+                    var description = $('#description').val();
+
+
+                    if (title == "") {
+                        title_message.style.display = "block";
+                    }
+                    if (recipient == "") {
+                        res_message.style.display = "block";
+                    }
+                    if (description == "") {
+                        desc_message.style.display = "block";
+                    }
+                    // alert();
+
+                    var formData = {
+                        _token: '{{ csrf_token() }}',
+                        title: title,
+                        recipient: recipient,
+                        description: description
+                    };
+
+
+
+                    // Optionally, you can send this data to the server using AJAX
+                    $.ajax({
+                        type: 'POST',
+                        url: '/add-annoucement',
+
+                        data: formData,
+                        success: function(response) {
+                            messageBox.style.display = 'block';
+                        },
+                        error: function(xhr, status, error) {
+                            var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message :
+                            'An error occurred';
+
+                            $('#messageBox').text(errorMessage); // Set the error message from the server response
+                            }
+                    });
+                }
+
+
+        </script>
     @endsection
     @section('scripts')
         <!-- Required datatable js -->

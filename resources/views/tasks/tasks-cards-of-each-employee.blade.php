@@ -66,7 +66,7 @@
                                     <div style="border-bottom: 1px solid #e3e3e3;margin-top:10px;">
                                         <h5 style="font-size: 20px;">
                                             @if (Auth()->user()->user_type == "employee" || Auth()->user()->user_type == "manager")
-                                                <a href="/task-update/{{$task->id}}">{{ $task->task_title }}</a>
+                                                <a style="color: #14213d;" href="/task-update/{{$task->id}}">{{ $task->task_title }}</a>
                                                 @else
                                                 {{ $task->task_title }}
                                             @endif
@@ -101,7 +101,7 @@
                                     <div style="border-bottom: 1px solid #e3e3e3;margin-top:10px;">
                                         <h5 style="font-size: 20px;">
                                             @if (Auth()->user()->user_type == "employee" || Auth()->user()->user_type == "manager")
-                                               <a href="/task-update/{{$task->id}}">{{ $task->task_title }}</a>
+                                               <a style="color: #14213d;" href="/task-update/{{$task->id}}">{{ $task->task_title }}</a>
                                                @else
                                                {{ $task->task_title }}
                                             @endif
@@ -136,7 +136,7 @@
                                     <div style="border-bottom: 1px solid #e3e3e3; margin-top:10px;">
                                         <h5 style="font-size: 20px;">
                                             @if (Auth()->user()->user_type == "employee" || Auth()->user()->user_type == "manager")
-                                               <a href="/task-update/{{$task->id}}">{{ $task->task_title }}</a>
+                                               <a style="color: #14213d;" href="/task-update/{{$task->id}}">{{ $task->task_title }}</a>
                                             @else
                                             {{ $task->task_title }}
                                          @endif

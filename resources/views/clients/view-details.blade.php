@@ -30,10 +30,10 @@
                             @endif
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 inputboxcolor">
                                         <input class="form-control @error('client_name') is-invalid @enderror"
                                             type="text" placeholder="User Name" name="client_name"
-                                            value="{{ $client_data->client_name }}" disabled
+                                            value="{{ $client_data->client_name }}" style="background-color: transparent; border: none;" disabled
                                             min="0">
 
                                         <label for="">Client Name <span class="text-danger">*</span></label>
@@ -41,10 +41,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 inputboxcolor">
                                         <input class="form-control @error('project_client_name') is-invalid @enderror"
                                             type="text" placeholder="email" name="project_client_name"
-                                            disabled
+                                            disabled style="background-color: transparent; border: none;"
                                             value="{{ $client_data->project_name }}">
 
                                         <label for="">Project Name<span class="text-danger">*</span></label>
@@ -54,10 +54,10 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 inputboxcolor">
                                         <input class="form-control @error('project_start_date') is-invalid @enderror"
                                             type="date" placeholder="User Name" name="project_start_date"
-                                            disabled
+                                            disabled style="background-color: transparent; border: none;"
                                             value="{{ $client_data->project_start_date }}"
                                             min="0">
 
@@ -66,8 +66,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                       <input type="text" disabled
+                                    <div class="form-floating mb-3 inputboxcolor">
+                                       <input type="text" disabled style="background-color: transparent; border: none;"
                                        value="{{ $client_data->project_type }}" class="form-control">
                                         <label for="">Project Name<span class="text-danger">*</span></label>
                                     </div>
@@ -76,9 +76,9 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 inputboxcolor">
                                         <input class="form-control @error('client_email') is-invalid @enderror"
-                                            type="email" placeholder="User Name" disabled
+                                            type="email" placeholder="User Name" disabled style="background-color: transparent; border: none;"
                                             value="{{ $client_data->client_email }}"
                                             min="0">
 
@@ -87,10 +87,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3 inputboxcolor">
                                         <input class="form-control " type="tel" placeholder="User Name"
                                             name="client_email"
-                                            disabled
+                                            disabled style="background-color: transparent; border: none;"
                                             value="{{ $client_data->client_phone }}"
                                             min="0">
 
@@ -101,8 +101,8 @@
                             </div>
 
                             <div class="col-md-12">
-                                <div class="form-floating mb-3">
-                                    <textarea class="form-control" style="height: 80px;" name="client_description" disabled placeholder="project description">{{$client_data->project_description}}</textarea>
+                                <div class="form-floating mb-3 inputboxcolor">
+                                    <textarea class="form-control" style="height: 80px; resize: none; background-color: transparent; border: none;" name="client_description" disabled placeholder="project description">{{$client_data->project_description}}</textarea>
 
                                     <label for="">Project Description</label>
 
@@ -110,9 +110,8 @@
                             </div>
 
 
-                            <div>
-                                <a href="/view-clients" class="btn btn-primary  w-md"
-                                    style="background-color: #14213D ; border-color: #fff;">{{ $btn_text }}</a>
+                            <div class="mt-4">
+                                <a href="/view-clients" class="reblateBtn px-4 py-2 w-md">{{ $btn_text }}</a>
                             </div>
 
                     </div>
