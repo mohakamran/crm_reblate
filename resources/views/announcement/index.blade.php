@@ -76,7 +76,7 @@
                                             <div class="form-group mt-2" style="margin-top:10px;">
                                                 <label for="title">Announcement Title</label>
                                                 <input type="text" class="form-control"
-                                                    style="background-color: #e3e3e3; border:none;" id="title"
+                                                    style="background-color: #e3e3e3; border: 1px solid #c7c7c7;" id="title"
                                                     placeholder="Enter title">
                                                 <span id="title_message"
                                                     style="color:red;margin:12px 0px;display:none;">Enter title</span>
@@ -84,7 +84,7 @@
                                             <div class="form-group" style="margin-top:10px;">
                                                 <label for="recipient ">Recipient</label>
                                                 <select class="form-control mt-2" id="recipient"
-                                                    style="background-color: #e3e3e3; border:none;">
+                                                    style="background-color: #e3e3e3; border: 1px solid #c7c7c7;">
                                                     {{-- <option value="" disabled selected>Select Option</option> --}}
                                                     <option value="all">All</option>
                                                     <option value="employees">Employees</option>

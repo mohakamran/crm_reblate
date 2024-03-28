@@ -225,9 +225,9 @@
                     <i class="ri-notification-3-line"></i>
                     <span class="noti-dot"></span>
                 </button> --}}
-                <a href="/clear" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown">
+                {{-- <a href="/clear" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown">
                     <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24"><path fill="#14213d" d="m20.37 8.91l-1 1.73l-12.13-7l1-1.73l3.04 1.75l1.36-.37l4.33 2.5l.37 1.37zM6 19V7h5.07L18 11v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2"/></svg>
-                </a>
+                </a> --}}
             </div>
 
             <div class="dropdown px-3 sidebar-user" style="background-color: #e3e3e3; border-radius: 10px;margin:10px;">

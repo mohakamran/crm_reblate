@@ -10,11 +10,11 @@
     <body data-sidebar="colored">
     @endsection
     @section('content')
-        <div class="row">
-            <div class="col-xl-12">
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-6 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title">Fill below form to add new employee. Fields with(<span
+                        <p class="card-title" style="color:#6b6b6b">Fill below form to add new employee. Fields with(<span
                                 style="color:red;">*</span>) are mandatory to fill, remaining are optional.</p>
                         <br>
 
@@ -36,7 +36,7 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 inputboxcolor">
+                                    <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                         <input class="form-control" style="background-color: transparent; border:none;" type="number" placeholder="User Name" name="ex_amount"
                                             value="{{ old('ex_amount') }}" min="0">
                                         @error('ex_amount')
@@ -47,7 +47,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 inputboxcolor">
+                                    <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                         <input class="form-control" style="background-color: transparent; border:none;" type="date" placeholder="email" name="ex_date"
                                             value="{{ old('ex_date') }}">
                                         @error('ex_date')
@@ -59,7 +59,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 inputboxcolor">
+                                    <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                         <select id="ex_parent_category" class="form-control" name="ex_parent_category" style="background-color: transparent; border:none;">
                                             <option value="" disabled selected >Select a category</option>
 
@@ -76,7 +76,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 inputboxcolor">
+                                    <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                         <select id="ex_child_category" class="form-control"  name="ex_child_category" style="background-color: transparent; border:none;">
                                             <option value="" disabled selected >Select a subctegory</option>
                                             <option value="none" {{ old('ex_child_category') === 'none' ? 'selected' : '' }}>None</option>
@@ -99,8 +99,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-floating mb-3 inputboxcolor">
-                                        <textarea class="form-control" style="height: 80px;  background-color: transparent; border:none;" name="ex_description" placeholder="expense description"></textarea>
+                                    <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
+                                        <textarea class="form-control" style="height: 80px;  background-color: transparent; border:none;resize: none; height: 100px" name="ex_description" placeholder="expense description"></textarea>
                                         @error('ex_description')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror

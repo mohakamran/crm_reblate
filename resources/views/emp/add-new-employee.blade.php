@@ -52,7 +52,7 @@
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input type="text" class="form-control" id="floatingFirstnameInput" style="background-color: transparent; border:none;"
                                                         type="text" placeholder="Employee Name" name="employee_name"
                                                         value="{{ isset($emp_data->Emp_Full_Name) ? $emp_data->Emp_Full_Name : old('employee_name') }}" >
@@ -64,7 +64,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control" style="background-color: transparent; border:none;" placeholder="0333-3333333" type="tel"
                                                         name="employee_phone"
                                                         value="{{ isset($emp_data->Emp_Phone) ? $emp_data->Emp_Phone : old('employee_phone') }}">
@@ -77,7 +77,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control" style="background-color: transparent; border:none;" placeholder="employee email"
                                                     value="{{ isset($emp_data->employee_email) ? $emp_data->employee_email : old('employee_email') }}"
                                                         type="email" name="employee_email" >
@@ -88,7 +88,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
 
                                                     <input class="form-control" style="background-color: transparent; border:none;" type="file" name="employee_img" accept="image/*">
                                                     @error('employee_img')
@@ -101,8 +101,8 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="form-floating mb-3 inputboxcolor">
-                                                    <textarea name="employee_address" style="background-color: transparent; border:none;" placeholder="Employee Address" class="form-control">{{ isset($emp_data->Emp_Address) ? $emp_data->Emp_Address : old('employee_address') }}</textarea>
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
+                                                    <textarea name="employee_address" style="background-color: transparent; border:none; resize: none; height: 50px" placeholder="Employee Address" class="form-control">{{ isset($emp_data->Emp_Address) ? $emp_data->Emp_Address : old('employee_address') }}</textarea>
                                                     @error('employee_address')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -116,7 +116,7 @@
                                         <h4 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Company Details</h4>
                                         <div class="row" style="margin-top: 15px;">
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control " placeholder="Employee code: 200sols" style="background-color: transparent; border:none;"
                                                         value="{{ isset(auth()->user()->emp_code) ? auth()->user()->emp_code : '' }}"
                                                         type="text" name="employee_code" >
@@ -128,7 +128,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control " placeholder="department" style="background-color: transparent; border:none;"
                                                         value="{{ isset($emp_data->department) ? $emp_data->department : old('employee_department') }}"
                                                         type="text" name="employee_department">
@@ -142,7 +142,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control" type="text" style="background-color: transparent; border:none;" placeholder="Employee Designation"
                                                         name="employee_designation"
                                                         value="{{ isset($emp_data->Emp_Designation) ? $emp_data->Emp_Designation : old('employee_designation') }}">
@@ -156,7 +156,7 @@
                                             </div>
                                             @if (!isset($emp_data->Emp_Shift_Time))
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <select class="form-control" style="background-color: transparent; border:none;" name="employee_shift_time" id="">
                                                         <option value="" selected disabled>Select Time Shift</option>
                                                         <option value="Morning"
@@ -179,7 +179,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control" style="background-color: transparent; border:none;"
                                                         value="{{ isset($emp_data->Emp_Joining_Date) ? $emp_data->Emp_Joining_Date : old('employee_joining_date') }}"
                                                         placeholder="Employee Joining Date" name="employee_joining_date"
@@ -200,7 +200,7 @@
                                     <h4 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Emergency Contact Details</h4>
                                     <div class="row" style="margin-top: 15px;">
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                 <input class="form-control " placeholder="Employee code: 200sols" style="background-color: transparent; border:none;"
                                                     value="{{ isset($emp_data->Emp_Relation) ? $emp_data->Emp_Relation : old('employee_relation') }}"
                                                     type="text" name="employee_relation">
@@ -211,7 +211,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                 <input class="form-control " placeholder="department" style="background-color: transparent; border:none;"
                                                     value="{{ isset($emp_data->Emp_Relation_Name) ? $emp_data->Emp_Relation_Name : old('employee_relative_name') }}"
                                                     type="text" name="employee_relative_name">
@@ -225,7 +225,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                 <input class="form-control" style="background-color: transparent; border:none;"
                                                     value="{{ isset($emp_data->Emp_Relation_Phone) ? $emp_data->Emp_Relation_Phone : old('employee_relative_phone_num') }}"
                                                     placeholder="0333-3333333" name="employee_relative_phone_num" type="tel">
@@ -236,7 +236,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                 <textarea name="employee_relative_address" style="background-color: transparent; border:none;" placeholder="Employee Address" class="form-control">{{ isset($emp_data->Emp_Relation_Address) ? $emp_data->Emp_Relation_Address : old('employee_relative_address') }}</textarea>
                                                 @error('employee_address')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -250,7 +250,7 @@
                                     <h4 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Back Account Details</h4>
 
                                         <div class="col-md-12" style="margin-top: 15px;">
-                                            <div class="form-floating mb-3 inputboxcolor">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                 <input class="form-control" style="background-color: transparent; border:none;"
                                                     value="{{ isset($emp_data->Emp_Bank_Name) ? $emp_data->Emp_Bank_Name : old('employee_bank_name') }}"
                                                     placeholder="0333-3333333" name="employee_bank_name" type="text">
@@ -260,7 +260,7 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            <div class="form-floating mb-3 inputboxcolor">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                 <input class="form-control" style="background-color: transparent; border:none;"
                                                     value="{{ isset($emp_data->Emp_Bank_IBAN) ? $emp_data->Emp_Bank_IBAN : old('employee_bank_iban') }}"
                                                     placeholder="0333-3333333" name="employee_bank_iban" type="text">
