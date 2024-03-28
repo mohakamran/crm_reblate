@@ -3,8 +3,7 @@
     Login
 @endsection
 @section('content')
-    <div class="auth-maintenance d-flex align-items-center min-vh-100">
-        <div class="bg-overlay"></div>
+    <div class="d-flex align-items-center min-vh-100" style="background-color: lightgray">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-10">
@@ -15,16 +14,15 @@
                                 <style>
                                     .card {
                                         margin-bottom: 24px;
-                                        box-shadow: 0px 1px 18px 8px rgba(0, 0, 0, 0.4);
+                                        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
                                         border-radius: 22px;
                                     }
-
                                     .card-box {
                                         background: #fff;
                                         box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);
                                         padding: 10px;
                                         /* height: 80px; */
-                                        width: 160px;
+                                        width: 100%;
                                         display: flex;
                                         align-items: center;
                                         justify-content: center;
@@ -33,14 +31,12 @@
                                         border-radius: 10px;
                                         border: 1px solid #14213d;
                                     }
-
                                     .card-box:hover {
                                         background: #14213d;
                                         color: #fff;
                                         box-shadow: none;
                                         cursor: pointer;
                                     }
-
                                     .card-holder {
                                         display: flex;
                                         align-items: center;
@@ -49,11 +45,6 @@
                                         flex-wrap: wrap;
                                         width: 100%;
                                     }
-
-                                    /* a:hover {
-                                            color: #fff;
-                                        } */
-
                                     .login-mine-way {
                                         display: flex;
                                         align-items: center;
@@ -72,21 +63,19 @@
                                                 style="width:100%; object-fit:cover;height:100%;" alt="">
                                         </div>
 
-                                        <div class="col-lg-6"
-                                            style=" background-color:#fff;   display: flex;
-                                        align-items: center;
-                                        justify-content: center;
-                                        flex-direction: column;
-                                        flex-wrap: wrap;
-                                        padding-bottom:20px;">
+                                        <div class="col-lg-6 d-flex align-items-center flex-column flex-wrap pb-5 bg-light justify-content-center">
                                             <div class="text-center  mt-2">
                                                 <a href="https://reblatesols.com" class="" target="_blank">
                                                     <img src="{{ url('reblat-logo.png') }}" alt="" height="60"
                                                         class="auth-logo logo-dark "
                                                         style="display: block; margin:20px auto; object-fit:contain;">
                                                 </a>
-                                                {{-- <p class="text-muted mt-2">User Experience & Interface Design Strategy Saas Solution</p> --}}
                                             </div>
+                                            {{-- <div class="text-center">
+                                                <div class="text-start">
+                                                    <h1 style="color: black; font-size: 25px; font-weight: 200; letter-spacing: 5px; ">Welcome To <br> <span style="color: #14213d;font-size: 30px">Reblate </span><span style="color: #fca311; font-size: 30px">Solutions</span>  <br> & Service Providers</h1>
+                                                </div>
+                                            </div> --}}
                                             <div class="row container">
                                                 <div class="col-md-6 col-sm-12  mt-2 mb-2">
                                                     <a href="/employee-login" style="font-size:17px;text-align:center;">
@@ -102,8 +91,6 @@
                                                         </button>
                                                     </a>
                                                 </div>
-                                            </div>
-                                            <div class="row container">
                                                 <div class="col-md-6 col-sm-12 mt-2 mb-2">
                                                     <a href="/admin-login" style="font-size:17px;text-align:center;">
                                                         <button type="button" class="btn card-box">
@@ -119,20 +106,10 @@
                                                     </a>
                                                 </div>
                                             </div>
-
-
                                     </div>
                                 </div>
                                 <!-- end card -->
 
-                                {{-- <div class="mt-5 text-center">
-                                    <p class="mb-0">©
-                                        <script>
-                                            document.write(new Date().getFullYear())
-                                        </script> Tocly. Crafted with <i
-                                            class="mdi mdi-heart text-danger"></i> by Themesdesign
-                                    </p>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -143,14 +120,7 @@
         </div>
     </div>
 
-    <script>
-        function togglePasswordVisibility() {
-            const passwordInput = document.getElementById('password');
-            const checkbox = document.querySelector('input[type="checkbox"]');
 
-            passwordInput.type = checkbox.checked ? 'text' : 'password';
-        }
-    </script>
 @endsection
 @section('scripts')
     <!-- App js -->

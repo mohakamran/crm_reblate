@@ -3,8 +3,8 @@
     Manager Login
 @endsection
 @section('content')
-    <div class="auth-maintenance d-flex align-items-center min-vh-100">
-        <div class="bg-overlay"></div>
+    <div class="d-flex align-items-center min-vh-100" style="background-color:lightgray">
+
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-10">
@@ -13,14 +13,14 @@
                             <div class="d-flex flex-column h-100 py-0 py-xl-3">
 
                                 <style>
-                                                                        /* Custom checkbox style */
-                                                                        input[type="checkbox"] {
+                                         /* Custom checkbox style */
+                                         input[type="checkbox"] {
                                         appearance: none;
                                         -webkit-appearance: none;
                                         -moz-appearance: none;
-                                        width: 16px;
-                                        height: 16px;
-                                        border: 2px solid #14213d;
+                                        width: 15px;
+                                        height: 15px;
+                                        border: 1px solid #14213d;
                                         /* Border color */
                                         border-radius: 4px;
                                         /* Border radius */
@@ -51,7 +51,7 @@
                                     }
                                     .card {
                                         margin-bottom: 24px;
-                                        box-shadow: 0px 1px 18px 8px rgba(0, 0, 0, 0.4);
+                                        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
                                         border-radius: 22px;
                                     }
 
@@ -109,7 +109,7 @@
                                             <div class="p-lg-5 p-4">
                                                 <div>
                                                     <div class="text-center mt-1">
-                                                        <h4 class="font-size-18"> Manager Dashboard!</h4>
+                                                        <h4 class="font-size-18" style="color: #14213d"> Manager Dashboard!</h4>
                                                         <p class="text-muted">Sign in to continue to Reblate Solutions
                                                             Manager Dashboard!
                                                         </p>
@@ -143,8 +143,8 @@
                                                         <div class="mb-2">
                                                             <label for="text" class="form-label">Emp Code</label>
                                                             <input id="text" type="text"
-                                                                class="form-control @error('employee_code') is-invalid @enderror"
-                                                                name="employee_code" value="{{ old('employee_code') }}"
+                                                                class="inputboxcolor form-control @error('employee_code') is-invalid @enderror"
+                                                                name="employee_code" value="{{ old('employee_code') }}" style="border: 1px solid gray"
                                                                 placeholder="Emp Code" maxlength="8">
                                                             @error('employee_code')
                                                                 <span class="invalid-feedback" role="alert">
@@ -156,8 +156,8 @@
                                                         <div class="mb-3">
                                                             <label class="form-label" for="password-input">Password</label>
                                                             <input type="password"
-                                                                class="form-control @error('user_password') is-invalid @enderror"
-                                                                placeholder="Enter password" id="password"
+                                                                class="inputboxcolor form-control @error('user_password') is-invalid @enderror"
+                                                                placeholder="Enter password" id="password" style="border: 1px solid gray"
                                                                 name="user_password" autocomplete="current-password">
                                                             @error('user_password')
                                                                 <span class="invalid-feedback" role="alert">
@@ -165,17 +165,6 @@
                                                                 </span>
                                                             @enderror
                                                         </div>
-
-                                                        {{-- <div class="mb-3">
-                                                              <label for="password" class="form-label">Password</label>
-                                                              <div class="input-group">
-                                                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
-                                                                <div class="input-group-append">
-
-                                                                </div>
-                                                              </div>
-                                                            </div> --}}
-
                                                         <div class="mb-3">
 
                                                             <input type="checkbox" onclick="togglePasswordVisibility()">
@@ -183,22 +172,6 @@
 
                                                         </div>
 
-                                                        {{--
-                                                        <div class="mb-3">
-                                                            <div class="form-floating mb-3">
-                                                                <select name="employee_type" class="form-control @error('employee_type') is-invalid @enderror" id="">
-                                                                    <option value="" disabled selected>Select Employee Type</option>
-                                                                    <option value="employee" {{ old('employee_type') == 'employee' ? 'selected' : '' }}>Employee</option>
-                                                                    <option value="manager" {{ old('employee_type') == 'manager' ? 'selected' : '' }}>Manager</option>
-                                                                </select>
-                                                                <label for="">Employee Type </label>
-                                                            </div>
-                                                            @error('employee_type')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
-                                                        </div> --}}
 
                                                         <div class="form-check d-flex justify-content-between">
                                                             <div>
@@ -208,12 +181,11 @@
                                                                 <label class="form-check-label" for="remember">Remember
                                                                     me</label>
                                                             </div>
-                                                            <a href="/forget-password" class="text-end">Forget Password?</a>
+                                                            <a href="/forget-password" class="text-end" style="color:gray">Forget Password?</a>
                                                         </div>
 
                                                         <div class="mt-4">
-                                                            <button class="btn btn-primary w-100"
-                                                                style="background:#14213d;" type="submit">Sign
+                                                            <button class="reblateBtn px-4 py-2 w-100" type="submit">Sign
                                                                 In</button>
                                                         </div>
 

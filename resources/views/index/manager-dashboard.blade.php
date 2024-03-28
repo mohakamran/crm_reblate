@@ -214,34 +214,37 @@
 
                         @if (isset($emp_det->Emp_Image) && $emp_det->Emp_Image != '')
                             <img src="{{ $emp_det->Emp_Image }}"
-                                style="width:150px;height:150px;border-radius:100%; object-fit:cover;" alt="">
+                                style="width:120px;height:120px;border-radius:100%; object-fit:cover;" alt="">
                         @else
                             <img src="{{ url('user.png') }}"
-                                style="width:150px;height:150px;border-radius:100%; object-fit:cover;" alt="">
+                                style="width:120px;height:120px;border-radius:100%; object-fit:cover;" alt="">
                         @endif
                         <div class="welcome-det ms-3 text-dark fw-bolder">
-                            <h3 class="fs-2" style="font-size: 35px; color:#14213d">Welcome, </h3>
+                            <h3  style="font-size: 20px; color:#14213d">Welcome, </h3>
                             <span class="fw-bold"
-                                style="font-size: 15px; color:#fca311;">{{ isset($emp_det->Emp_Full_Name) && $emp_det->Emp_Full_Name ? $emp_det->Emp_Full_Name : 'Guest' }}</span>
+                                style="font-size: 20px; color:#fca311;">{{ isset($emp_det->Emp_Full_Name) && $emp_det->Emp_Full_Name ? $emp_det->Emp_Full_Name : 'Guest' }}</span>
                         </div>
 
                     </div>
 
                     <div class="">
-                        <h3 style="color:#14213d; font-size: 15px">Designation:</h3>
+                        <h3 style="font-size: 20px; color:#14213d">Designation</h3>
                         <span class="fw-semibold "
-                            style="color:#fca311;">{{ isset($emp_det->Emp_Designation) && $emp_det->Emp_Designation ? $emp_det->Emp_Designation : '' }}</span>
+                            style="color:#fca311; font-size: 20px;">{{ isset($emp_det->Emp_Designation) && $emp_det->Emp_Designation ? $emp_det->Emp_Designation : '' }}</span>
                     </div>
                     <div class="">
-                        <h3 style="color:#14213d; font-size: 15px">Shift:</h3>
-                        <span class="fw-semibold" style="color:#fca311;">
+                        <h3 style="font-size: 20px; color:#14213d">Shift</h3>
+                        <span class="fw-semibold" style="color:#fca311; font-size: 20px;">
                             {{ isset($emp_det->Emp_Shift_Time) && $emp_det->Emp_Shift_Time ? $emp_det->Emp_Shift_Time : '' }}
                         </span>
 
                     </div>
-                    <span class="" style="color:#fca311;">
-                        {{ isset($t_date) ? $t_date : '' }}
-                    </span>
+                    <div>
+                        <h3 style="font-size: 20px; color:#14213d">Today's Date</h3>
+                        <span class="" style="color:#fca311; font-size: 15px;">
+                            {{ isset($t_date) ? $t_date : '' }}
+                        </span>
+                    </div>
                 </div>
             </div>
 

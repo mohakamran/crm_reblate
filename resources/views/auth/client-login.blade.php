@@ -3,8 +3,8 @@
     Client Login
 @endsection
 @section('content')
-    <div class="auth-maintenance d-flex align-items-center min-vh-100">
-        <div class="bg-overlay "></div>
+    <div class="d-flex align-items-center min-vh-100" style="background-color:lightgray">
+
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-10">
@@ -13,14 +13,14 @@
                             <div class="d-flex flex-column h-100 py-0 py-xl-3">
 
                                 <style>
-                                                                        /* Custom checkbox style */
-                                                                        input[type="checkbox"] {
+                                         /* Custom checkbox style */
+                                         input[type="checkbox"] {
                                         appearance: none;
                                         -webkit-appearance: none;
                                         -moz-appearance: none;
-                                        width: 16px;
-                                        height: 16px;
-                                        border: 2px solid #14213d;
+                                        width: 15px;
+                                        height: 15px;
+                                        border: 1px solid #14213d;
                                         /* Border color */
                                         border-radius: 4px;
                                         /* Border radius */
@@ -52,7 +52,7 @@
 
                                     .card {
                                         margin-bottom: 24px;
-                                        box-shadow: 0px 1px 18px 8px rgba(0, 0, 0, 0.4);
+                                        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
                                         border-radius: 22px;
                                         position: relative;
                                     }
@@ -108,12 +108,11 @@
                                                     <img src="{{ url('reblat-logo.png') }}" alt="" height="60"
                                                         class="auth-logo logo-light mx-auto">
                                                 </a>
-                                                {{-- <p class="text-muted mt-2">User Experience & Interface Design Strategy Saas Solution</p> --}}
                                             </div>
                                             <div class="p-lg-5 p-4">
                                                 <div>
                                                     <div class="text-center mt-1">
-                                                        <h4 class="font-size-18"> Client Dashboard!</h4>
+                                                        <h4 class="font-size-18" style="color: #14213d;"> Client Dashboard!</h4>
                                                         <p class="text-muted">Sign in to continue to Reblate Solutions
                                                             Client  Dashboard!
                                                         </p>
@@ -127,10 +126,6 @@
                                                             <div class="alert alert-danger alert-dismissible fade show"
                                                                 id="close-now">
                                                                 {{ session('error') }}
-                                                                {{-- <a type="button" class="close" data-dismiss="alert"
-                                                                    aria-label="Close" style="float: right;">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </a> --}}
                                                             </div>
                                                         @endif
 
@@ -149,8 +144,8 @@
                                                         <div class="mb-2">
                                                             <label for="email" class="form-label">Email</label>
                                                             <input id="text" type="email"
-                                                                class="form-control @error('client_email') is-invalid @enderror"
-                                                                name="client_email" value="{{ old('client_email') }}"
+                                                                class="form-control inputboxcolor @error('client_email') is-invalid @enderror"
+                                                                name="client_email" value="{{ old('client_email') }}" style="border: 1px solid gray"
                                                                 autocomplete="email">
                                                             @error('client_email')
                                                                 <span class="invalid-feedback" role="alert">
@@ -162,8 +157,8 @@
                                                         <div class="mb-3">
                                                             <label class="form-label" for="password-input">Password</label>
                                                             <input type="password"
-                                                                class="form-control @error('client_password') is-invalid @enderror"
-                                                                placeholder="Enter password" id="password"
+                                                                class="form-control inputboxcolor @error('client_password') is-invalid @enderror"
+                                                                placeholder="Enter password" id="password" style="border: 1px solid gray"
                                                                 name="client_password" autocomplete="current-password">
                                                             @error('client_password')
                                                                 <span class="invalid-feedback" role="alert">
@@ -171,41 +166,12 @@
                                                                 </span>
                                                             @enderror
                                                         </div>
-
-                                                        {{-- <div class="mb-3">
-                                                              <label for="password" class="form-label">Password</label>
-                                                              <div class="input-group">
-                                                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
-                                                                <div class="input-group-append">
-
-                                                                </div>
-                                                              </div>
-                                                            </div> --}}
-
                                                         <div class="mb-3">
 
                                                             <input type="checkbox" onclick="togglePasswordVisibility()">
                                                             <label for="showPassword">Show Password</label>
 
                                                         </div>
-
-                                                        {{--
-                                                        <div class="mb-3">
-                                                            <div class="form-floating mb-3">
-                                                                <select name="employee_type" class="form-control @error('employee_type') is-invalid @enderror" id="">
-                                                                    <option value="" disabled selected>Select Employee Type</option>
-                                                                    <option value="employee" {{ old('employee_type') == 'employee' ? 'selected' : '' }}>Employee</option>
-                                                                    <option value="manager" {{ old('employee_type') == 'manager' ? 'selected' : '' }}>Manager</option>
-                                                                </select>
-                                                                <label for="">Employee Type </label>
-                                                            </div>
-                                                            @error('employee_type')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                            @enderror
-                                                        </div> --}}
-
                                                         <div class="form-check d-flex justify-content-between">
                                                             <div>
                                                                 <input class="form-check-input" type="checkbox"
@@ -214,31 +180,16 @@
                                                                 <label class="form-check-label" for="remember">Remember
                                                                     me</label>
                                                             </div>
-                                                            <a href="/forget-password" class="text-end">Forget Password?</a>
+                                                            <a href="/forget-password" class="text-end" style="color: gray">Forget Password?</a>
                                                         </div>
 
                                                         <div class="mt-4">
-                                                            <button class="btn btn-primary w-100"
-                                                                style="background:#14213d;" type="submit">Sign
+                                                            <button class="reblateBtn px-4 py-2 w-100" type="submit">Sign
                                                                 In</button>
 
                                                         </div>
 
-                                                        {{-- <div class="mt-4 pt-2 text-center">
-                                                            <div class="signin-other-title">
-                                                                <h5 class="font-size-14 mb-4 title">Sign In with</h5>
-                                                            </div>
-                                                            <div class="pt-2 hstack gap-2 justify-content-center">
-                                                                <button type="button" class="btn btn-primary btn-sm"><i
-                                                                        class="ri-facebook-fill font-size-16"></i></button>
-                                                                <button type="button" class="btn btn-danger btn-sm"><i
-                                                                        class="ri-google-fill font-size-16"></i></button>
-                                                                <button type="button" class="btn btn-dark btn-sm"><i
-                                                                        class="ri-github-fill font-size-16"></i></button>
-                                                                <button type="button" class="btn btn-info btn-sm"><i
-                                                                        class="ri-twitter-fill font-size-16"></i></button>
-                                                            </div>
-                                                        </div> --}}
+
                                                     </form>
 
                                                     <a href="/login" class="go-back"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="#14213d" d="m4 10l-.707.707L2.586 10l.707-.707zm17 8a1 1 0 1 1-2 0zM8.293 15.707l-5-5l1.414-1.414l5 5zm-5-6.414l5-5l1.414 1.414l-5 5zM4 9h10v2H4zm17 7v2h-2v-2zm-7-7a7 7 0 0 1 7 7h-2a5 5 0 0 0-5-5z"/></svg> Go Back</a>

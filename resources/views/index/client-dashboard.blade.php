@@ -18,23 +18,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    {{-- <div class="card-header border-0 align-items-center d-flex pb-0">
-                    <h4 class="card-title mb-0 flex-grow-1">Audiences Metrics</h4>
-                    <div>
-                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                            ALL
-                        </button>
-                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                            1M
-                        </button>
-                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                            6M
-                        </button>
-                        <button type="button" class="btn btn-soft-primary btn-sm">
-                            1Y
-                        </button>
-                    </div>
-                </div> --}}
+
 
                     <div class="card-body">
                         <div class="row">
