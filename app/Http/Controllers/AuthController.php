@@ -1526,20 +1526,20 @@ class AuthController extends Controller
 
     //get exchange rate prices
     public function getExchangeRate($amount) {
-        // $client = new GuzzleClient(); // Use the alias GuzzleClient
-        // $response = $client->get('https://open.er-api.com/v6/latest/USD');
-        // $data = json_decode($response->getBody(), true);
+        $client = new GuzzleClient(); // Use the alias GuzzleClient
+        $response = $client->get('https://open.er-api.com/v6/latest/USD');
+        $data = json_decode($response->getBody(), true);
 
-        // // Get the exchange rate for PKR
-        // $usdToPkrRate = $data['rates']['PKR'];
+        // Get the exchange rate for PKR
+        $usdToPkrRate = $data['rates']['PKR'];
 
-        // // Convert PKR to USD using the reciprocal of the exchange rate
-        // $pkrToUsdRate = 1 / $usdToPkrRate;
+        // Convert PKR to USD using the reciprocal of the exchange rate
+        $pkrToUsdRate = 1 / $usdToPkrRate;
 
-        // // Convert amount from PKR to USD
-        // $amountInUSD = $amount * $pkrToUsdRate;
+        // Convert amount from PKR to USD
+        $amountInUSD = $amount * $pkrToUsdRate;
 
-        return $amount;
+        return $amountInUSD;
     }
 
 }

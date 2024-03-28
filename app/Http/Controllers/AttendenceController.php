@@ -176,7 +176,7 @@ class AttendenceController extends Controller
     }
     public function leaveRequests() {
         $user_type = Auth()->user()->user_type;
-        if ($user_type != "" && $user_type == "manager") {
+        if ($user_type != "" && ( $user_type == "manager" || $user_type == "admin" ) ) {
             $records = DB::table('leaves')->where('user_type', 'employee')->where('status','pending')->get();
             $emp = [];
 
@@ -196,26 +196,10 @@ class AttendenceController extends Controller
             // dd($records);
             return view('attendence.approval', compact('records', 'emp'));
         }
-        if ($user_type != "" && $user_type == "admin") {
-            $records = DB::table('leaves')->where('status','pending')->get();
-            $emp = [];
-
-            foreach ($records as $rec) {
-                $employees = DB::table('employees')->where('Emp_Code', $rec->emp_code)->get();
-
-                // Loop through each employee record and append to $emp array
-                foreach ($employees as $employee) {
-                    $emp[] = $employee;
-                }
-            }
-
-
-            // if ($records->isEmpty()) {
-            //     dd("empty!");
-            // }
-            // dd($records);
-            return view('attendence.approval', compact('records', 'emp'));
+        else {
+            return redirect('/');
         }
+
     }
     // search employee records
     public function empSearchRecords(Request $req) {
