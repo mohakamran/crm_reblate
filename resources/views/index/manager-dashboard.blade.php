@@ -268,12 +268,12 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
                                     <p class="text-truncate font-size-18 mb-0 fw-bold">Revenue</p>
-                                    <h5 class="mb-0">total revenue
+                                    <h5 class="mb-0"> ${{$total_revenue}}
                                     </h5>
                                 </div>
-                                <p class="text-muted mb-0 text-truncate"><span
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p>
+                                            class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p> --}}
                             </div>
 
                         </div>
@@ -298,13 +298,13 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5 ">
                                     <p class="text-truncate font-size-18 mb-0 fw-bold"> Salaries</p>
-                                    <h5 class="mb-0">total salery
+                                    <h5 class="mb-0"> ${{$total_salary}}
                                     </h5>
                                 </div>
 
-                                <p class="text-muted mb-0 text-truncate"><span
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-danger text-danger font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p>
+                                            class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p> --}}
                             </div>
 
                         </div>
@@ -336,11 +336,11 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5">
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Expenses</p>
-                                    <h5 class="mb-0">used expense </h5>
+                                    <h5 class="mb-0">$ {{$usd_expenses}} </h5>
                                 </div>
-                                <p class="text-muted mb-0 text-truncate"><span
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
+                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p> --}}
                             </div>
 
                         </div>
@@ -387,12 +387,12 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Profit</p>
-                                    <h5 class="mb-0"> total profit
+                                    <h5 class="mb-0">  {{$total_profit}}
                                     </h5>
                                 </div>
-                                <p class="text-muted mb-0 text-truncate"><span
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
+                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p> --}}
                             </div>
                         </div>
                     </div>
@@ -1287,7 +1287,7 @@
                 labels: ['Presents', 'Absents', 'Leaves'],
                 datasets: [{
                   label: 'Attendance',
-                  data: [12, 0, 3],
+                  data: [<?php echo $total_present_day; ?>, <?php echo $absent_days; ?>, <?php echo $total_leaves; ?>],
                   borderWidth: 1
                 }]
               },
@@ -1303,7 +1303,7 @@
                 labels: ['Completed', 'Pending', 'In Progress'],
                 datasets: [{
                   label: 'Tasks',
-                  data: [12, 0, 3],
+                  data: [<?php echo $completed_count ?>, <?php echo $pending_count ?>, <?php echo $in_progress_count ?>],
                   borderWidth: 1
                 }]
               },

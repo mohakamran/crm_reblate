@@ -8,6 +8,13 @@ use Carbon\Carbon;
 
 class TaskController extends Controller
 {
+       // get task report and save in database
+       public function taskUpdateDatabase(Request $req, $id) {
+            $validatedData = $req->validate([
+                'task_desc' => 'required',
+                'task_status' => 'required'
+            ]);
+       }
        // to update task open form for task update
        public function taskUpdateForm($id) {
         //  dd($id);

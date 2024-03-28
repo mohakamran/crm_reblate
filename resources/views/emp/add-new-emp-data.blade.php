@@ -39,8 +39,9 @@
                                 <h3 style="font-size: 25px; color:#14213d">
                                     {{ isset($emp_data->Emp_Full_Name) ? $emp_data->Emp_Full_Name : old('employee_name') }}
                                 </h3>
-                                <h3 style="font-size: 15px; color:gray">Employee Designation</h3>
-                                <h4 style="font-size: 15px; color:gray">Employee Shift</h4>
+                                <h3 style="font-size: 15px; color:gray">{{$emp_data->Emp_Designation}}</h3>
+                                <h4 style="font-size: 15px; color:gray">{{$emp_data->Emp_Shift_Time}}</h4>
+                                <h4 style="font-size: 15px; color:gray">{{$emp_data->Emp_Email}}</h4>
                             </div>
                         </div>
                     </div>
@@ -94,6 +95,17 @@
                                             </div>
 
                                         </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
+                                                    <input type="text" name="emp_cnic" value="{{ isset($emp_data->emp_cnic) ? $emp_data->emp_cnic : old('emp_cnic') }}" style="background-color: transparent; border:none; resize: none; height: 50px" placeholder="Employee Address" class="form-control">
+                                                    @error('emp_cnic')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                    <label for="">CNIC <span class="text-danger">*</span></label>
+                                                </div>
+                                            </div>
+
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 inputboxcolor">
                                                 <textarea name="employee_address" placeholder="Employee Address" class="form-control "

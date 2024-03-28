@@ -33,6 +33,7 @@ class EmployeesController extends Controller
                 'employee_relative_name' => 'required',
                 'employee_relative_phone_num' => 'required',
                 'employee_relative_address' => 'required',
+                'emp_cnic' => 'required',
             ]);
             $bank_name = "";
             $bank_iban = "";
@@ -66,7 +67,8 @@ class EmployeesController extends Controller
                     'Emp_Relation_Phone' => $req->employee_relative_phone_num,
                     'Emp_Relation_Address' => $req->employee_relative_address,
                     'Emp_Bank_Name' => $bank_name,
-                    'Emp_Bank_IBAN' => $bank_iban
+                    'Emp_Bank_IBAN' => $bank_iban,
+                    'emp_cnic' => $req->emp_cnic
                 ]);
 
                 session()->flash('success', 'Data Updated successfully!');
@@ -82,7 +84,8 @@ class EmployeesController extends Controller
                     'Emp_Relation_Phone' => $req->employee_relative_phone_num,
                     'Emp_Relation_Address' => $req->employee_relative_address,
                     'Emp_Bank_Name' => $bank_name,
-                    'Emp_Bank_IBAN' => $bank_iban
+                    'Emp_Bank_IBAN' => $bank_iban,
+                    'emp_cnic' => $req->emp_cnic
                 ]);
                 session()->flash('success', 'Data Updated successfully!');
                 return back();
@@ -191,7 +194,8 @@ class EmployeesController extends Controller
             'employee_relative_phone_num' => 'required',
             'employee_relative_address' => 'required',
             'employee_code' => 'required|max:255',
-            'employee_department' => 'required|max:255'
+            'employee_department' => 'required|max:255',
+            'emp_cnic' => 'required'
         ]);
 
         // check if image is uploaded or not
@@ -250,6 +254,7 @@ class EmployeesController extends Controller
             $empModel->Emp_Relation_Address = $req->employee_relative_address;
             $empModel->Emp_Bank_Name = $bank_name;
             $empModel->Emp_Bank_IBAN = $bank_iban;
+            $empModel->emp_cnic = $req->emp_cnic;
             $empModel->Emp_Code = $req->employee_code;
             $empModel->department = $req->employee_department;
             $empModel->save();
@@ -340,33 +345,38 @@ class EmployeesController extends Controller
 
     // delete employee
     public function delEmployee($emp_id) {
-        $emp_data = DB::table('employees')->where('Emp_Code', $emp_id)->first();
+        $emp_data = DB::table('users')->where('user_code', $emp_id)->first();
         // $emp_data = Employee::where('Emp_Code', $emp_data)->first();
         // return $emp_data;
         if($emp_data) {
-            $file_path = $emp_data->Emp_Image;
-            if (File::exists($file_path)) {
-                File::delete($file_path);
-                DB::table('employees')->where('Emp_Code', $emp_id)->delete();
-                // return redirect('manage-employees');
-            } else {
-                DB::table('employees')->where('Emp_Code', $emp_id)->delete();
-                // return response()->json(['message' => 'success']);
+            if($emp_data->password != null) {
+                DB::table('users')->where('user_code', $emp_id)->update([
+                    'password' => ""
+                ]);
             }
-            // $c_employee_user = UserEmployee::where('emp_code',$emp_id)->first();
-            $c_employee_user = DB::table('user_employee')->where('emp_code', $emp_id)->first();
-            if($c_employee_user) {
-                DB::table('user_employee')->where('emp_code', $emp_id)->delete();
-            }
-            // $login_table_employee_user = Login::where('emp_code',$emp_id)->first();
-            $login_table_employee_user = DB::table('user_employee')->where('emp_code', $emp_id)->first();
-            if($login_table_employee_user) {
-                $login_table_employee_user->delete();
-            }
-            $login_user_table = DB::table('user_employee')->where('emp_code', $emp_id)->first();
-            if($login_user_table) {
-                DB::table('user_employee')->where('emp_code', $emp_id)->delete();
-            }
+            // $file_path = $emp_data->Emp_Image;
+            // if (File::exists($file_path)) {
+            //     File::delete($file_path);
+            //     DB::table('employees')->where('Emp_Code', $emp_id)->delete();
+            //     // return redirect('manage-employees');
+            // } else {
+            //     DB::table('employees')->where('Emp_Code', $emp_id)->delete();
+            //     // return response()->json(['message' => 'success']);
+            // }
+            // // $c_employee_user = UserEmployee::where('emp_code',$emp_id)->first();
+            // $c_employee_user = DB::table('user_employee')->where('emp_code', $emp_id)->first();
+            // if($c_employee_user) {
+            //     DB::table('user_employee')->where('emp_code', $emp_id)->delete();
+            // }
+            // // $login_table_employee_user = Login::where('emp_code',$emp_id)->first();
+            // $login_table_employee_user = DB::table('user_employee')->where('emp_code', $emp_id)->first();
+            // if($login_table_employee_user) {
+            //     $login_table_employee_user->delete();
+            // }
+            // $login_user_table = DB::table('user_employee')->where('emp_code', $emp_id)->first();
+            // if($login_user_table) {
+            //     DB::table('user_employee')->where('emp_code', $emp_id)->delete();
+            // }
             return response()->json(['message' => 'success']);
 
         } else {
@@ -415,7 +425,9 @@ class EmployeesController extends Controller
                     'employee_relative_phone_num' => 'required',
                     'employee_relative_address' => 'required',
                     'employee_code' => 'required|max:255',
-                    'employee_department' => 'required|max:255'
+                    'employee_department' => 'required|max:255',
+                    'emp_cnic' => 'required'
+
                 ]);
                 if( $req->hasFile('employee_img') ) {
 
@@ -478,6 +490,7 @@ class EmployeesController extends Controller
                 $id_rec->Emp_Bank_IBAN = $bank_iban;
                 $id_rec->Emp_Code = $req->employee_code;
                 $id_rec->department = $req->employee_department;
+                $id_rec->emp_cnic = $req->emp_cnic;
                 $id_rec->save();
 
                 session()->flash('success', 'Employee Updated successfully!');

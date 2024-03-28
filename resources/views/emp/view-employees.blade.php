@@ -183,14 +183,17 @@
 
                                     <div class="options">
                                         <div class="group-menu" onclick="toggleFun({{$emp->id}})">
+                                            <svg viewBox="0 0 16 16" width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="#000000" class="bi bi-three-dots-vertical"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path> </g></svg>
+                                            {{-- <div class="dot"></div>
                                             <div class="dot"></div>
-                                            <div class="dot"></div>
-                                            <div class="dot"></div>
+                                            <div class="dot"></div> --}}
                                         </div>
                                         <div id={{$emp->id}} class="frame1">
                                             <ul class="info">
-                                                <li>Edit</li>
-                                                <li>Delete</li>
+                                                <li><a href="/update-employee/{{$emp->Emp_Code}}" style="color: #000">Edit</a></li>
+                                                <li><a href="/view_profile/{{$emp->Emp_Code}}" style="color: #000">View</a></li>
+                                                <li><a href="javascript:void()" onclick="deleteEmployee('{{ $emp->Emp_Code }}')"  style="color: #000" >
+                                                   Disable</a></li>
                                             </ul>
                                         </div>
 
@@ -259,7 +262,7 @@
             function confirmDelete(id) {
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: 'The Employee would be removed from the database!',
+                    text: 'The Employee would be Disabled! Employee Will not be able to Access Login Portal',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Yes',
@@ -276,7 +279,7 @@
                                 // Provide user feedback
                                 Swal.fire({
                                     title: 'Success!',
-                                    text: 'The employee has been deleted.',
+                                    text: 'The employee disabled successfully!',
                                     icon: 'success'
                                 }).then(() => {
                                     location.reload(); // Refresh the page

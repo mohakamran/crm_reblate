@@ -34,6 +34,7 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
+                        <button class="reblateBtn p-2">View Records</button>
                         {{-- error message --}}
                         <div class="row container">
                             @if ($errors->any())

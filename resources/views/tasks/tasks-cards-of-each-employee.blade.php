@@ -38,7 +38,7 @@
 
                         </div>
                         </div>
-                        @if (Auth()->user()->user_type == "admin")
+                        @if (Auth()->user()->user_type == "admin" || Auth()->user()->user_type == "manager")
                                 <div class="d-flex flex-column align-items-center p-3 gap-2" style="">
 
                                     <a href="/create-new-task" class="text-dark fw-bold p-2">Assign New</a>
@@ -73,10 +73,10 @@
                                         </h5>
                                         <P style="font-size: 15px; margin-bottom: 5px;">Task Desc: {{ $task->task_description }}</P>
 
-                                        <div class="progress mb-2" style="height: 20px;">
+                                        {{-- <div class="progress mb-2" style="height: 20px;">
                                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 90%;"
                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{$task->task_percentage}}% Complete</div>
-                                        </div>
+                                        </div> --}}
                                         <p class="mb-0"  style="font-size:15px;margin-top:10px; color:gray;">deadline: {{$task->task_date}}</p>
                                     </div>
                                 @endif
@@ -107,10 +107,10 @@
                                             @endif
                                         </h5>
                                         <p style="font-size: 15px; margin-bottom: 5px;">{{ $task->task_description }}</p>
-                                        <div class="progress mb-2" style="height: 20px;">
+                                        {{-- <div class="progress mb-2" style="height: 20px;">
                                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: {{$task->task_percentage}}%;"
                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{$task->task_percentage}}% Complete</div>
-                                        </div>
+                                        </div> --}}
                                         <p class="mb-0"  style="font-size:15px;margin-top:10px; color:gray;">deadline: {{$task->task_date}}</p>
 
                                     </div>
@@ -142,10 +142,10 @@
                                          @endif
                                         </h5>
                                         <P style="font-size: 15px; margin-bottom: 5px;">Task Desc: {{ $task->task_description }}</P>
-                                        <div class="progress mb-2" style="height: 20px;">
+                                        {{-- <div class="progress mb-2" style="height: 20px;">
                                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 80%;"
                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{$task->task_percentage}}% Complete</div>
-                                        </div>
+                                        </div> --}}
                                         <p class="mb-0"  style="font-size:15px;margin-top:10px; color:gray;">deadline: {{$task->task_date}}</p>
                                     </div>
                                 @endif

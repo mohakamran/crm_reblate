@@ -329,7 +329,7 @@
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4 d-flex align-items-center gap-3">
                                 <h3 class="fs-4 font-size-18 mb-0" style="color:#14213d;">Total Leaves</h3>
-                                <p class="font-size-15 mb-0 flex-grow-1">15</p>
+                                <p class="font-size-15 mb-0 flex-grow-1">0</p>
 
                                 <p style="position: absolute;bottom: 5px; color:gray; font-size: 12px; margin-bottom: 0;">
                                     Total Allowed leaves are 15 per year</p>
@@ -577,7 +577,7 @@
                                         <th>Task Date</th>
                                         {{-- <th>Tasks</th> --}}
                                         <th>Task Status</th>
-                                        <th>Task Percentage</th>
+                                        <th>Assigned By</th>
 
                                     </tr>
                                 </thead>
@@ -589,7 +589,7 @@
                                                 <td>{{ $task->task_title }}</td>
                                                 <td>{{ $task->task_date }}</td>
                                                 <td>{{ $task->task_status }}</td>
-                                                <td>{{ $task->task_percentage }}%</td>
+                                                <td>{{ $task->assigned_by }}%</td>
                                                 {{-- <td>{{$task->task_title}}</td> --}}
 
                                         @endforeach
@@ -1196,7 +1196,7 @@
                     labels: ['Presents', 'Absents', 'Leaves'],
                     datasets: [{
                         label: 'Attendance',
-                        data: [12, 5, 3],
+                        data: [<?php echo $total_present_day ?>, <?php echo $absent_days ?>, 3],
                         backgroundColor: [
                             'rgba(75, 192, 192, 0.5)',
                             'rgba(255, 99, 132, 0.5)',
@@ -1237,7 +1237,7 @@
 
                     datasets: [{
                         label: 'Tasks',
-                        data: [12, 0, 3],
+                        data: [<?php echo $completed_count; ?>, <?php echo $pending_count ?>, <?php echo $in_progress_count; ?>],
                         backgroundColor: [
                             'rgba(75, 192, 192, 0.5)',
                             'rgba(255, 99, 132, 0.5)',

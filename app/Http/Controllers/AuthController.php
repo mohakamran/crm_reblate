@@ -984,6 +984,30 @@ class AuthController extends Controller
             $t_date = Carbon::now()->format('l, d F Y');
             $emp_img = $emp_det->Emp_Image;
             Session::put('emp_img', $emp_img);
+
+            // get total revenue record (USD)
+            $total_revenue = $this->getTotalRevenue();
+            // dd($total_revenue);
+            // get total salary (PKR)
+            $total_salary = $this->getTotalSalary();
+            // get total expense (PKR)
+            $total_expense = $this->getTotalExpense();
+            // get usd to pkr total revenue
+            $usd_pkr_expenses = $this->getExchangeRate($total_expense);
+            $usd_pkr_salary = $this->getExchangeRate($total_salary);
+            // Convert formatted strings back to float values and round to two decimal places
+            $usd_pkr_expenses = str_replace(',', '', $usd_pkr_expenses);
+            $usd_pkr_salary = str_replace(',', '', $usd_pkr_salary);
+            // dd($usd_pkr_salary);
+            // Perform arithmetic operation
+            $total_profit = $total_revenue - $usd_pkr_expenses - $usd_pkr_salary;
+            //  dd($usd_pkr_salary);
+            // $total_profit = $this->getExchangeRate($total_profit);
+            $usd_pkr_expenses = number_format($usd_pkr_expenses,2);
+            $usd_pkr_salary = number_format($usd_pkr_salary,2);
+
+            $total_profit = number_format($total_profit, 2);
+
             $data = [
                 'absent_days' => $absent_days,
                 'total_present_day' => $total_present_day,
@@ -1000,6 +1024,10 @@ class AuthController extends Controller
                 'in_progress_count' =>$in_progress_count,
                 'latest_tasks' => $latest_tasks,
                 'total_leaves' => $total_leaves,
+                'total_revenue' => $total_revenue,
+                'total_salary' => $usd_pkr_salary,
+                'usd_expenses' => $usd_pkr_expenses,
+                'total_profit' => $total_profit
             ];
 
             return view('index.manager-dashboard',$data);

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
 
 
+
 class AttendenceController extends Controller
 {
     // check permission

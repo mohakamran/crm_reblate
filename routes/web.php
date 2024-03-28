@@ -227,6 +227,7 @@ Route::group(['middleware' => 'admin'], function () {
 
     // task side of employee/ manager
     Route::get('/task-update/{id}',[TaskController::class, 'taskUpdateForm']);
+    Route::post('/task-save-update/{id}',[TaskController::class, 'taskUpdateDatabase']);
 
 
 });
