@@ -155,6 +155,22 @@
                 </div>
             </div>
         </div>
+        <div class="row mt-5">
+            <div class="col md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="fw-bold" style="color: #14213d">Daily Repoting</h3>
+                        <textarea class="w-100 p-3 inputboxcolor" placeholder="Enter Your Daily Report" style="resize: none; height:150px;border: 1px solid #e3e3e3"  name="DailtReport" id="DailyReport"></textarea>
+                    <div class="w-25 mt-2">
+                        <button type="submit" class="reblateBtn px-4 py-2">
+Submit
+                    </button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 
         <!-- end row -->
