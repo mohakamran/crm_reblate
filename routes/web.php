@@ -15,6 +15,7 @@ use App\Http\Controllers\AttendenceController;
 use App\Http\Controllers\TimeController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\ProjectController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -228,6 +229,10 @@ Route::group(['middleware' => 'admin'], function () {
     // task side of employee/ manager
     Route::get('/task-update/{id}',[TaskController::class, 'taskUpdateForm']);
     Route::post('/task-save-update/{id}',[TaskController::class, 'taskUpdateDatabase']);
+
+    // projectController
+
+    Route::get('/projects',[ProjectController::class,'index']);
 
 
 });

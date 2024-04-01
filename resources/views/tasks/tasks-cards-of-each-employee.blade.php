@@ -16,35 +16,39 @@
                 <div class="card mb-3">
                     <div class="card-body" style="display: flex; align-items: center; justify-content: space-between;">
                         <!-- Using a dummy CDN link for the image -->
-                        @if (Auth()->user()->user_type == "admin")
+                        @if (Auth()->user()->user_type == 'admin')
                             <a href="/view-tasks" class="position-absolute top-0 start-1 pt-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#14213d" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#14213d"
+                                    class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
                                 </svg>
                             </a>
                         @endif
 
                         <div class="d-flex align-items-center gap-3" style="margin-left: 15px;">
                             @if ($Emp_Image != '')
-                            <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
-                                src="{{ $Emp_Image }}">
-                        @else
-                            <img class="img-fluid rounded-circle " src="{{ URL::asset('user.png') }}">
-                        @endif
-                        <div class="d-flex flex-column gap-1 ml-4">
-                            <h5 class="card-title mb-0" style="font-size: 25px;">{{ $emp_name }}</h5>
-                            <p class="card-text mb-1 ">{{ $Emp_Designation }}</p>
-                            <p class="card-text">{{ $Emp_Shift_Time }}</p>
+                                <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
+                                    src="{{ $Emp_Image }}">
+                            @else
+                                <img class="img-fluid rounded-circle " src="{{ URL::asset('user.png') }}">
+                            @endif
+                            <div class="d-flex flex-column gap-1 ml-4">
+                                <h5 class="card-title mb-0" style="font-size: 25px;">{{ $emp_name }}</h5>
+                                <p class="card-text mb-1 ">{{ $Emp_Designation }}</p>
+                                <p class="card-text">{{ $Emp_Shift_Time }}</p>
 
+                            </div>
                         </div>
-                        </div>
-                        @if (Auth()->user()->user_type == "admin" || Auth()->user()->user_type == "manager")
-                                <div class="d-flex flex-column align-items-center p-3 gap-2" style="">
+                        @if (Auth()->user()->user_type == 'admin' || Auth()->user()->user_type == 'manager')
+                            <div class="d-flex flex-column align-items-center p-3 gap-2" style="">
 
-                                    <a href="/create-new-task" class="text-dark fw-bold p-2">Assign New</a>
-                                    <a href="/update-tasks/{{$emp_id}}" class="text-dark fw-bold p-2">Update</a>
-                                </div>
+                                <a href="/create-new-task" class="text-dark fw-bold p-2">Assign New</a>
+                                <a href="/update-tasks/{{ $emp_id }}" class="text-dark fw-bold p-2">Update</a>
+                            </div>
                         @endif
+
+
                     </div>
                 </div>
             </div>
@@ -65,19 +69,64 @@
                                 @if ($task->task_status == 'completed')
                                     <div style="border-bottom: 1px solid #e3e3e3;margin-top:10px;">
                                         <h5 style="font-size: 20px;">
-                                            @if (Auth()->user()->user_type == "employee" || Auth()->user()->user_type == "manager")
-                                                <a style="color: #14213d;" href="/task-update/{{$task->id}}">{{ $task->task_title }}</a>
-                                                @else
+                                            @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager')
+                                            <a style="color: #14213d;" href="#" data-toggle="modal" data-target="#taskModal{{ $task->id }}">
+                                                {{ $task->task_title }}
+                                            </a>
+                                            @else
                                                 {{ $task->task_title }}
                                             @endif
                                         </h5>
-                                        <P style="font-size: 15px; margin-bottom: 5px;">Task Desc: {{ $task->task_description }}</P>
+                                        <P style="font-size: 15px; margin-bottom: 5px;">Task Desc:
+                                            {{ $task->task_description }}</P>
 
                                         {{-- <div class="progress mb-2" style="height: 20px;">
                                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 90%;"
                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{$task->task_percentage}}% Complete</div>
                                         </div> --}}
-                                        <p class="mb-0"  style="font-size:15px;margin-top:10px; color:gray;">deadline: {{$task->task_date}}</p>
+                                        <p class="mb-0" style="font-size:15px;margin-top:10px; color:gray;">deadline:
+                                            {{ $task->task_date }}</p>
+                                    </div>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="taskModal{{ $task->id }}" tabindex="-1" role="dialog" aria-labelledby="taskModal{{ $task->id }}Label" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">{{$task->task_title}}</h5>
+                                                    {{-- <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button> --}}
+                                                </div>
+                                                <div class="modal-body">
+                                                    <strong>Task Description:</strong> <br>
+                                                    <p>
+                                                        {{ $task->task_description }}
+                                                    </p>
+                                                    <b>Task DeadLine</b>
+                                                    <p>
+                                                        {{ $task->task_date }}
+                                                    </p>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label for="">Task Update</label>
+                                                            <textarea name="" class="form-control" id="" cols="20" rows="5"></textarea>
+                                                        </div>
+                                                        <div class="col-md-12">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 @endif
                             @endforeach
@@ -85,6 +134,8 @@
                     </div>
                 </div>
             </div>
+
+
 
             <div class="col-md-4">
                 @php
@@ -100,10 +151,11 @@
                                 @if ($task->task_status == 'pending')
                                     <div style="border-bottom: 1px solid #e3e3e3;margin-top:10px;">
                                         <h5 style="font-size: 20px;">
-                                            @if (Auth()->user()->user_type == "employee" || Auth()->user()->user_type == "manager")
-                                               <a style="color: #14213d;" href="/task-update/{{$task->id}}">{{ $task->task_title }}</a>
-                                               @else
-                                               {{ $task->task_title }}
+                                            @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager')
+                                                <a style="color: #14213d;"
+                                                    href="/task-update/{{ $task->id }}">{{ $task->task_title }}</a>
+                                            @else
+                                                {{ $task->task_title }}
                                             @endif
                                         </h5>
                                         <p style="font-size: 15px; margin-bottom: 5px;">{{ $task->task_description }}</p>
@@ -111,7 +163,8 @@
                                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: {{$task->task_percentage}}%;"
                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{$task->task_percentage}}% Complete</div>
                                         </div> --}}
-                                        <p class="mb-0"  style="font-size:15px;margin-top:10px; color:gray;">deadline: {{$task->task_date}}</p>
+                                        <p class="mb-0" style="font-size:15px;margin-top:10px; color:gray;">deadline:
+                                            {{ $task->task_date }}</p>
 
                                     </div>
                                 @endif
@@ -129,24 +182,27 @@
                     <p class="p-4 rounded-top bg-warning text-black mb-0" style="font-size: 17px;">In Progress</p>
                     <div class="p-4 rounded-bottom bg-white">
                         @if ($inProgressTasksCount == 0)
-                            <p class="mb-0" >No Tasks Available</p>
+                            <p class="mb-0">No Tasks Available</p>
                         @else
                             @foreach ($tasks as $task)
                                 @if ($task->task_status == 'in-progress')
                                     <div style="border-bottom: 1px solid #e3e3e3; margin-top:10px;">
                                         <h5 style="font-size: 20px;">
-                                            @if (Auth()->user()->user_type == "employee" || Auth()->user()->user_type == "manager")
-                                               <a style="color: #14213d;" href="/task-update/{{$task->id}}">{{ $task->task_title }}</a>
+                                            @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager')
+                                                <a style="color: #14213d;"
+                                                    href="/task-update/{{ $task->id }}">{{ $task->task_title }}</a>
                                             @else
-                                            {{ $task->task_title }}
-                                         @endif
+                                                {{ $task->task_title }}
+                                            @endif
                                         </h5>
-                                        <P style="font-size: 15px; margin-bottom: 5px;">Task Desc: {{ $task->task_description }}</P>
+                                        <P style="font-size: 15px; margin-bottom: 5px;">Task Desc:
+                                            {{ $task->task_description }}</P>
                                         {{-- <div class="progress mb-2" style="height: 20px;">
                                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 80%;"
                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{$task->task_percentage}}% Complete</div>
                                         </div> --}}
-                                        <p class="mb-0"  style="font-size:15px;margin-top:10px; color:gray;">deadline: {{$task->task_date}}</p>
+                                        <p class="mb-0" style="font-size:15px;margin-top:10px; color:gray;">deadline:
+                                            {{ $task->task_date }}</p>
                                     </div>
                                 @endif
                             @endforeach
@@ -155,22 +211,29 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-5">
-            <div class="col md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="fw-bold" style="color: #14213d">Daily Repoting</h3>
-                        <textarea class="w-100 p-3 inputboxcolor" placeholder="Enter Your Daily Report" style="resize: none; height:150px;border: 1px solid #e3e3e3"  name="DailtReport" id="DailyReport"></textarea>
-                    <div class="w-25 mt-2">
-                        <button type="submit" class="reblateBtn px-4 py-2">
-Submit
-                    </button>
-                    </div>
+
+
+        {{-- if the user is employee or manager the show below  --}}
+        @if (auth()->user()->user_type == 'manager' || auth()->user()->user_type == 'employee')
+            <div class="row mt-5">
+                <div class="col md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="fw-bold" style="color: #14213d">Daily Repoting</h3>
+                            <textarea class="w-100 p-3 inputboxcolor" placeholder="Enter Your Daily Report"
+                                style="resize: none; height:150px;border: 1px solid #e3e3e3" name="DailtReport" id="DailyReport"></textarea>
+                            <div class="w-25 mt-2">
+                                <button type="submit" class="reblateBtn px-4 py-2">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
+        @endif
+
 
 
         <!-- end row -->
@@ -201,4 +264,11 @@ Submit
         <script src="{{ URL::asset('build/js/pages/form-element.init.js') }}"></script>
         <!-- App js -->
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <!-- Popper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     @endsection
+

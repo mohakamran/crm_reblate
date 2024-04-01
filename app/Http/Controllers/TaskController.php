@@ -42,9 +42,12 @@ class TaskController extends Controller
 
             $tasks = DB::table('tasks')
             ->where('emp_id', $emp_id)
-            ->whereMonth('assigned_date', $currentMonth)
-            // ->orderBy('id', 'desc')
+            // ->whereMonth('assigned_date', $currentMonth)
+            ->orderBy('id', 'desc')
             ->get();
+
+            // dd($tasks);
+
             return view('tasks.tasks-cards-of-each-employee',compact('tasks','emp_name','emp_id','Emp_Designation','Emp_Image','Emp_Shift_Time'));
        }
        // get task details and save in database

@@ -320,7 +320,7 @@ class AuthController extends Controller
 
 
         $check_emp = DB::table('users')->where('user_code',$request->employee_code)->first();
-        if($check_emp->user_type == "employee") {
+        if($check_emp!=null && $check_emp->user_type == "employee") {
 
              // $credentials = $request->only('user_email', 'password');
             $remember = $request->has('remember'); // Check if "Remember Me" is selected
@@ -353,7 +353,7 @@ class AuthController extends Controller
 
 
         $check_emp = DB::table('users')->where('user_code',$request->employee_code)->first();
-        if($check_emp->user_type == "manager") {
+        if($check_emp!=null && $check_emp->user_type == "manager") {
 
              // $credentials = $request->only('user_email', 'password');
             $remember = $request->has('remember'); // Check if "Remember Me" is selected
@@ -1091,11 +1091,13 @@ class AuthController extends Controller
             // $this->getYearBaseDataChart();
 
             // get get current  monthly wise expense to show in chart
+            $chartData = $this->getYearBaseDataChart();
+            // dd($chartData);
 
 
             $data = compact('emp_count','client_count','data_chart','total_revenue',
             'usd_pkr_expenses','usd_pkr_salary','total_profit','emp_present_count',
-            'emp_leave_count','emp_absent_count','tasks_count','total_clients', 'currentTasks');
+            'emp_leave_count','emp_absent_count','tasks_count','total_clients', 'currentTasks','chartData');
             // $chartData = json_encode($data);
             // $chart_data = compact('total_revenue','usd_pkr_expenses','usd_pkr_salary','total_profit');
             // $chartData = json_encode($chart_data);
@@ -1160,38 +1162,62 @@ class AuthController extends Controller
 
     // get currenly
     public function getYearBaseDataChart(){
-        // Get the current month
-        $currentMonth = date('m');
-
         // Get the current year
         $currentYear = date('Y');
 
-        // Initialize an array to hold the months
-        $months = [];
+        // Get the current month
+        $currentMonth = date('n');
 
-        // Generate a table of months from January to the current month
-        for ($i = 1; $i <= $currentMonth; $i++) {
-            $months[] = $i;
+        // Initialize an array to hold the months and their data
+        $data = [
+            'labels' => [],
+            'sales' => [],
+            'expenses' => [],
+            'profits' => []
+        ];
+
+        // Iterate through each month up to the current month of the year
+        for ($month = 1; $month <= $currentMonth; $month++) {
+            // Get sales data for the month (assuming it's in USD)
+            $sales = DB::table('invoices')
+                        ->whereYear('date', $currentYear)
+                        ->whereMonth('date', $month)
+                        ->sum('amount');
+
+            // Get expenses data for the month in PKR
+            $expensesPKR = DB::table('expenses')
+                            ->whereYear('expense_date', $currentYear)
+                            ->whereMonth('expense_date', $month)
+                            ->sum('expense_amount');
+
+            // Convert expenses from PKR to USD
+            $expensesUSD = $this->getExchangeRate($expensesPKR);
+
+            // Get salaries data for the month in PKR
+            $salariesPKR = DB::table('salaries')
+                            ->whereYear('date', $currentYear)
+                            ->whereMonth('date', $month)
+                            ->sum('amount');
+
+
+
+                        // Convert salaries from PKR to USD
+            $salariesUSD = number_format($this->getExchangeRate($salariesPKR), 2);
+
+            // Calculate total expenses in USD
+            $totalExpensesUSD = number_format(($expensesUSD + $salariesUSD), 2);
+
+            // Calculate profit in USD
+            $profit = number_format(($sales - $totalExpensesUSD), 2);
+
+            // Push data into the array
+            $data['labels'][] = date('M', mktime(0, 0, 0, $month, 1));
+            $data['sales'][] = $sales;
+            $data['expenses'][] = $totalExpensesUSD;
+            $data['profits'][] = $profit;
         }
 
-        // Fetching expenses data using a left join with the generated months table
-        $expensesData = DB::table('expenses')
-            ->select(DB::raw('MONTH(expense_date) as month'), DB::raw('COALESCE(SUM(expense_amount), 0) as total'))
-            ->whereYear('expense_date', $currentYear)
-            ->whereIn(DB::raw('MONTH(expense_date)'), $months)
-            ->groupBy(DB::raw('MONTH(expense_date)'))
-            ->orderBy(DB::raw('MONTH(expense_date)'))
-            ->get();
-
-        $months = [];
-        $expenses = [];
-
-        // Mapping the results to prepare data for chart
-        foreach ($expensesData as $expense) {
-            $months[] = date('M', mktime(0, 0, 0, $expense->month, 1));
-            $expenses[] = $expense->total;
-        }
-        // dd($months);
+        return $data;
 
     }
 
