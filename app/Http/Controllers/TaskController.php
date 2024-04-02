@@ -8,6 +8,33 @@ use Carbon\Carbon;
 
 class TaskController extends Controller
 {
+      public function taskSaveDatabase(Request $req) {
+        // Retrieve data from the request
+        $task_status = $req->input('task_status');
+        $task_update = $req->input('task_update');
+        $id = $req->input('id');
+
+
+        $task = DB::Table('tasks')->where('id',$id)->first();
+        if($task) {
+            DB::table('tasks')->where('id',$id)->update([
+                'task_report' => $task_update,
+                'task_status' => $task_status,
+            ]);
+            // Return a response
+            return response()->json([
+                'message' => 'Data received successfully',
+                'id' => $id,
+                'task_status' => $task_status,
+                'task_update' => $task_update
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'Not Found!',
+            ],404);
+        }
+
+      }
        // get task report and save in database
        public function taskUpdateDatabase(Request $req, $id) {
             $validatedData = $req->validate([
@@ -240,7 +267,7 @@ class TaskController extends Controller
             'task_description' => $first_task_description,
             'task_date' => $first_task_deadline,
             'task_status' => "pending",
-            'task_percentage' => "0",
+            'task_report' => "",
             'assigned_by' => $name, // Assuming admin is the default assigned_by value
             'assigned_date' => $dateAssigned, // Save the current date as date_assigned
         ]);
@@ -261,7 +288,7 @@ class TaskController extends Controller
                     'task_description' => $descriptions[$index],
                     'task_date' => $deadlines[$index],
                     'task_status' => 'pending',
-                    'task_percentage' => "0",
+                    'task_report' => "",
                     'assigned_by' => 'admin', // Assuming admin is the default assigned_by value
                     'assigned_date' => $dateAssigned, // Save the current date as date_assigned
                 ];

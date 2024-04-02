@@ -65,6 +65,13 @@
                         <span>Update Info</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="/view_reports" class="waves-effect">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 20 20"><path fill="#06a503" fill-rule="evenodd" d="M6 2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7.414A2 2 0 0 0 15.414 6L12 2.586A2 2 0 0 0 10.586 2zm2 10a1 1 0 1 0-2 0v3a1 1 0 1 0 2 0zm2-3a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-5a1 1 0 0 1 1-1m4-1a1 1 0 1 0-2 0v7a1 1 0 1 0 2 0z" clip-rule="evenodd"/></svg>
+                        <span>Daily Reporting</span>
+                    </a>
+                </li>
                 {{-- <li>
                     <a href="/mark-attendence" class="waves-effect">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 12h5v5h-5zm7-9h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m0 2v2H5V5zM5 19V9h14v10z"/></svg>

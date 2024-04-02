@@ -752,6 +752,8 @@ class AuthController extends Controller
             //get latest tasks for each employee
             $latest_tasks = $this->getLatestTasks();
 
+            // dd($latest_tasks);
+
             // get latest records of absent, leaves,
             $total_present_day = $this->getAttendenceDetails();
             // $total_present_day = 10;

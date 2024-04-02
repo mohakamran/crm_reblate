@@ -583,14 +583,16 @@
                                 </thead>
                                 <tbody>
                                     <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
-
-                                    @if (!count($latest_tasks))
+                                    {{-- {{count($latest_tasks)}} --}}
+                                    @if (count($latest_tasks) >= 1)
                                         @foreach ($latest_tasks as $task)
+                                            <tr>
                                                 <td>{{ $task->task_title }}</td>
                                                 <td>{{ $task->task_date }}</td>
                                                 <td>{{ $task->task_status }}</td>
-                                                <td>{{ $task->assigned_by }}%</td>
+                                                <td>{{ $task->assigned_by }}</td>
                                                 {{-- <td>{{$task->task_title}}</td> --}}
+                                            </tr>
 
                                         @endforeach
                                     @else
