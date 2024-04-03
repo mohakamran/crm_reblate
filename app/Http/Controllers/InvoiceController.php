@@ -140,14 +140,14 @@ class InvoiceController extends Controller
             return view('invoices.view-invoices',$data);
         }
         else {
-            return redirect('/create-new-invoice');
+            return redirect('/');
         }
 
     }
 
     public function viewIndividualInvoices($id) {
         // dd($id);
-        $emp = Invoice::where('client_id', $id)->get();
+        $emp = Invoice::where('client_id', $id)->orderBy('id','desc')->get();
         // dd($emp);
         if($emp) {
                 $title = "Invoices";
@@ -161,7 +161,7 @@ class InvoiceController extends Controller
     // view invoice on browser
     public function previewOnBrowser($id) {
         $in = DB::table('invoices')->where('id',$id)->first();
-        $client = DB::table('clients')->where('client_id',$data->client_id)->first();
+        $client = DB::table('clients')->where('client_id',$in->client_id)->first();
 
         $invoice_number = $in->invoice_id;
         $client_name = $client->client_name;
@@ -171,8 +171,21 @@ class InvoiceController extends Controller
         $invoice_description = $in->description;
         $invoice_profit = $in->profit;
         $invoice_amount = $in->amount;
+        $invoice_notes = $in->additional_notes;
 
-        return view('invoices.browser-invoice');
+        $data = compact(
+            'invoice_number',
+            'client_name',
+            'client_phone',
+            'client_email',
+            'invoice_month',
+            'invoice_description',
+            'invoice_profit',
+            'invoice_amount',
+            'invoice_notes'
+        );
+
+        return view('invoices.browser-invoice',$data);
 
         // $pdf = PDF::loadView('invoices.browser-invoice.blade')->setOptions(['defaultFont' => 'sans-serif']);
         // dd($data);

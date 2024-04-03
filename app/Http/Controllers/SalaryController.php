@@ -194,6 +194,7 @@ class SalaryController extends Controller
 
         // Format the result in 'F, Y' format
         $previous_month = date('F, Y', $last_day_previous_month);
+        // dd($previous_month);
 
 
         $pdf_name = 'generated-salaries/'.$emp_code."_".$previous_month.".pdf";
@@ -214,6 +215,19 @@ class SalaryController extends Controller
         $emp->file_name  = $pdf_name;
         $emp->status  = "paid";
         $emp->amount  = $emp_net_salary;
+        // $emp->basic_salary  = $emp_basic_salary;
+        $emp->basic_salary  = $emp_basic_salary;
+        $emp->kpi_bonus  = $emp_kpi_bonus;
+        $emp->project_bonus  = $emp_project_bonus;
+        $emp->designation_bonus  = $emp_designation_bonus;
+        $emp->absent_days  = $emp_absent;
+        $emp->travel_allowence  = $emp_travel_allowence;
+        $emp->leave_days  = $emp_leave;
+        $emp->deduction  = $emp_deduction;
+        $emp->working_days  = $emp_no_of_working_days;
+        $emp->reason_of_deduction  = $emp_reason_deduction;
+        $emp->month_salary  = $previous_month;
+        $emp->total_salary  = $emp_total_salary;
         $emp->date  = date('d/m/Y');
 
         $emp->save();
@@ -232,9 +246,62 @@ class SalaryController extends Controller
         return view('salaries.view-slips',$data);
     }
 
+    // view salary slip of employee on browser
+    public function viewSlipBrowser($id) {
+        // dd($id);
+        $slip = DB::table('salaries')->where('id',$id)->first();
+
+        if($slip) {
+            $emp = DB::table('employees')->where('Emp_Code',$slip->emp_id)->first();
+            $emp_name = $slip->emp_name;
+            $emp_code = $slip->emp_id;
+            $emp_designation = $slip->emp_name;
+            // $emp_name = $slip->emp_name;
+            $emp_no_of_working_days = $slip->working_days;
+            $emp_designation = $emp->Emp_Designation;
+            $emp_month_salary_hidden = $emp->Emp_Designation;
+            $emp_date_of_joining_hidden = $emp->Emp_Joining_Date;
+            $emp_absent = $slip->absent_days;
+            $emp_leave = $slip->leave_days;
+            $emp_basic_salary = $slip->basic_salary;
+            $emp_deduction = $slip->deduction;
+            $emp_designation_bonus = $slip->designation_bonus;
+            $emp_project_bonus = $slip->project_bonus;
+            $emp_kpi_bonus = $slip->kpi_bonus;
+            $emp_travel_allowence = $slip->travel_allowence;
+            $emp_total_salary = $slip->total_salary;
+            $emp_net_salary = $slip->amount;
+            $emp_reason_deduction = $slip->reason_of_deduction;
+            $data = compact(
+                'emp_name',
+                'emp_code',
+                'emp_designation',
+                'emp_no_of_working_days',
+                'emp_no_of_working_days',
+                'emp_month_salary_hidden',
+                'emp_date_of_joining_hidden',
+                'emp_absent',
+                'emp_leave',
+                'emp_basic_salary',
+                'emp_deduction',
+                'emp_designation_bonus',
+                'emp_kpi_bonus',
+                'emp_travel_allowence',
+                'emp_total_salary',
+                'emp_net_salary',
+                'emp_reason_deduction',
+                'emp_project_bonus',
+            );
+            return view('salaries.slip-browser',$data);
+        }
+        else {
+            return redirect('/');
+        }
+    }
+
     // view salaries of employees
     public function viewSalaries($id) {
-        $emp = Salary::where('emp_id', $id)->get();
+        $emp = Salary::where('emp_id', $id)->orderBy('id','desc')->get();
         // dd($emp);
         if($emp) {
             // dd($emp->emp_name);

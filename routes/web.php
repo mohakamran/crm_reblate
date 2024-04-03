@@ -136,6 +136,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/send-reciept/{u_id}', [SalaryController::class,'sendReciept']);
     Route::get('/view-slips', [SalaryController::class,'viewReciepts']);
     Route::get('/view-salaries/{id}', [SalaryController::class,'viewSalaries']);
+    Route::get('/preview-slip-employee-page/{id}', [SalaryController::class,'viewSlipBrowser']);
     // Route::get('/testpdf', [SalaryController::class,'testPdf']);
 
     // invoices
