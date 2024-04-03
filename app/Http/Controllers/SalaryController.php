@@ -64,8 +64,10 @@ class SalaryController extends Controller
         // }
         // die;
         $date = date('F, Y');
+        $last_month_date = date('F, Y', strtotime('last month'));
+        // dd($date);
         $title = "Salaries of ".$date;
-        $data = compact('rec','title','sal');
+        $data = compact('rec','title','sal','last_month_date');
         return view('salaries.unpaid-salaries',$data);
     }
 

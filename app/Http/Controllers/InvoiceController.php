@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Mail;
 use Storage;
 use PDF;
 
+use DB;
+
 
 
 class InvoiceController extends Controller
@@ -35,7 +37,7 @@ class InvoiceController extends Controller
             $btn_text = "Proceed";
             return view('invoices.create-new-invoice',compact('id','title','client','btn_text','route'));
         } else {
-            return view('index.index');
+            return back();
         }
     }
     public function previewInvoice($id, Request $req) {
@@ -79,6 +81,7 @@ class InvoiceController extends Controller
         $invoice_due_date =$req->invoice_due_date_hidden;
         $invoice_method =$req->invoice_method_hidden;
         $invoice_notes =$req->invoice_notes_hidden;
+        $client_id =$req->client_id;
 
         // Generate absolute path for the image file
         $logo_path = public_path('reblat-logo.png');
@@ -87,9 +90,10 @@ class InvoiceController extends Controller
         $data = compact('logo_path','invoice_notes','invoice_method','invoice_due_date','invoice_amount','invoice_description','invoice_profit','invoice_month','invoice_date','invoice_number','client_phone','client_name','client_email');
         // return view('invoices.preview-invoice',$data);
         $pdf_name = 'invoices/'.$client_name."_".date('m_Y').".pdf";
-        $pdf = PDF::loadView('invoices.preview-invoice', $data)->setOptions(['defaultFont' => 'sans-serif']);
+        $pdf = PDF::loadView('invoices.preview-invoice',$data)->setOptions(['defaultFont' => 'sans-serif']);
+        // dd('done');
         $pdfPath = $pdf->save(public_path($pdf_name));
-        dd("sent");
+        // dd("sent");
         $mail_subject = "Invoice for Month of ".$invoice_month;
         $pdfContent = $pdf->output();
         Mail::send('invoices.email-template', $data, function ($message) use ($mail_subject, $client_email, $pdfContent) {
@@ -102,13 +106,21 @@ class InvoiceController extends Controller
         });
 
 
+
         $invoice = new Invoice();
         $invoice->invoice_id = $invoice_number;
         $invoice->client_name = $client_name;
         $invoice->status = "done";
+        $invoice->period = $invoice_month;
+        $invoice->description = $invoice_description;
+        $invoice->due_date = $invoice_due_date;
+        $invoice->payment_method = $invoice_method;
+        $invoice->profit = $invoice_profit;
+        $invoice->additional_notes = $invoice_notes;
+
         $invoice->pdf_path = $pdf_name;
         $invoice->date = date('Y-m-d');
-        $invoice->client_id  = $id;
+        $invoice->client_id  = $client_id;
         $invoice->amount = $invoice_amount;
         $invoice->save();
 
@@ -144,6 +156,26 @@ class InvoiceController extends Controller
             } else {
                 return redirect('/view-invoices')->with('not_found','No record found!');
             }
+    }
+
+    // view invoice on browser
+    public function previewOnBrowser($id) {
+        $in = DB::table('invoices')->where('id',$id)->first();
+        $client = DB::table('clients')->where('client_id',$data->client_id)->first();
+
+        $invoice_number = $in->invoice_id;
+        $client_name = $client->client_name;
+        $client_phone = $client->client_phone;
+        $client_email = $client->client_email;
+        $invoice_month = $in->period;
+        $invoice_description = $in->description;
+        $invoice_profit = $in->profit;
+        $invoice_amount = $in->amount;
+
+        return view('invoices.browser-invoice');
+
+        // $pdf = PDF::loadView('invoices.browser-invoice.blade')->setOptions(['defaultFont' => 'sans-serif']);
+        // dd($data);
     }
 
 }

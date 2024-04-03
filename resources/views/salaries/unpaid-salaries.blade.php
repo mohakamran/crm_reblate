@@ -75,14 +75,14 @@
                                             {{-- {{file_exists($pdf)}} --}}
                                         </td>
                                         @php
-                                            $pdfPath = 'generated-salaries/' . $emp->Emp_Code . '_' . date('m_Y') . '.pdf';
+                                            $pdfPath = 'generated-salaries/' . $emp->Emp_Code . '_' . $last_month_date . '.pdf';
                                             // echo $pdfPath;
                                         @endphp
                                         <td>
-                                            @if (file_exists(public_path($pdfPath)))
-                                                <label class="text-primary">Salary Slip Sent</label>
+                                            @if ( file_exists($pdfPath) )
+                                                <label class="text-primary">Sent</label>
                                             @else
-                                                <label class="text-danger">Salary Slip Not Sent</label>
+                                                <label class="text-danger">Not Sent</label>
                                             @endif
                                         </td>
                                             @php $count++; @endphp

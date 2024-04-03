@@ -111,6 +111,18 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" type="text" placeholder="text" name="client_id"
+                                            disabled value="{{ $client->client_id }}">
+                                        <input type="hidden" value="{{ $client->client_id }}"
+                                            name="client_id">
+                                        <label for="">Client ID</label>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <h3>Invoice Details</h3>
                             <hr>

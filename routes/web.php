@@ -145,6 +145,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/send-invoice/{id}',[InvoiceController::class,'sendInvoice']);
     Route::get('/view-invoices',[InvoiceController::class,'viewInvoices']);
     Route::get('/preview-invoices/{id}',[InvoiceController::class,'viewIndividualInvoices']);
+    Route::get('/preview/{id}',[InvoiceController::class,'previewOnBrowser']);
 
     // logins
     Route::get('/create-new-login',[LoginController::class,'createLoginView']);
@@ -233,7 +234,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/task-update/{id}',[TaskController::class, 'taskUpdateForm']);
     Route::post('/task-save-update/{id}',[TaskController::class, 'taskUpdateDatabase']);
     Route::post('/save_task_database',[TaskController::class, 'taskSaveDatabase']);
+
+
     Route::get('/view_reports',[ReportingController::class, 'viewReports']);
+    Route::post('/saveReportsDatabase', [ReportingController::class, 'saveReportsDatabase']);
 
     // projectController
 

@@ -35,6 +35,19 @@
                             <div class="row">
                                 <div class="col-md-6 col-xl-6 ">
                                     <h3 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Client Details </h3>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-floating mb-3">
+                                                <input class="form-control" style="border:1px solid #c7c7c7;" type="text" placeholder="text" name="client_id"
+                                                    disabled value="{{ $client->client_id }}">
+                                                <input type="hidden" value="{{ $client->client_id }}"
+                                                    name="client_id">
+                                                <label for="">Client ID</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
@@ -101,6 +114,10 @@
                                         </div>
 
                                     </div>
+
+
+
+
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
