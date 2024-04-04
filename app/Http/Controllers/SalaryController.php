@@ -27,11 +27,19 @@ class SalaryController extends Controller
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
 
+        // $currentMonth = Carbon::now()->subMonth()->month;
+        // dd($currentMonth);
+
+
         $rankedEmployees = DB::table('salaries')
             ->whereYear('date', $currentYear)
             ->whereMonth('date', $currentMonth)
             ->orderByDesc('amount')
             ->get();
+
+            // echo $rankedEmployees;
+
+        // dd($rankedEmployees);
 
         if ($rankedEmployees->isEmpty()) {
             echo "No records found for the current month and year.";

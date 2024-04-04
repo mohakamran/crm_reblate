@@ -66,20 +66,22 @@
 
             .punch-info .punch-hours {
                 border: 5px solid #fca311;
-                font-size: 18px;
-                height: 120px;
-                width: 120px;
+                /* font-size: 20px; */
+                height: 74px;
+                width: 275px;
                 margin: 0 auto;
-                border-radius: 50%;
+                border-radius: 2%;
                 position: relative;
             }
+
+
 
             .punch-hours span {
                 position: absolute;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                font-size: 14px;
+                font-size: 19px;
             }
 
             .view-class-more {
@@ -475,7 +477,7 @@
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4 d-flex align-items-center gap-3">
                                 <h3 class="fs-4 font-size-18 mb-0" style="color:#14213d;">Total Leaves</h3>
-                                <p class="font-size-15 mb-0 flex-grow-1">15</p>
+                                <p class="font-size-15 mb-0 flex-grow-1">{{$total_leaves}}</p>
 
                                 <p style="position: absolute;bottom: 5px; color:gray; font-size: 12px; margin-bottom: 0;">
                                     Total Allowed leaves are 15 per year</p>
@@ -578,28 +580,32 @@
             </div>
             <div class="col-md-4 col-sm-12">
                 <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="card-body" style="min-height: 340px;">
+                        <div class="d-flex justify-content-between align-items-center ">
                             <h3 class=" font-size-header mb-0">Timesheet </h3>
-                            <div id="timer" class="text-center timer">00:00:00</div>
+                            {{-- <div id="timer" class="text-center timer">00:00:00</div> --}}
                         </div>
                         {{-- show check in time if it is done  --}}
                         {{-- @if (session()->has('check_in_time') && session('check_in_time') != '')
                                 <h3 class="check_in_time">Check In Time: {{ session('check_in_time') }}</h3>
                             @endif --}}
-                        <div class="punch-info">
-                            <div class="punch-hours">
+                            <div class="punch-info" style="margin-top: 15px;">
+                                <div class="punch-hours">
                                 @if (session()->has('total_hours') && session('total_hours') != '')
-                                    <span style="float: right;">{{ session('total_hours') }}</span>
+
+                                       <span style="float: right;">{{ session('total_hours') }}</span>
+
                                 @else
-                                    <span>0 hrs</span>
+                                    {{-- <span>0 hrs</span> --}}
+
+                                        <span id="timer" class="text-center timer">00:00:00</span>
+
+                                    {{-- <div id="timer" class="text-center timer">00:00:00</div> --}}
                                 @endif
-
-
                             </div>
-                        </div>
 
-                        @if (isset($day_message) && $day_message != '')
+
+                            @if (isset($day_message) && $day_message != '')
                             <span class="text-center text-danger">{{ $day_message }}</span>
                         @endif
                         @if (isset($check_in_already_message) && $check_in_already_message != '')
@@ -609,9 +615,9 @@
                             <span class="text-center green-text">{{ $success_message }}</span>
                         @endif
 
-                        <div class="break-time d-flex align-items-center justify-content-between my-3">
-                            <p class="mb-0 font-size-15">Target Working Hours</p>
-                            <p class="mb-0 font-size-15">7:00 / Day</p>
+                        <div class="break-time d-flex align-items-center justify-content-between my-3 " >
+                            <p class="mb-0 font-size-15" style="margin-top:45px;">Target Working Hours</p>
+                            <p class="mb-0 font-size-15" style="margin-top:45px;">7:00 / Day</p>
                         </div>
                         @if (session()->has('attendence_status') && session('attendence_status') === true)
                             <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
@@ -684,6 +690,12 @@
                             <a href="/view-attendence" style="color:#fca311; border-bottom:1px solid #14213d;">View
                                 Attendence</a>
                         </div>
+
+
+                            </div>
+                        </div>
+
+
 
                     </div>
                 </div>

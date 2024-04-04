@@ -469,7 +469,7 @@ class AuthController extends Controller
         $currentYear = now()->year;
 
         $attendanceCount = DB::table('attendence')
-        ->where('check_out_status', 'done')
+        ->where('check_in_status', 'done')
         ->where('emp_id', $user_code)
         ->whereMonth('date', $currentMonth)
         ->whereYear('date', $currentYear)
@@ -538,12 +538,16 @@ class AuthController extends Controller
     public function totalLeaves() {
         $user_code = auth()->user()->user_code;
         $total_leaves = DB::table('leaves')
-        ->where('emp_code', $user_code)
-        ->where('status', 'approved')
-        ->get();
-        if($total_leaves ==null ) {
+            ->where('emp_code', $user_code)
+            ->where('status', 'approved')
+            ->get();
+
+        if ($total_leaves->isEmpty()) {
             $total_leaves = 0;
+        } else {
+            $total_leaves = $total_leaves->count();
         }
+
         return $total_leaves;
     }
     // attendence report
@@ -758,8 +762,13 @@ class AuthController extends Controller
             $total_present_day = $this->getAttendenceDetails();
             // $total_present_day = 10;
             // dd($dat);
-            $absent_days = 22 - $total_present_day;
+            $absent_days = $this->getAbsent();
+            // dd($absent_days);
+            $total_work_days_in_month = $this->getTotalDaysWork();
+            // dd($total_work_days_in_month);
+            // $absent_days = $total_work_days_in_month - $total_present_day;
             $total_leaves = $this->totalLeaves();
+            // dd($total_leaves);
 
             // get latest tasks details
             $task_details = $this->getTasksDetails();
@@ -968,8 +977,13 @@ class AuthController extends Controller
             $total_present_day = $this->getAttendenceDetails();
             // $total_present_day = 10;
             // dd($dat);
-            $absent_days = 22 - $total_present_day;
+            $absent_days = $this->getAbsent();
+            // dd($absent_days);
+            $total_work_days_in_month = $this->getTotalDaysWork();
+            // dd($total_work_days_in_month);
+            // $absent_days = $total_work_days_in_month - $total_present_day;
             $total_leaves = $this->totalLeaves();
+            // dd($total_leaves);
 
             // get latest tasks details
             $task_details = $this->getTasksDetails();
@@ -1119,6 +1133,98 @@ class AuthController extends Controller
         }
 
     }
+
+    public function getTotalDaysWork() {
+        try {
+            // Get current month and year
+            $currentMonth = now()->month;
+            $currentYear = now()->year;
+
+            // Get the first and last day of the current month
+            $firstDayOfMonth = now()->firstOfMonth();
+            $lastDayOfMonth = now()->endOfMonth();
+
+            // Initialize count of work days
+            $workDayCount = 0;
+
+            // Iterate through each day of the month
+            $currentDate = $firstDayOfMonth;
+            while ($currentDate <= $lastDayOfMonth) {
+                // Check if the current day is a weekday (Monday to Friday)
+                if ($currentDate->isWeekday()) {
+                    // Increment the count of work days
+                    $workDayCount++;
+                }
+                // Move to the next day
+                $currentDate->addDay();
+            }
+
+            return $workDayCount;
+        } catch (\Exception $e) {
+            // Log or handle the exception
+            return 0; // or throw $e; depending on your requirements
+        }
+    }
+
+
+    // get attendence
+    public function getAbsent() {
+        try {
+            // Get the user code
+            $user = auth()->user();
+            if (!$user) {
+                throw new \Exception("User not authenticated.");
+            }
+            $user_code = $user->user_code;
+
+            // Get current month and year
+            $currentMonth = now()->month;
+            $currentYear = now()->year;
+
+            // Get all attendance records for the current month and year
+            $attendanceRecords = DB::table('attendence')
+                ->where('emp_id', $user_code)
+                ->whereMonth('date', $currentMonth)
+                ->whereYear('date', $currentYear)
+                ->get();
+
+                // dd($attendanceRecords);
+
+            // Initialize absent count
+            $absentCount = 0;
+
+
+
+            // Get the current day
+            $currentDay = now()->day;
+
+            // Loop through each day of the month until the previous day of the current date
+            for ($day = 1; $day <= $currentDay; $day++) {
+                $date = now()->setDay($day);
+
+                if ($date->dayOfWeek === 0 || $date->dayOfWeek === 6) {
+                    // If it's a Saturday or Sunday, skip to the next iteration
+                    continue;
+                }
+
+                // echo "<br> Date: ".$date;
+
+                // Check if there is an attendance record for the current date
+                $record = $attendanceRecords->where('date', $date->format('Y-m-d'))->first();
+
+                // If there is no record or check_out_status is null, consider it absent
+                if (!$record || is_null($record->check_in_status)) {
+                    $absentCount++;
+                }
+            }
+
+            return $absentCount;
+        } catch (\Exception $e) {
+            // Log or handle the exception
+            return 0; // or throw $e; depending on your requirements
+        }
+    }
+
 
     //get tasks
     public function getEmpTasks() {
