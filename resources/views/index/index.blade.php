@@ -551,23 +551,27 @@
                                                             <th>Shift</th>
                                                             <th>See Details</th>
                                                         </tr>
-                                                        @foreach($currentTasks as $task)
-                                                        <tr>
-                                                            <td style="width: 20px;">#{{ $task['id'] }}</td>
-                                                            <td>
-                                                                <img src="{{ $task['image'] }}" class="avatar-xs rounded-circle me-2" alt="Employee Image">
-                                                                {{ $task['name'] }}
-                                                            </td>
-                                                            <td>
-                                                                <h6 class="text-muted mb-0 font-size-14">{{ $task['task_title'] }}</h6>
-                                                            </td>
-                                                            <td>
-                                                                <span class="badge badge-{{ $task['shift_time'] == 'Morning' ? 'soft-primary' : 'soft-success' }} font-size-12">{{ $task['shift_time'] }}</span>
-                                                            </td>
-                                                            <td>
-                                                                <a href="#">See more</a>
-                                                            </td>
-                                                        </tr>
+                                                        @foreach ($currentTasks as $task)
+                                                            <tr>
+                                                                <td style="width: 20px;">#{{ $task['id'] }}</td>
+                                                                <td>
+                                                                    <img src="{{ $task['image'] }}"
+                                                                        class="avatar-xs rounded-circle me-2"
+                                                                        alt="Employee Image">
+                                                                    {{ $task['name'] }}
+                                                                </td>
+                                                                <td>
+                                                                    <h6 class="text-muted mb-0 font-size-14">
+                                                                        {{ $task['task_title'] }}</h6>
+                                                                </td>
+                                                                <td>
+                                                                    <span
+                                                                        class="badge badge-{{ $task['shift_time'] == 'Morning' ? 'soft-primary' : 'soft-success' }} font-size-12">{{ $task['shift_time'] }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#">See more</a>
+                                                                </td>
+                                                            </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>
@@ -1557,30 +1561,27 @@
 
         <script>
             // Sample data for absent, present, and leaves
-            var data = {
-                labels: ['Absent', 'Present', 'Leaves'],
-                datasets: [{
-                    data: [<?php echo $emp_absent_count; ?>, <?php echo $emp_present_count; ?>, <?php echo $emp_leave_count; ?>],
-                    backgroundColor: ['#dc3545', '#28a745', '#ffc107']
-                }]
-            };
 
-            // Configuration options
-            var options = {
-                cutoutPercentage: 70,
-                responsive: false, // Set to true for responsiveness
-                legend: {
-                    display: true,
-                    position: 'right'
-                }
-            };
 
             // Create the chart
             var ctx = document.getElementById('attendenceRecord').getContext('2d');
             var myDonutChart = new Chart(ctx, {
                 type: 'doughnut',
-                data: data,
-                options: options
+                data: {
+                    labels: ['Present', 'Absent', 'Leaves'],
+                    datasets: [{
+                        data: [<?php echo $emp_present_count; ?>, <?php echo $emp_absent_count; ?>, <?php echo $emp_leave_count; ?>],
+                        backgroundColor: ['#28a745', '#dc3545', '#ffc107']
+                    }]
+                },
+                options: {
+                    cutoutPercentage: 70,
+                    responsive: false, // Set to true for responsiveness
+                    legend: {
+                        display: true,
+                        position: 'right'
+                    }
+                },
             });
         </script>
 

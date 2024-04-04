@@ -43,9 +43,20 @@
                     <a href="/" class="waves-effect">
                         <i class="uim uim-airplay"></i>
                         <span>Dashboard</span>
-                    </a>|
+                    </a>
                 </li>
-
+                <li>
+                    <a href="/view_info_emp" class="waves-effect">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11s11-4.925 11-11S18.075 1 12 1m-.5 5a1 1 0 1 0 0 2h.5a1 1 0 1 0 0-2zM10 10a1 1 0 1 0 0 2h1v3h-1a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-1v-4a1 1 0 0 0-1-1z" clip-rule="evenodd"/></svg>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/view-emp-tasks-each" class="waves-effect">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24"><path fill="white" d="M3 6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm1.5 4.5h4v-4h-4Zm8.25-5a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5zm0 6a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5zm0 6a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5zm-2.97-2.53a.75.75 0 0 1 0 1.06l-3.5 3.5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l2.97-2.97a.75.75 0 0 1 1.06 0"/></svg>
+                        <span>Tasks</span>
+                    </a>
+                </li>
                 @if (auth()->user()->user_type == 'employee')
                     <li>
                         <a href="/view-my-slips" class="waves-effect">
@@ -68,7 +79,7 @@
 
                 <li>
                     <a href="/view_reports" class="waves-effect">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 20 20"><path fill="#06a503" fill-rule="evenodd" d="M6 2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7.414A2 2 0 0 0 15.414 6L12 2.586A2 2 0 0 0 10.586 2zm2 10a1 1 0 1 0-2 0v3a1 1 0 1 0 2 0zm2-3a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0v-5a1 1 0 0 1 1-1m4-1a1 1 0 1 0-2 0v7a1 1 0 1 0 2 0z" clip-rule="evenodd"/></svg>
+                        <svg fill="#fff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 60 60" xml:space="preserve" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M47.5,58h-42V2h31v10c0,0.6,0.4,1,1,1h10v25h2V12l0,0c0-0.1,0-0.2-0.1-0.3v-0.1c-0.1-0.1-0.1-0.2-0.2-0.3l-11-11 c-0.1-0.1-0.2-0.1-0.3-0.2h-0.1c-0.1,0-0.2-0.1-0.3-0.1l0,0h-33c-0.6,0-1,0.4-1,1v58c0,0.6,0.4,1,1,1h44c0.6,0,1-0.4,1-1v-3h-2V58 z M46.1,11h-7.6V3.4L46.1,11z"></path> <path d="M55.5,45h-4v-3c0-0.6-0.4-1-1-1h-18v2h17v2h-5h-27c-0.2,0-0.4,0.1-0.6,0.2l-6.8,2.9c-0.4,0.1-0.6,0.5-0.6,0.9 s0.2,0.8,0.6,0.9l6.8,2.9c0.1,0.1,0.2,0.1,0.3,0.1c0.1,0,0.2,0.1,0.3,0.1h27h11c0.6,0,1-0.4,1-1v-6C56.5,45.4,56.1,45,55.5,45z M16.5,47.5v3L13,49L16.5,47.5z M18.5,47h25v4h-25V47z M54.5,51h-9v-4h9V51z"></path> <rect x="9.5" y="36" width="3" height="2"></rect> <rect x="15.5" y="36" width="3" height="2"></rect> <rect x="21.5" y="36" width="3" height="2"></rect> <rect x="9.5" y="41" width="3" height="2"></rect> <rect x="15.5" y="41" width="3" height="2"></rect> <rect x="21.5" y="41" width="3" height="2"></rect> <rect x="27.5" y="36" width="16" height="2"></rect> <rect x="9.5" y="31" width="34" height="2"></rect> <rect x="9.5" y="26" width="34" height="2"></rect> <rect x="9.5" y="21" width="34" height="2"></rect> <rect x="9.5" y="16" width="16" height="2"></rect> <rect x="9.5" y="6" width="5" height="2"></rect> <rect x="9.5" y="10" width="9" height="2"></rect> </g> </g> </g></svg>
                         <span>Daily Reporting</span>
                     </a>
                 </li>
@@ -79,13 +90,6 @@
                     </a>
                 </li> --}}
 
-
-                <li>
-                    <a href="/view-emp-tasks-each" class="waves-effect">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24"><path fill="white" d="M3 6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm1.5 4.5h4v-4h-4Zm8.25-5a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5zm0 6a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5zm0 6a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5zm-2.97-2.53a.75.75 0 0 1 0 1.06l-3.5 3.5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l2.97-2.97a.75.75 0 0 1 1.06 0"/></svg>
-                        <span>Tasks</span>
-                    </a>
-                </li>
 
                 {{-- employee access --}}
                 @if (Session::has('employees_access'))

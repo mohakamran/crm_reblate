@@ -43,52 +43,16 @@
                     <a href="/" class="waves-effect">
                         <i class="uim uim-airplay"></i>
                         <span>Dashboard</span>
-                    </a>|
+                    </a>
                 </li>
-
-                @if ( (auth()->user()->user_type == 'manager'))
-                    <li>
-                        <a href="/view-my-slips" class="waves-effect">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
-                                <path fill="#fff"
-                                    d="M12.32 8a3 3 0 0 0-2-.7H5.63A1.59 1.59 0 0 1 4 5.69a2 2 0 0 1 0-.25a1.59 1.59 0 0 1 1.63-1.33h4.62a1.59 1.59 0 0 1 1.57 1.33h1.5a3.08 3.08 0 0 0-3.07-2.83H8.67V.31H7.42v2.3H5.63a3.08 3.08 0 0 0-3.07 2.83a2.09 2.09 0 0 0 0 .25a3.07 3.07 0 0 0 3.07 3.07h4.74A1.59 1.59 0 0 1 12 10.35a1.86 1.86 0 0 1 0 .34a1.59 1.59 0 0 1-1.55 1.24h-4.7a1.59 1.59 0 0 1-1.55-1.24H2.69a3.08 3.08 0 0 0 3.06 2.73h1.67v2.27h1.25v-2.27h1.7a3.08 3.08 0 0 0 3.06-2.73v-.34A3.06 3.06 0 0 0 12.32 8" />
-                            </svg>
-                            <span> My Salary Slips</span>
-                        </a>
-                    </li>
-                @endif
-                @if (auth()->user()->user_type == 'manager')
-                    <li>
-                        <a href="/leave-requests" class="waves-effect">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 48 48"><path fill="#ffcdd2" d="M5 38V14h38v24c0 2.2-1.8 4-4 4H9c-2.2 0-4-1.8-4-4"/><path fill="#f44336" d="M43 10v6H5v-6c0-2.2 1.8-4 4-4h30c2.2 0 4 1.8 4 4"/><g fill="#b71c1c"><circle cx="33" cy="10" r="3"/><circle cx="15" cy="10" r="3"/></g><path fill="#bdbdbd" d="M33 3c-1.1 0-2 .9-2 2v5c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2M15 3c-1.1 0-2 .9-2 2v5c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2"/><path fill="#f44336" d="M22.2 35.3c0-.2 0-.5.1-.7c.1-.2.2-.4.4-.5s.3-.3.5-.3c.2-.1.5-.1.7-.1s.5 0 .7.1l.6.3c.2.1.3.3.4.5c.1.2.1.4.1.7c0 .2 0 .5-.1.7c-.1.2-.2.4-.4.5c-.2.1-.3.3-.6.3s-.3.2-.6.2s-.5 0-.7-.1c-.2-.1-.4-.2-.5-.3c-.2-.1-.3-.3-.4-.5c-.1-.3-.2-.5-.2-.8m3.1-4.3h-2.6l-.4-11h3.3z"/></svg>
-                            <span>Leaves</span>
-                        </a>
-                    </li>
-                @endif
-
                 <li>
                     <a href="/view_info_emp" class="waves-effect">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11s11-4.925 11-11S18.075 1 12 1m-.5 5a1 1 0 1 0 0 2h.5a1 1 0 1 0 0-2zM10 10a1 1 0 1 0 0 2h1v3h-1a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-1v-4a1 1 0 0 0-1-1z" clip-rule="evenodd"/></svg>
-                        <span>Update Info</span>
+                        <span>Profile</span>
                     </a>
                 </li>
-                {{-- <li>
-                    <a href="/mark-attendence" class="waves-effect">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 12h5v5h-5zm7-9h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m0 2v2H5V5zM5 19V9h14v10z"/></svg>
-                        <span>Attendence</span>
-                    </a>
-                </li> --}}
-
-
                 <li>
-                    <a href="/view-emp-tasks-each" class="waves-effect">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24"><path fill="white" d="M3 6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm1.5 4.5h4v-4h-4Zm8.25-5a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5zm0 6a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5zm0 6a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5zm-2.97-2.53a.75.75 0 0 1 0 1.06l-3.5 3.5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l2.97-2.97a.75.75 0 0 1 1.06 0"/></svg>
-                        <span>Tasks</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/manage-employees" class="waves-effect">
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
                             <path fill="currentColor"
                                 d="M12 16.14h-.87a8.67 8.67 0 0 0-6.43 2.52l-.24.28v8.28h4.08v-4.7l.55-.62l.25-.29a11 11 0 0 1 4.71-2.86A6.59 6.59 0 0 1 12 16.14Z"
@@ -109,11 +73,102 @@
                                 class="clr-i-solid clr-i-solid-path-6" />
                             <path fill="none" d="M0 0h36v36H0z" />
                         </svg>
-                        <span>Employees</span>
+                        <span>All Employees</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li>
+                            <a href="/manage-employees" class="waves-effect">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+                                    <path fill="currentColor"
+                                        d="M12 16.14h-.87a8.67 8.67 0 0 0-6.43 2.52l-.24.28v8.28h4.08v-4.7l.55-.62l.25-.29a11 11 0 0 1 4.71-2.86A6.59 6.59 0 0 1 12 16.14Z"
+                                        class="clr-i-solid clr-i-solid-path-1" />
+                                    <path fill="currentColor"
+                                        d="M31.34 18.63a8.67 8.67 0 0 0-6.43-2.52a10.47 10.47 0 0 0-1.09.06a6.59 6.59 0 0 1-2 2.45a10.91 10.91 0 0 1 5 3l.25.28l.54.62v4.71h3.94v-8.32Z"
+                                        class="clr-i-solid clr-i-solid-path-2" />
+                                    <path fill="currentColor"
+                                        d="M11.1 14.19h.31a6.45 6.45 0 0 1 3.11-6.29a4.09 4.09 0 1 0-3.42 6.33Z"
+                                        class="clr-i-solid clr-i-solid-path-3" />
+                                    <path fill="currentColor"
+                                        d="M24.43 13.44a6.54 6.54 0 0 1 0 .69a4.09 4.09 0 0 0 .58.05h.19A4.09 4.09 0 1 0 21.47 8a6.53 6.53 0 0 1 2.96 5.44Z"
+                                        class="clr-i-solid clr-i-solid-path-4" />
+                                    <circle cx="17.87" cy="13.45" r="4.47" fill="currentColor"
+                                        class="clr-i-solid clr-i-solid-path-5" />
+                                    <path fill="currentColor"
+                                        d="M18.11 20.3A9.69 9.69 0 0 0 11 23l-.25.28v6.33a1.57 1.57 0 0 0 1.6 1.54h11.49a1.57 1.57 0 0 0 1.6-1.54V23.3l-.24-.3a9.58 9.58 0 0 0-7.09-2.7Z"
+                                        class="clr-i-solid clr-i-solid-path-6" />
+                                    <path fill="none" d="M0 0h36v36H0z" />
+                                </svg>
+                                <span>Employees</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="waves-effect" href="/view-tasks">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem"
+                                    viewBox="0 0 24 24">
+                                    <path fill="none" stroke="white" stroke-width="2"
+                                        d="M12 20h12m-12-8h12M12 4h12M1 19l3 3l5-5m-8-6l3 3l5-5m0-8L4 6L1 3" />
+                                </svg>
+                                Tasks
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="waves-effect" href="/view-emp-attendence"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="1.2rem" height="1.2rem" viewBox="0 0 512 512">
+                                    <path fill="#f9e7c0"
+                                        d="M437.567 512H88.004a8.182 8.182 0 0 1-8.182-8.182V8.182A8.182 8.182 0 0 1 88.004 0H437.83a7.92 7.92 0 0 1 7.92 7.92v495.898a8.183 8.183 0 0 1-8.183 8.182" />
+                                    <path fill="#597b91"
+                                        d="M368.727 92.401H126.453c-6.147 0-11.13-4.983-11.13-11.13s4.983-11.13 11.13-11.13h242.273c6.146 0 11.13 4.983 11.13 11.13s-4.983 11.13-11.129 11.13m-40.597 61.723c0-6.147-4.983-11.13-11.13-11.13H126.453c-6.147 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13H317c6.146 0 11.13-4.983 11.13-11.13m-96.935 72.854c0-6.147-4.983-11.13-11.13-11.13h-93.612c-6.147 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13h93.612c6.147-.001 11.13-4.983 11.13-11.13m109.051 72.853c0-6.146-4.983-11.13-11.13-11.13H126.453c-6.147 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13h202.663c6.147 0 11.13-4.983 11.13-11.13m49.884-72.853c0-6.147-4.983-11.13-11.13-11.13H276.612c-6.146 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13H379c6.146-.001 11.13-4.983 11.13-11.13m-92.38 145.707c0-6.146-4.983-11.13-11.13-11.13H126.453c-6.147 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13H286.62c6.147-.001 11.13-4.984 11.13-11.13m66.504 72.853c0-6.146-4.983-11.13-11.13-11.13H126.453c-6.147 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13h226.671c6.147 0 11.13-4.983 11.13-11.13m25.876-72.853c0-6.146-4.983-11.13-11.13-11.13h-51.752c-6.146 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13H379c6.146-.001 11.13-4.984 11.13-11.13" />
+                                </svg>
+                                Attendence
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/view-login" class=" waves-effect">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24">
+                                    <path fill="currentColor"
+                                        d="M6 22q-.825 0-1.412-.587T4 20V10q0-.825.588-1.412T6 8h1V6q0-2.075 1.463-3.537T12 1q2.075 0 3.538 1.463T17 6v2h1q.825 0 1.413.588T20 10v10q0 .825-.587 1.413T18 22zm6-5q.825 0 1.413-.587T14 15q0-.825-.587-1.412T12 13q-.825 0-1.412.588T10 15q0 .825.588 1.413T12 17M9 8h6V6q0-1.25-.875-2.125T12 3q-1.25 0-2.125.875T9 6z" />
+                                </svg>
+                                <span> Employee Logins </span>
+                            </a>
+
+                        </li>
+                        @if (auth()->user()->user_type == 'manager')
+                        <li>
+                            <a href="/leave-requests" class="waves-effect">
+                                <svg fill="#fff" height="200px" width="200px" version="1.1" id="Capa_1"
+                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    viewBox="0 0 55 55" xml:space="preserve" stroke="#fff">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <g>
+                                            <path
+                                                d="M54.924,24.382c0.101-0.244,0.101-0.519,0-0.764c-0.051-0.123-0.125-0.234-0.217-0.327L42.708,11.293 c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414L51.587,23H36.001V1c0-0.553-0.447-1-1-1h-34 c-0.032,0-0.06,0.015-0.091,0.018C0.854,0.023,0.805,0.036,0.752,0.05C0.658,0.075,0.574,0.109,0.493,0.158 C0.467,0.174,0.435,0.174,0.411,0.192C0.38,0.215,0.356,0.244,0.328,0.269c-0.017,0.016-0.035,0.03-0.051,0.047 C0.201,0.398,0.139,0.489,0.093,0.589c-0.009,0.02-0.014,0.04-0.022,0.06C0.029,0.761,0.001,0.878,0.001,1v46 c0,0.125,0.029,0.243,0.072,0.355c0.014,0.037,0.035,0.068,0.053,0.103c0.037,0.071,0.079,0.136,0.132,0.196 c0.029,0.032,0.058,0.061,0.09,0.09c0.058,0.051,0.123,0.093,0.193,0.13c0.037,0.02,0.071,0.041,0.111,0.056 c0.017,0.006,0.03,0.018,0.047,0.024l22,7C22.797,54.984,22.899,55,23.001,55c0.21,0,0.417-0.066,0.59-0.192 c0.258-0.188,0.41-0.488,0.41-0.808v-6h11c0.553,0,1-0.447,1-1V25h15.586L41.294,35.293c-0.391,0.391-0.391,1.023,0,1.414 C41.489,36.902,41.745,37,42.001,37s0.512-0.098,0.707-0.293l11.999-11.999C54.799,24.616,54.873,24.505,54.924,24.382z M22.001,52.633l-20-6.364V2.367l20,6.364V52.633z M34.001,46h-10V8c0-0.436-0.282-0.821-0.697-0.953L7.442,2h26.559V46z">
+                                            </path>
+                                            <path
+                                                d="M20.372,31.071l-5-2c-0.509-0.205-1.095,0.043-1.3,0.558c-0.205,0.513,0.045,1.095,0.558,1.3l5,2 C19.751,32.978,19.877,33,20.001,33c0.396,0,0.772-0.237,0.929-0.629C21.134,31.858,20.884,31.276,20.372,31.071z">
+                                            </path>
+                                        </g>
+                                    </g>
+                                </svg>
+                                <span>Leaves</span>
+                            </a>
+                        </li>
+                        @endif
+
+                        <li>
+                            <a href="/view-slips" class=" waves-effect">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><path fill="#fff" d="M12.32 8a3 3 0 0 0-2-.7H5.63A1.59 1.59 0 0 1 4 5.69a2 2 0 0 1 0-.25a1.59 1.59 0 0 1 1.63-1.33h4.62a1.59 1.59 0 0 1 1.57 1.33h1.5a3.08 3.08 0 0 0-3.07-2.83H8.67V.31H7.42v2.3H5.63a3.08 3.08 0 0 0-3.07 2.83a2.09 2.09 0 0 0 0 .25a3.07 3.07 0 0 0 3.07 3.07h4.74A1.59 1.59 0 0 1 12 10.35a1.86 1.86 0 0 1 0 .34a1.59 1.59 0 0 1-1.55 1.24h-4.7a1.59 1.59 0 0 1-1.55-1.24H2.69a3.08 3.08 0 0 0 3.06 2.73h1.67v2.27h1.25v-2.27h1.7a3.08 3.08 0 0 0 3.06-2.73v-.34A3.06 3.06 0 0 0 12.32 8"/></svg>
+                                <span> Salary Slips</span>
+                            </a>
+                        </li>
+
+                    </ul>
                 </li>
-
-
                 <li>
                     <a href="/view-expenses" class=" waves-effect">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
@@ -141,11 +196,6 @@
                         </svg>
                         <span>Expenses</span>
                     </a>
-                    {{-- <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="/view-expenses">View</a></li>
-                        <li><a href="/add-new-expense">Add New</a></li>
-                    </ul> --}}
-
                 </li>
 
                 <li>
@@ -164,40 +214,7 @@
                         </svg>
                         <span>Clients</span>
                     </a>
-                    {{-- <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="/view-clients">View</a></li>
-                        <li><a href="/add-new-client">Add New</a></li>
-                    </ul> --}}
-
                 </li>
-
-                <li>
-                    <a href="/view-slips" class=" waves-effect">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><path fill="#fff" d="M12.32 8a3 3 0 0 0-2-.7H5.63A1.59 1.59 0 0 1 4 5.69a2 2 0 0 1 0-.25a1.59 1.59 0 0 1 1.63-1.33h4.62a1.59 1.59 0 0 1 1.57 1.33h1.5a3.08 3.08 0 0 0-3.07-2.83H8.67V.31H7.42v2.3H5.63a3.08 3.08 0 0 0-3.07 2.83a2.09 2.09 0 0 0 0 .25a3.07 3.07 0 0 0 3.07 3.07h4.74A1.59 1.59 0 0 1 12 10.35a1.86 1.86 0 0 1 0 .34a1.59 1.59 0 0 1-1.55 1.24h-4.7a1.59 1.59 0 0 1-1.55-1.24H2.69a3.08 3.08 0 0 0 3.06 2.73h1.67v2.27h1.25v-2.27h1.7a3.08 3.08 0 0 0 3.06-2.73v-.34A3.06 3.06 0 0 0 12.32 8"/></svg>
-                        <span> Salary Slips</span>
-                    </a>
-                    {{-- <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="/view-slips">View</a></li>
-                        <li><a href="/generate-new-salary-slip">Add New</a></li>
-                    </ul> --}}
-
-                </li>
-
-                <li>
-                    <a href="/view-login" class=" waves-effect">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M6 22q-.825 0-1.412-.587T4 20V10q0-.825.588-1.412T6 8h1V6q0-2.075 1.463-3.537T12 1q2.075 0 3.538 1.463T17 6v2h1q.825 0 1.413.588T20 10v10q0 .825-.587 1.413T18 22zm6-5q.825 0 1.413-.587T14 15q0-.825-.587-1.412T12 13q-.825 0-1.412.588T10 15q0 .825.588 1.413T12 17M9 8h6V6q0-1.25-.875-2.125T12 3q-1.25 0-2.125.875T9 6z" />
-                        </svg>
-                        <span> Employee Logins </span>
-                    </a>
-                    {{-- <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="/view-login">View</a></li>
-                        <li><a href="/create-new-login">Create</a></li>
-                    </ul> --}}
-                </li>
-
-
 
                 <li>
                     <a class="waves-effect" href="/office-time">
@@ -205,21 +222,25 @@
                        Office Times
                     </a>
                 </li>
-
+                @if ( (auth()->user()->user_type == 'manager'))
                 <li>
-                    <a class="waves-effect" href="/view-emp-attendence"><svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" viewBox="0 0 512 512"><path fill="#f9e7c0" d="M437.567 512H88.004a8.182 8.182 0 0 1-8.182-8.182V8.182A8.182 8.182 0 0 1 88.004 0H437.83a7.92 7.92 0 0 1 7.92 7.92v495.898a8.183 8.183 0 0 1-8.183 8.182"/><path fill="#597b91" d="M368.727 92.401H126.453c-6.147 0-11.13-4.983-11.13-11.13s4.983-11.13 11.13-11.13h242.273c6.146 0 11.13 4.983 11.13 11.13s-4.983 11.13-11.129 11.13m-40.597 61.723c0-6.147-4.983-11.13-11.13-11.13H126.453c-6.147 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13H317c6.146 0 11.13-4.983 11.13-11.13m-96.935 72.854c0-6.147-4.983-11.13-11.13-11.13h-93.612c-6.147 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13h93.612c6.147-.001 11.13-4.983 11.13-11.13m109.051 72.853c0-6.146-4.983-11.13-11.13-11.13H126.453c-6.147 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13h202.663c6.147 0 11.13-4.983 11.13-11.13m49.884-72.853c0-6.147-4.983-11.13-11.13-11.13H276.612c-6.146 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13H379c6.146-.001 11.13-4.983 11.13-11.13m-92.38 145.707c0-6.146-4.983-11.13-11.13-11.13H126.453c-6.147 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13H286.62c6.147-.001 11.13-4.984 11.13-11.13m66.504 72.853c0-6.146-4.983-11.13-11.13-11.13H126.453c-6.147 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13h226.671c6.147 0 11.13-4.983 11.13-11.13m25.876-72.853c0-6.146-4.983-11.13-11.13-11.13h-51.752c-6.146 0-11.13 4.983-11.13 11.13s4.983 11.13 11.13 11.13H379c6.146-.001 11.13-4.984 11.13-11.13"/></svg>
-                     Attendence
+                    <a href="/view-my-slips" class="waves-effect">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+                            <path fill="#fff"
+                                d="M12.32 8a3 3 0 0 0-2-.7H5.63A1.59 1.59 0 0 1 4 5.69a2 2 0 0 1 0-.25a1.59 1.59 0 0 1 1.63-1.33h4.62a1.59 1.59 0 0 1 1.57 1.33h1.5a3.08 3.08 0 0 0-3.07-2.83H8.67V.31H7.42v2.3H5.63a3.08 3.08 0 0 0-3.07 2.83a2.09 2.09 0 0 0 0 .25a3.07 3.07 0 0 0 3.07 3.07h4.74A1.59 1.59 0 0 1 12 10.35a1.86 1.86 0 0 1 0 .34a1.59 1.59 0 0 1-1.55 1.24h-4.7a1.59 1.59 0 0 1-1.55-1.24H2.69a3.08 3.08 0 0 0 3.06 2.73h1.67v2.27h1.25v-2.27h1.7a3.08 3.08 0 0 0 3.06-2.73v-.34A3.06 3.06 0 0 0 12.32 8" />
+                        </svg>
+                        <span> My Salary Slips</span>
                     </a>
                 </li>
+            @endif
 
-                {{-- employee access --}}
                 @if (Session::has('employees_access'))
                     @php
                         $employees_access = Session::get('employees_access');
                         // Convert to an array if it's a single value
                         if (!is_array($employees_access)) {
                             $employees_access = explode(',', $employees_access);
-                            // Remove any empty elements resulting from the explode function
+
                             $employees_access = array_filter($employees_access);
                         }
                     @endphp

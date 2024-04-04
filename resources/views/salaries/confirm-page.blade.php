@@ -14,53 +14,7 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
-                        {{-- <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" type="text" placeholder="User Name"
-                                    disabled
-                                    value="{{$emp_name}}" min="0" name="emp_name">
-
-                                    <label for=""> Name <span class="text-danger">*</span></label>
-
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" type="email" placeholder="email"
-                                    disabled
-                                    value="{{$emp_email}}" name="emp_email">
-                                    @error('ex_date')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                    <label for=""> Email<span class="text-danger">*</span></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" type="text" placeholder="User Name" name="emp_designation"
-
-                                    disabled
-                                        value="{{$emp_designation}}" min="0">
-
-                                    <label for=""> Designation <span class="text-danger">*</span></label>
-
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" type="text" placeholder="email" name="emp_shift_time"
-                                    disabled
-                                    value="{{$emp_shift_time}}">
-
-                                    <label for=""> Shift Time<span class="text-danger">*</span></label>
-                                </div>
-                            </div>
-                        </div> --}}
-                        <br>
-                        <h3> Preview Salary Details</h3><hr>
+                        <h3 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;"> Preview Salary Details</h3><hr>
                         <form method="post" action="{{ $route }}" enctype="multipart/form-data">
                             @csrf
                             @if (session('success'))
@@ -105,59 +59,59 @@
                                        <input type="hidden" value="{{$emp_designation_bonus}}" name="emp_designation_bonus">
                                        <input type="hidden" value="{{$emp_date_of_joining_hidden}}" name="emp_date_of_joining_hidden">
 
-                                        <tr>
+                                        <tr style="border:1px solid #aeb3b3">
                                             <td> <strong> Name</strong> </td>
                                             <td> {{$emp_name}} </td>
                                             <td> <strong>  Email </strong> </td>
                                             <td> {{$emp_email}} </td>
                                         </tr>
 
-                                        <tr>
+                                        <tr style="border:1px solid #aeb3b3">
                                             <td> <strong> Emp Code</strong> </td>
                                             <td> {{$emp_code }} </td>
                                             <td> <strong>  Month of Salary </strong> </td>
                                             <td> {{$emp_month_salary_hidden}} </td>
                                         </tr>
 
-                                        <tr>
+                                        <tr style="border:1px solid #aeb3b3">
                                             <td> <strong> Designation</strong> </td>
                                             <td> {{$emp_designation}} </td>
                                             <td> <strong>  Shift Time </strong> </td>
                                             <td> {{$emp_shift_time}} </td>
                                         </tr>
 
-                                        <tr>
+                                        <tr style="border:1px solid #aeb3b3">
                                             <td> <strong> Basic Salary</strong> </td>
                                             <td> Rs. {{$emp_basic_salary}} </td>
                                             <td> <strong>  KPI Bonus </strong> </td>
                                             <td> Rs. {{$emp_kpi_bonus}} </td>
                                         </tr>
 
-                                        <tr>
+                                        <tr style="border:1px solid #aeb3b3">
                                             <td> <strong> Travel Allowence</strong> </td>
                                             <td> Rs. {{$emp_travel_allowence}} </td>
                                             <td> <strong> Working Days </strong> </td>
                                             <td> {{$emp_no_of_working_days}} </td>
                                         </tr>
 
-                                        <tr>
+                                        <tr style="border:1px solid #aeb3b3">
                                             <td> <strong> Project Bonus</strong> </td>
                                             <td> Rs. {{$emp_project_bonus}} </td>
                                             <td> <strong>  Absent </strong> </td>
                                             <td> {{$emp_absent}} </td>
                                         </tr>
-                                        <tr>
+                                        <tr style="border:1px solid #aeb3b3">
                                             <td> <strong> Leaves</strong> </td>
                                             <td>  {{$emp_leave}} </td>
                                             <td> <strong>  Designation Bonus </strong> </td>
                                             <td> Rs. {{$emp_designation_bonus}} </td>
                                         </tr>
-                                        <tr>
+                                        <tr style="border:1px solid #aeb3b3">
                                             <td> <strong>Reason of Deduction</strong> </td>
                                             <td colspan="3">  {{$emp_reason_deduction}} </td>
                                         </tr>
 
-                                        <tr>
+                                        <tr style="border:1px solid #aeb3b3">
                                             <td> <strong> Total Salary</strong> </td>
                                             <td>  {{$emp_total_salary}} </td>
                                             <td> <strong>  Deduction </strong> </td>
@@ -165,7 +119,7 @@
 
                                         </tr>
 
-                                        <tr>
+                                        <tr style="border:1px solid #aeb3b3">
                                             <td> <strong>  Net Salary </strong> </td>
                                             <td> Rs. {{$emp_net_salary}} </td>
                                         </tr>
@@ -175,23 +129,9 @@
 
 
                             </div>
-
-                            <br>
-
-                            {{-- <p>Mark check if you want to send  email to <strong><u>{{$emp_name}}</u></strong> otherwise email will not be sent!</p> --}}
-{{--
-                            <div class="">
-                                <input type="checkbox"  checked name="check_box" class="checbox"> Send Email to <strong>{{$emp_name}}</strong> 😂😂
-
-                            </div> --}}
-
-                            <br>
-
-
                             <div>
-                                <button type="submit" class="btn btn-primary  w-md"
-                                    style="background-color: #14213D ; border-color: #fff;">Send Receipt</button>
-                                <a href="/generate-new/{{$id}}" class="btn btn-danger">Go Back</a>
+                                <button type="submit" class="reblateBtn py-2 px-4 w-md">Send Receipt</button>
+                                <a href="/generate-new/{{$id}}" class="reblateBtn py-2 px-4 w-md">Go Back</a>
                             </div>
                         </form>
                     </div>

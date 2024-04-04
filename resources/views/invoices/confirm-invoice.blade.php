@@ -14,191 +14,171 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
-
-                        <br>
-                        <h3>Client Details </h3>
-                        <hr>
+                        <p class="card-title" style="color:#6b6b6b">Confirm entered data and then click 'Send Invoice' button to send invoice.</p>
                         <form method="post" action="{{ $route }}" enctype="multipart/form-data">
-                            @csrf
-
-                            {{-- @if (session('success'))
-                                <div class="alert alert-success alert-dismissible fade show" id="close-now">
-                                    {{ session('success') }}
-                                    <a type="button" onclick="hideNow()" class="close" data-dismiss="alert"
-                                        aria-label="Close" style="float: right;">
-                                        <span aria-hidden="true">&times;</span>
-                                    </a>
-                                </div>
-                            @endif --}}
-
-
-
                             <div class="row">
+                                <div class="col-md-6 col-xl-6 ">
+                                    <h3 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Client Details </h3>
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="text" name="client_id"
+                                                    disabled value="{{ $client->client_id }}">
+                                                <input type="hidden" value="{{ $client->client_id }}"
+                                                    name="client_id">
+                                                <label for="">Client ID</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="text" name="emp_code"
+                                                    disabled value="{{ $client->client_name }}">
+                                                <input type="hidden" value="{{ $client->client_name }}" name="client_name_hidden">
+                                                <label for="">Client Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="User Name" disabled
+                                                    value="{{ $client->project_name }}" min="0" name="emp_name">
+                                                <input type="hidden" value="{{ $client->project_name }}" name="emp_name_hidden">
 
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="text" name="emp_code"
-                                            disabled value="{{ $client->client_name }}">
-                                        <input type="hidden" value="{{ $client->client_name }}" name="client_name_hidden">
-                                        <label for="">Client Name</label>
+                                                <label for="">Project Name </label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <input class="form-control" style="background-color: transparent; border:none;" type="email" placeholder="email" disabled
+                                                    value="{{ $client->project_type }}" name="emp_email">
+
+                                                <input type="hidden" value="{{ $client->project_type }}" name="emp_email_hidden">
+                                                @error('ex_date')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                                <label for="">Project Type</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="User Name"
+                                                    name="emp_designation" disabled value="{{ $client->client_email }}"
+                                                    min="0">
+                                                <input type="hidden" value="{{ $client->client_email }}"
+                                                    name="client_email_hidden">
+                                                <label for="">Client Email </label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="text" name="emp_code"
+                                                    disabled value="{{ $client->client_phone }}">
+                                                <input type="hidden" value="{{ $client->client_phone }}" name="client_phone_hidden">
+                                                <label for="">Client Phone</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="text" name="emp_code"
+                                                    disabled value="{{ $client->project_start_date }}">
+                                                <input type="hidden" value="{{ $client->project_start_date }}"
+                                                    name="emp_code_hidden">
+                                                <label for="">Project Start Date</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <textarea name="" style="background-color: transparent; border:none; resize: none; height: 70px" class="form-control" disabled cols="30" rows="10">{{ $client->project_description }}</textarea>
+                                                <label for="">Project Description</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="User Name" disabled
-                                            value="{{ $client->project_name }}" min="0" name="emp_name">
-                                        <input type="hidden" value="{{ $client->project_name }}" name="emp_name_hidden">
-
-                                        <label for="">Project Name </label>
-
+                                <div class="col-md-6 col-xl-6">
+                                    <h3 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Invoice Details</h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <input type="month" style="background-color: transparent; border:none;" disabled  value="{{$invoice_month}}" class="form-control">
+                                                <label for="invoice_month">Period </label>
+                                                <input type="hidden" style="background-color: transparent; border:none;" name="invoice_month_hidden"  value="{{$invoice_month}}" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <input type="text" style="background-color: transparent; border:none;" value="{{$invoice_description}}"  class="form-control" disabled>
+                                                <label for="">Description </label>
+                                                <input type="hidden" style="background-color: transparent; border:none;"  name="invoice_description" value="{{$invoice_description}}"  class="form-control">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="email" placeholder="email" disabled
-                                            value="{{ $client->project_type }}" name="emp_email">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <input type="number" style="background-color: transparent; border:none;" min="0" value="{{$invoice_profit}}" class="form-control" disabled>
+                                                <label for="">Profit($)  </label>
+                                                <input type="hidden" style="background-color: transparent; border:none;" name="invoice_profit_hidden" value="{{$invoice_profit}}"  class="form-control">
 
-                                        <input type="hidden" value="{{ $client->project_type }}" name="emp_email_hidden">
-                                        @error('ex_date')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                        <label for="">Project Type</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <input type="number" style="background-color: transparent; border:none;" min="0" value="{{$invoice_amount}}" class="form-control" disabled>
+                                                <label for="invoice_amount">Amount($) </label>
+                                                <input type="hidden" style="background-color: transparent; border:none;" name="invoice_amount_hidden"  value="{{$invoice_amount}}" class="form-control" >
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="User Name"
-                                            name="emp_designation" disabled value="{{ $client->client_email }}"
-                                            min="0">
-                                        <input type="hidden" value="{{ $client->client_email }}"
-                                            name="client_email_hidden">
-                                        <label for="">Client Email </label>
-
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <input type="date" style="background-color: transparent; border:none;" value="{{$invoice_due_date}}" class="form-control" disabled>
+                                                <label for="">Due Date </label>
+                                                <input type="hidden" style="background-color: transparent; border:none;"  value="{{$invoice_due_date}}" class="form-control" name="invoice_due_date_hidden">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                <input type="text" style="background-color: transparent; border:none;" value="{{$invoice_method}}" class="form-control" disabled>
+                                                <label for="">Payment Method
+                                                </label>
+                                                <input type="hidden" style="background-color: transparent; border:none;" name="invoice_method_hidden" value="{{$invoice_method}}"  >
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="text" name="emp_code"
-                                            disabled value="{{ $client->client_phone }}">
-                                        <input type="hidden" value="{{ $client->client_phone }}" name="client_phone_hidden">
-                                        <label for="">Client Phone</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="text" name="emp_code"
-                                            disabled value="{{ $client->project_start_date }}">
-                                        <input type="hidden" value="{{ $client->project_start_date }}"
-                                            name="emp_code_hidden">
-                                        <label for="">Project Start Date</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-floating mb-3">
-                                        <textarea name="" class="form-control" disabled cols="30" rows="10">{{ $client->project_description }}</textarea>
-                                        <label for="">Project Description</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="text" name="client_id"
-                                            disabled value="{{ $client->client_id }}">
-                                        <input type="hidden" value="{{ $client->client_id }}"
-                                            name="client_id">
-                                        <label for="">Client ID</label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <h3>Invoice Details</h3>
-                            <hr>
-
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="month" disabled  value="{{$invoice_month}}" class="form-control">
-                                        <label for="invoice_month">Period </label>
-                                        <input type="hidden" name="invoice_month_hidden"  value="{{$invoice_month}}" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" value="{{$invoice_description}}"  class="form-control" disabled>
-                                        <label for="">Description </label>
-                                        <input type="hidden"  name="invoice_description" value="{{$invoice_description}}"  class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="number" min="0" value="{{$invoice_profit}}" class="form-control" disabled>
-                                        <label for="">Profit($)  </label>
-                                        <input type="hidden" name="invoice_profit_hidden" value="{{$invoice_profit}}"  class="form-control">
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="number" min="0" value="{{$invoice_amount}}" class="form-control" disabled>
-                                        <label for="invoice_amount">Amount($) </label>
-                                        <input type="hidden" name="invoice_amount_hidden"  value="{{$invoice_amount}}" class="form-control" >
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="date" value="{{$invoice_due_date}}" class="form-control" disabled>
-                                        <label for="">Due Date </label>
-                                        <input type="hidden"  value="{{$invoice_due_date}}" class="form-control" name="invoice_due_date_hidden">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" value="{{$invoice_method}}" class="form-control" disabled>
-                                        <label for="">Payment Method
-                                        </label>
-                                        <input type="hidden" name="invoice_method_hidden" value="{{$invoice_method}}"  >
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                                {{-- <input type="date" value="" class="form-control" name="emp_code_hidden"> --}}
+                                                <textarea class="form-control" style="background-color: transparent; border:none; resize: none; height: 150px" disabled id="" cols="50" rows="20">{{$invoice_notes}}</textarea>
+                                                <label for="">Additional Notes (optional)</label>
+                                                <input type="hidden" style="background-color: transparent; border:none;" value="{{$invoice_notes}}" name="invoice_notes_hidden">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-floating mb-3">
-                                        {{-- <input type="date" value="" class="form-control" name="emp_code_hidden"> --}}
-                                        <textarea class="form-control" disabled id="" cols="50" rows="20">{{$invoice_notes}}</textarea>
-                                        <label for="">Additional Notes (optional)</label>
-                                        <input type="hidden" value="{{$invoice_notes}}" name="invoice_notes_hidden">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <p>Confirm entered data and then click 'Send Invoice' button to send invoice.</p>
 
                             <div>
-                                <br>
-
-                                <button type="submit" class="btn btn-primary  w-md" target="_blank"
-                                    style="background-color: #14213D ; border-color: #fff;">{{ $btn_text }}</button>
+                                <button type="submit" class="reblateBtn py-2 px-4 w-md" target="_blank">{{ $btn_text }}</button>
+                                <button type="submit" class="reblateBtn py-2 px-4 w-md">
+                                    <a href="/create-invoice/{{$id}}" class="text-light">Go Back</a>
+                                </button>
                                 {{-- <a href="/preview-salary/{{$id}}" target="_blank" class="btn btn-danger">Preview</a> --}}
-                                <a href="/create-invoice/{{$id}}" class="btn btn-danger">Go Back</a>
 
                             </div>
                         </form>
