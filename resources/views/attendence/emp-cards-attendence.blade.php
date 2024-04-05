@@ -103,7 +103,7 @@
                                 <div class="card">
                                     <div class="card-body">
 
-                                        <table id="datatable-buttons"
+                                        {{-- <table id="datatable-buttons"
                                             class="table table-striped table-bordered dt-responsive nowrap"
                                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                             <thead>
@@ -112,7 +112,7 @@
                                                     <th>Department</th>
                                                     <th>Designation</th>
                                                     <th>Shift time</th>
-                                                    {{-- <th>Year</th> --}}
+
                                                     <th class="text-nowrap">Action</th>
                                                 </tr>
                                             </thead>
@@ -137,7 +137,61 @@
                                                     </tr>
                                                 @endforeach
                                             </tbody>
-                                        </table>
+                                        </table> --}}
+
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <td>Employee</td>
+                                                        <!-- Display the days of the month -->
+                                                        @foreach ($daysOfMonth as $day)
+                                                            <td>{{ $day }}</td>
+                                                        @endforeach
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @foreach ($emp as $employee)
+                                                    <tr>
+                                                        <td>
+                                                            @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
+                                                                <img style="width:50px;height:50px;border-radius:50%;" src="{{ asset($employee->Emp_Image) }}" alt="">
+                                                            @endif
+                                                            {{ $employee->Emp_Full_Name }}
+                                                        </td>
+                                                        <!-- Display attendance status for each day -->
+                                                        @foreach ($daysOfMonth as $day)
+                                                            <td>
+                                                                <!-- Check attendance for the current employee and day from the database -->
+                                                                @php
+                                                                    $day = Carbon\Carbon::parse($day)->format('Y-m-d');
+
+                                                                    $attendanceRecord = DB::table('attendence')
+                                                                    ->where('emp_id', $employee->Emp_Code)
+                                                                    ->whereDate('date', $day)
+                                                                    ->first();
+                                                                    // echo $attendanceRecord;
+                                                                @endphp
+
+                                                                <!-- Determine if the employee is present based on the presence of an attendance record -->
+                                                                @if ($attendanceRecord && $attendanceRecord->check_in_status == 'done')
+                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24"><path fill="#06a503" d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59z"/></svg>
+                                                                @else
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24"><path fill="#f9010e" d="M18.36 19.78L12 13.41l-6.36 6.37l-1.42-1.42L10.59 12L4.22 5.64l1.42-1.42L12 10.59l6.36-6.36l1.41 1.41L13.41 12l6.36 6.36z"/></svg>
+                                                                @endif
+                                                            </td>
+                                                        @endforeach
+                                                    </tr>
+                                                @endforeach
+
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>

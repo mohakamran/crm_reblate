@@ -329,13 +329,68 @@ class AttendenceController extends Controller
     }
    // admin can see the the employees card for attendence
    public function viewEmpAttendence() {
-        $latestEmployees = DB::table('employees')->get();
-        // dd($latestEmployees);
-        if ($latestEmployees) {
-            return view('attendence.emp-cards-attendence',compact('latestEmployees'));
-        } else {
-            return back();
-        }
+            // Get the current month and year
+            $currentMonth = Carbon::now()->format('m');
+            $currentYear = Carbon::now()->format('Y');
+
+            // Get the first day of the current month
+            $firstDayOfMonth = Carbon::now()->startOfMonth();
+
+            // Get the current date
+            $today = Carbon::now()->toDateString();
+
+            // Query attendance records for the current month up to today's date
+            // Query employees and their attendance records for the current month up to today's date
+            $emp = DB::table('employees')->where('Emp_Status','active')->get();
+
+            // Initialize an empty array to store attendance records
+            $attendances = [];
+
+            // Initialize an empty array to store days
+            // Get the number of days in the current month
+            $numberOfDaysInMonth = Carbon::now()->daysInMonth;
+
+            // Initialize an empty array to store days
+            $daysOfMonth = [];
+
+            // Loop through the days of the month and store each day in the array
+            // Loop through the days of the month and store each day in the array
+            for ($day = 1; $day <= $numberOfDaysInMonth; $day++) {
+                // Create a Carbon instance for the current day of the month
+                $currentDate = Carbon::createFromDate($currentYear, $currentMonth, $day);
+
+                // Format the date string into the desired format
+                $formattedDate = $currentDate->format('j F l'); // e.g., "1 April Monday"
+
+                // Store the formatted date in the array
+                $daysOfMonth[] = $formattedDate;
+            }
+
+            // dd($daysOfMonth);
+
+            // Iterate over each active employee to fetch their attendance records
+            foreach ($emp as $employee) {
+                // Query attendance records for the current month up to today's date for each employee
+                $employeeAttendances = DB::table('attendence')
+                    ->where('emp_id', $employee->Emp_Code)
+                    ->whereYear('date', $currentYear)
+                    ->whereMonth('date', $currentMonth)
+                    ->whereDate('date', '<=', $today)
+                    ->get();
+
+                // Append the attendance records to the $attendances array
+                $attendances = array_merge($attendances, $employeeAttendances->toArray());
+            }
+
+
+            // dd($attendances);
+
+            // Assuming you have retrieved the latest employees elsewhere in your code
+            // $latestEmployees = DB::table('employees')->get();
+
+
+        return view('attendence.emp-cards-attendence', compact('attendances','emp','daysOfMonth'));
+
    }
    // searcj details
    public function searchAttendenceEmp(Request $req) {
