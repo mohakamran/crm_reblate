@@ -363,14 +363,14 @@
                                     <div id="messageBox"></div>
                                     <div class="form-group mt-3">
                                         <label for="date">Date</label>
-                                        <input type="date" class="form-control inputboxcolor" style="border: none;"
+                                        <input type="date" class="form-control inputboxcolor" style="border: 1px solid #ced4da;"
                                             id="date" name="date">
                                         <span class="text-danger" id="dateBox" style="display: none">Please Select
                                             a date!</span>
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="reason">Reason:</label>
-                                        <textarea class="form-control inputboxcolor" style="border: none; resize: none; height: 100px;" id="reason"
+                                        <textarea class="form-control inputboxcolor" style="border: 1px solid #ced4da; resize: none; height: 100px;" id="reason"
                                             name="reason" placeholder="Reason:" rows="5"></textarea>
                                         <span class="text-danger" id="reasonBox" style="display: none">Please Write a
                                             reason!</span>
@@ -1159,39 +1159,6 @@
             </div>
         </div>
 
-        {{-- <div class="row">
-            <div class="col-xl-12">
-                <div class="card">
-                            <div class="col-md-2" style="display: flex;align-items:center">
-                                <h6>See Who is Present Today</h6>
-                            </div>
-                            <div class="col-md-10">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                                <img src="{{ url('user.png') }}"
-                                    class="img-fluid mr-2 header-profile-user rounded-circle" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
         <!-- END ROW -->
 
 
@@ -1225,24 +1192,6 @@
             new Chart(chartId2, {
                 type: 'bar',
                 data: {
-                    // labels: ['Completed', 'Pending', 'In Progress'],
-
-                    // datasets: [{
-                    //     label: 'Completed',
-                    //     borderColor: 'rgba(75, 192, 192, 0.9)',
-                    //     backgroundColor: 'rgba(75, 192, 192, 0.5)', // Remove background color
-                    //     data: [12]
-                    // }, {
-                    //     label: 'In Progress',
-                    //     borderColor: 'rgba(255, 99, 132, 0.9)',
-                    //     backgroundColor: 'rgba(255, 99, 132, 0.5)', // Remove background color
-                    //     data: []
-                    // }, {
-                    //     label: 'Profit',
-                    //     borderColor: 'green',
-                    //     backgroundColor: 'rgba(0, 0, 0, 0)', // Remove background color
-                    //     data: [200, 600, 1000, 700, 1300, 900]
-                    // }]
                     labels: ['Completed', 'Pending', 'In Progress'],
 
                     datasets: [{
@@ -1260,64 +1209,6 @@
                     indexAxis: 'y',
                 }
             });
-
-            // google.charts.load('current', {
-            //     'packages': ['corechart']
-            // });
-            // google.charts.setOnLoadCallback(drawChart);
-
-            // function drawChart() {
-            //     var data = new google.visualization.DataTable();
-            //     data.addColumn('string', 'Task');
-            //     data.addColumn('number', 'Count');
-            //     data.addRows([
-            //         ['Completed', <?php echo $completed_count; ?>],
-            //         ['Pending', <?php echo $pending_count; ?>],
-            //         ['In Progress', <?php echo $in_progress_count; ?>]
-            //     ]);
-
-            //     var options = {
-            //         title: 'Tasks Status for Current Month',
-            //         legend: {
-            //             position: 'none'
-            //         },
-            //         bars: 'horizontal',
-            //         colors: ['#008000', '#FF0000',
-            //             '#FFFF00'] // Green for completed, Red for pending, Yellow for in-progress
-            //     };
-
-            //     var chart = new google.visualization.BarChart(document.getElementById('bar_chart'));
-
-            //     chart.draw(data, options);
-            // }
-
-            // google.charts.load('current', {
-            //     packages: ['corechart', 'bar']
-            // });
-            // google.charts.setOnLoadCallback(drawChartBar);
-
-            // function drawChartBar() {
-            //     var data = google.visualization.arrayToDataTable([
-            //         ['Category', 'Count'],
-            //         ['Present', <?php echo $total_present_day; ?>],
-            //         ['Absent', <?php echo $absent_days; ?>],
-            //         ['Leaves', <?php echo $total_leaves; ?>]
-            //     ]);
-
-            //     var options = {
-            //         title: 'Attendance for Current Month',
-            //         legend: {
-            //             position: 'none'
-            //         },
-            //         bars: 'vertical',
-            //         vAxis: {
-            //             format: 'decimal'
-            //         }
-            //     };
-
-            //     var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-            //     chart.draw(data, options);
-            // }
         </script>
 
 

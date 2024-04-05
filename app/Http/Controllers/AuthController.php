@@ -1285,45 +1285,45 @@ class AuthController extends Controller
         ];
 
         // Iterate through each month up to the current month of the year
-        for ($month = 1; $month <= $currentMonth; $month++) {
-            // Get sales data for the month (assuming it's in USD)
-            $sales = DB::table('invoices')
-                        ->whereYear('date', $currentYear)
-                        ->whereMonth('date', $month)
-                        ->sum('amount');
+        // for ($month = 1; $month <= $currentMonth; $month++) {
+        //     // Get sales data for the month (assuming it's in USD)
+        //     $sales = DB::table('invoices')
+        //                 ->whereYear('date', $currentYear)
+        //                 ->whereMonth('date', $month)
+        //                 ->sum('amount');
 
-            // Get expenses data for the month in PKR
-            $expensesPKR = DB::table('expenses')
-                            ->whereYear('expense_date', $currentYear)
-                            ->whereMonth('expense_date', $month)
-                            ->sum('expense_amount');
+        //     // Get expenses data for the month in PKR
+        //     $expensesPKR = DB::table('expenses')
+        //                     ->whereYear('expense_date', $currentYear)
+        //                     ->whereMonth('expense_date', $month)
+        //                     ->sum('expense_amount');
 
-            // Convert expenses from PKR to USD
-            $expensesUSD = $this->getExchangeRate($expensesPKR);
+        //     // Convert expenses from PKR to USD
+        //     $expensesUSD = $this->getExchangeRate($expensesPKR);
 
-            // Get salaries data for the month in PKR
-            $salariesPKR = DB::table('salaries')
-                            ->whereYear('date', $currentYear)
-                            ->whereMonth('date', $month)
-                            ->sum('amount');
+        //     // Get salaries data for the month in PKR
+        //     $salariesPKR = DB::table('salaries')
+        //                     ->whereYear('date', $currentYear)
+        //                     ->whereMonth('date', $month)
+        //                     ->sum('amount');
 
 
 
-                        // Convert salaries from PKR to USD
-            $salariesUSD = number_format($this->getExchangeRate($salariesPKR), 2);
+        //                 // Convert salaries from PKR to USD
+        //     $salariesUSD = number_format($this->getExchangeRate($salariesPKR), 2);
 
-            // Calculate total expenses in USD
-            $totalExpensesUSD = number_format(($expensesUSD + $salariesUSD), 2);
+        //     // Calculate total expenses in USD
+        //     $totalExpensesUSD = number_format(($expensesUSD + $salariesUSD), 2);
 
-            // Calculate profit in USD
-            $profit = number_format(($sales - $totalExpensesUSD), 2);
+        //     // Calculate profit in USD
+        //     $profit = number_format(($sales - $totalExpensesUSD), 2);
 
-            // Push data into the array
-            $data['labels'][] = date('M', mktime(0, 0, 0, $month, 1));
-            $data['sales'][] = $sales;
-            $data['expenses'][] = $totalExpensesUSD;
-            $data['profits'][] = $profit;
-        }
+        //     // Push data into the array
+        //     $data['labels'][] = date('M', mktime(0, 0, 0, $month, 1));
+        //     $data['sales'][] = $sales;
+        //     $data['expenses'][] = $totalExpensesUSD;
+        //     $data['profits'][] = $profit;
+        // }
 
         return $data;
 
@@ -1660,20 +1660,20 @@ class AuthController extends Controller
 
     //get exchange rate prices
     public function getExchangeRate($amount) {
-        $client = new GuzzleClient(); // Use the alias GuzzleClient
-        $response = $client->get('https://open.er-api.com/v6/latest/USD');
-        $data = json_decode($response->getBody(), true);
+        // $client = new GuzzleClient(); // Use the alias GuzzleClient
+        // $response = $client->get('https://open.er-api.com/v6/latest/USD');
+        // $data = json_decode($response->getBody(), true);
 
-        // Get the exchange rate for PKR
-        $usdToPkrRate = $data['rates']['PKR'];
+        // // Get the exchange rate for PKR
+        // $usdToPkrRate = $data['rates']['PKR'];
 
-        // Convert PKR to USD using the reciprocal of the exchange rate
-        $pkrToUsdRate = 1 / $usdToPkrRate;
+        // // Convert PKR to USD using the reciprocal of the exchange rate
+        // $pkrToUsdRate = 1 / $usdToPkrRate;
 
-        // Convert amount from PKR to USD
-        $amountInUSD = $amount * $pkrToUsdRate;
+        // // Convert amount from PKR to USD
+        // $amountInUSD = $amount * $pkrToUsdRate;
 
-        return $amountInUSD;
+        return $amount;
     }
 
 }

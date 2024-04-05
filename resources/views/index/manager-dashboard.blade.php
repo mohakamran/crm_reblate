@@ -1293,6 +1293,8 @@
         <script>
             const chartId = document.getElementById('chart_div');
 
+
+
             new Chart(chartId, {
               type: 'bar',
               data: {
@@ -1300,7 +1302,12 @@
                 datasets: [{
                   label: 'Attendance',
                   data: [<?php echo $total_present_day; ?>, <?php echo $absent_days; ?>, <?php echo $total_leaves; ?>],
-                  borderWidth: 1
+                  backgroundColor: [
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(255, 205, 86, 0.5)',
+
+                        ],
                 }]
               },
               options: {
