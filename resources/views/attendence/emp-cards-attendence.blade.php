@@ -40,19 +40,53 @@
                 text-align: center;
                 margin-top: 15px;
             }
+
+
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .table-striped tbody tr:nth-of-type(2n+1) {
+                background-color: #f5f6f7;
+            }
+
+            .custom-table td {
+                padding: 10px 20px;
+            }
+
+            .table td {
+                border-top: 1px solid #e9e9ea;
+                white-space: nowrap;
+                vertical-align: middle;
+                padding: .5rem;
+                font-size: 14px;
+            }
+
+            .table td h2 {
+                display: inline-block;
+                font-size: 14px;
+                font-weight: 400;
+                margin: 0;
+                padding: 0;
+                vertical-align: middle;
+            }
+
+            .avatar>img {
+                width: 30px;
+                height: 30px;
+                -o-object-fit: cover;
+                object-fit: cover;
+                border-radius: 50%;
+            }
         </style>
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-xl-12">
                 <div class="card" style="box-shadow: none;">
                     <div class="card-body">
-                        <form action="/search-emp-attendence" method="post">
+                        <form action="/filter_emp_date" method="post">
                             @csrf
-                            <div class="row justify-content-center">
-                                <div class="col-md-2"
-                                    style="padding: 5px; background-color: #e3e3e3; border-radius:10px; margin-right:5px;">
-                                    <input class="form-control" type="text" name="emp_id" placeholder="Employee ID"
-                                        style="background-color: transparent; border:none;">
-                                </div>
+                            <div class="row d-flex justify-content-center align-items-center">
                                 <div class="col-md-2"
                                     style="padding: 5px; background-color: #e3e3e3; border-radius:10px; margin-right:5px;">
                                     <input class="form-control" type="text" name="emp_name" placeholder="Employee Name"
@@ -60,148 +94,312 @@
                                 </div>
                                 <div class="col-md-2"
                                     style="padding: 5px; background-color: #e3e3e3; border-radius:10px; margin-right:5px;">
-                                    <select name="emp_designation" class="form-control" id=""
+                                    <select name="emp_attendence_month" class="form-control" id=""
                                         style="background-color: transparent; border:none;">
-                                        <option value="" selected disabled>Select a designation</option>
-                                        <option value="Operations Manager">Operations Manager</option>
-                                        <option value="Web Development">Web Development</option>
-                                        <option value="Graphic Designer">Graphic Designer</option>
-                                        <option value="Virtual Assistant">Virtual Assistant</option>
+                                        <option value="" selected disabled>Select Month</option>
+                                        <option value="1">Janaury</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
                                     </select>
                                 </div>
-                                <div class="col-md-2" style="padding: 5px; background-color: #e3e3e3; border-radius:10px;">
-                                    <select name="emp_shift" class="form-control" id=""
+                                <div class="col-md-2"
+                                    style="padding: 5px; background-color: #e3e3e3; border-radius:10px; margin-right:5px;">
+                                    <select name="emp_attendance_year" class="form-control" id=""
                                         style="background-color: transparent; border:none;">
-                                        <option value="" selected disabled>Select Shift</option>
-                                        <option value="Morning">Morning</option>
-                                        <option value="Night">Night</option>
+                                        <option value="" selected disabled>Select Year</option>
+                                        @php
+                                        $startYear = 2024;
+                                        $endYear = 2034;
+                                        @endphp
+                                        @for ($year = $startYear; $year <= $endYear; $year++)
+                                            <option value="{{$year}}">{{$year}}</option>
+                                        @endfor
                                     </select>
                                 </div>
-                                <div class="col-md-3 d-flex justify-content-end gap-2">
+                                <div class="col-md-1">
+                                    <button class="reblateBtn mt-1" style="padding: 10px 14px;"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                            class="bi bi-search" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                        </svg></button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <!-- Employee dashboards -->
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width: 350px;">Employee</td>
+                                                    <!-- Display the days of the month -->
+                                                    @foreach ($daysOfMonth as $day)
+                                                        <td style="width: 350px;">{{ $day }}</td>
+                                                    @endforeach
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                @foreach ($emp as $employee)
+                                                <tr>
+                                                    <td>
+                                                        @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
+                                                            <img style="width:50px;height:50px;border-radius:50%;" src="{{ asset($employee->Emp_Image) }}" alt="">
+                                                            @else
+                                                            <img style="width:50px;height:50px;border-radius:50%;" src="{{ url('user.png') }}" alt="">
+                                                        @endif
+                                                        {{ $employee->Emp_Full_Name }}
+                                                    </td>
+                                                    <!-- Display attendance status for each day -->
+                                                    @foreach ($daysOfMonth as $day)
+                                                        <td>
+                                                            @php
+                                                                $day = Carbon\Carbon::parse($day)->format('Y-m-d');
+
+                                                                $today = Carbon\Carbon::today()->format('Y-m-d');
+
+                                                                $attendanceRecord = DB::table('attendence')
+                                                                    ->where('emp_id', $employee->Emp_Code)
+                                                                    ->whereDate('date', $day)
+                                                                    ->first();
+
+                                                                $leaveRecord = DB::table('leaves')
+                                                                    ->where('emp_code', $employee->Emp_Code)
+                                                                    ->whereDate('date', $day)
+                                                                    ->first();
+                                                            @endphp
+
+                                                            @if ($day > $today)
+
+                                                            @elseif ($attendanceRecord && $attendanceRecord->check_in_status == 'done')
+                                                                <!-- Display check mark or any indication of attendance -->
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24"><path fill="#06a503" d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59z"/></svg>
+                                                            @elseif($leaveRecord && $leaveRecord->status == "approved")
+                                                                <!-- Display Leave indication -->
+                                                                L
+                                                            @elseif($leaveRecord)
+                                                                <!-- Display Pending Leave indication or any other status -->
+                                                                <span>Pending</span>
+                                                            @else
+                                                                <!-- Display absence indication -->
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24"><path fill="#f9010e" d="M18.36 19.78L12 13.41l-6.36 6.37l-1.42-1.42L10.59 12L4.22 5.64l1.42-1.42L12 10.59l6.36-6.36l1.41 1.41L13.41 12l6.36 6.36z"/></svg>
+                                                            @endif
+                                                        </td>
+                                                    @endforeach
+
+                                                </tr>
+                                            @endforeach
+
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div> --}}
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="/filter_emp_date" method="post">
+                            @csrf
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-md-2"
+                                    style="padding: 5px; background-color: #e3e3e3; border-radius:10px; margin-right:5px;">
+                                    <input class="form-control" type="text" name="emp_name" placeholder="Employee Name"
+                                        style="background-color: transparent; border:none;">
+                                </div>
+                                <div class="col-md-2"
+                                    style="padding: 5px; background-color: #e3e3e3; border-radius:10px; margin-right:5px;">
+                                    <select name="emp_attendence_month" class="form-control" id=""
+                                        style="background-color: transparent; border:none;">
+                                        <option value="" selected disabled>Select Month</option>
+                                        <option value="1">Janaury</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2"
+                                    style="padding: 5px; background-color: #e3e3e3; border-radius:10px; margin-right:5px;">
+                                    <select name="emp_attendance_year" class="form-control" id=""
+                                        style="background-color: transparent; border:none;">
+                                        <option value="" selected disabled>Select Year</option>
+                                        @php
+                                            $startYear = 2024;
+                                            $endYear = 2034;
+                                        @endphp
+                                        @for ($year = $startYear; $year <= $endYear; $year++)
+                                            <option value="{{ $year }}">{{ $year }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
                                     <button class="reblateBtn mt-1" style="padding: 10px 14px;"><svg
                                             xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                             <path
                                                 d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                         </svg></button>
-
                                 </div>
                             </div>
                         </form>
                     </div>
-                    {{-- error message --}}
-                    <div class="row">
-                        @if (isset($error) && $error != '')
-                            <p style="color:red;">{{ $error }}</p>
-                        @endif
-                    </div>
-                    {{-- employee dashboards --}}
-                    {{-- <div class="row mt-5"> --}}
-
-                        <div class="row mt-5">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
-
-                                        {{-- <table id="datatable-buttons"
-                                            class="table table-striped table-bordered dt-responsive nowrap"
-                                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Department</th>
-                                                    <th>Designation</th>
-                                                    <th>Shift time</th>
-
-                                                    <th class="text-nowrap">Action</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody id="table-body">
-                                                @foreach ($latestEmployees as $employee)
-                                                    <tr>
-                                                        <td>{{ $employee->Emp_Full_Name }}</td>
-                                                        <td>{{ $employee->department }}</td>
-                                                        <td>{{ $employee->Emp_Designation }}</td>
-                                                        <td>{{ $employee->Emp_Shift_Time }}</td>
-
-                                                        <td class="text-nowrap">
-                                                            <form action="/view-attendence-emp" method="post">
-                                                                @csrf
-                                                                <input type="hidden" name="hidden_emp_value"
-                                                                    value="{{ $employee->Emp_Code }}">
-                                                                <button type="submit" class="reblateBtn px-3 py-1">View</button>
-                                                            </form>
-
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table> --}}
-
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <td>Employee</td>
-                                                        <!-- Display the days of the month -->
-                                                        @foreach ($daysOfMonth as $day)
-                                                            <td>{{ $day }}</td>
-                                                        @endforeach
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                    @foreach ($emp as $employee)
-                                                    <tr>
-                                                        <td>
-                                                            @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
-                                                                <img style="width:50px;height:50px;border-radius:50%;" src="{{ asset($employee->Emp_Image) }}" alt="">
-                                                            @endif
-                                                            {{ $employee->Emp_Full_Name }}
-                                                        </td>
-                                                        <!-- Display attendance status for each day -->
-                                                        @foreach ($daysOfMonth as $day)
-                                                            <td>
-                                                                <!-- Check attendance for the current employee and day from the database -->
-                                                                @php
-                                                                    $day = Carbon\Carbon::parse($day)->format('Y-m-d');
-
-                                                                    $attendanceRecord = DB::table('attendence')
-                                                                    ->where('emp_id', $employee->Emp_Code)
-                                                                    ->whereDate('date', $day)
-                                                                    ->first();
-                                                                    // echo $attendanceRecord;
-                                                                @endphp
-
-                                                                <!-- Determine if the employee is present based on the presence of an attendance record -->
-                                                                @if ($attendanceRecord && $attendanceRecord->check_in_status == 'done')
-                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24"><path fill="#06a503" d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59z"/></svg>
-                                                                @else
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24"><path fill="#f9010e" d="M18.36 19.78L12 13.41l-6.36 6.37l-1.42-1.42L10.59 12L4.22 5.64l1.42-1.42L12 10.59l6.36-6.36l1.41 1.41L13.41 12l6.36 6.36z"/></svg>
-                                                                @endif
-                                                            </td>
-                                                        @endforeach
-                                                    </tr>
-                                                @endforeach
-
-
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-
                 </div>
-
-                <!-- end card body -->
             </div>
-            <!-- end card -->
         </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table table-nowrap mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Employee</th>
+                                        @php
+                                            for ($count=1; $count <= $numberOfDaysInMonth; $count++) {
+                                                echo "<th>".$count."</th>";
+                                            }
+                                        @endphp
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($emp as $employee)
+                                    <tr>
+                                        {{-- <td>
+                                            @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
+                                                <img style="width:50px;height:50px;border-radius:50%;" src="{{ asset($employee->Emp_Image) }}" alt="">
+                                                @else
+                                                <img style="width:50px;height:50px;border-radius:50%;" src="{{ url('user.png') }}" alt="">
+                                            @endif
+                                            {{ $employee->Emp_Full_Name }}
+                                        </td> --}}
+
+                                        <td class="table-avatar">
+                                            <a class="avatar avatar-xs" href="profile.html">
+                                                @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
+                                                {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ asset($employee->Emp_Image) }}" alt=""> --}}
+                                                <img src="{{ asset($employee->Emp_Image) }}" alt="User Image">
+                                                @else
+                                                {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ url('user.png') }}" alt=""> --}}
+                                                <img src="{{ url('user.png') }}" alt="{{ $employee->Emp_Full_Name }}">
+                                            @endif
+                                          {{ $employee->Emp_Full_Name }}</a>
+                                        </td>
+
+
+                                        <!-- Display attendance status for each day -->
+                                        @foreach ($daysOfMonth as $day)
+                                            <td>
+                                                @php
+                                                    $day = Carbon\Carbon::parse($day)->format('Y-m-d');
+
+                                                    $today = Carbon\Carbon::today()->format('Y-m-d');
+
+                                                    $attendanceRecord = DB::table('attendence')
+                                                        ->where('emp_id', $employee->Emp_Code)
+                                                        ->whereDate('date', $day)
+                                                        ->first();
+
+                                                    $leaveRecord = DB::table('leaves')
+                                                        ->where('emp_code', $employee->Emp_Code)
+                                                        ->whereDate('date', $day)
+                                                        ->first();
+                                                @endphp
+
+                                                @if ($day > $today)
+
+                                                @elseif ($attendanceRecord && $attendanceRecord->check_in_status == 'done')
+                                                    <!-- Display check mark or any indication of attendance -->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24"><path fill="#06a503" d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59z"/></svg>
+                                                @elseif($leaveRecord && $leaveRecord->status == "approved")
+                                                    <!-- Display Leave indication -->
+                                                    L
+                                                @elseif($leaveRecord)
+                                                    <!-- Display Pending Leave indication or any other status -->
+                                                    <span>Pending</span>
+                                                @else
+                                                    <!-- Display absence indication -->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24"><path fill="#f9010e" d="M18.36 19.78L12 13.41l-6.36 6.37l-1.42-1.42L10.59 12L4.22 5.64l1.42-1.42L12 10.59l6.36-6.36l1.41 1.41L13.41 12l6.36 6.36z"/></svg>
+                                                @endif
+                                            </td>
+                                        @endforeach
+
+                                    </tr>
+                                @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        {{-- <script>
+            // Function to filter table rows based on search input
+            function filterTable() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("searchInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("yourTableID"); // Set your table ID here
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0]; // Adjust index based on the column you want to search
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+
+            // Bind event listener to input field for live search
+            document.getElementById("searchInput").addEventListener("keyup", filterTable);
+
+        </script> --}}
+
         <!-- end col -->
         </div>
         <!-- end row -->

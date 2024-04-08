@@ -589,11 +589,23 @@ class AuthController extends Controller
         // dd($user_type);
         $user_code = auth()->user()->user_code;
         if($user_type == "employee") {
+            $active_emp = DB::table('employees')
+            ->where('Emp_Code', $user_code)
+            ->where('Emp_Status', 'active')
+            ->first();
+
+        if (!$active_emp) {
+            // If $active_emp is null, it means no active employee found
+            // Sending the message
+            return back()->with('error', 'You are not an active employee. Please Contact Admin! ');
+        }
             $employees = Employee::all();
             $emp_count = count($employees);
             // dd($count);
             $clients = Client::all();
             $client_count = count($clients);
+
+
 
             // create session for
             $check_permissions = DB::table('table_login_details')->where('emp_code',$user_code)->where('employee_type','employee')->first();
@@ -806,6 +818,17 @@ class AuthController extends Controller
             return view('index.emp-dashboard',$data);
         }
         else if($user_type == "manager") {
+
+            $active_emp = DB::table('employees')
+            ->where('Emp_Code', $user_code)
+            ->where('Emp_Status', 'active')
+            ->first();
+
+            if (!$active_emp) {
+                // If $active_emp is null, it means no active employee found
+                // Sending the message
+                return back()->with('error', 'You are not an active employee. Please Contact Admin! ');
+            }
             $employees = Employee::all();
             $emp_count = count($employees);
             // dd($count);
@@ -1110,10 +1133,15 @@ class AuthController extends Controller
             $chartData = $this->getYearBaseDataChart();
             // dd($chartData);
 
+            $salesData  = $this->getYearWiseData();
+
+
+
 
             $data = compact('emp_count','client_count','data_chart','total_revenue',
             'usd_pkr_expenses','usd_pkr_salary','total_profit','emp_present_count',
-            'emp_leave_count','emp_absent_count','tasks_count','total_clients', 'currentTasks','chartData');
+            // 'emp_leave_count','emp_absent_count','tasks_count','total_clients', 'currentTasks','chartData');
+            'emp_leave_count','emp_absent_count','tasks_count','total_clients', 'currentTasks','salesData');
             // $chartData = json_encode($data);
             // $chart_data = compact('total_revenue','usd_pkr_expenses','usd_pkr_salary','total_profit');
             // $chartData = json_encode($chart_data);
@@ -1133,6 +1161,7 @@ class AuthController extends Controller
         }
 
     }
+
 
     public function getTotalDaysWork() {
         try {
@@ -1225,7 +1254,45 @@ class AuthController extends Controller
         }
     }
 
+    // getting sales, profit, expenses yearly data
+    public function getYearWiseData() {
+        $currentYear = Carbon::now()->year;
 
+        // Query for sales data
+        $salesData = DB::table('invoices')
+            ->select(DB::raw('MONTH(date) as month'), DB::raw('SUM(amount) as total'))
+            ->whereYear('date', $currentYear)
+            ->groupBy(DB::raw('MONTH(date)'))
+            ->get()->pluck('total', 'month')->toArray();
+
+        // Query for expenses data
+        $expensesData = DB::table('salaries')
+            ->select(DB::raw('MONTH(date) as month'), DB::raw('SUM(amount) as total'))
+            ->whereYear('date', $currentYear)
+            ->groupBy(DB::raw('MONTH(date)'))
+            ->get()->pluck('total', 'month')->toArray();
+
+        // Initialize arrays for sales, expenses, and profit
+        $sales = [];
+        $expenses = [];
+        $profit = [];
+
+        // Loop through each month and populate data
+        for ($month = 1; $month <= 12; $month++) {
+            $sales[] = isset($salesData[$month]) ? $salesData[$month] : 0;
+            $expenses[] = isset($expensesData[$month]) ? $expensesData[$month] : 0;
+            $profit[] = (isset($salesData[$month]) ? $salesData[$month] : 0) - (isset($expensesData[$month]) ? $expensesData[$month] : 0);
+        }
+
+        // Prepare response
+        $chartData = [
+            'sales' => $sales,
+            'expenses' => $expenses,
+            'profit' => $profit,
+        ];
+
+        return $chartData;
+    }
     //get tasks
     public function getEmpTasks() {
         // Get the current month and year

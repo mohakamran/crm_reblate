@@ -54,9 +54,9 @@
                                     <h5 class="mb-0">{{ $emp_count }}
                                     </h5>
                                 </div>
-                                <p class="text-muted mb-0 text-truncate"><span
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p>
+                                            class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p> --}}
                             </div>
 
                         </div>
@@ -85,9 +85,9 @@
                                     </h5>
                                 </div>
 
-                                <p class="text-muted mb-0 text-truncate"><span
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-danger text-danger font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p>
+                                            class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p> --}}
                             </div>
 
                         </div>
@@ -116,9 +116,9 @@
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Projects</p>
                                     <h5 class="mb-0">15 </h5>
                                 </div>
-                                <p class="text-muted mb-0 text-truncate"><span
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
+                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p> --}}
                             </div>
 
                         </div>
@@ -180,9 +180,9 @@
                                     <h5 class="mb-0">${{ $total_revenue }}
                                     </h5>
                                 </div>
-                                <p class="text-muted mb-0 text-truncate"><span
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p>
+                                            class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p> --}}
                             </div>
 
                         </div>
@@ -211,9 +211,9 @@
                                     </h5>
                                 </div>
 
-                                <p class="text-muted mb-0 text-truncate"><span
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-danger text-danger font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p>
+                                            class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p> --}}
                             </div>
 
                         </div>
@@ -247,9 +247,9 @@
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Expenses</p>
                                     <h5 class="mb-0">${{ $usd_pkr_expenses }} </h5>
                                 </div>
-                                <p class="text-muted mb-0 text-truncate"><span
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
+                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p> --}}
                             </div>
 
                         </div>
@@ -299,9 +299,9 @@
                                     <h5 class="mb-0"> ${{ $total_profit }}
                                     </h5>
                                 </div>
-                                <p class="text-muted mb-0 text-truncate"><span
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
+                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p> --}}
                             </div>
                         </div>
                     </div>
@@ -1497,28 +1497,27 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         <script>
-            // Data returned by the controller function
-            var chartData = {
-                labels: {!! json_encode($chartData['labels']) !!},
+            // Sample data for sales, expenses, and profit
+            var data = {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
                 datasets: [{
                     label: 'Sales',
                     borderColor: 'blue',
                     backgroundColor: 'rgba(0, 0, 0, 0)', // Remove background color
-                    data: {!! json_encode($chartData['sales']) !!}
+                    data: [1000, 1500, 2000, 1800, 2500, 2200]
                 }, {
                     label: 'Expenses',
                     borderColor: 'red',
                     backgroundColor: 'rgba(0, 0, 0, 0)', // Remove background color
-                    data: {!! json_encode($chartData['expenses']) !!}
+                    data: [800, 900, 1000, 1100, 1200, 1300]
                 }, {
                     label: 'Profit',
                     borderColor: 'green',
                     backgroundColor: 'rgba(0, 0, 0, 0)', // Remove background color
-                    data: {!! json_encode($chartData['profits']) !!}
+                    data: [200, 600, 1000, 700, 1300, 900]
                 }]
             };
 
-            // Configuration options
             var options = {
                 scales: {
                     yAxes: [{
@@ -1529,11 +1528,10 @@
                 }
             };
 
-            // Create the chart
             var ctx = document.getElementById('myChartPerformance').getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'line',
-                data: chartData,
+                data: data,
                 options: options
             });
         </script>

@@ -242,7 +242,7 @@ class AttendenceController extends Controller
 
     }
     // view records of each employee
-    public function viewEachAttendenceEmp(Request $req) {
+    public function viewEachAttendenceEmp($id) {
         $id = $req->hidden_emp_value;
         if($id) {
             $emp = DB::table('employees')->where('Emp_Code', $id)->first();
@@ -349,6 +349,7 @@ class AttendenceController extends Controller
             // Initialize an empty array to store days
             // Get the number of days in the current month
             $numberOfDaysInMonth = Carbon::now()->daysInMonth;
+            // dd($numberOfDaysInMonth);
 
             // Initialize an empty array to store days
             $daysOfMonth = [];
@@ -389,7 +390,19 @@ class AttendenceController extends Controller
             // $latestEmployees = DB::table('employees')->get();
 
 
-        return view('attendence.emp-cards-attendence', compact('attendances','emp','daysOfMonth'));
+        return view('attendence.emp-cards-attendence', compact('numberOfDaysInMonth','attendances','emp','daysOfMonth'));
+
+   }
+   // function to filter overall employees attendence
+   public function filterEmpDateWise(Request $req) {
+        $emp_id = $req->emp_id;
+        $emp_name = $req->emp_name;
+        $emp_attendence_month = $req->emp_attendence_month;
+        $emp_attendance_year = $req->emp_attendance_year;
+
+        if($emp_id) {
+
+        }
 
    }
    // searcj details

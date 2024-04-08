@@ -32,6 +32,25 @@
                                 <p style="color: gray; font-size: 15px; font-weight: 300;">
                                     {{ \Carbon\Carbon::parse($emp_data->Emp_Joining_Date)->format('j F Y') }}
                                 </p>
+                                <p>
+                                    <a href="/update-employee/{{$emp_data->Emp_Code}}" class="btn btn-primary">Edit</a>
+
+                                    @if (isset($show_disable) && $show_disable == TRUE)
+                                         {{-- <a href="/update-employee/{{$emp_data->Emp_Code}}" class="btn btn-primary">Disable</a> --}}
+                                         @if (isset($emp_data->Emp_Status) && $emp_data->Emp_Status == "disable")
+                                           <a href="javascript:void()" onclick="deleteEmployee('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Enable</a>
+                                           @else
+                                           <a href="javascript:void()" onclick="deleteEmployee('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Disable</a>
+                                         @endif
+
+                                    @endif
+
+                                    @if (isset($emp_data->Emp_Status) && $emp_data->Emp_Status == "active")
+                                        <a href="javascript:void()" onclick="statusChange('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Terminate</a>
+                                        @else
+                                        <a href="javascript:void()" onclick="statusChange('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Activate</a>
+                                    @endif
+                                </p>
                             </div>
                         </div>
 
@@ -202,6 +221,100 @@
             </div>
 
         </div>
+
+        <script>
+                function confirmDelete(id) {
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: 'Disable/Enable Employee!',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes',
+                            cancelButtonText: 'No',
+                            confirmButtonColor: '#FF5733', // Red color for "Yes"
+                            cancelButtonColor: '#4CAF50', // Green color for "No"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Send an AJAX request to delete the task
+                                $.ajax({
+                                    url: '/delete-employee/' + id,
+                                    method: 'GET', // Use the DELETE HTTP method
+                                    success: function() {
+                                        // Provide user feedback
+                                        Swal.fire({
+                                            title: 'Success!',
+                                            text: 'The employee disabled successfully!',
+                                            icon: 'success'
+                                        }).then(() => {
+                                            location.reload(); // Refresh the page
+                                        });
+                                    },
+                                    error: function(xhr, status, error) {
+                                        // Handle errors, you can display an error message to the user
+                                        console.error('Error:', error);
+                                        Swal.fire({
+                                            title: 'Error!',
+                                            text: 'An error occurred while deleting the employee!',
+                                            icon: 'error'
+                                        });
+                                    }
+                                });
+
+                        }
+                    });
+                }
+
+                function statusChangeFunc(id) {
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: 'Terminate/Activate Employee!',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes',
+                            cancelButtonText: 'No',
+                            confirmButtonColor: '#FF5733', // Red color for "Yes"
+                            cancelButtonColor: '#4CAF50', // Green color for "No"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Send an AJAX request to delete the task
+                                $.ajax({
+                                    url: '/change-status/' + id,
+                                    method: 'GET', // Use the DELETE HTTP method
+                                    success: function() {
+                                        // Provide user feedback
+                                        Swal.fire({
+                                            title: 'Success!',
+                                            text: 'The employee disabled successfully!',
+                                            icon: 'success'
+                                        }).then(() => {
+                                            location.reload(); // Refresh the page
+                                        });
+                                    },
+                                    error: function(xhr, status, error) {
+                                        // Handle errors, you can display an error message to the user
+                                        console.error('Error:', error);
+                                        Swal.fire({
+                                            title: 'Error!',
+                                            text: 'An error occurred while deleting the employee!',
+                                            icon: 'error'
+                                        });
+                                    }
+                                });
+
+                        }
+                    });
+                }
+
+                function deleteEmployee(id) {
+                    confirmDelete(id);
+                }
+
+                function statusChange(id) {
+                    statusChangeFunc(id);
+                }
+
+
+        </script>
     @endsection
     @section('scripts')
         <!-- bs custom file input plugin -->

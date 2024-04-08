@@ -17,7 +17,17 @@ class EmployeesController extends Controller
 {
     public function viewProfile($id) {
         $emp_data = DB::table('employees')->where('Emp_Code', $id)->first();
-        return view('emp.profile',compact('emp_data'));
+        $check_portal = DB::table('users')->where('user_code',$id)->first();
+        if($emp_data == null) {
+            return view('errors.404');
+        }
+        if($check_portal) {
+            $show_disable = TRUE;
+        } else {
+            $show_disable = FALSE;
+        }
+        // dd($show_disable);
+        return view('emp.profile',compact('emp_data','show_disable'));
     }
     // update info employee dashboard
     public function updateEmpInfo(Request $req) {
@@ -173,7 +183,7 @@ class EmployeesController extends Controller
             $emp="Reblate Solutions Employees";
             return view('emp.view-employees',compact('latestEmployees','emp'));
         } else {
-            return redirect('add-new-employee');
+            return redirect('/');
         }
 
     }
@@ -321,66 +331,72 @@ class EmployeesController extends Controller
         }
 
     }
-
-    // change status
     public function changeStatus($id) {
-        $emp_data = Employee::find($id);
-
-        if ($emp_data !=null) {
-
-            $get_status = $emp_data->Emp_Status;
-
-            if($get_status == "active") {
-                $emp_data->Emp_Status = "inactive";
-                $emp_data->save();
-            } else if($get_status == "inactive") {
-                $emp_data->Emp_Status = "active";
-                $emp_data->save();
-            }
-            return redirect('manage-employees');
-        } else {
-            return redirect('manage-employees');
-        }
-    }
-
-    // delete employee
-    public function delEmployee($emp_id) {
-        $emp_data = DB::table('users')->where('user_code', $emp_id)->first();
+        $emp_data = DB::table('employees')->where('Emp_Code', $id)->first();
         // $emp_data = Employee::where('Emp_Code', $emp_data)->first();
         // return $emp_data;
         if($emp_data) {
-            if($emp_data->password != null) {
-                DB::table('users')->where('user_code', $emp_id)->update([
-                    'password' => ""
+
+            if($emp_data->Emp_Status == "active") {
+                DB::table('employees')->where('Emp_Code', $id)->update([
+                    'Emp_Status' => "disable"
                 ]);
             }
-            // $file_path = $emp_data->Emp_Image;
-            // if (File::exists($file_path)) {
-            //     File::delete($file_path);
-            //     DB::table('employees')->where('Emp_Code', $emp_id)->delete();
-            //     // return redirect('manage-employees');
-            // } else {
-            //     DB::table('employees')->where('Emp_Code', $emp_id)->delete();
-            //     // return response()->json(['message' => 'success']);
-            // }
-            // // $c_employee_user = UserEmployee::where('emp_code',$emp_id)->first();
-            // $c_employee_user = DB::table('user_employee')->where('emp_code', $emp_id)->first();
-            // if($c_employee_user) {
-            //     DB::table('user_employee')->where('emp_code', $emp_id)->delete();
-            // }
-            // // $login_table_employee_user = Login::where('emp_code',$emp_id)->first();
-            // $login_table_employee_user = DB::table('user_employee')->where('emp_code', $emp_id)->first();
-            // if($login_table_employee_user) {
-            //     $login_table_employee_user->delete();
-            // }
-            // $login_user_table = DB::table('user_employee')->where('emp_code', $emp_id)->first();
-            // if($login_user_table) {
-            //     DB::table('user_employee')->where('emp_code', $emp_id)->delete();
-            // }
+            else {
+                DB::table('employees')->where('Emp_Code', $id)->update([
+                    'Emp_Status' => "active"
+                ]);
+            }
+
             return response()->json(['message' => 'success']);
 
         } else {
-            // return redirect('manage-employees');
+            return response()->json(['message' => 'failed']);
+        }
+    }
+
+    // change status
+    // public function changeStatus($id) {
+    //     $emp_data = Employee::find($id);
+
+    //     if ($emp_data !=null) {
+
+    //         $get_status = $emp_data->Emp_Status;
+
+    //         if($get_status == "active") {
+    //             $emp_data->Emp_Status = "inactive";
+    //             $emp_data->save();
+    //         } else if($get_status == "inactive") {
+    //             $emp_data->Emp_Status = "active";
+    //             $emp_data->save();
+    //         }
+    //         return redirect('manage-employees');
+    //     } else {
+    //         return redirect('manage-employees');
+    //     }
+    // }
+
+    // delete employee
+    public function delEmployee($emp_id) {
+        $emp_data = DB::table('employees')->where('Emp_Code', $emp_id)->first();
+        // $emp_data = Employee::where('Emp_Code', $emp_data)->first();
+        // return $emp_data;
+        if($emp_data) {
+
+            if($emp_data->Emp_Status == "active") {
+                DB::table('employees')->where('Emp_Code', $emp_id)->update([
+                    'Emp_Status' => "disable"
+                ]);
+            }
+            else {
+                DB::table('employees')->where('Emp_Code', $emp_id)->update([
+                    'Emp_Status' => "active"
+                ]);
+            }
+
+            return response()->json(['message' => 'success']);
+
+        } else {
             return response()->json(['message' => 'failed']);
         }
     }

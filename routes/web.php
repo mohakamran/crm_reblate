@@ -102,6 +102,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/change-status/{status}', [EmployeesController::class, 'changeStatus']);
     Route::get('/change-shift/{status}', [EmployeesController::class, 'changeShift']);
     Route::get('/delete-employee/{emp_id}', [EmployeesController::class, 'delEmployee'])->name('del-emp');
+    Route::get('/change-status/{emp_id}', [EmployeesController::class, 'changeStatus']);
     Route::get('/update-employee/{emp_id}', [EmployeesController::class, 'updateEmployee']);
     Route::post('/update-employee-data/{emp_id}', [EmployeesController::class, 'updateEmployeeData']);
     Route::get('/view_emp_details/{emp_id}', [EmployeesController::class, 'viewEmployeeData']);
@@ -182,7 +183,7 @@ Route::group(['middleware' => 'admin'], function () {
 
     // attendence
     Route::get('/view-attendence',[AttendenceController::class,'viewAttendenceEmp']);
-    Route::post('/view-attendence-emp',[AttendenceController::class,'viewEachAttendenceEmp']);
+    Route::get('/view-attendence-emp/{id}',[AttendenceController::class,'viewEachAttendenceEmp']);
     Route::post('/search-emp-details',[AttendenceController::class,'searchAttendenceEmp']);
     Route::get('/view-emp-attendence',[AttendenceController::class,'viewEmpAttendence']);
     // Route::get('/view-attendence-emp', [AttendenceController::class, 'viewAttendanceEmployee']);
@@ -192,6 +193,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/search-emp-leaves', [AttendenceController::class, 'empSearchRecords']);
     Route::post('/show-update-attendence-form', [AttendenceController::class, 'showUpdateAttendenceForm']);
     Route::post('/update-emp-attendence-details', [AttendenceController::class, 'updateEmpAttendenceDetails'])->name('update-emp-attendence-details');
+    Route::post('/filter_emp_date',[AttendenceController::class,'filterEmpDateWise']);
 
     // office time controller
 
