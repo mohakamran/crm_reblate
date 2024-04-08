@@ -218,6 +218,10 @@ class SalaryController extends Controller
                         'mime' => 'application/pdf',
                     ]);
         });
+
+        if($emp_reason_deduction==null) {
+            $emp_reason_deduction = "";
+        }
         $emp->emp_id = $emp_code;
         $emp->emp_name =  $emp_name;
         $emp->file_name  = $pdf_name;

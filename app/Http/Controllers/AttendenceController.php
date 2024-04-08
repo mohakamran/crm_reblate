@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Redirect;
 
+
 use Carbon\Carbon;
 
 
@@ -55,16 +56,69 @@ class AttendenceController extends Controller
 
 
     // get form updated check in, check out, data and save in database
-    public function updateEmpAttendenceDetails(Request $req) {
-        // dd($req->attendence_id);
 
-        $attendence_id = $req->attendence_id;
-        $check_in_time = $req->check_in_time;
-        $check_out_time = $req->check_out_time;
-        $break_start = $req->break_start;
-        $break_end = $req->break_end;
-        // DB::table('attendence')->
+    public function updateEmpAttendenceDetails(Request $req) {
+
+    // Retrieve data from the request
+    $attendence_id = $req->attendence_id;
+    $check_in_time = $req->check_in_time;
+    $checkout_time = $req->check_out_time;
+    $break_start_time = $req->break_start;
+    $break_end_time = $req->break_end;
+
+    // Check if check-in and check-out times are null and set them to empty strings if so
+    $checkIn = $checkIn ?? "";
+    $checkOut = $checkOut ?? "";
+
+   // Parse and format times to 'h:i A' format using Carbon
+$checkIn_format = $check_in_time ? Carbon::parse($check_in_time)->format('h:i A') : '';
+$checkOut_format = $checkout_time ? Carbon::parse($checkout_time)->format('h:i A') : '';
+$break_start_format = $break_start_time ? Carbon::parse($break_start_time)->format('h:i A') : '';
+$break_end_format = $break_end_time ? Carbon::parse($break_end_time)->format('h:i A') : '';
+
+// Calculate total work hours
+$checkOut = Carbon::createFromFormat('h:i A', $checkOut_format);
+$checkIn = Carbon::createFromFormat('h:i A', $checkIn_format);
+$totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to hours
+
+
+    // Subtract break time if provided
+    if ($break_end_time != "" && $break_start_time != "") {
+        $break_start = Carbon::createFromFormat('h:i A', $break_start_format);
+        $break_end = Carbon::createFromFormat('h:i A', $break_end_format);
+
+        if ($break_start >= $checkIn && $break_end <= $checkOut) {
+            $totalWorkHours -= $break_end->diffInMinutes($break_start) / 60; // Subtract break time in hours
+        }
     }
+
+    // Format total worked hours into HH:MM format
+    $hours = floor($totalWorkHours);
+    $minutes = ($totalWorkHours - $hours) * 60;
+    $formattedTotalWorkHours = sprintf('%02d:%02d', $hours, $minutes);
+
+
+
+    // Update database record
+    DB::table('attendence')
+        ->where('id', $attendence_id)
+        ->update([
+            'check_in_time' => $checkIn_format,
+            'check_out_time' => $checkOut_format,
+            'break_end' => $break_end_format,
+            'break_start' => $break_start_format,
+            'check_in_status' => "done",
+            'check_out_status' => "done",
+            'total_time' => $formattedTotalWorkHours
+        ]);
+
+    dd("worked");
+
+    // Return a response
+    return response()->json(['message' => 'Record updated successfully']);
+}
+
+
     // show attendence form
     public function showUpdateAttendenceForm(Request $req){
         $attendence_id = $req->attendence_id;
@@ -243,7 +297,7 @@ class AttendenceController extends Controller
     }
     // view records of each employee
     public function viewEachAttendenceEmp($id) {
-        $id = $req->hidden_emp_value;
+        // $id = $req->hidden_emp_value;
         if($id) {
             $emp = DB::table('employees')->where('Emp_Code', $id)->first();
             if($emp) {
@@ -332,6 +386,10 @@ class AttendenceController extends Controller
             // Get the current month and year
             $currentMonth = Carbon::now()->format('m');
             $currentYear = Carbon::now()->format('Y');
+            $currentmonth = Carbon::now()->format('F');
+            $currentyear = Carbon::now()->format('Y');
+
+            // dd($currentmonth);
 
             // Get the first day of the current month
             $firstDayOfMonth = Carbon::now()->startOfMonth();
@@ -390,19 +448,101 @@ class AttendenceController extends Controller
             // $latestEmployees = DB::table('employees')->get();
 
 
-        return view('attendence.emp-cards-attendence', compact('numberOfDaysInMonth','attendances','emp','daysOfMonth'));
+        return view('attendence.emp-cards-attendence', compact('currentyear','currentmonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
 
    }
    // function to filter overall employees attendence
    public function filterEmpDateWise(Request $req) {
-        $emp_id = $req->emp_id;
-        $emp_name = $req->emp_name;
-        $emp_attendence_month = $req->emp_attendence_month;
-        $emp_attendance_year = $req->emp_attendance_year;
 
-        if($emp_id) {
+    $emp_attendence_month = $req->emp_attendence_month;
+    $emp_attendance_year = $req->emp_attendance_year;
+    // dd($emp_attendance_year);
 
+
+
+    $currentmonth = Carbon::now()->format('F');
+    $currentyear = Carbon::now()->format('Y');
+
+    if ($emp_attendance_year != null) {
+        $currentyear = $emp_attendance_year;
+    }
+
+    // If a month is selected, update $currentmonth and get the first day of that month
+    if ($emp_attendence_month != null) {
+        $currentmonth = Carbon::create()->month($emp_attendence_month)->format('F');
+        $firstDayOfMonth = Carbon::createFromDate($emp_attendance_year, $emp_attendence_month, 1);
+        $numberOfDaysInMonth = $firstDayOfMonth->daysInMonth;
+    } else {
+        // Get the first day of the current month
+        $emp_attendence_month = Carbon::now()->format('m');
+        $firstDayOfMonth = Carbon::now()->startOfMonth();
+        $numberOfDaysInMonth = Carbon::now()->daysInMonth;
+
+    }
+
+    // If a year is selected, update $currentyear
+
+
+
+        // Get the current date
+        // $today = Carbon::now()->toDateString();
+
+        // Query attendance records for the current month up to today's date
+        // Query employees and their attendance records for the current month up to today's date
+        $emp = DB::table('employees')->where('Emp_Status','active')->get();
+
+        // Initialize an empty array to store attendance records
+        $attendances = [];
+
+        // Initialize an empty array to store days
+        // Get the number of days in the current month
+        ;
+        // dd($numberOfDaysInMonth);
+
+        // Initialize an empty array to store days
+        $daysOfMonth = [];
+
+        // Loop through the days of the month and store each day in the array
+        // Loop through the days of the month and store each day in the array
+        for ($day = 1; $day <= $numberOfDaysInMonth; $day++) {
+            // Create a Carbon instance for the current day of the month
+            $currentDate = Carbon::createFromDate($emp_attendance_year, $emp_attendence_month, $day);
+
+            // Format the date string into the desired format
+            $formattedDate = $currentDate->format('j F l'); // e.g., "1 April Monday"
+
+            // Store the formatted date in the array
+            $daysOfMonth[] = $formattedDate;
         }
+
+        // dd($daysOfMonth);
+
+        // Iterate over each active employee to fetch their attendance records
+        foreach ($emp as $employee) {
+            // Query attendance records for the current month up to today's date for each employee
+            $employeeAttendances = DB::table('attendence')
+                ->where('emp_id', $employee->Emp_Code)
+                ->whereYear('date', $emp_attendance_year)
+                ->whereMonth('date', $emp_attendence_month)
+                // ->whereDate('date', '<=', $today)
+                ->get();
+
+            // Append the attendance records to the $attendances array
+            $attendances = array_merge($attendances, $employeeAttendances->toArray());
+        }
+
+
+        // dd($attendances);
+
+        // Assuming you have retrieved the latest employees elsewhere in your code
+        // $latestEmployees = DB::table('employees')->get();
+
+
+    return view('attendence.emp-cards-attendence-search', compact('currentyear','currentmonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
+
+
+
+
 
    }
    // searcj details
