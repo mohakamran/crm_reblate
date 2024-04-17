@@ -235,11 +235,27 @@
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                            @if (Session::has('emp_img') && Session::get('emp_img') != "")
-                            <img src="{{ Session::get('emp_img') }}" class="img-fluid header-profile-user rounded-circle" alt="">
+
+                            @if (Session::has('emp_img'))
+                            <!-- Debugging: Check if session variable exists -->
+
+                            <!-- Debugging: Output session variable value -->
+
+
+                            @if (Session::get('emp_img') != "" && file_exists(Session::get('emp_img')))
+                                <!-- Debugging: Output image path -->
+
+
+                                <!-- Render image -->
+                                <img src="{{ url(Session::get('emp_img')) }}" class="img-fluid header-profile-user rounded-circle" alt="">
                             @else
+
+
+                                <!-- Render default image -->
                                 <img src="{{ url('user.png') }}" class="img-fluid header-profile-user rounded-circle" alt="">
                             @endif
+                        @endif
+
                         </div>
 
                         <div class="flex-grow-1 ms-2 text-start">

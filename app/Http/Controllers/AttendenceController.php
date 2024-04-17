@@ -170,64 +170,80 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
             return redirect()->back()->with('error', 'No Leave Records found!');
         }
     }
+    // a manager and admin can approve or decline
+    public function updateLeaveStatus($action, $id) {
+        // dd("working");
+        // Check if the action is either approve or decline
+        if ($action == 'approve') {
+            // Process approval logic using $id and $emp_code
+            // echo "Emp Code: ".$emp_code;
+            // echo "<br> ID : ".$id;
+            // echo "<br> Action Code: ".$action;
+            DB::table('leaves')->where('id',$id)->update([
+                'status'=> 'approved'
+            ]);
+            return back()->with('message','Leave Approved!');
+        } elseif ($action == 'decline') {
+            // Process decline logic using $id and $emp_code
+            // echo "Emp Code: ".$emp_code;
+            // echo "<br> ID : ".$id;
+            // echo "<br> Action Code: ".$action;
+            DB::table('leaves')->where('id',$id)->update([
+                'status'=> 'declined'
+            ]);
+            return back()->with('message','Leave Declined!');
+        }
+
+    }
     public function leaveRequests() {
         $user_type = Auth()->user()->user_type;
-        if ($user_type != "" && $user_type == "manager") {
-            $records = DB::table('leaves')->where('user_type', 'employee')->where('status','pending')->get();
-            $emp = [];
 
-            foreach ($records as $rec) {
-                $employees = DB::table('employees')->where('Emp_Code', $rec->emp_code)->get();
+        if ($user_type != "" && ($user_type == "manager" || $user_type == "admin")) {
+            if ($user_type == "manager") {
+                $records = DB::table('leaves')->where('user_type', 'employee')->where('status','pending')->orderBy('id','desc')->get();
+            } else {
+                $records = DB::table('leaves')->where('status','pending')->get();
+            }
 
-                // Loop through each employee record and append to $emp array
-                foreach ($employees as $employee) {
-                    $emp[] = $employee;
+            $empLeaveRequests = [];
+
+            foreach ($records as $record) {
+                $employee = DB::table('employees')->where('Emp_Code', $record->emp_code)->first();
+
+                if ($employee) {
+                    $empLeaveRequests[$employee->Emp_Code][] = [
+                        'employee' => $employee,
+                        'leave_record' => $record
+                    ];
                 }
             }
 
-
-            // if ($records->isEmpty()) {
-            //     dd("empty!");
-            // }
-            // dd($records);
-            return view('attendence.approval', compact('records', 'emp'));
-        }
-        if ($user_type != "" && $user_type == "admin") {
-            $records = DB::table('leaves')->where('status','pending')->get();
-            $emp = [];
-
-            foreach ($records as $rec) {
-                $employees = DB::table('employees')->where('Emp_Code', $rec->emp_code)->get();
-
-                // Loop through each employee record and append to $emp array
-                foreach ($employees as $employee) {
-                    $emp[] = $employee;
-                }
-            }
-
-
-            // if ($records->isEmpty()) {
-            //     dd("empty!");
-            // }
-            // dd($records);
-            return view('attendence.approval', compact('records', 'emp'));
+            return view('attendence.approval', compact('empLeaveRequests', 'records'));
         }
     }
+
+
     // search employee records
     public function empSearchRecords(Request $req) {
-        $validate = $req->validate([
-            'date_controller' => 'required'
-        ]);
-        $date = $req->date_controller;
+
+        $Date = $req->daterange;
+        $dateRange = explode(' - ', $Date);
+        $startDate = Carbon::createFromFormat('m/d/Y', $dateRange[0])->format('Y-m-d');
+        $endDate = Carbon::createFromFormat('m/d/Y', $dateRange[1])->format('Y-m-d');
+
         // dd($date);
         $id = Auth()->user()->user_code;
+        // dd($id , $startDate, $endDate,);
 
         $emp = DB::table('employees')->where('Emp_Code', $id)->first();
         if($emp) {
-            if($date!="") {
-                $emp_records = DB::table('leaves')->where('emp_code',$id)->where('date',$date)->get();
+            if($Date!="") {
+                $emp_records = DB::table('leaves')
+                ->where('emp_code', $id)
+                ->whereBetween('date', [$startDate, $endDate])
+                ->get();
                 $show_back = "yes";
-                return view('attendence.leaves',compact('emp_records','show_back'));
+                return view('attendence.leaves-search',compact('emp_records','show_back'));
             }
         } else {
             return back();
@@ -236,7 +252,7 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
     // employee clicks to see records from employee dashboard
     public function empLeaveRecords() {
         $user_code = Auth()->user()->user_code;
-        $emp_records = DB::table('leaves')->where('emp_code',$user_code)->get();
+        $emp_records = DB::table('leaves')->where('emp_code',$user_code)->orderBy('id','desc')->get();
         return view('attendence.leaves',compact('emp_records','user_code'));
     }
     // apply for leave admin
@@ -302,9 +318,9 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
             $emp = DB::table('employees')->where('Emp_Code', $id)->first();
             if($emp) {
                 $emp_name = $emp->Emp_Full_Name;
-                $check_attendence = DB::table('attendence')->where('emp_id', $id)->get();
+                $check_attendence = DB::table('attendence')->where('emp_id', $id)->orderBy('id','desc')->get();
                 // dd($check_attendence->date);
-                return view('attendence.view-individual',compact('check_attendence','id','emp_name'));
+                return view('attendence.view-individual',compact('check_attendence','emp','id','emp_name'));
             } else {
                 return back();
             }
@@ -547,24 +563,29 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
    }
    // searcj details
    public function searchAttendenceEmp(Request $req) {
-        $validate = $req->validate([
-            'date_controller' => 'required'
-        ]);
-        $date = $req->date_controller;
-        // dd($date);
-        $id =  $req->emp_search_date;
 
-        $emp = DB::table('employees')->where('Emp_Code', $id)->first();
-        if($emp) {
-            if($date!="") {
-                $emp_name = $emp->Emp_Full_Name;
-                $check_attendence = DB::table('attendence')->where('emp_id',$id)->where('date',$date)->get();
-                $show_back = "yes";
-                return view('attendence.view-individual',compact('check_attendence','show_back','emp_name'));
-            }
-        } else {
-            return back();
+
+    $Date = $req->daterange;
+    $dateRange = explode(' - ', $Date);
+    $startDate = Carbon::createFromFormat('m/d/Y', $dateRange[0])->format('Y-m-d');
+    $endDate = Carbon::createFromFormat('m/d/Y', $dateRange[1])->format('Y-m-d');
+
+    $id = $req->emp_search_date;
+    // dd($startDate, $endDate, $id);
+    $emp = DB::table('employees')->where('Emp_Code', $id)->first();
+    if($emp) {
+
+            $emp_name = $emp->Emp_Full_Name;
+            $check_attendence = DB::table('attendence')
+        ->where('emp_id', $id)
+        ->whereBetween('date', [$startDate, $endDate])
+        ->get();
+            $show_back = "yes";
+            return view('attendence.search-view-individual',compact('id','check_attendence','emp','show_back','emp_name'));
         }
+    else {
+        return view('errors.404');
+    }
 
    }
    // view attendence details
@@ -572,10 +593,16 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
     $id = auth()->user()->user_code;
     $emp = DB::table('employees')->where('Emp_Code', $id)->first();
     if($emp) {
-        $check_attendence = DB::table('attendence')->where('emp_id', $id)->orderBy('id','desc')->get();
-        // dd($check_attendence->date);
+        $check_attendence = DB::table('attendence')
+                    ->where('emp_id', $id)
+                    ->orderBy('date', 'desc') // Order by date in descending order
+                    ->get();
+        // foreach ($check_attendence as $attendance) {
+        //     echo "<br>".$attendance->date;
+        // }
+        // exit;
         $emp_name = $emp->Emp_Full_Name;
-        return view('attendence.view-individual',compact('check_attendence','id','emp_name' ));
+        return view('attendence.view-individual',compact('check_attendence','id','emp_name','emp' ));
     } else {
         return back();
     }

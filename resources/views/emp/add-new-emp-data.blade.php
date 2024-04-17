@@ -27,12 +27,20 @@
                         <div class="card-body">
 
                             <div class="form-floating mb-3 col-md-12 d-flex justify-content-center" >
-                                @isset($emp_data->Emp_Image)
+
+                                @if ($emp_data->Emp_Image != "" && file_exists($emp_data->Emp_Image))
+                                    <img src="{{ url($emp_data->Emp_Image) }}"
+                                    style="width:100px;height:100px; object-fit:cover;border-radius:100%;">
+                                    @else
+                                    <img src="{{ url('user.png') }}"
+                                            style="width:100px;height:100px; object-fit:cover;border-radius:100%;">
+                                @endif
+                                {{-- @isset($emp_data->Emp_Image)
                                     <a href="{{ asset($emp_data->Emp_Image) }}" style="border: 5px solid #fca311; border-radius: 100%;" target="_blank">
                                         <img src="{{ asset($emp_data->Emp_Image) }}"
                                             style="width:100px;height:100px; object-fit:cover;border-radius:100%;">
                                     </a>
-                                @endisset
+                                @endisset --}}
 
                             </div>
                             <div class="text-center">

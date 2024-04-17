@@ -80,7 +80,7 @@ class AuthController extends Controller
         $emp_absent_count = $emp_count - $emp_present_count - $emp_leave_count;
 
          // get emp_present_count
-        $tasks_count = $this->getTaskCount($startDate,$endDate);
+        $tasks_count = $this->getTaskCountsInRange($startDate,$endDate);
         $total_clients = $this->getTotalClients();
 
         $currentTasks = $this->getEmpTasks();
@@ -1141,7 +1141,7 @@ class AuthController extends Controller
             $data = compact('emp_count','client_count','data_chart','total_revenue',
             'usd_pkr_expenses','usd_pkr_salary','total_profit','emp_present_count',
             // 'emp_leave_count','emp_absent_count','tasks_count','total_clients', 'currentTasks','chartData');
-            'emp_leave_count','emp_absent_count','tasks_count','total_clients', 'currentTasks','salesData');
+            'emp_leave_count','emp_absent_count','tasks_count', 'chartData', 'total_clients', 'currentTasks','salesData');
             // $chartData = json_encode($data);
             // $chart_data = compact('total_revenue','usd_pkr_expenses','usd_pkr_salary','total_profit');
             // $chartData = json_encode($chart_data);
@@ -1266,11 +1266,13 @@ class AuthController extends Controller
             ->get()->pluck('total', 'month')->toArray();
 
         // Query for expenses data
-        $expensesData = DB::table('salaries')
-            ->select(DB::raw('MONTH(date) as month'), DB::raw('SUM(amount) as total'))
-            ->whereYear('date', $currentYear)
-            ->groupBy(DB::raw('MONTH(date)'))
+        $expensesData = DB::table('expenses')
+            ->select(DB::raw('MONTH(expense_date) as month'), DB::raw('SUM(expense_amount) as total'))
+            ->whereYear('expense_date', $currentYear)
+            ->groupBy(DB::raw('MONTH(expense_date)'))
             ->get()->pluck('total', 'month')->toArray();
+
+        // dd($expensesData);
 
         // Initialize arrays for sales, expenses, and profit
         $sales = [];
@@ -1278,11 +1280,21 @@ class AuthController extends Controller
         $profit = [];
 
         // Loop through each month and populate data
-        for ($month = 1; $month <= 12; $month++) {
-            $sales[] = isset($salesData[$month]) ? $salesData[$month] : 0;
-            $expenses[] = isset($expensesData[$month]) ? $expensesData[$month] : 0;
-            $profit[] = (isset($salesData[$month]) ? $salesData[$month] : 0) - (isset($expensesData[$month]) ? $expensesData[$month] : 0);
+        for ($month = 0; $month < 12; $month++) { // Adjusted loop to start from 0
+
+            $sales[] = isset($salesData[$month + 1]) ? $salesData[$month + 1] : 0; // Adjusted index for $salesData
+
+            // Convert expenses to USD
+            if (isset($expensesData[$month])) { // Check if $expensesData has entry for current month
+                $expenses[] = $this->getExchangeRate($expensesData[$month]);
+                // $expensesInPKR = isset($exchangeRate) ? $exchangeRate : 0;
+            } else {
+                $expenses[] = 0; // Set default expenses if data not available for the month
+            }
+
+            $profit[] = (isset($salesData[$month + 1]) ? $salesData[$month + 1] : 0) - $expenses[$month ]; // Adjusted index for $salesData
         }
+
 
         // Prepare response
         $chartData = [
@@ -1290,6 +1302,8 @@ class AuthController extends Controller
             'expenses' => $expenses,
             'profit' => $profit,
         ];
+
+        // dd($chartData);
 
         return $chartData;
     }
@@ -1727,18 +1741,18 @@ class AuthController extends Controller
 
     //get exchange rate prices
     public function getExchangeRate($amount) {
-        // $client = new GuzzleClient(); // Use the alias GuzzleClient
-        // $response = $client->get('https://open.er-api.com/v6/latest/USD');
-        // $data = json_decode($response->getBody(), true);
+        $client = new GuzzleClient(); // Use the alias GuzzleClient
+        $response = $client->get('https://open.er-api.com/v6/latest/USD');
+        $data = json_decode($response->getBody(), true);
 
-        // // Get the exchange rate for PKR
-        // $usdToPkrRate = $data['rates']['PKR'];
+        // Get the exchange rate for PKR
+        $usdToPkrRate = $data['rates']['PKR'];
 
-        // // Convert PKR to USD using the reciprocal of the exchange rate
-        // $pkrToUsdRate = 1 / $usdToPkrRate;
+        // Convert PKR to USD using the reciprocal of the exchange rate
+        $pkrToUsdRate = 1 / $usdToPkrRate;
 
-        // // Convert amount from PKR to USD
-        // $amountInUSD = $amount * $pkrToUsdRate;
+        // Convert amount from PKR to USD
+        $amountInUSD = $amount * $pkrToUsdRate;
 
         return $amount;
     }

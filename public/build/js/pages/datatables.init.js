@@ -22,6 +22,7 @@ $(document).ready(function() {
     //Buttons examples
     var table = $('#datatable-buttons').DataTable({
         lengthChange: false,
+        pageLength: 30, // Display 30 records per page
         "language": {
             "paginate": {
                 "previous": "<i class='mdi mdi-chevron-left' style='color:#14213d'>",

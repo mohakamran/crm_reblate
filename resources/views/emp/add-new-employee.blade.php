@@ -41,12 +41,19 @@
                                     <div class="col-md-6">
                                         <h4 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Personal Details</h4>
                                         <div class="form-floating mb-3">
-                                            @isset($emp_data->Emp_Image)
+                                            {{-- @isset($emp_data->Emp_Image)
 
                                                 <a href="{{ asset($emp_data->Emp_Image) }}" target="_blank">
                                                     <img src="{{ asset($emp_data->Emp_Image) }}" style="width:150px;height:150px">
                                                 </a>
-                                            @endisset
+                                            @endisset --}}
+
+                                            @if ($emp_data->Emp_Image !="" && file_exists($emp_data->Emp_Image))
+                                <img src="{{  url($emp_data->Emp_Image)  }}"
+                                style="width:150px;height:150px" alt="">
+                                @else
+                                <img src="{{ url('/user.png') }}" style="width:150px;height:150px" alt="">
+                            @endif
 
                                         </div>
 

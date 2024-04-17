@@ -181,7 +181,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/break-start',[AttendenceController::class,'breakStart']);
     Route::get('/break-end',[AttendenceController::class,'breakEnd']);
 
-    // attendence
+    // attendenceleave-requests
     Route::get('/view-attendence',[AttendenceController::class,'viewAttendenceEmp']);
     Route::get('/view-attendence-emp/{id}',[AttendenceController::class,'viewEachAttendenceEmp']);
     Route::post('/search-emp-details',[AttendenceController::class,'searchAttendenceEmp']);
@@ -198,8 +198,8 @@ Route::group(['middleware' => 'admin'], function () {
     // office time controller
 
     Route::get('/office-time', [TimeController::class, 'indexPage']);
-    Route::post('/office-times-morning', [TimeController::class, 'setMorningShift']);
-    Route::post('/office-times-night', [TimeController::class, 'setEveningShift']);
+    Route::post('/office-times', [TimeController::class, 'setShift']);
+    // Route::post('/office-times-night', [TimeController::class, 'setEveningShift'])
 
     // employee dashboard
     Route::get('/view_info_emp',[EmployeesController::class,'viewEmpSlips']);
@@ -218,8 +218,9 @@ Route::group(['middleware' => 'admin'], function () {
 
     // leaves
     Route::get('/leave-requests',[AttendenceController::class,'leaveRequests']);
-    Route::get('/leave-request/approve/{empCode}', [AttendenceController::class, 'approveLeaveRequest']);
-    Route::get('/leave-request/decline/{empCode}', [AttendenceController::class, 'declineLeaveRequest']);
+    Route::get('/leave-request/{action}/{id}',[AttendenceController::class,'updateLeaveStatus'])->name('leave.handle');
+    // Route::get('/leave-request/{action}/{id}/{emp_code}', 'LeaveController@handleLeaveRequest')->name('leave.handle');
+
 
     // announcement
     Route::get('/announcements',[AnnouncementController::class,'viewindexPage']);

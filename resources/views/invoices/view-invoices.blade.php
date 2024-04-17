@@ -70,9 +70,10 @@
                             <thead>
                                 <tr>
                                     <th> SR</th>
-                                    <th> Invoice ID</th>
                                     <th> Client Name</th>
-                                    <th> Date</th>
+                                    <th>Project Name</th>
+
+                                    <th> Project Start</th>
 
                                     <th> View</th>
                                     {{-- <th> Month</th> --}}
@@ -84,11 +85,13 @@
                                 @foreach ($rec as $emp)
                                     <tr>
                                         <td>{{ $count }}</td>
-                                        <td>{{ $emp->invoice_id }}</td>
                                         <td>{{ $emp->client_name }}</td>
+                                        <td>{{ $emp->project_name }}</td>
+
+
 
                                         <td>
-                                            {{ $emp->date }}
+                                            {{ \Carbon\Carbon::parse($emp->project_start_date)->format('j F, Y') }}
                                             {{-- {{file_exists($pdf)}} --}}
                                         </td>
 

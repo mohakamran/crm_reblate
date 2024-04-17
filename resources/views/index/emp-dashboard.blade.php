@@ -63,23 +63,22 @@
 
 
             .punch-info .punch-hours {
-                border: 5px solid #fca311;
+                border: 3px solid #fca311;
                 /* font-size: 20px; */
-                height: 74px;
-                width: 275px;
+                padding: 20px;
                 margin: 0 auto;
-                border-radius: 2%;
+                border-radius: 12px;
                 position: relative;
+                text-align: center;
             }
 
 
 
             .punch-hours span {
-                position: absolute;
-                top: 50%;
-                left: 50%;
+                font-weight: 300;
                 transform: translate(-50%, -50%);
-                font-size: 19px;
+                font-size: 25px;
+                color: #14213d;
             }
 
             .view-class-more {
@@ -218,12 +217,12 @@
                 <div class="card-body d-flex justify-content-lg-between align-items-center">
                     <div class="col-md-3 d-flex align-items-center">
 
-                        @if (isset($emp_det->Emp_Image) && $emp_det->Emp_Image != '')
+                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image) )
                             <img src="{{ $emp_det->Emp_Image }}"
                                 style="width:120px;height:120px;border-radius:100%; object-fit:cover;" alt="">
                         @else
-                            <img src="{{ url('user.png') }}"
-                                style="width:120px;height:120px;border-radius:100%; object-fit:cover;" alt="">
+                        <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
+                        src="{{ url('user.png') }}">
                         @endif
                         <div class="welcome-det ms-3 text-dark fw-bolder">
                             <h3 style="font-size: 20px; color:#14213d">Welcome, </h3>
@@ -341,12 +340,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="container d-flex justify-content-between">
-                    <button type="button" class="reblateBtn px-3 py-2" data-toggle="modal"
-                        data-target="#exampleModal">Apply for Leave</button>
-                    <a href="/leave-records" class="reblateBtn px-3 py-2">Leave Records</a>
-                </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                <div class="d-flex flex-wrap gap-4 justify-content-between">
+                    <div class="container d-flex justify-content-between">
+                        <button type="button" class="reblateBtn px-3 py-2" data-toggle="modal"
+                            data-target="#exampleModal">Apply for Leave</button>
+                        <a href="/leave-records" class="reblateBtn px-3 py-2">Leave Records</a>
+                    </div>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -363,15 +363,15 @@
                                     <div id="messageBox"></div>
                                     <div class="form-group mt-3">
                                         <label for="date">Date</label>
-                                        <input type="date" class="form-control inputboxcolor" style="border: 1px solid #ced4da;"
-                                            id="date" name="date">
+                                        <input type="date" class="form-control inputboxcolor"
+                                            style="border: 1px solid #ced4da;" id="date" name="date">
                                         <span class="text-danger" id="dateBox" style="display: none">Please Select
                                             a date!</span>
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="reason">Reason:</label>
-                                        <textarea class="form-control inputboxcolor" style="border: 1px solid #ced4da; resize: none; height: 100px;" id="reason"
-                                            name="reason" placeholder="Reason:" rows="5"></textarea>
+                                        <textarea class="form-control inputboxcolor" style="border: 1px solid #ced4da; resize: none; height: 100px;"
+                                            id="reason" name="reason" placeholder="Reason:" rows="5"></textarea>
                                         <span class="text-danger" id="reasonBox" style="display: none">Please Write a
                                             reason!</span>
                                     </div>
@@ -383,6 +383,9 @@
                         </div>
                     </div>
                 </div>
+                </div>
+
+
 
             </div>
             <div class="col-md-4 col-xl-4 col-sm-12">
@@ -436,121 +439,113 @@
                             <h3 class=" font-size-header mb-0">Timesheet </h3>
 
                         </div>
-                        {{-- show check in time if it is done  --}}
-                        {{-- @if (session()->has('check_in_time') && session('check_in_time') != '')
-                            <h3 class="check_in_time">Check In Time: {{ session('check_in_time') }}</h3>
-                        @endif --}}
                         <div class="punch-info" style="margin-top: 15px;">
                             <div class="punch-hours">
-                            @if (session()->has('total_hours') && session('total_hours') != '')
-
-                                   <span style="float: right;">{{ session('total_hours') }}</span>
-
-                            @else
-                                {{-- <span>0 hrs</span> --}}
+                                @if (session()->has('total_hours') && session('total_hours') != '')
+                                    <span>{{ session('total_hours') }}</span>
+                                @else
+                                    {{-- <span>0 hrs</span> --}}
 
                                     <span id="timer" class="text-center timer">00:00:00</span>
 
-                                {{-- <div id="timer" class="text-center timer">00:00:00</div> --}}
-                            @endif
-                        </div>
-
-
-
-                        @if (isset($day_message) && $day_message != '')
-                            <span class="text-center text-danger">{{ $day_message }}</span>
-                        @endif
-                        @if (isset($check_in_already_message) && $check_in_already_message != '')
-                            <span class="font-text text-danger">{{ $check_in_already_message }}</span>
-                        @endif
-                        @if (isset($success_message) && $success_message != '')
-                            <span class="text-center green-text">{{ $success_message }}</span>
-                        @endif
-
-                        <div class="break-time d-flex align-items-center justify-content-between my-3"
-                             >
-                            <p class="mb-0 font-size-15" style="margin-top:45px;">Target Working Hours</p>
-                            <p class="mb-0 font-size-15" style="margin-top:45px;">7:00 / Day</p>
-                        </div>
-                        @if (session()->has('attendence_status') && session('attendence_status') === true)
-                            <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
-                                    width="1em" height="1em" viewBox="0 0 24 24">
-                                    <path fill="#3e7213"
-                                        d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
-                                </svg> Attendence Marked Successfully!</span>
-                        @else
-                            <div class="row pt-3">
-                                <div class="col-md-6">
-                                    @if (session()->has('show_check_out') && session('show_check_out') === true)
-                                        <a class="reblateBtn px-4 py-2" href="/check-out/" style="width:100%;">Check Out
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                viewBox="0 0 16 16">
-                                                <g fill="currentColor" fill-rule="evenodd">
-                                                    <path
-                                                        d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                                    <path
-                                                        d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                                                </g>
-                                            </svg>
-                                        </a>
-                                    @else
-                                        <a class="reblateBtn px-4 py-2" href="/check-in" style="width:100%;">Check In
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                viewBox="0 0 21 21">
-                                                <g fill="none" fill-rule="evenodd" stroke="currentColor"
-                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
-                                                    <path
-                                                        d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
-                                                </g>
-                                            </svg>
-                                        </a>
-                                    @endif
-                                </div>
-
-                                <div class="col-md-6">
-                                    @if (session()->has('show_break_end') && session('show_break_end') === true)
-                                        <a class="reblateBtn px-4 py-2" href="/break-end" style="width:100%;">Break End
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                viewBox="0 0 16 16">
-                                                <g fill="currentColor" fill-rule="evenodd">
-                                                    <path
-                                                        d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                                    <path
-                                                        d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                                                </g>
-                                            </svg>
-                                        </a>
-                                    @else
-                                        <a class="reblateBtn px-4 py-2" href="/break-start" style="width:100%;">BreakStart
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                viewBox="0 0 16 16">
-                                                <g fill="currentColor" fill-rule="evenodd">
-                                                    <path
-                                                        d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                                    <path
-                                                        d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                                                </g>
-                                            </svg>
-                                        </a>
-                                    @endif
-                                </div>
-
+                                    {{-- <div id="timer" class="text-center timer">00:00:00</div> --}}
+                                @endif
                             </div>
-                        @endif
-                        <div class="view-class-more">
-                            <a href="/view-attendence" style="color:#fca311;">View Attendence</a>
+
+
+
+                            @if (isset($day_message) && $day_message != '')
+                                <span class="text-center text-danger">{{ $day_message }}</span>
+                            @endif
+                            @if (isset($check_in_already_message) && $check_in_already_message != '')
+                                <span class="font-text text-danger">{{ $check_in_already_message }}</span>
+                            @endif
+                            @if (isset($success_message) && $success_message != '')
+                                <span class="text-center green-text">{{ $success_message }}</span>
+                            @endif
+
+                            <div class="break-time d-flex align-items-center justify-content-between my-3">
+                                <p class="mb-0 font-size-15" style="margin-top:45px;">Target Working Hours</p>
+                                <p class="mb-0 font-size-15" style="margin-top:45px;">7:00 / Day</p>
+                            </div>
+                            @if (session()->has('attendence_status') && session('attendence_status') === true)
+                                <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="1em" height="1em" viewBox="0 0 24 24">
+                                        <path fill="#3e7213"
+                                            d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
+                                    </svg> Attendence Marked Successfully!</span>
+                            @else
+                                <div class="d-flex flex-wrap justify-content-between gap-4">
+
+                                        @if (session()->has('show_check_out') && session('show_check_out') === true)
+                                            <a class="reblateBtn px-4 py-2 w-md" href="/check-out/" >Checking Out
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                    viewBox="0 0 16 16">
+                                                    <g fill="currentColor" fill-rule="evenodd">
+                                                        <path
+                                                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                                        <path
+                                                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                        @else
+                                            <a class="reblateBtn px-4 py-2" href="/check-in">Checking In
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                    viewBox="0 0 21 21">
+                                                    <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
+                                                        <path
+                                                            d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                        @endif
+
+
+                                        @if (session()->has('show_break_end') && session('show_break_end') === true)
+                                            <a class="reblateBtn px-4 py-2" href="/break-end" >Break End
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                    viewBox="0 0 16 16">
+                                                    <g fill="currentColor" fill-rule="evenodd">
+                                                        <path
+                                                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                                        <path
+                                                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                        @else
+                                            <a class="reblateBtn px-4 py-2" href="/break-start">Break Start
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                    viewBox="0 0 16 16">
+                                                    <g fill="currentColor" fill-rule="evenodd">
+                                                        <path
+                                                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                                        <path
+                                                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                        @endif
+
+
+                                </div>
+                            @endif
+                            <div class="view-class-more">
+                                <a href="/view-attendence" style="color:#fca311;">View Attendence</a>
+                            </div>
+
+
                         </div>
+
 
 
                     </div>
-
-
-
                 </div>
-            </div>
 
-        </div>
+            </div>
 
         </div>
         <!-- END ROW -->
@@ -601,7 +596,19 @@
                                     <tr>
                                         <td>{{ $task->task_title }}</td>
                                         <td>{{ $task->task_date }}</td>
-                                        <td>{{ $task->task_status }}</td>
+                                        <td>
+                                            @if ($task->task_status == 'completed')
+                                                <span
+                                                class="badge badge-soft-success font-size-12">{{ $task->task_status }}</span>
+                                            @elseif ($task->task_status == 'in-progress')
+                                                <span
+                                                class="badge badge-soft-warning font-size-12">{{ $task->task_status }}</span>
+                                            @else
+                                                <span
+                                                class="badge badge-soft-danger font-size-12">{{ $task->task_status }}</span>
+
+                                            @endif
+                                            </td>
                                         <td>{{ $task->assigned_by }}</td>
                                         {{-- <td>{{$task->task_title}}</td> --}}
                                     </tr>

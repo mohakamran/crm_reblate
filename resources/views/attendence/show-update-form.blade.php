@@ -23,11 +23,12 @@
                     <div class="card-body text-center">
                         <!-- Using a dummy CDN link for the image -->
 
-                        @if (isset($Emp_Image) && $Emp_Image != '')
+                        @if ($Emp_Image != '' && file_exists($Emp_Image))
                             <img class="img-fluid rounded-circle mb-3" style="width:100px;height:100px;"
                                 src="{{ $Emp_Image }}">
+
                         @else
-                            <img class="img-fluid rounded-circle mb-3" src="{{ URL::asset('user.png') }}">
+                            <img class="img-fluid rounded-circle mb-3" style="width:100px;height:100px;" src="{{ URL::asset('user.png') }}">
                         @endif
                         <h5 class="card-title">{{ $emp_name }}</h5>
                         <p class="card-text">{{ $Emp_Designation }}</p>

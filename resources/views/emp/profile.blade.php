@@ -15,11 +15,11 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body d-flex w-100">
-                            @if ($emp_data->Emp_Image !="")
-                                <img src="{{  asset(URL::asset($emp_data->Emp_Image)) }}"
+                            @if ($emp_data->Emp_Image !="" && file_exists($emp_data->Emp_Image))
+                                <img src="{{  url($emp_data->Emp_Image)  }}"
                                 style="width:120px; object-fit:cover; height:120px; border-radius: 50%;" alt="">
                                 @else
-                                <img src="{{ asset(URL::asset('/user.png')) }}" style="width:120px; object-fit:cover; height:120px; border-radius: 50%;" alt="">
+                                <img src="{{ url('/user.png') }}" style="width:120px; object-fit:cover; height:120px; border-radius: 50%;" alt="">
                             @endif
 
 

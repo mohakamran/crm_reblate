@@ -213,7 +213,7 @@
                         <thead>
                             <tr>
                                 {{-- <th> Emp ID</th> --}}
-                                <th> Name</th>
+
                                 <th> Date</th>
                                 <th> Day</th>
                                 {{-- <th> Month</th>
@@ -251,7 +251,7 @@
                                     @endphp
 
                                     {{-- <td>{{ $emp->emp_id }}</td> --}}
-                                    <td>{{ $emp_name }}</td>
+                                    {{-- <td>{{ $emp_name }}</td> --}}
                                     <td>{{ $formattedDate }}</td>
                                     <td>{{ $dayName }}</td>
                                     {{-- <td>{{ $monthName }}</td>

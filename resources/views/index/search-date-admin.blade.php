@@ -488,29 +488,58 @@
                             </div>
                         </div>
                         <div class="progress mb-4" style="height: 30px;">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple "
-                                style="width:{{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
-                                role="progressbar"
-                                aria-valuenow="{{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}"
-                                aria-valuemin="0" aria-valuemax="100">
-                                {{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}%
-                            </div>
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning "
-                                style="width:{{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
-                                role="progressbar"
-                                aria-valuenow="{{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}"
-                                aria-valuemin="0" aria-valuemax="100">
-                                {{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}%
-                            </div>
+                            @if ($tasks_count['complete_tasks'] == null)
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple "
+                                    style="width:0%;" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                    aria-valuemax="100">
+                                    0%
+                                </div>
+                            @else
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple "
+                                    style="width:{{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
+                                    role="progressbar"
+                                    aria-valuenow="{{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    {{ number_format(($tasks_count['complete_tasks'] / $tasks_count['total_tasks']) * 100) }}%
+                                </div>
+                            @endif
+
+                            @if ($tasks_count['complete_tasks'] == null)
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple "
+                                    style="width:0%;" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                    aria-valuemax="100">
+                                    0%
+                                </div>
+                            @else
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning "
+                                    style="width:{{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
+                                    role="progressbar"
+                                    aria-valuenow="{{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    {{ number_format(($tasks_count['incomplete_tasks'] / $tasks_count['total_tasks']) * 100) }}%
+                                </div>
+                            @endif
+
+                            @if ($tasks_count['complete_tasks'] == null)
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-purple "
+                                    style="width:0%;" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                    aria-valuemax="100">
+                                    0%
+                                </div>
+                            @else
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info "
+                                    style="width:{{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
+                                    role="progressbar"
+                                    aria-valuenow="{{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    {{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}%
+                                </div>
+                            @endif
+
+
                             {{-- <div class="progress-bar progress-bar-striped progress-bar-animated bg-success w-50" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100">24%</div>
                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger w-25" role="progressbar" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100">21%</div> --}}
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info "
-                                style="width:{{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}%;"
-                                role="progressbar"
-                                aria-valuenow="{{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}"
-                                aria-valuemin="0" aria-valuemax="100">
-                                {{ number_format(($tasks_count['in_progress_tasks'] / $tasks_count['total_tasks']) * 100) }}%
-                            </div>
+
                         </div>
                         <div>
                             <p><svg class="text-purple me-2" xmlns="http://www.w3.org/2000/svg" width="16"

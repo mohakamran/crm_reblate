@@ -54,9 +54,9 @@
                                     <h5 class="mb-0">{{ $emp_count }}
                                     </h5>
                                 </div>
-                                {{-- <p class="text-muted mb-0 text-truncate"><span
+                                <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p> --}}
+                                            class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p>
                             </div>
 
                         </div>
@@ -85,9 +85,9 @@
                                     </h5>
                                 </div>
 
-                                {{-- <p class="text-muted mb-0 text-truncate"><span
+                                <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-danger text-danger font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p> --}}
+                                            class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p>
                             </div>
 
                         </div>
@@ -116,9 +116,9 @@
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Projects</p>
                                     <h5 class="mb-0">15 </h5>
                                 </div>
-                                {{-- <p class="text-muted mb-0 text-truncate"><span
+                                <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p> --}}
+                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
                             </div>
 
                         </div>
@@ -180,9 +180,9 @@
                                     <h5 class="mb-0">${{ $total_revenue }}
                                     </h5>
                                 </div>
-                                {{-- <p class="text-muted mb-0 text-truncate"><span
+                                <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p> --}}
+                                            class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p>
                             </div>
 
                         </div>
@@ -211,9 +211,9 @@
                                     </h5>
                                 </div>
 
-                                {{-- <p class="text-muted mb-0 text-truncate"><span
+                                <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-danger text-danger font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p> --}}
+                                            class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p>
                             </div>
 
                         </div>
@@ -247,9 +247,9 @@
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Expenses</p>
                                     <h5 class="mb-0">${{ $usd_pkr_expenses }} </h5>
                                 </div>
-                                {{-- <p class="text-muted mb-0 text-truncate"><span
+                                <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p> --}}
+                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
                             </div>
 
                         </div>
@@ -299,9 +299,9 @@
                                     <h5 class="mb-0"> ${{ $total_profit }}
                                     </h5>
                                 </div>
-                                {{-- <p class="text-muted mb-0 text-truncate"><span
+                                <p class="text-muted mb-0 text-truncate"><span
                                         class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p> --}}
+                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
                             </div>
                         </div>
                     </div>
@@ -551,27 +551,23 @@
                                                             <th>Shift</th>
                                                             <th>See Details</th>
                                                         </tr>
-                                                        @foreach ($currentTasks as $task)
-                                                            <tr>
-                                                                <td style="width: 20px;">#{{ $task['id'] }}</td>
-                                                                <td>
-                                                                    <img src="{{ $task['image'] }}"
-                                                                        class="avatar-xs rounded-circle me-2"
-                                                                        alt="Employee Image">
-                                                                    {{ $task['name'] }}
-                                                                </td>
-                                                                <td>
-                                                                    <h6 class="text-muted mb-0 font-size-14">
-                                                                        {{ $task['task_title'] }}</h6>
-                                                                </td>
-                                                                <td>
-                                                                    <span
-                                                                        class="badge badge-{{ $task['shift_time'] == 'Morning' ? 'soft-primary' : 'soft-success' }} font-size-12">{{ $task['shift_time'] }}</span>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="#">See more</a>
-                                                                </td>
-                                                            </tr>
+                                                        @foreach($currentTasks as $task)
+                                                        <tr>
+                                                            <td style="width: 20px;">#{{ $task['id'] }}</td>
+                                                            <td>
+                                                                <img src="{{ $task['image'] }}" class="avatar-xs rounded-circle me-2" alt="Employee Image">
+                                                                {{ $task['name'] }}
+                                                            </td>
+                                                            <td>
+                                                                <h6 class="text-muted mb-0 font-size-14">{{ $task['task_title'] }}</h6>
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge badge-{{ $task['shift_time'] == 'Morning' ? 'soft-primary' : 'soft-success' }} font-size-12">{{ $task['shift_time'] }}</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#">See more</a>
+                                                            </td>
+                                                        </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>
@@ -1497,27 +1493,28 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         <script>
-            // Sample data for sales, expenses, and profit
-            var data = {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+            // Data returned by the controller function
+            var chartData = {
+                labels: {!! json_encode($chartData['labels']) !!},
                 datasets: [{
                     label: 'Sales',
                     borderColor: 'blue',
                     backgroundColor: 'rgba(0, 0, 0, 0)', // Remove background color
-                    data: [1000, 1500, 2000, 1800, 2500, 2200]
+                    data: {!! json_encode($chartData['sales']) !!}
                 }, {
                     label: 'Expenses',
                     borderColor: 'red',
                     backgroundColor: 'rgba(0, 0, 0, 0)', // Remove background color
-                    data: [800, 900, 1000, 1100, 1200, 1300]
+                    data: {!! json_encode($chartData['expenses']) !!}
                 }, {
                     label: 'Profit',
                     borderColor: 'green',
                     backgroundColor: 'rgba(0, 0, 0, 0)', // Remove background color
-                    data: [200, 600, 1000, 700, 1300, 900]
+                    data: {!! json_encode($chartData['profits']) !!}
                 }]
             };
 
+            // Configuration options
             var options = {
                 scales: {
                     yAxes: [{
@@ -1528,10 +1525,11 @@
                 }
             };
 
+            // Create the chart
             var ctx = document.getElementById('myChartPerformance').getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'line',
-                data: data,
+                data: chartData,
                 options: options
             });
         </script>
@@ -1559,27 +1557,30 @@
 
         <script>
             // Sample data for absent, present, and leaves
+            var data = {
+                labels: ['Absent', 'Present', 'Leaves'],
+                datasets: [{
+                    data: [<?php echo $emp_absent_count; ?>, <?php echo $emp_present_count; ?>, <?php echo $emp_leave_count; ?>],
+                    backgroundColor: ['#dc3545', '#28a745', '#ffc107']
+                }]
+            };
 
+            // Configuration options
+            var options = {
+                cutoutPercentage: 70,
+                responsive: false, // Set to true for responsiveness
+                legend: {
+                    display: true,
+                    position: 'right'
+                }
+            };
 
             // Create the chart
             var ctx = document.getElementById('attendenceRecord').getContext('2d');
             var myDonutChart = new Chart(ctx, {
                 type: 'doughnut',
-                data: {
-                    labels: ['Present', 'Absent', 'Leaves'],
-                    datasets: [{
-                        data: [<?php echo $emp_present_count; ?>, <?php echo $emp_absent_count; ?>, <?php echo $emp_leave_count; ?>],
-                        backgroundColor: ['#28a745', '#dc3545', '#ffc107']
-                    }]
-                },
-                options: {
-                    cutoutPercentage: 70,
-                    responsive: false, // Set to true for responsiveness
-                    legend: {
-                        display: true,
-                        position: 'right'
-                    }
-                },
+                data: data,
+                options: options
             });
         </script>
 

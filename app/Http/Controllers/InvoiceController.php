@@ -133,7 +133,8 @@ class InvoiceController extends Controller
 
     }
     public function viewInvoices() {
-        $rec = Invoice::orderBy('id', 'desc')->get();
+        $rec = DB::table('clients')->orderBy('id','desc')->get();
+        // dd($rec);
         if($rec) {
             $title = "Invoices Of Registered Clients";
             $data = compact('rec','title');
@@ -148,9 +149,10 @@ class InvoiceController extends Controller
     public function viewIndividualInvoices($id) {
         // dd($id);
         $emp = Invoice::where('client_id', $id)->orderBy('id','desc')->get();
+        $client = DB::table('clients')->where('client_id',$id)->first();
         // dd($emp);
         if($emp) {
-                $title = "Invoices";
+                $title = "Invoices of ".$client->client_name;
                 $data = compact('title','emp');
                 return view('invoices.individual-invoice',$data);
             } else {

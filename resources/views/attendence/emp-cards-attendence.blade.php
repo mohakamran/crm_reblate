@@ -369,9 +369,6 @@
                                                     @elseif($leaveRecord && $leaveRecord->status == 'approved')
                                                         <!-- Display Leave indication -->
                                                         L
-                                                    @elseif($leaveRecord)
-                                                        <!-- Display Pending Leave indication or any other status -->
-                                                        <span>Pending</span>
                                                     @else
                                                         <!-- Display absence indication -->
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="1rem"
