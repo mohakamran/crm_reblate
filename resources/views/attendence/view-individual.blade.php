@@ -214,10 +214,10 @@
                             <tr>
                                 {{-- <th> Emp ID</th> --}}
                                 <th> Name</th>
-                                <th> Date</th>
+                                {{-- <th> Date</th> --}}
                                 <th> Day</th>
-                                {{-- <th> Month</th>
-                                <th> Year</th> --}}
+                                {{-- <th> Month</th> --}}
+                                <th> Year</th>
                                 <th> Check In</th>
                                 <th> Check Out</th>
                                 <th> Break Start</th>
@@ -247,21 +247,50 @@
                                         // Extract day name
                                         $dayName = $carbonDate->englishDayOfWeek;
                                         $dayName = $carbonDate->dayName;
+                                        $day_number = $carbonDate->format('j');
                                         $formattedDate = $carbonDate->format('j F Y');
+
+                                                    // Convert time into 24-hour format and handle null values
+            $check_in_time_24 = $emp->check_in_time ? \Carbon\Carbon::parse($emp->check_in_time)->format('H:i') : '';
+            $check_out_time_24 = $emp->check_out_time ? \Carbon\Carbon::parse($emp->check_out_time)->format('H:i') : '';
+            $break_start_24 = $emp->break_start ? \Carbon\Carbon::parse($emp->break_start)->format('H:i') : '';
+            $break_end_24 = $emp->break_end ? \Carbon\Carbon::parse($emp->break_end)->format('H:i') : '';
+
+                                        if($check_out_time_24 == null) {
+                                            $break_start_24 = "";
+                                        }
+
+                                        if($break_start_24 == null) {
+                                            $break_start_24 = "";
+                                        }
+                                        if($break_end_24 == null) {
+                                            $break_end_24 = "";
+                                        }
+
+
+
                                     @endphp
 
                                     {{-- <td>{{ $emp->emp_id }}</td> --}}
                                     <td>{{ $emp_name }}</td>
-                                    <td>{{ $formattedDate }}</td>
-                                    <td>{{ $dayName }}</td>
-                                    {{-- <td>{{ $monthName }}</td>
-                                    <td>{{ $year }}</td> --}}
+                                    {{-- <td>{{ $formattedDate }}</td> --}}
+                                    @php
+                                        if ($day_number < 10) {
+                                            $day_number = '0' . $day_number;
+                                        }
+                                    @endphp
+
+
+
+                                    <td>{{ $monthName }} {{ $day_number }} </td>
+                                    {{-- <td>{{ $monthName }}</td> --}}
+                                    <td>{{ $year }}</td>
                                     {{-- <td>{{ ( $emp->Emp_Code < 10) ? '00'.$emp->Emp_Code : $emp->Emp_Code }}sols</td> --}}
                                     {{-- <td><a href="{{ Route('view-client-detail', $client->client_id) }}">{{ $client->client_name }} </a></td> --}}
-                                    <td>{{ $emp->check_in_time }} </a></td>
-                                    <td>{{ $emp->check_out_time }} </a></td>
-                                    <td>{{ $emp->break_start }}</td>
-                                    <td>{{ $emp->break_end }}</td>
+                                    <td>{{ $emp->check_in_time  ?? ''}} </a></td>
+                                    <td>{{ $emp->check_out_time ?? '' }} </a></td>
+                                    <td>{{ $emp->break_start ?? '' }}</td>
+                                    <td>{{ $emp->break_end ?? ''}}</td>
                                     <td>{{ $emp->total_time }}</td>
                                     {{-- <td>0 Hrs</td> --}}
                                     @if (auth()->user()->user_type == 'admin')
@@ -272,10 +301,68 @@
                                             <input type="hidden" value="{{ $emp->emp_id }}" name="emp_id">
                                             <td>
                                                 {{-- <button>Edit</button> --}}
-                                                <input type="submit" value="edit">
+                                                <a href="#emp_{{ $emp->id }}" data-toggle="modal">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem"
+                                                        viewBox="0 0 24 24">
+                                                        <path fill="#14213d"
+                                                            d="m14.06 9l.94.94L5.92 19H5v-.92zm3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z" />
+                                                    </svg>
+                                                </a>
                                             </td>
                                         </form>
                                     @endif
+
+                                    <!-- Bootstrap modal for the popup form -->
+                                    <div class="modal fade" id="emp_{{ $emp->id }}" tabindex="-1" role="dialog"
+                                        aria-labelledby="editModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editModalLabel">Update Employee Attendance
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Your form content goes here -->
+                                                    <p>Date: {{ $day_number }} {{ $monthName }}, {{ $year }}
+                                                    </p>
+                                                    <form id="editForm">
+                                                        <div class="form-group mt-2">
+                                                            <label for="editCheckIn">Check In Time</label>
+                                                            <input type="time" class="form-control"
+                               id="editCheckIn" name="checkInTime"
+                               value="{{ $check_in_time_24 }}"> <!-- Corrected -->
+                                                        </div>
+                                                        <div class="form-group mt-2">
+                                                            <label for="editCheckOut">Check Out Time</label>
+                                                            <input type="time" value="{{ $check_out_time_24 }}"
+                                                                class="form-control" id="editCheckOut"
+                                                                name="checkOutTime">
+                                                        </div>
+                                                        <div class="form-group mt-2">
+                                                            <label for="editBreakStart">Break Start</label>
+                                                            <input type="time" value="{{ $break_start_24 }}"
+                                                                class="form-control" id="editBreakStart"
+                                                                name="breakStart">
+                                                        </div>
+                                                        <div class="form-group mt-2">
+                                                            <label for="editBreakEnd">Break End</label>
+                                                            <input type="time" value="{{ $break_end_24 }}"
+                                                                class="form-control" id="editBreakEnd" name="breakEnd">
+                                                        </div>
+                                                        <!-- Add more fields as needed -->
+                                                        <button type="submit"
+                                                            class="btn btn-primary mt-2">Update</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
 
 
                                 </tr>
@@ -289,75 +376,39 @@
             </div>
         </div> <!-- end col -->
 
-        <!-- Bootstrap modal for the popup form -->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Edit Employee Attendance</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Your form content goes here -->
-                        <form id="editForm">
-                            <div class="form-group">
-                                <label for="editCheckIn">Check In Time</label>
-                                <input type="text" class="form-control" id="editCheckIn" name="checkInTime">
-                            </div>
-                            <div class="form-group">
-                                <label for="editCheckOut">Check Out Time</label>
-                                <input type="text" class="form-control" id="editCheckOut" name="checkOutTime">
-                            </div>
-                            <div class="form-group">
-                                <label for="editBreakStart">Break Start</label>
-                                <input type="text" class="form-control" id="editBreakStart" name="breakStart">
-                            </div>
-                            <div class="form-group">
-                                <label for="editBreakEnd">Break End</label>
-                                <input type="text" class="form-control" id="editBreakEnd" name="breakEnd">
-                            </div>
-                            <!-- Add more fields as needed -->
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <script>
             $(function() {
                 $('input[name="daterange"]').daterangepicker({
-                    opens: 'right'
-                },
-                function(start, end, label) {
-                    var startDate = start.format('YYYY-MM-DD');
-                    var endDate = end.format('YYYY-MM-DD');
+                        opens: 'right'
+                    },
+                    function(start, end, label) {
+                        var startDate = start.format('YYYY-MM-DD');
+                        var endDate = end.format('YYYY-MM-DD');
 
-                    // var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                    // // alert(csrfToken);
+                        // var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                        // // alert(csrfToken);
 
-                    // // AJAX request to send the selected dates to the controller
-                    // $.ajax({
-                    //     url: '/search-emp-details', // Update the URL to match your controller route
-                    //     method: 'POST',
-                    //     data: {
-                    //         startDate: startDate,
-                    //         endDate: endDate,
-                    //         _token: csrfToken // Ensure CSRF token is included
-                    //     },
-                    //     success: function(response) {
-                    //         // Handle success response if needed
-                    //         console.log("Dates sent to controller successfully.");
-                    //     },
-                    //     error: function(xhr, status, error) {
-                    //         // Handle error if any
-                    //         console.error("Error sending dates to controller: " + error);
-                    //     }
-                    // });
-                });
+                        // // AJAX request to send the selected dates to the controller
+                        // $.ajax({
+                        //     url: '/search-emp-details', // Update the URL to match your controller route
+                        //     method: 'POST',
+                        //     data: {
+                        //         startDate: startDate,
+                        //         endDate: endDate,
+                        //         _token: csrfToken // Ensure CSRF token is included
+                        //     },
+                        //     success: function(response) {
+                        //         // Handle success response if needed
+                        //         console.log("Dates sent to controller successfully.");
+                        //     },
+                        //     error: function(xhr, status, error) {
+                        //         // Handle error if any
+                        //         console.error("Error sending dates to controller: " + error);
+                        //     }
+                        // });
+                    });
             });
         </script>
 
@@ -425,6 +476,9 @@
             });
         </script>
     @endsection
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     @section('scripts')
         <!-- Required datatable js -->
         <script src="{{ URL::asset('build/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>

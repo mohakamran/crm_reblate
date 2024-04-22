@@ -213,11 +213,11 @@
                         <thead>
                             <tr>
                                 {{-- <th> Emp ID</th> --}}
-
-                                <th> Date</th>
+                                <th> Name</th>
+                                {{-- <th> Date</th> --}}
                                 <th> Day</th>
-                                {{-- <th> Month</th>
-                                <th> Year</th> --}}
+                                {{-- <th> Month</th> --}}
+                                <th> Year</th>
                                 <th> Check In</th>
                                 <th> Check Out</th>
                                 <th> Break Start</th>
@@ -247,15 +247,24 @@
                                         // Extract day name
                                         $dayName = $carbonDate->englishDayOfWeek;
                                         $dayName = $carbonDate->dayName;
+                                        $day_number = $carbonDate->format('j');
                                         $formattedDate = $carbonDate->format('j F Y');
                                     @endphp
 
                                     {{-- <td>{{ $emp->emp_id }}</td> --}}
-                                    {{-- <td>{{ $emp_name }}</td> --}}
-                                    <td>{{ $formattedDate }}</td>
-                                    <td>{{ $dayName }}</td>
-                                    {{-- <td>{{ $monthName }}</td>
-                                    <td>{{ $year }}</td> --}}
+                                    <td>{{ $emp_name }}</td>
+                                    {{-- <td>{{ $formattedDate }}</td> --}}
+                                    @php
+                                        if ($day_number < 10) {
+                                        $day_number = "0".$day_number;
+                                    }
+                                    @endphp
+
+
+
+                                    <td>{{ $monthName }} {{$day_number}}  </td>
+                                    {{-- <td>{{ $monthName }}</td> --}}
+                                    <td>{{ $year }}</td>
                                     {{-- <td>{{ ( $emp->Emp_Code < 10) ? '00'.$emp->Emp_Code : $emp->Emp_Code }}sols</td> --}}
                                     {{-- <td><a href="{{ Route('view-client-detail', $client->client_id) }}">{{ $client->client_name }} </a></td> --}}
                                     <td>{{ $emp->check_in_time }} </a></td>
@@ -289,43 +298,7 @@
             </div>
         </div> <!-- end col -->
 
-        <!-- Bootstrap modal for the popup form -->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Edit Employee Attendance</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Your form content goes here -->
-                        <form id="editForm">
-                            <div class="form-group">
-                                <label for="editCheckIn">Check In Time</label>
-                                <input type="text" class="form-control" id="editCheckIn" name="checkInTime">
-                            </div>
-                            <div class="form-group">
-                                <label for="editCheckOut">Check Out Time</label>
-                                <input type="text" class="form-control" id="editCheckOut" name="checkOutTime">
-                            </div>
-                            <div class="form-group">
-                                <label for="editBreakStart">Break Start</label>
-                                <input type="text" class="form-control" id="editBreakStart" name="breakStart">
-                            </div>
-                            <div class="form-group">
-                                <label for="editBreakEnd">Break End</label>
-                                <input type="text" class="form-control" id="editBreakEnd" name="breakEnd">
-                            </div>
-                            <!-- Add more fields as needed -->
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <script>
             $(function() {
@@ -425,6 +398,7 @@
             });
         </script>
     @endsection
+
     @section('scripts')
         <!-- Required datatable js -->
         <script src="{{ URL::asset('build/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>

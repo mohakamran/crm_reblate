@@ -464,14 +464,21 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
             // $latestEmployees = DB::table('employees')->get();
 
 
-        return view('attendence.emp-cards-attendence', compact('currentyear','currentmonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
+        return view('attendence.emp-cards-attendence', compact('currentyear','currentMonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
 
    }
    // function to filter overall employees attendence
    public function filterEmpDateWise(Request $req) {
 
-    $emp_attendence_month = $req->emp_attendence_month;
-    $emp_attendance_year = $req->emp_attendance_year;
+
+    $date_controller = $req->date_controller;
+    $date_parts = explode('-', $date_controller);
+    $emp_attendence_month = $date_parts[1];
+    $emp_attendance_year = $date_parts[0];
+
+    // dd($emp_attendence_month,$emp_attendance_year );
+
+
     // dd($emp_attendance_year);
 
 
@@ -547,6 +554,8 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
             $attendances = array_merge($attendances, $employeeAttendances->toArray());
         }
 
+        $currentMonth = $date_parts[1];
+
 
         // dd($attendances);
 
@@ -554,7 +563,7 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
         // $latestEmployees = DB::table('employees')->get();
 
 
-    return view('attendence.emp-cards-attendence-search', compact('currentyear','currentmonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
+    return view('attendence.emp-cards-attendence-search', compact('currentyear','currentMonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
 
 
 
