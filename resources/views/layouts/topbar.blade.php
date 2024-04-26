@@ -36,97 +36,6 @@
 
         <div class="d-flex align-items-center">
 
-             {{-- <!-- App Search-->
-             <form class="app-search d-none d-lg-block">
-                <div class="position-relative">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <span class="ri-search-line"></span>
-                </div>
-            </form> --}}
-
-            <div class="dropdown d-inline-block d-lg-none ms-2">
-                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="ri-search-line"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
-                    aria-labelledby="page-header-search-dropdown">
-
-                    <form class="p-3">
-                        <div class="mb-3 m-0">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search ...">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit"><i class="ri-search-line"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-
-
-
-            {{-- <div class="dropdown d-none d-lg-inline-block ms-1">
-                <button type="button" class="btn header-item noti-icon waves-effect"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="ri-apps-2-line"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                    <div class="px-lg-2">
-                        <div class="row g-0">
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="{{ URL::asset('build/images/brands/github.png') }}" alt="Github">
-                                    <span>GitHub</span>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="{{ URL::asset('build/images/brands/bitbucket.png') }}" alt="bitbucket">
-                                    <span>Bitbucket</span>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="{{ URL::asset('build/images/brands/dribbble.png') }}" alt="dribbble">
-                                    <span>Dribbble</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="row g-0">
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="{{ URL::asset('build/images/brands/dropbox.png') }}" alt="dropbox">
-                                    <span>Dropbox</span>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="{{ URL::asset('build/images/brands/mail_chimp.png') }}" alt="mail_chimp">
-                                    <span>Mail Chimp</span>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="{{ URL::asset('build/images/brands/slack.png') }}" alt="slack">
-                                    <span>Slack</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
-
-
-            {{-- <div class="dropdown d-none d-lg-inline-block ms-1">
-                <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
-                    <i class="ri-fullscreen-line"></i>
-                </button>
-            </div> --}}
 
             @if(Auth()->user()->user_type == "employee" || Auth()->user()->user_type == "manager")
                 <div class="dropdown d-inline-block">
@@ -218,18 +127,6 @@
                     </div>
                 </div>
             @endif
-
-            <div class="dropdown d-inline-block">
-                {{-- <button type="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="ri-notification-3-line"></i>
-                    <span class="noti-dot"></span>
-                </button> --}}
-                {{-- <a href="/clear" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24"><path fill="#14213d" d="m20.37 8.91l-1 1.73l-12.13-7l1-1.73l3.04 1.75l1.36-.37l4.33 2.5l.37 1.37zM6 19V7h5.07L18 11v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2"/></svg>
-                </a> --}}
-            </div>
-
             <div class="dropdown px-3 sidebar-user" style="background-color: #e3e3e3; border-radius: 10px;margin:10px;">
                 <button type="button" class="btn w-100 px-0 border-0" id="page-header-user-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -268,19 +165,6 @@
                     <a class="dropdown-item" href="{{ Route('user.chang-password')}}"><i
                             class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
                             class="align-middle">Change Password</span></a>
-                    {{-- <a class="dropdown-item" href="apps-chat"><i
-                            class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Messages</span></a> --}}
-                    {{-- <a class="dropdown-item" href="pages-faq"><i
-                            class="mdi mdi-lifebuoy text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Help</span></a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="pages-profile"><i
-                            class="mdi mdi-wallet text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Balance : <b>$5971.67</b></span></a>
-                    <a class="dropdown-item" href="#"><span class="badge bg-primary mt-1 float-end">New</span><i
-                            class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Settings</span></a> --}}
                     <a class="dropdown-item" href="javascript:void()" onclick="confirmLogout()"><i
                             class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
                             class="align-middle">Logout</span></a>

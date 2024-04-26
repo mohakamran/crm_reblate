@@ -42,37 +42,36 @@
         <div class="row mt-2">
             <div class="col-md-12">
                 <div class="card mb-3">
-                    <div class="card-body" style="display: flex; align-items: center; justify-content: space-between;">
-                        <!-- Using a dummy CDN link for the image -->
-                        <a href="/view-tasks" class="position-absolute top-0 start-1 pt-2">
-                            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#14213d" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"></path>
-                        </svg> --}}
-                        </a>
-
-                        <div class="d-flex align-items-center gap-3" style="margin-left: 15px;">
+                    <div class="card-body" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap">
+                        <div class="d-flex justify-content-center align-items-center flex-wrap">
+                            {{-- <a href="/view-tasks" class="position-absolute top-0 start-1 pt-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#14213d" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"></path>
+                            </svg>
+                            </a> --}}
                             @if ($emp->Emp_Image != '' && file_exists($emp->Emp_Image))
-                                <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
-                                    src="{{ url($emp->Emp_Image) }}">
-                            @else
-                                <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
-                                    src="{{ url('user.png') }}">
-                            @endif
+                            <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
+                                src="{{ url($emp->Emp_Image) }}">
+                        @else
+                            <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
+                                src="{{ url('user.png') }}">
+                        @endif
+                        <h5 class="card-title mb-0 ms-3" style="font-size: 25px; color:#fca311;">{{ $emp_name }}</h5>
 
-                            <div class="d-flex flex-column gap-1 ml-4">
-                                <h5 class="card-title mb-0" style="font-size: 25px;">{{ $emp_name }}</h5>
-                                <p class="card-text mb-1 ">{{ $emp->Emp_Designation }}</p>
-                                <p class="card-text">{{ $emp->Emp_Shift_Time }}</p>
-                                <p class="card-text">{{ $emp->Emp_Code }}</p>
-
+                        </div>
+                        <!-- Using a dummy CDN link for the image -->
+                        <div>
+                            <h3 style="font-size: 20px; color:#14213d">Designation:</h3>
+                            <p class="card-text mb-1 " style="color:#fca311; font-size: 15px; font-weight:500;">{{ $emp->Emp_Designation }}</p>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 20px; color:#14213d">Shift:</h3>
+                            <p class="card-text" style="color:#fca311; font-size: 15px; font-weight:500;">{{ $emp->Emp_Shift_Time }}</p>
+                        </div>
+                          <div>
+                            <h3 style="font-size: 20px; color:#14213d">EMP Code:</h3>
+                            <p class="card-text" style="color:#fca311; font-size: 15px; font-weight:500;">{{ $emp->Emp_Code }}</p>
                             </div>
-                        </div>
-                        <div class="d-flex flex-column align-items-center p-3 gap-2" style="">
-
-
-                        </div>
-
-
                     </div>
                 </div>
             </div>
@@ -132,8 +131,14 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="updateModalLabel">Update Attendance</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
+                                        <button type="button" class="close"
+                                            style="border: none;background-color: transparent;" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                            </svg>
                                         </button>
                                     </div>
                                     <div class="modal-body">
@@ -141,15 +146,15 @@
                                         <form id="updateForm">
                                             <div class="form-group">
                                                 <label for="date">Date</label>
-                                                <input type="text" class="form-control" id="date" name="date"
+                                                <input type="text" class="form-control inputboxcolor" style="border: 1px solid #c7c7c7" id="date" name="date"
                                                     readonly>
                                             </div>
                                             <div class="form-group">
                                                 <label for="checkIn">Check In Time</label>
-                                                <input type="text" class="form-control" id="checkIn" name="checkIn">
+                                                <input type="text" class="form-control inputboxcolor" style="border: 1px solid #c7c7c7" id="checkIn" name="checkIn">
                                             </div>
                                             <!-- Add more form fields for other attendance data -->
-                                            <button type="submit" class="btn btn-primary">Update</button>
+                                            <button type="submit" class="reblateBtn px-4 py-2 mt-2">Update</button>
                                         </form>
                                     </div>
                                 </div>
@@ -320,10 +325,15 @@
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="editModalLabel">Update Employee Attendance
                                                     </h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                                                    <button type="button" class="close"
+                                            style="border: none;background-color: transparent;" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                            </svg>
+                                        </button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <!-- Your form content goes here -->
@@ -332,30 +342,30 @@
                                                     <form id="editForm">
                                                         <div class="form-group mt-2">
                                                             <label for="editCheckIn">Check In Time</label>
-                                                            <input type="time" class="form-control"
+                                                            <input type="time" class="form-control inputboxcolor" style="border: 1px solid #c7c7c7"
                                id="editCheckIn" name="checkInTime"
                                value="{{ $check_in_time_24 }}"> <!-- Corrected -->
                                                         </div>
                                                         <div class="form-group mt-2">
                                                             <label for="editCheckOut">Check Out Time</label>
                                                             <input type="time" value="{{ $check_out_time_24 }}"
-                                                                class="form-control" id="editCheckOut"
+                                                                class="form-control inputboxcolor" style="border: 1px solid #c7c7c7" id="editCheckOut"
                                                                 name="checkOutTime">
                                                         </div>
                                                         <div class="form-group mt-2">
                                                             <label for="editBreakStart">Break Start</label>
                                                             <input type="time" value="{{ $break_start_24 }}"
-                                                                class="form-control" id="editBreakStart"
+                                                                class="form-control inputboxcolor" style="border: 1px solid #c7c7c7" id="editBreakStart"
                                                                 name="breakStart">
                                                         </div>
                                                         <div class="form-group mt-2">
                                                             <label for="editBreakEnd">Break End</label>
                                                             <input type="time" value="{{ $break_end_24 }}"
-                                                                class="form-control" id="editBreakEnd" name="breakEnd">
+                                                                class="form-control inputboxcolor" style="border: 1px solid #c7c7c7" id="editBreakEnd" name="breakEnd">
                                                         </div>
                                                         <!-- Add more fields as needed -->
                                                         <button type="submit"
-                                                            class="btn btn-primary mt-2">Update</button>
+                                                            class="reblateBtn px-4 py-2 mt-2">Update</button>
                                                     </form>
                                                 </div>
                                             </div>

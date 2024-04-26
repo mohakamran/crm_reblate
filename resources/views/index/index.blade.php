@@ -1557,30 +1557,27 @@
 
         <script>
             // Sample data for absent, present, and leaves
-            var data = {
-                labels: ['Absent', 'Present', 'Leaves'],
-                datasets: [{
-                    data: [<?php echo $emp_absent_count; ?>, <?php echo $emp_present_count; ?>, <?php echo $emp_leave_count; ?>],
-                    backgroundColor: ['#dc3545', '#28a745', '#ffc107']
-                }]
-            };
 
-            // Configuration options
-            var options = {
-                cutoutPercentage: 70,
-                responsive: false, // Set to true for responsiveness
-                legend: {
-                    display: true,
-                    position: 'right'
-                }
-            };
 
             // Create the chart
             var ctx = document.getElementById('attendenceRecord').getContext('2d');
             var myDonutChart = new Chart(ctx, {
                 type: 'doughnut',
-                data: data,
-                options: options
+                data: {
+                    labels: ['Present', 'Absent', 'Leaves'],
+                    datasets: [{
+                        data: [<?php echo $emp_present_count; ?>, <?php echo $emp_absent_count; ?>, <?php echo $emp_leave_count; ?>],
+                        backgroundColor: ['#28a745', '#dc3545', '#ffc107']
+                    }]
+                },
+                options: {
+                    cutoutPercentage: 70,
+                    responsive: false, // Set to true for responsiveness
+                    legend: {
+                        display: true,
+                        position: 'right'
+                    }
+                },
             });
         </script>
 

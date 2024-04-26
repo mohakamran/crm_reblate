@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-4 col-xl-4">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body verti">
 
                             <div class="form-floating mb-3 col-md-12 d-flex justify-content-center" >
 
@@ -64,7 +64,7 @@
                                     <div class="row">
 
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
 
                                                 <input class="form-control"
                                                     style="background-color: transparent; border: none;" type="file"
@@ -77,7 +77,7 @@
 
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                 <input type="text" style="background-color: transparent; border: none;"
                                                     class="form-control" id="floatingFirstnameInput" type="text"
                                                     placeholder="Employee Name" name="employee_name"
@@ -91,7 +91,7 @@
 
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                 <input class="form-control"
                                                     style="background-color: transparent; border: none;"
                                                     placeholder="0333-3333333" type="tel" name="employee_phone"
@@ -115,9 +115,9 @@
                                             </div>
 
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor">
+                                            <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                 <textarea name="employee_address" placeholder="Employee Address" class="form-control "
-                                                    style="border: none; background-color: transparent; resize: none;">{{ isset($emp_data->Emp_Address) ? $emp_data->Emp_Address : old('employee_address') }}</textarea>
+                                                    style="border: none; background-color: transparent; resize: none; height: 50px">{{ isset($emp_data->Emp_Address) ? $emp_data->Emp_Address : old('employee_address') }}</textarea>
                                                 @error('employee_address')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -147,7 +147,7 @@
                                             Emergency Contact Details</h4>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control "
                                                         style="background-color: transparent; border: none;"
                                                         placeholder="Employee code: 200sols"
@@ -161,7 +161,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control "
                                                         style="background-color: transparent; border: none;"
                                                         placeholder="department"
@@ -178,7 +178,7 @@
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control"
                                                         style="background-color: transparent; border: none;"
                                                         value="{{ isset($emp_data->Emp_Relation_Phone) ? $emp_data->Emp_Relation_Phone : old('employee_relative_phone_num') }}"
@@ -192,7 +192,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <textarea name="employee_relative_address" style="border: none; background-color: transparent; resize: none;"
                                                         placeholder="Employee Address" class="form-control">{{ isset($emp_data->Emp_Relation_Address) ? $emp_data->Emp_Relation_Address : old('employee_relative_address') }}</textarea>
                                                     @error('employee_address')
@@ -215,7 +215,7 @@
                                         </h4>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control"
                                                         style="background-color: transparent; border: none;"
                                                         value="{{ isset($emp_data->Emp_Bank_Name) ? $emp_data->Emp_Bank_Name : old('employee_bank_name') }}"
@@ -227,7 +227,7 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 inputboxcolor">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control"
                                                         style="background-color: transparent; border: none;"
                                                         value="{{ isset($emp_data->Emp_Bank_IBAN) ? $emp_data->Emp_Bank_IBAN : old('employee_bank_iban') }}"
