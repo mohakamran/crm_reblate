@@ -5,10 +5,10 @@
     <div class="navbar-brand-box" style="background-color: #14213d">
         <a href="/" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ URL::asset('build/images/logo-sm-dark.png') }}" alt="logo-sm-dark" height="24">
+                <img src="{{ url('fav-reblate.png') }}" alt="logo-sm-dark" height="24">
             </span>
             <span class="logo-lg">
-                <img src="{{ URL::asset('build/images/logo-dark.png') }}" alt="logo-dark" height="22">
+                <img src="{{ url('reblate-favicon.png') }}" alt="logo-dark" height="22">
             </span>
         </a>
 

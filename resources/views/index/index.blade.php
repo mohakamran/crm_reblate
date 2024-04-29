@@ -155,8 +155,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
         <div class="row" style="display: flex; flex-wrap: wrap;">
             <div class="col-md-4 col-xl-3">
@@ -1581,7 +1579,7 @@
             });
         </script>
 
-        {{-- end of expense chart --}}
+
         <script type="text/javascript">
             $(document).ready(function() {
                 $('#date_range_picker').daterangepicker({

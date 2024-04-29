@@ -64,9 +64,21 @@
 
             }
 
+            .btn-apply {
+                border: 0px;
+                background: #14213d;
+                color: #fff;
+                padding: 7px;
+                font-size: 13px;
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                border-radius: 7px;
+                margin: 10px;
+            }
+
             .punch-info .punch-hours {
                 border: 3px solid #fca311;
-                /* font-size: 20px; */
+               max-width: 245px;
                 padding: 20px;
                 margin: 0 auto;
                 border-radius: 12px;
@@ -77,9 +89,9 @@
 
 
             .punch-hours span {
-                font-weight: 300;
+                font-weight: 500;
                 transform: translate(-50%, -50%);
-                font-size: 25px;
+                font-size: 30px;
                 color: #14213d;
             }
 
@@ -210,7 +222,7 @@
 
         <div class="row mt-2">
             <div class="card">
-                <div class="card-body d-flex justify-content-lg-between align-items-center">
+                <div class="card-body d-flex justify-content-lg-between align-items-center flex-wrap" style="gap:10px;">
                     <div class="col-md-3 d-flex align-items-center">
 
                         @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image) )
@@ -250,17 +262,19 @@
             </div>
 
         </div>
+
         <div class="row" style="display: flex; flex-wrap: wrap;">
-            <div class="col-md-4 col-xl-3">
+            <div class="col-md-4 col-xl-4">
                 <div class="card overflow-hidden">
                     <div class="card-body overflow-hidden" style="position: relative;">
                         <div class="ag-courses-item_bg"></div>
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <path fill="#14213d"
-                                            d="M320 96H192L144.6 24.9C137.5 14.2 145.1 0 157.9 0H354.1c12.8 0 20.4 14.2 13.3 24.9L320 96zM192 128H320c3.8 2.5 8.1 5.3 13 8.4C389.7 172.7 512 250.9 512 416c0 53-43 96-96 96H96c-53 0-96-43-96-96C0 250.9 122.3 172.7 179 136.4l0 0 0 0c4.8-3.1 9.2-5.9 13-8.4zm84 88c0-11-9-20-20-20s-20 9-20 20v14c-7.6 1.7-15.2 4.4-22.2 8.5c-13.9 8.3-25.9 22.8-25.8 43.9c.1 20.3 12 33.1 24.7 40.7c11 6.6 24.7 10.8 35.6 14l1.7 .5c12.6 3.8 21.8 6.8 28 10.7c5.1 3.2 5.8 5.4 5.9 8.2c.1 5-1.8 8-5.9 10.5c-5 3.1-12.9 5-21.4 4.7c-11.1-.4-21.5-3.9-35.1-8.5c-2.3-.8-4.7-1.6-7.2-2.4c-10.5-3.5-21.8 2.2-25.3 12.6s2.2 21.8 12.6 25.3c1.9 .6 4 1.3 6.1 2.1l0 0 0 0c8.3 2.9 17.9 6.2 28.2 8.4V424c0 11 9 20 20 20s20-9 20-20V410.2c8-1.7 16-4.5 23.2-9c14.3-8.9 25.1-24.1 24.8-45c-.3-20.3-11.7-33.4-24.6-41.6c-11.5-7.2-25.9-11.6-37.1-15l0 0-.7-.2c-12.8-3.9-21.9-6.7-28.3-10.5c-5.2-3.1-5.3-4.9-5.3-6.7c0-3.7 1.4-6.5 6.2-9.3c5.4-3.2 13.6-5.1 21.5-5c9.6 .1 20.2 2.2 31.2 5.2c10.7 2.8 21.6-3.5 24.5-14.2s-3.5-21.6-14.2-24.5c-6.5-1.7-13.7-3.4-21.1-4.7V216z" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:30px; color:#14213d"
+                                        viewBox="0 0 512 512">
+                                        <path fill="currentColor"
+                                            d="M256 256a112 112 0 1 0-112-112a112 112 0 0 0 112 112m0 32c-69.42 0-208 42.88-208 128v64h416v-64c0-85.12-138.58-128-208-128" />
                                     </svg>
                                 </span>
                             </div>
@@ -268,13 +282,11 @@
 
                                 <div
                                     class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
-                                    <p class="text-truncate font-size-18 mb-0 fw-bold">Revenue</p>
-                                    <h5 class="mb-0"> ${{$total_revenue}}
+                                    <p class="text-truncate font-size-18 mb-0 fw-bold">Employees</p>
+                                    <h5 class="mb-0">{{ $emp_count }}
                                     </h5>
                                 </div>
-                                {{-- <p class="text-muted mb-0 text-truncate"><span
-                                        class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p> --}}
+
                             </div>
 
                         </div>
@@ -282,7 +294,70 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-xl-3">
+            <div class="col-md-4 col-xl-4">
+                <div class="card overflow-hidden">
+                    <div class="card-body overflow-hidden" style="position: relative;">
+                        <div class="ag-courses-item_bg"></div>
+                        <div class="d-flex align-items-center position-relative" style="z-index: 10">
+                            <div class="avatar-md flex-shrink-0">
+                                <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                                        <path fill="#14213d"
+                                            d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0H21.3C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7h42.7C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352H378.7C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z" />
+                                    </svg>
+                                </span>
+                            </div>
+
+                            <div class="flex-grow-1 overflow-hidden ms-2">
+
+                                <div
+                                    class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
+                                    <p class="text-truncate font-size-18 mb-0 fw-bold">Clients</p>
+                                    <h5 class="mb-0">{{ $client_count }}</h5>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xl-4">
+                <div class="card overflow-hidden">
+                    <div class="card-body overflow-hidden" style="position: relative;">
+                        <div class="ag-courses-item_bg"></div>
+                        <div class="d-flex align-items-center position-relative" style="z-index: 10">
+                            <div class="avatar-md flex-shrink-0">
+                                <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:30px; color:#14213d"
+                                        viewBox="0 0 24 24">
+                                        <path fill="currentColor"
+                                            d="M4 21q-.825 0-1.412-.587T2 19V8q0-.825.588-1.412T4 6h4V4q0-.825.588-1.412T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v11q0 .825-.587 1.413T20 21zm6-15h4V4h-4z" />
+                                    </svg>
+                                </span>
+                            </div>
+
+                            <div class="flex-grow-1 overflow-hidden ms-2">
+
+                                <div
+                                    class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
+                                    <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Projects</p>
+                                    <h5 class="mb-0">15 </h5>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-xl-4">
                 <div class="card overflow-hidden">
                     <div class="card-body overflow-hidden" style="position: relative;">
                         <div class="ag-courses-item_bg"></div>
@@ -295,17 +370,16 @@
                                     </svg>
                                 </span>
                             </div>
-                            <div class="d-flex flex-column ms-2">
+
+
+                            <div class="flex-grow-1 overflow-hidden ms-2">
+
                                 <div
-                                    class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5 ">
+                                    class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
                                     <p class="text-truncate font-size-18 mb-0 fw-bold"> Salaries</p>
-                                    <h5 class="mb-0"> ${{$total_salary}}
-                                    </h5>
+                                    <h5 class="mb-0">${{ $usd_pkr_salary }}
                                 </div>
 
-                                {{-- <p class="text-muted mb-0 text-truncate"><span
-                                        class="badge bg-subtle-danger text-danger font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p> --}}
                             </div>
 
                         </div>
@@ -313,7 +387,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-xl-3">
+            <div class="col-md-4 col-xl-4">
                 <div class="card overflow-hidden">
                     <div class="card-body overflow-hidden" style="position: relative;">
                         <div class="ag-courses-item_bg"></div>
@@ -332,78 +406,61 @@
                                     </svg>
                                 </span>
                             </div>
-                            <div class="d-flex flex-column ms-2">
+
+                            <div class="flex-grow-1 overflow-hidden ms-2">
 
                                 <div
-                                    class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5">
+                                    class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Expenses</p>
-                                    <h5 class="mb-0">$ {{$usd_expenses}} </h5>
+                                    <h5 class="mb-0">${{ $usd_pkr_expenses }} </h5>
                                 </div>
-                                {{-- <p class="text-muted mb-0 text-truncate"><span
-                                        class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p> --}}
+
                             </div>
 
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-xl-3">
+            <div class="col-md-4 col-xl-4">
                 <div class="card overflow-hidden">
                     <div class="card-body overflow-hidden" style="position: relative;">
-                        <div class="ag-courses-item_bg"></div>
+
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
-                                    <svg viewBox="0 0 512 512" id="svg2793"
-                                        style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
-                                        version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                                        xmlns:cc="http://creativecommons.org/ns#"
-                                        xmlns:dc="http://purl.org/dc/elements/1.1/"
-                                        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-                                        xmlns:serif="http://www.serif.com/" xmlns:svg="http://www.w3.org/2000/svg"
-                                        fill="#14213d" stroke="#14213d">
-                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                        <g id="SVGRepo_iconCarrier">
-                                            <defs id="defs2797"></defs>
-                                            <g id="_03-Profit" style="display:inline"
-                                                transform="translate(-2048,7.53847e-4)">
-                                                <g id="g2756" transform="translate(2132.93,29.6336)">
-                                                    <path
-                                                        d="m 0,166.206 c 1.848,0 3.727,-0.344 5.548,-1.069 L 245.19,69.65 234.235,95.126 c -3.272,7.61 0.244,16.433 7.855,19.706 1.931,0.83 3.941,1.224 5.919,1.224 5.812,0 11.345,-3.4 13.787,-9.079 l 25.26,-58.739 c 0.019,-0.046 0.032,-0.092 0.05,-0.137 0.172,-0.41 0.33,-0.825 0.464,-1.249 0.073,-0.226 0.123,-0.455 0.184,-0.682 0.065,-0.245 0.139,-0.487 0.191,-0.735 0.056,-0.26 0.09,-0.521 0.132,-0.781 0.035,-0.222 0.078,-0.443 0.104,-0.668 0.029,-0.258 0.039,-0.515 0.054,-0.773 0.014,-0.233 0.036,-0.463 0.038,-0.696 0.003,-0.246 -0.012,-0.488 -0.02,-0.732 -0.009,-0.246 -0.012,-0.492 -0.032,-0.739 -0.021,-0.239 -0.06,-0.475 -0.091,-0.711 -0.033,-0.248 -0.059,-0.496 -0.106,-0.744 -0.048,-0.267 -0.119,-0.53 -0.183,-0.793 -0.051,-0.212 -0.092,-0.425 -0.153,-0.636 -0.136,-0.475 -0.294,-0.941 -0.478,-1.4 V 36.76 c -0.183,-0.459 -0.391,-0.908 -0.617,-1.348 -0.104,-0.2 -0.224,-0.387 -0.335,-0.581 -0.132,-0.229 -0.258,-0.463 -0.403,-0.686 -0.141,-0.219 -0.298,-0.423 -0.451,-0.633 -0.134,-0.186 -0.262,-0.376 -0.406,-0.557 -0.161,-0.201 -0.335,-0.389 -0.506,-0.582 -0.155,-0.174 -0.304,-0.354 -0.467,-0.521 -0.171,-0.176 -0.354,-0.337 -0.534,-0.504 -0.179,-0.167 -0.353,-0.339 -0.543,-0.498 -0.185,-0.157 -0.381,-0.297 -0.574,-0.444 -0.196,-0.15 -0.387,-0.305 -0.592,-0.447 -0.23,-0.158 -0.471,-0.297 -0.71,-0.442 -0.179,-0.11 -0.352,-0.227 -0.538,-0.33 -0.434,-0.24 -0.88,-0.46 -1.336,-0.656 L 220.461,3.272 C 212.854,0 204.028,3.516 200.755,11.126 c -3.273,7.61 0.244,16.433 7.854,19.706 l 25.468,10.952 -239.634,95.484 c -7.695,3.066 -11.448,11.791 -8.382,19.487 2.341,5.874 7.979,9.451 13.939,9.451"
-                                                        id="path2754" style="fill-rule:nonzero"></path>
-                                                </g>
-                                                <g id="g2760" transform="translate(2078,242.827)">
-                                                    <path
-                                                        d="m 0,104.978 c 0,-9.826 7.994,-17.819 17.82,-17.819 9.826,0 17.82,7.993 17.82,17.819 V 207.489 H 0 Z M 138.79,41.869 c 0,-4.77 1.85,-9.243 5.225,-12.613 3.353,-3.358 7.826,-5.208 12.595,-5.208 4.763,0 9.232,1.85 12.602,5.226 3.365,3.359 5.218,7.832 5.218,12.595 v 165.62 h -35.64 z m 138.78,-52.88 c 0,-9.826 7.994,-17.821 17.82,-17.821 9.826,0 17.82,7.995 17.82,17.821 v 218.5 h -35.64 z m 138.79,-73.681 c 0,-9.826 7.994,-17.819 17.82,-17.819 9.826,0 17.82,7.993 17.82,17.819 v 292.181 h -35.64 z m 17.82,-47.819 c -26.368,0 -47.82,21.452 -47.82,47.819 v 292.181 h -43.15 v -218.5 c 0,-26.368 -21.452,-47.821 -47.82,-47.821 -26.368,0 -47.82,21.453 -47.82,47.821 v 218.5 H 204.43 V 41.869 c 0,-12.786 -4.98,-24.799 -14.005,-33.808 -9.02,-9.036 -21.029,-14.013 -33.815,-14.013 -12.792,0 -24.805,4.977 -33.808,13.995 -9.036,9.022 -14.012,21.035 -14.012,33.826 v 165.62 H 65.64 V 104.978 C 65.64,78.611 44.188,57.159 17.82,57.159 -8.548,57.159 -30,78.611 -30,104.978 v 117.511 c 0,8.284 6.716,15 15,15 h 482 c 8.284,0 15,-6.716 15,-15 V -84.692 c 0,-26.367 -21.452,-47.819 -47.82,-47.819"
-                                                        id="path2758" style="fill-rule:nonzero"></path>
-                                                </g>
-                                            </g>
-                                        </g>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#14213d"
+                                        class="bi bi-calendar-range" viewBox="0 0 16 16">
+                                        <path d="M9 7a1 1 0 0 1 1-1h5v2h-5a1 1 0 0 1-1-1M1 9h4a1 1 0 0 1 0 2H1z" />
+                                        <path
+                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
                                     </svg>
                                 </span>
                             </div>
                             <div class="d-flex flex-column ms-2">
-                                <div
-                                    class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
-                                    <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Profit</p>
-                                    <h5 class="mb-0">  {{$total_profit}}
-                                    </h5>
-                                </div>
-                                {{-- <p class="text-muted mb-0 text-truncate"><span
-                                        class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
-                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p> --}}
+                                <form action="/filter-manager-date" method="post">
+@csrf
+                                    <div
+                                        class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
+
+                                            <input type="text" name="daterange" value="" class="form-control" />
+                                            <button id="submit_dates" class="btn-apply">Apply</button>
+
+
+
+                                    </div>
+                                </form>
+
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
+
         <div class="row">
             <div class="col-md-4 col-xl-4 col-sm-12">
-                <div class="card overflow-hidden">
+                <div class="card overflow-hidden" style="height: 400px;">
                     <div class="card-body overflow-hidden">
                         <div class="ag-courses-item_bg"></div>
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
@@ -411,8 +468,8 @@
                                 <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" style="width:30px; color:#14213d"
                                         viewBox="0 0 48 48">
-                                        <g fill="none" stroke="#14213d" stroke-linecap="round"
-                                            stroke-linejoin="round" stroke-width="4">
+                                        <g fill="none" stroke="#14213d" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="4">
                                             <path d="M42 20v19a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h21" />
                                             <path d="m16 20l10 8L41 7" />
                                         </g>
@@ -476,7 +533,7 @@
                             </div>
                             <div class="flex-grow-1 overflow-hidden ms-4 d-flex align-items-center gap-3">
                                 <h3 class="fs-4 font-size-18 mb-0" style="color:#14213d;">Total Leaves</h3>
-                                <p class="font-size-15 mb-0 flex-grow-1">{{$total_leaves}}</p>
+                                <p class="font-size-15 mb-0 flex-grow-1">{{ $total_leaves }}</p>
 
                                 <p style="position: absolute;bottom: 5px; color:gray; font-size: 12px; margin-bottom: 0;">
                                     Total Allowed leaves are 15 per year</p>
@@ -484,19 +541,17 @@
 
 
                         </div>
+                        <div class="container d-flex justify-content-between position-absolute overflow-hidden" style="z-index: 10; left:0; bottom:10px;">
+                            <button type="button" class="reblateBtn px-3 py-2" data-toggle="modal"
+                                data-target="#exampleModal">Apply for Leave</button>
+                            <a href="/leave-records" class="reblateBtn px-3 py-2">Leave Records</a>
+                        </div>
                     </div>
                 </div>
-                {{-- leave button  --}}
-                <div class="container d-flex justify-content-between">
-                    <button type="button" class="reblateBtn px-3 py-2" data-toggle="modal"
-                        data-target="#exampleModal">Apply for Leave</button>
-                    <a href="/leave-records" class="reblateBtn px-3 py-2">Leave Records</a>
-                </div>
+                <div class="d-flex flex-wrap gap-4 justify-content-between">
 
-                {{-- apply leave modal  --}}
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header pb-0">
@@ -512,15 +567,15 @@
                                     <div id="messageBox"></div>
                                     <div class="form-group mt-3">
                                         <label for="date">Date</label>
-                                        <input type="date" class="form-control inputboxcolor" style="border: none;"
-                                            id="date" name="date">
+                                        <input type="date" class="form-control inputboxcolor"
+                                            style="border: 1px solid #ced4da;" id="date" name="date">
                                         <span class="text-danger" id="dateBox" style="display: none">Please Select
                                             a date!</span>
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="reason">Reason:</label>
-                                        <textarea class="form-control inputboxcolor" style="border: none; resize: none; height: 100px;" id="reason"
-                                            name="reason" placeholder="Reason:" rows="5"></textarea>
+                                        <textarea class="form-control inputboxcolor" style="border: 1px solid #ced4da; resize: none; height: 100px;"
+                                            id="reason" name="reason" placeholder="Reason:" rows="5"></textarea>
                                         <span class="text-danger" id="reasonBox" style="display: none">Please Write a
                                             reason!</span>
                                     </div>
@@ -532,9 +587,12 @@
                         </div>
                     </div>
                 </div>
+                </div>
+
+
 
             </div>
-            <div class="col-md-4  col-sm-12">
+            <div class="col-md-4 col-xl-4 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-title">Today Activity</h6>
@@ -572,14 +630,31 @@
                                         <p>No Checkout</p>
                                     @endif
                                 </li>
+                                <li class="event mb-1">
+                                    <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Overtime Start</h3>
+                                    @if (session()->has('overtime_start') && session('overtime_start') != '')
+                                        <p>{{ session('overtime_start') }}</p>
+                                    @else
+                                        <p>No Overtime Start</p>
+                                    @endif
+                                </li>
+                                <li class="event mb-1">
+                                    <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Overtime End</h3>
+                                    @if (session()->has('overtime_end') && session('overtime_end') != '')
+                                        <p>{{ session('overtime_end') }}</p>
+                                    @else
+                                        <p>No Overtime End</p>
+                                    @endif
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
+
             </div>
-            <div class="col-md-4 col-sm-12">
+            <div class="col-md-4 col-xl-4 col-sm-12">
                 <div class="card">
-                    <div class="card-body" style="min-height: 340px;">
+                    <div class="card-body" style="min-height: 400px;">
                         <div class="d-flex justify-content-between align-items-center ">
                             <h3 class=" font-size-header mb-0">Timesheet </h3>
                             {{-- <div id="timer" class="text-center timer">00:00:00</div> --}}
@@ -588,16 +663,14 @@
                         {{-- @if (session()->has('check_in_time') && session('check_in_time') != '')
                                 <h3 class="check_in_time">Check In Time: {{ session('check_in_time') }}</h3>
                             @endif --}}
-                            <div class="punch-info" style="margin-top: 15px;">
-                                <div class="punch-hours">
+                        <div class="punch-info" style="margin-top: 15px;">
+                            <div class="punch-hours">
                                 @if (session()->has('total_hours') && session('total_hours') != '')
-
-                                       <span>{{ session('total_hours') }}</span>
-
+                                    <span>{{ session('total_hours') }}</span>
                                 @else
                                     {{-- <span>0 hrs</span> --}}
 
-                                        <span id="timer" class="text-center timer">00:00:00</span>
+                                    <span id="timer" class="text-center timer">00:00:00</span>
 
                                     {{-- <div id="timer" class="text-center timer">00:00:00</div> --}}
                                 @endif
@@ -605,57 +678,76 @@
 
 
                             @if (isset($day_message) && $day_message != '')
-                            <span class="text-center text-danger">{{ $day_message }}</span>
-                        @endif
-                        @if (isset($check_in_already_message) && $check_in_already_message != '')
-                            <span class="font-text text-danger">{{ $check_in_already_message }}</span>
-                        @endif
-                        @if (isset($success_message) && $success_message != '')
-                            <span class="text-center green-text">{{ $success_message }}</span>
-                        @endif
-
-                        <div class="break-time d-flex align-items-center justify-content-between my-3 " >
-                            <p class="mb-0 font-size-15" style="margin-top:45px;">Target Working Hours</p>
-                            <p class="mb-0 font-size-15" style="margin-top:45px;">7:00 / Day</p>
-                        </div>
-                        @if (session()->has('attendence_status') && session('attendence_status') === true)
-                            <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
-                                    width="1em" height="1em" viewBox="0 0 24 24">
-                                    <path fill="#3e7213"
-                                        d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
-                                </svg> Attendence Marked Successfully!</span>
-                        @else
-                        <div class="d-flex flex-wrap justify-content-between gap-4">
-
-                            @if (session()->has('show_check_out') && session('show_check_out') === true)
-                                <a class="reblateBtn px-4 py-2 w-md" href="/check-out/" >Checking Out
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                        viewBox="0 0 16 16">
-                                        <g fill="currentColor" fill-rule="evenodd">
-                                            <path
-                                                d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                            <path
-                                                d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                                        </g>
-                                    </svg>
-                                </a>
-                            @else
-                                <a class="reblateBtn px-4 py-2" href="/check-in">Checking In
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                        viewBox="0 0 21 21">
-                                        <g fill="none" fill-rule="evenodd" stroke="currentColor"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
-                                            <path
-                                                d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
-                                        </g>
-                                    </svg>
-                                </a>
+                                <span class="text-center text-danger">{{ $day_message }}</span>
+                            @endif
+                            @if (isset($check_in_already_message) && $check_in_already_message != '')
+                                <span class="font-text text-danger">{{ $check_in_already_message }}</span>
+                            @endif
+                            @if (isset($success_message) && $success_message != '')
+                                <span class="text-center green-text">{{ $success_message }}</span>
                             @endif
 
-                                <div class="col-md-6">
-                                    @if (session()->has('show_break_end') && session('show_break_end') === true)
-                                        <a class="reblateBtn px-4 py-2" href="/break-end" style="width:100%;">Break End
+                            <div class="break-time d-flex align-items-center justify-content-between my-3 ">
+                                <p class="mb-0 font-size-15" style="margin-top:45px;">Target Working Hours</p>
+                                <p class="mb-0 font-size-15" style="margin-top:45px;">7:00 / Day</p>
+                            </div>
+                            @if (session()->has('attendence_status') && session('attendence_status') === true)
+                                <div>
+                                    <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="1em" height="1em" viewBox="0 0 24 24">
+                                        <path fill="#3e7213"
+                                            d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
+                                    </svg> Attendence Marked Successfully!</span>
+                                </div>
+
+                                @if ( session()->has('overtime_status') && session('overtime_status') === true)
+                                    <div>
+                                        <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
+                                            width="1em" height="1em" viewBox="0 0 24 24">
+                                            <path fill="#3e7213"
+                                                d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
+                                        </svg> Over time marked!</span>
+                                    </div>
+
+                                    @elseif( session()->has('show_over_time_end') && session('show_over_time_end') === false)
+                                    <div class="row" style="margin-top:20px;">
+                                        <div class="col-md-12 d-flex justify-content-center">
+                                            <a class="reblateBtn px-4 py-2 w-md" href="/overtime-start" >Overtime Start
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                    viewBox="0 0 21 21">
+                                                    <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
+                                                        <path
+                                                            d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                    @elseif( session()->has('show_over_time_end') && session('show_over_time_end') === true)
+                                    <div class="row" style="margin-top:20px;">
+                                        <div class="col-md-12 d-flex justify-content-center">
+                                            <a class="reblateBtn px-4 py-2 w-md" href="/overtime-end" >Overtime End
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                    viewBox="0 0 21 21">
+                                                    <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
+                                                        <path
+                                                            d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                        </div>
+
+                                @endif
+                            @else
+                                <div class="d-flex flex-wrap justify-content-between gap-4 align-items-center">
+
+                                    @if (session()->has('show_check_out') && session('show_check_out') === true)
+                                        <a class="reblateBtn px-4 py-2 w-md" href="/check-out/">Checking Out
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                 viewBox="0 0 16 16">
                                                 <g fill="currentColor" fill-rule="evenodd">
@@ -667,40 +759,61 @@
                                             </svg>
                                         </a>
                                     @else
-                                        <a class="reblateBtn px-4 py-2" href="/break-start"
-                                            style="width:100%;">BreakStart
+                                        <a class="reblateBtn px-4 py-2" href="/check-in">Checking In
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                viewBox="0 0 16 16">
-                                                <g fill="currentColor" fill-rule="evenodd">
+                                                viewBox="0 0 21 21">
+                                                <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
                                                     <path
-                                                        d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                                    <path
-                                                        d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                                        d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
                                                 </g>
                                             </svg>
                                         </a>
                                     @endif
+
+
+                                        @if (session()->has('show_break_end') && session('show_break_end') === true)
+                                            <a class="reblateBtn px-4 py-2" href="/break-end" >Break
+                                                End
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                    viewBox="0 0 16 16">
+                                                    <g fill="currentColor" fill-rule="evenodd">
+                                                        <path
+                                                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                                        <path
+                                                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                        @else
+                                            <a class="reblateBtn px-4 py-2" href="/break-start"
+                                            >BreakStart
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                    viewBox="0 0 16 16">
+                                                    <g fill="currentColor" fill-rule="evenodd">
+                                                        <path
+                                                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                                        <path
+                                                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                        @endif
+
+
                                 </div>
-
-                    </div>
-                        @endif
-                        <div class="view-class-more">
-                            <a href="/view-attendence" style="color:#fca311; border-bottom:1px solid #14213d;">View
-                                Attendence</a>
-                        </div>
-
-
+                            @endif
+                            <div class="view-class-more">
+                                <a href="/view-attendence" style="color:#fca311;">View
+                                    Attendence</a>
                             </div>
+
+
                         </div>
-
-
-
                     </div>
-                </div>
-                <!-- end card -->
+
             </div>
-
-
 
         </div>
 
@@ -1288,6 +1401,39 @@
             const chartId = document.getElementById('chart_div');
 
 
+            $(function() {
+                $('input[name="daterange"]').daterangepicker({
+                        opens: 'right'
+                    },
+                    function(start, end, label) {
+                        var startDate = start.format('YYYY-MM-DD');
+                        var endDate = end.format('YYYY-MM-DD');
+
+                        // var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                        // // alert(csrfToken);
+
+                        // // AJAX request to send the selected dates to the controller
+                        // $.ajax({
+                        //     url: '/search-emp-details', // Update the URL to match your controller route
+                        //     method: 'POST',
+                        //     data: {
+                        //         startDate: startDate,
+                        //         endDate: endDate,
+                        //         _token: csrfToken // Ensure CSRF token is included
+                        //     },
+                        //     success: function(response) {
+                        //         // Handle success response if needed
+                        //         console.log("Dates sent to controller successfully.");
+                        //     },
+                        //     error: function(xhr, status, error) {
+                        //         // Handle error if any
+                        //         console.error("Error sending dates to controller: " + error);
+                        //     }
+                        // });
+                    });
+            });
+
+
 
             new Chart(chartId, {
               type: 'bar',
@@ -1412,4 +1558,8 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     @endsection

@@ -19,6 +19,7 @@
     View Attendence Details
 @endsection
 @section('body')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <body data-sidebar="colored">
     @endsection
@@ -42,36 +43,37 @@
         <div class="row mt-2">
             <div class="col-md-12">
                 <div class="card mb-3">
-                    <div class="card-body" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap">
-                        <div class="d-flex justify-content-center align-items-center flex-wrap">
-                            {{-- <a href="/view-tasks" class="position-absolute top-0 start-1 pt-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#14213d" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"></path>
-                            </svg>
-                            </a> --}}
+                    <div class="card-body" style="display: flex; align-items: center; justify-content: space-between;">
+                        <!-- Using a dummy CDN link for the image -->
+                        <a href="/view-tasks" class="position-absolute top-0 start-1 pt-2">
+                            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#14213d" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"></path>
+                        </svg> --}}
+                        </a>
+
+                        <div class="d-flex align-items-center gap-3" style="margin-left: 15px;">
                             @if ($emp->Emp_Image != '' && file_exists($emp->Emp_Image))
-                            <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
-                                src="{{ url($emp->Emp_Image) }}">
-                        @else
-                            <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
-                                src="{{ url('user.png') }}">
-                        @endif
-                        <h5 class="card-title mb-0 ms-3" style="font-size: 25px; color:#fca311;">{{ $emp_name }}</h5>
+                                <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
+                                    src="{{ url($emp->Emp_Image) }}">
+                            @else
+                                <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
+                                    src="{{ url('user.png') }}">
+                            @endif
+
+                            <div class="d-flex flex-column gap-1 ml-4">
+                                <h5 class="card-title mb-0" style="font-size: 25px;">{{ $emp_name }}</h5>
+                                <p class="card-text mb-1 ">{{ $emp->Emp_Designation }}</p>
+                                <p class="card-text">{{ $emp->Emp_Shift_Time }}</p>
+                                <p class="card-text">{{ $emp->Emp_Code }}</p>
+
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column align-items-center p-3 gap-2" style="">
+
 
                         </div>
-                        <!-- Using a dummy CDN link for the image -->
-                        <div>
-                            <h3 style="font-size: 20px; color:#14213d">Designation:</h3>
-                            <p class="card-text mb-1 " style="color:#fca311; font-size: 15px; font-weight:500;">{{ $emp->Emp_Designation }}</p>
-                        </div>
-                        <div>
-                            <h3 style="font-size: 20px; color:#14213d">Shift:</h3>
-                            <p class="card-text" style="color:#fca311; font-size: 15px; font-weight:500;">{{ $emp->Emp_Shift_Time }}</p>
-                        </div>
-                          <div>
-                            <h3 style="font-size: 20px; color:#14213d">EMP Code:</h3>
-                            <p class="card-text" style="color:#fca311; font-size: 15px; font-weight:500;">{{ $emp->Emp_Code }}</p>
-                            </div>
+
+
                     </div>
                 </div>
             </div>
@@ -131,14 +133,8 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="updateModalLabel">Update Attendance</h5>
-                                        <button type="button" class="close"
-                                            style="border: none;background-color: transparent;" data-dismiss="modal"
-                                            aria-label="Close">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                                            </svg>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
@@ -146,15 +142,15 @@
                                         <form id="updateForm">
                                             <div class="form-group">
                                                 <label for="date">Date</label>
-                                                <input type="text" class="form-control inputboxcolor" style="border: 1px solid #c7c7c7" id="date" name="date"
+                                                <input type="text" class="form-control" id="date" name="date"
                                                     readonly>
                                             </div>
                                             <div class="form-group">
                                                 <label for="checkIn">Check In Time</label>
-                                                <input type="text" class="form-control inputboxcolor" style="border: 1px solid #c7c7c7" id="checkIn" name="checkIn">
+                                                <input type="text" class="form-control" id="checkIn" name="checkIn">
                                             </div>
                                             <!-- Add more form fields for other attendance data -->
-                                            <button type="submit" class="reblateBtn px-4 py-2 mt-2">Update</button>
+                                            <button type="submit" class="btn btn-primary">Update</button>
                                         </form>
                                     </div>
                                 </div>
@@ -228,6 +224,7 @@
                                 <th> Break Start</th>
                                 <th> Break End</th>
                                 <th> Total Time Worked</th>
+                                <th> Over Time Worked</th>
                                 {{-- <th> Over Time</th> --}}
                                 @if (auth()->user()->user_type == 'admin')
                                     <th> Action</th>
@@ -255,24 +252,37 @@
                                         $day_number = $carbonDate->format('j');
                                         $formattedDate = $carbonDate->format('j F Y');
 
-                                                    // Convert time into 24-hour format and handle null values
-            $check_in_time_24 = $emp->check_in_time ? \Carbon\Carbon::parse($emp->check_in_time)->format('H:i') : '';
-            $check_out_time_24 = $emp->check_out_time ? \Carbon\Carbon::parse($emp->check_out_time)->format('H:i') : '';
-            $break_start_24 = $emp->break_start ? \Carbon\Carbon::parse($emp->break_start)->format('H:i') : '';
-            $break_end_24 = $emp->break_end ? \Carbon\Carbon::parse($emp->break_end)->format('H:i') : '';
+                                        // Convert time into 24-hour format and handle null values
+                                        $check_in_time_24 = $emp->check_in_time
+                                            ? \Carbon\Carbon::parse($emp->check_in_time)->format('H:i')
+                                            : '';
+                                        $check_out_time_24 = $emp->check_out_time
+                                            ? \Carbon\Carbon::parse($emp->check_out_time)->format('H:i')
+                                            : '';
+                                        $break_start_24 = $emp->break_start
+                                            ? \Carbon\Carbon::parse($emp->break_start)->format('H:i')
+                                            : '';
+                                        $overtime_start_24 = $emp->overtime_start
+                                            ? \Carbon\Carbon::parse($emp->overtime_start)->format('H:i')
+                                            : '';
 
-                                        if($check_out_time_24 == null) {
-                                            $break_start_24 = "";
+                                        $overtime_end_24 = $emp->overtime_end
+                                            ? \Carbon\Carbon::parse($emp->overtime_end)->format('H:i')
+                                            : '';
+                                        $break_end_24 = $emp->break_end
+                                            ? \Carbon\Carbon::parse($emp->break_end)->format('H:i')
+                                            : '';
+
+                                        if ($check_out_time_24 == null) {
+                                            $break_start_24 = '';
                                         }
 
-                                        if($break_start_24 == null) {
-                                            $break_start_24 = "";
+                                        if ($break_start_24 == null) {
+                                            $break_start_24 = '';
                                         }
-                                        if($break_end_24 == null) {
-                                            $break_end_24 = "";
+                                        if ($break_end_24 == null) {
+                                            $break_end_24 = '';
                                         }
-
-
 
                                     @endphp
 
@@ -292,29 +302,28 @@
                                     <td>{{ $year }}</td>
                                     {{-- <td>{{ ( $emp->Emp_Code < 10) ? '00'.$emp->Emp_Code : $emp->Emp_Code }}sols</td> --}}
                                     {{-- <td><a href="{{ Route('view-client-detail', $client->client_id) }}">{{ $client->client_name }} </a></td> --}}
-                                    <td>{{ $emp->check_in_time  ?? ''}} </a></td>
+                                    <td>{{ $emp->check_in_time ?? '' }} </a></td>
                                     <td>{{ $emp->check_out_time ?? '' }} </a></td>
                                     <td>{{ $emp->break_start ?? '' }}</td>
-                                    <td>{{ $emp->break_end ?? ''}}</td>
+                                    <td>{{ $emp->break_end ?? '' }}</td>
                                     <td>{{ $emp->total_time }}</td>
+                                    <td>{{ $emp->total_over_time }}</td>
                                     {{-- <td>0 Hrs</td> --}}
                                     @if (auth()->user()->user_type == 'admin')
                                         {{-- <td><a class="open-popup" href="#" data-emp-id="{{ $emp->emp_id }}"><svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" viewBox="0 0 24 24"><path fill="currentColor" d="m14.06 9l.94.94L5.92 19H5v-.92zm3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z"/></svg></a></td> --}}
-                                        <form action="/show-update-attendence-form" method="post">
-                                            @csrf
-                                            <input type="hidden" value="{{ $emp->id }}" name="attendence_id">
-                                            <input type="hidden" value="{{ $emp->emp_id }}" name="emp_id">
-                                            <td>
-                                                {{-- <button>Edit</button> --}}
-                                                <a href="#emp_{{ $emp->id }}" data-toggle="modal">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem"
-                                                        viewBox="0 0 24 24">
-                                                        <path fill="#14213d"
-                                                            d="m14.06 9l.94.94L5.92 19H5v-.92zm3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z" />
-                                                    </svg>
-                                                </a>
-                                            </td>
-                                        </form>
+
+
+                                        <input type="hidden" value="{{ $emp->emp_id }}" name="emp_id">
+                                        <td>
+                                            {{-- <button>Edit</button> --}}
+                                            <a href="#emp_{{ $emp->id }}" data-toggle="modal">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem"
+                                                    viewBox="0 0 24 24">
+                                                    <path fill="#14213d"
+                                                        d="m14.06 9l.94.94L5.92 19H5v-.92zm3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z" />
+                                                </svg>
+                                            </a>
+                                        </td>
                                     @endif
 
                                     <!-- Bootstrap modal for the popup form -->
@@ -325,48 +334,69 @@
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="editModalLabel">Update Employee Attendance
                                                     </h5>
-                                                    <button type="button" class="close"
-                                            style="border: none;background-color: transparent;" data-dismiss="modal"
-                                            aria-label="Close">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                                            </svg>
-                                        </button>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <!-- Your form content goes here -->
                                                     <p>Date: {{ $day_number }} {{ $monthName }}, {{ $year }}
                                                     </p>
-                                                    <form id="editForm">
-                                                        <div class="form-group mt-2">
-                                                            <label for="editCheckIn">Check In Time</label>
-                                                            <input type="time" class="form-control inputboxcolor" style="border: 1px solid #c7c7c7"
-                               id="editCheckIn" name="checkInTime"
-                               value="{{ $check_in_time_24 }}"> <!-- Corrected -->
-                                                        </div>
-                                                        <div class="form-group mt-2">
-                                                            <label for="editCheckOut">Check Out Time</label>
-                                                            <input type="time" value="{{ $check_out_time_24 }}"
-                                                                class="form-control inputboxcolor" style="border: 1px solid #c7c7c7" id="editCheckOut"
-                                                                name="checkOutTime">
-                                                        </div>
-                                                        <div class="form-group mt-2">
-                                                            <label for="editBreakStart">Break Start</label>
-                                                            <input type="time" value="{{ $break_start_24 }}"
-                                                                class="form-control inputboxcolor" style="border: 1px solid #c7c7c7" id="editBreakStart"
-                                                                name="breakStart">
-                                                        </div>
-                                                        <div class="form-group mt-2">
-                                                            <label for="editBreakEnd">Break End</label>
-                                                            <input type="time" value="{{ $break_end_24 }}"
-                                                                class="form-control inputboxcolor" style="border: 1px solid #c7c7c7" id="editBreakEnd" name="breakEnd">
-                                                        </div>
-                                                        <!-- Add more fields as needed -->
-                                                        <button type="submit"
-                                                            class="reblateBtn px-4 py-2 mt-2">Update</button>
-                                                    </form>
+
+
+                                                    <input type="hidden" value="{{ $emp->id }}"
+                                                        id="attendence_id__{{ $emp->id }}">
+                                                    <span class="label label-success" style="display: none;"
+                                                        id="text-success"></span>
+                                                    <p class="text-danger" id="show_error_{{ $emp->id }}"></p>
+                                                    <p class="text-primary" id="show_success_message_{{ $emp->id }}"></p>
+
+                                                    <div class="form-group mt-2">
+                                                        <label for="editCheckIn_{{ $emp->id }}">Check In Time
+                                                             </label>
+                                                        <input type="time" class="form-control" id="editCheckIn_{{ $emp->id }}"
+                                                            name="checkInTime_{{ $emp->id }}" value="{{ $check_in_time_24 ?? '' }}">
+                                                        <span style="color:red;display:none;"
+                                                            id="show_error_check_in__{{ $emp->id }}">Check in time required!</span>
+                                                        <!-- Corrected -->
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <label for="editCheckOut_{{ $emp->id }}">Check Out Time
+                                                            {{ $emp->check_out_time ?? '' }}</label>
+                                                        <input type="time" value="{{ $check_out_time_24 ?? '' }}" class="form-control"
+                                                            id="editCheckOut_{{ $emp->id }}" name="checkOutTime">
+                                                        <span style="color:red;display:none; "
+                                                            id="show_error_check_out_{{ $emp->id }}">Check out time required!</span>
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <label for="editBreakStart">Break Start
+                                                             </label>
+                                                        <input type="time" value="{{$break_start_24 ?? '' }}" class="form-control"
+                                                            id="editBreakStart_{{ $emp->id }}" name="breakStart">
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <label for="editBreakEnd">Break End
+                                                             </label>
+                                                        <input type="time" value="{{$break_end_24 ?? '' }}" class="form-control"
+                                                            id="editBreakEnd_{{ $emp->id }}" name="breakEnd">
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <label for="editOverStart">Over Time Start
+                                                             </label>
+                                                        <input type="time" value="{{$overtime_start_24 ?? '' }}" class="form-control"
+                                                            id="overTimeStart_{{ $emp->id }}"  >
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <label for="editOverEnd">Over Time End
+                                                             </label>
+                                                        <input type="time" value="{{$overtime_end_24 ?? '' }}" class="form-control"
+                                                            id="overTimeEnd_{{ $emp->id }}"  >
+                                                    </div>
+                                                    <!-- Add more fields as needed -->
+                                                    <button type="submit" class="btn btn-primary mt-2"
+                                                        onclick="saveAttendence({{ $emp->id }})">Update</button>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -389,6 +419,129 @@
 
 
         <script>
+            function convertTo12Hour(time24) {
+                if (!time24 || time24 === "") {
+                    return ''; // If the time is null or empty, return an empty string
+                }
+
+                const [hours, minutes] = time24.split(':'); // Split the time string into hours and minutes
+                const period = parseInt(hours) >= 12 ? 'PM' : 'AM'; // Determine if it's AM or PM
+                let hours12 = parseInt(hours) % 12; // Convert hours to 12-hour format
+
+                // Ensure 12-hour clock uses 12 for noon/midnight
+                if (hours12 === 0) {
+                    hours12 = 12;
+                }
+
+                // Return the time in 12-hour format with AM/PM
+                return `${hours12}:${minutes} ${period}`;
+            }
+
+            function saveAttendence(id) {
+
+                // var editCheckIn = document.getElementById('editCheckIn_'+id).value;
+                // var editCheckOut = document.getElementById('editCheckOut_'+id).value;
+                // var editBreakStart = document.getElementById('editBreakStart_'+id).value;
+                // var editBreakEnd = document.getElementById('editBreakEnd_'+id).value;
+                // var attendence_id = document.getElementById('attendence_id_'+id).value;
+                var show_error = document.getElementById('show_error_'+id);
+                var show_success_message = document.getElementById('show_success_message_'+id);
+
+                var editCheckIn = document.getElementById('editCheckIn_'+id).value;
+                var editCheckOut = document.getElementById('editCheckOut_'+id).value;
+                // var editCheckOut = document.getElementById('editCheckOut_' +id).value;
+                var editBreakStart = document.getElementById('editBreakStart_' +id).value;
+                var editBreakEnd = document.getElementById('editBreakEnd_' +id).value;
+                var attendence_id = document.getElementById('attendence_id__' +id).value;
+
+                var editOverStart = document.getElementById('overTimeStart_' +id).value;
+                var editOverEnd = document.getElementById('overTimeEnd_' +id).value;
+
+
+
+
+
+
+                if (editCheckIn == "") {
+                    show_error.style.display = "block";
+                    show_error.innerHTML = "Check in Time Required!";
+                    return;
+                } else {
+                    show_error.style.display = "none";
+                }
+
+                if (editCheckOut == "") {
+                    show_error.style.display = "block";
+                    show_error.innerHTML = "Check Out Time Required!";
+                    return;
+                } else {
+                    show_error.style.display = "none";
+                }
+
+                editCheckIn = convertTo12Hour(editCheckIn);
+                editCheckOut = convertTo12Hour(editCheckOut);
+
+                if(editBreakStart != "") {
+                    editBreakStart = convertTo12Hour(editBreakStart);
+                }
+
+                if(editBreakEnd != "") {
+                    editBreakEnd = convertTo12Hour(editBreakEnd);
+                }
+
+                if(editOverStart != "") {
+                    editOverStart = convertTo12Hour(editOverStart);
+                }
+
+                if(editOverEnd != "") {
+                    editOverEnd = convertTo12Hour(editOverEnd);
+                }
+
+
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+                var formData = {
+                    _token: csrfToken,
+                    check_in: editCheckIn,
+                    check_out: editCheckOut,
+                    break_start: editBreakStart,
+                    break_end: editBreakEnd,
+                    overtime_start: editOverStart,
+                    overtime_end: editOverEnd,
+
+                    id: attendence_id
+                };
+
+                // console.log(formData);
+
+
+                // AJAX call to send data to the Laravel controller
+                $.ajax({
+                    url: '/save-attendance', // The Laravel route
+                    type: 'POST', // POST request
+                    data: formData,
+                    success: function(response) {
+                        // Show success message
+                        console.log('Response:', response);
+
+                        // Original innerHTML with updated href to trigger window reload
+show_success_message.innerHTML = "Attendance Saved Successfully! <a style='text-decoration:underline !important;' href='#' onclick='window.location.reload()'>Close Window</a>";
+
+
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error); // Log any errors
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken // Add CSRF token to request headers
+                    }
+                });
+
+                return false; // Prevent form submission if within a form
+            }
+
+
+
             $(function() {
                 $('input[name="daterange"]').daterangepicker({
                         opens: 'right'
@@ -460,29 +613,7 @@
                     });
                 });
 
-                // Handle form submission
-                var editForm = document.getElementById("editForm");
-                editForm.addEventListener("submit", function(event) {
-                    event.preventDefault();
-                    // Perform form submission using AJAX or any other method you prefer
-                    // You can access form data using editForm.elements
-                    // For example:
-                    // var formData = new FormData(editForm);
-                    // fetch('your-update-url', {
-                    //     method: 'POST',
-                    //     body: formData
-                    // })
-                    // .then(response => response.json())
-                    // .then(data => {
-                    //     console.log('Success:', data);
-                    // })
-                    // .catch((error) => {
-                    //     console.error('Error:', error);
-                    // });
 
-                    // Close the modal after submission
-                    $(modal).modal("hide");
-                });
             });
         </script>
     @endsection

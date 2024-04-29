@@ -635,149 +635,174 @@
 
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="exampleModal_{{ $attendence_id }}"
-                                                        tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered modal-lg"
-                                                            role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">
-                                                                        Attendance Info
-                                                                    </h5>
-                                                                     {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span> --}}
-                                                            </button>
-                                                                </div>
-                                                                <div class="modal-body">
+                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg"
+                                                        role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    Attendance Info
+                                                                </h5>
+                                                                 {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span> --}}
+                                                        </button>
+                                                            </div>
+                                                            <div class="modal-body">
 
-                                                                    @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
-                                                                        {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ asset($employee->Emp_Image) }}" alt=""> --}}
-                                                                        <img class="modal-image"
-                                                                            src="{{ asset($employee->Emp_Image) }}"
-                                                                            alt="User Image">
-                                                                    @else
-                                                                         {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ url('user.png') }}" alt=""> --}}
-                                                                        <img class="modal-image"
-                                                                            src="{{ url('user.png') }}"
-                                                                            alt="{{ $employee->Emp_Full_Name }}">
-                                                                    @endif
-                                                                    <p style="margin-top: 12px;font-size:13px;font-weight:500;margin-bottom:25px;">
-                                                                        {{ $employee->Emp_Full_Name }}
-                                                                    </p>
-                                                                    <div class="row mt-3">
-                                                                        <div class="col-md-6">
-                                                                            <div class="card punch-status">
-                                                                                <div class="card-body">
-                                                                                    <h5 class="card-title">Timesheet <small
-                                                                                            class="text-muted">{{ $year_date_name }} ({{$dayName}})</small>
-                                                                                    </h5>
-                                                                                    <div class="punch-det">
-                                                                                        <h6>Check In at</h6>
-                                                                                        <p>{{ isset($attendanceRecord->check_in_time) ?  $attendanceRecord->check_in_time : 'No Check In'}}</p>
-                                                                                    </div>
-                                                                                    <div class="punch-info">
-                                                                                        <div class="punch-hours">
-                                                                                            @if (isset($attendanceRecord->total_time))
-                                                                                                <span>{{$attendanceRecord->total_time}} hrs</span>
-                                                                                                @else
-                                                                                                <span>0 Hours</span>
-                                                                                            @endif
-
-
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <br>
-                                                                                    <div class="punch-det">
-                                                                                        <h6>Check Out at</h6>
-                                                                                        <p>{{ isset($attendanceRecord->check_out_time) ?  $attendanceRecord->check_out_time : 'No Check Out'}}</p>
-                                                                                    </div>
-                                                                                    <div class="statistics">
-                                                                                        <div class="row">
-                                                                                            <div
-                                                                                                class="col-md-6 col-6 text-center">
-                                                                                                <div class="stats-box">
-                                                                                                    @if (isset($attendanceRecord->break_start) && $attendanceRecord->break_start !="" && isset($attendanceRecord->break_end)  &&  $attendanceRecord->break_end !="" )
-                                                                                                    <?php
-                                                                                                        // Assuming $attendanceRecord->break_start and $attendanceRecord->break_end are in a valid format
-
-                                                                                                            // Parse break start and end times
-                                                                                                            $breakStart = \Carbon\Carbon::createFromFormat('h:i A', $attendanceRecord->break_start);
-                                                                                                            $breakEnd = \Carbon\Carbon::createFromFormat('h:i A', $attendanceRecord->break_end);
+                                                                @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
+                                                                    {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ asset($employee->Emp_Image) }}" alt=""> --}}
+                                                                    <img class="modal-image"
+                                                                        src="{{ asset($employee->Emp_Image) }}"
+                                                                        alt="User Image">
+                                                                @else
+                                                                     {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ url('user.png') }}" alt=""> --}}
+                                                                    <img class="modal-image"
+                                                                        src="{{ url('user.png') }}"
+                                                                        alt="{{ $employee->Emp_Full_Name }}">
+                                                                @endif
+                                                                <p style="margin-top: 12px;font-size:13px;font-weight:500;margin-bottom:25px;">
+                                                                    {{ $employee->Emp_Full_Name }}
+                                                                </p>
+                                                                <div class="row mt-3">
+                                                                    <div class="col-md-6">
+                                                                        <div class="card punch-status">
+                                                                            <div class="card-body">
+                                                                                <h5 class="card-title">Timesheet <small
+                                                                                        class="text-muted">{{ $year_date_name }} ({{$dayName}})</small>
+                                                                                </h5>
+                                                                                <div class="punch-det">
+                                                                                    <h6>Check In at</h6>
+                                                                                    <p>{{ isset($attendanceRecord->check_in_time) ?  $attendanceRecord->check_in_time : 'No Check In'}}</p>
+                                                                                </div>
+                                                                                <div class="punch-info">
+                                                                                    <div class="punch-hours">
+                                                                                        @if (isset($attendanceRecord->total_time))
+                                                                                            <span>{{$attendanceRecord->total_time}} hrs</span>
+                                                                                            @else
+                                                                                            <span>0 Hours</span>
+                                                                                        @endif
 
 
-
-                                                                                                            // Calculate break duration
-                                                                                                            $breakDuration = $breakEnd->diff($breakStart);
-
-                                                                                                            // Format break duration
-                                                                                                           // Format break duration
-                                                                                                            $hours = $breakDuration->h;
-                                                                                                            $minutes = $breakDuration->i;
-                                                                                                            $breakDurationFormatted = sprintf("%d hrs %02d min", $hours, $minutes);
-                                                                                                    ?>
-                                                                                                    @else
-                                                                                                      @php
-                                                                                                          $breakDurationFormatted = "0 hrs 0 min";
-                                                                                                      @endphp
-                                                                                                    @endif
-                                                                                                    <p>Break</p>
-                                                                                                    <h6> {{$breakDurationFormatted}} </h6>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div
-                                                                                                class="col-md-6 col-6 text-center">
-                                                                                                <div class="stats-box">
-                                                                                                    <p>Overtime</p>
-                                                                                                    <h6>0 hrs</h6>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <div class="card">
-                                                                                <div class="card-body">
-                                                                                    <h6 class="card-title"> Activity</h6>
-                                                                                    <div id="content">
-                                                                                        <ul class="timeliner">
-                                                                                            <li class="event mb-1">
-                                                                                                <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Check In</h3>
-                                                                                                <p>{{ (isset($attendanceRecord->check_in_time) && $attendanceRecord->check_in_time!="") ?  $attendanceRecord->check_in_time : 'No Check In'}}</p>
-                                                                                                                                </li>
-                                                                                            <li class="event mb-1">
-                                                                                                <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Break Start Time</h3>
-                                                                                                                                        <p>{{ (isset($attendanceRecord->break_start) && $attendanceRecord->break_start!="") ?  $attendanceRecord->break_start : 'No Break'}}</p>
-                                                                                                                                </li>
-                                                                                            <li class="event mb-1">
-                                                                                                <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Break End Time</h3>
-                                                                                                <p>{{ (isset($attendanceRecord->break_end) && $attendanceRecord->break_end!="") ?  $attendanceRecord->break_end : 'No Break '}}</p>
-                                                                                                                                </li>
-                                                                                            <li class="event mb-1">
-                                                                                                <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Check Out</h3>
-                                                                                                <p>{{ (isset($attendanceRecord->check_out_time) && $attendanceRecord->check_out_time!="") ?  $attendanceRecord->check_out_time : 'No Check Out'}}</p>
-                                                                                                                                </li>
-                                                                                        </ul>
+                                                                                <br>
+                                                                                <div class="punch-det">
+                                                                                    <h6>Check Out at</h6>
+                                                                                    <p>{{ isset($attendanceRecord->check_out_time) ?  $attendanceRecord->check_out_time : 'No Check Out'}}</p>
+                                                                                </div>
+                                                                                <div class="statistics">
+                                                                                    <div class="row">
+                                                                                        <div
+                                                                                            class="col-md-6 col-6 text-center">
+                                                                                            <div class="stats-box">
+                                                                                                @if (isset($attendanceRecord->break_start) && $attendanceRecord->break_start !="" && isset($attendanceRecord->break_end)  &&  $attendanceRecord->break_end !="" )
+                                                                                                <?php
+                                                                                                    // Assuming $attendanceRecord->break_start and $attendanceRecord->break_end are in a valid format
+
+                                                                                                        // Parse break start and end times
+                                                                                                        $breakStart = \Carbon\Carbon::createFromFormat('h:i A', $attendanceRecord->break_start);
+                                                                                                        $breakEnd = \Carbon\Carbon::createFromFormat('h:i A', $attendanceRecord->break_end);
+
+
+
+                                                                                                        // Calculate break duration
+                                                                                                        $breakDuration = $breakEnd->diff($breakStart);
+
+                                                                                                        // Format break duration
+                                                                                                       // Format break duration
+                                                                                                        $hours = $breakDuration->h;
+                                                                                                        $minutes = $breakDuration->i;
+                                                                                                        $breakDurationFormatted = sprintf("%d hrs %02d min", $hours, $minutes);
+                                                                                                ?>
+                                                                                                @else
+                                                                                                  @php
+                                                                                                      $breakDurationFormatted = "0 hrs 0 min";
+                                                                                                  @endphp
+                                                                                                @endif
+                                                                                                <p>Break</p>
+                                                                                                <h6> {{$breakDurationFormatted}} </h6>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div  class="col-md-6 col-6 text-center">
+                                                                                            @php
+                                                                                            if($attendanceRecord && $attendanceRecord->overtime_start !=null && $attendanceRecord->overtime_end !=null) {
+
+                                                                                                 $overtime_start = \Carbon\Carbon::createFromFormat('h:i A', $attendanceRecord->overtime_start);
+                                                                                                 $overtime_end = \Carbon\Carbon::createFromFormat('h:i A', $attendanceRecord->overtime_end);
+                                                                                                 // caculate overtime
+                                                                                                 $overTimeDuration = $overtime_end->diff($overtime_start);
+                                                                                                 // Format break duration
+                                                                                                 $overhours = $overTimeDuration->h;
+                                                                                                 $overminutes = $overTimeDuration->i;
+                                                                                                 $overDurationFormatted = sprintf("%d hrs %02d min", $overhours, $overminutes);
+
+                                                                                            }
+                                                                                            else {
+                                                                                             $overDurationFormatted = "0 hrs 0 min";
+                                                                                            }
+
+                                                                                           @endphp
+                                                                                            <div class="stats-box">
+                                                                                                <p>Overtime</p>
+                                                                                                <h6>{{$overDurationFormatted}}</h6>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="card">
+                                                                            <div class="card-body">
+                                                                                <h6 class="card-title"> Activity</h6>
+                                                                                <div id="content">
+                                                                                    <ul class="timeliner">
+                                                                                        <li class="event mb-1">
+                                                                                            <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Check In</h3>
+                                                                                            <p>{{ (isset($attendanceRecord->check_in_time) && $attendanceRecord->check_in_time!="") ?  $attendanceRecord->check_in_time : 'No Check In'}}</p>
+                                                                                                                            </li>
+                                                                                        <li class="event mb-1">
+                                                                                            <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Break Start Time</h3>
+                                                                                                                                    <p>{{ (isset($attendanceRecord->break_start) && $attendanceRecord->break_start!="") ?  $attendanceRecord->break_start : 'No Break'}}</p>
+                                                                                                                            </li>
+                                                                                        <li class="event mb-1">
+                                                                                            <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Break End Time</h3>
+                                                                                            <p>{{ (isset($attendanceRecord->break_end) && $attendanceRecord->break_end!="") ?  $attendanceRecord->break_end : 'No Break '}}</p>
+                                                                                                                            </li>
+                                                                                        <li class="event mb-1">
+                                                                                            <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Check Out</h3>
+                                                                                            <p>{{ (isset($attendanceRecord->check_out_time) && $attendanceRecord->check_out_time!="") ?  $attendanceRecord->check_out_time : 'No Check Out'}}</p>
 
-
-
-
-
+                                                                                        <li class="event mb-1">
+                                                                                            <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Over Time Start</h3>
+                                                                                            <p>{{ (isset($attendanceRecord->overtime_start) && $attendanceRecord->overtime_start!="") ?  $attendanceRecord->overtime_start : 'No Over Time'}}</p>
+                                                                                                                            </li>
+                                                                                        <li class="event mb-1">
+                                                                                            <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Over Time End</h3>
+                                                                                            <p>{{ (isset($attendanceRecord->overtime_end) && $attendanceRecord->overtime_end!="") ?  $attendanceRecord->overtime_end : 'No Over Time'}}</p>
+                                                                                                                            </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-primary"
-                                                                        data-dismiss="modal">Close</button>
-                                                                    <!-- You can add additional buttons here -->
-                                                                </div>
+
+
+
+
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <!-- You can add additional buttons here -->
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
 
 
 

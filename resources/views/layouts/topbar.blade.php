@@ -6,19 +6,19 @@
             <div class="navbar-brand-box">
                 <a href="index" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset('build/images/logo-dark.png') }}" alt="logo-sm-dark" width="25" style="object-fit: contain">
+                        <img src="{{ url('reblate-favicon.png') }}" alt="logo-sm-dark" width="50" style="object-fit: contain">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset('build/images/logo-sm-dark.png') }}" alt="logo-dark" width="25" style="object-fit: contain">
+                        <img src="{{ url('reblate-favicon.png') }}" alt="logo-dark" width="50" style="object-fit: contain">
                     </span>
                 </a>
 
                 <a href="index" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset('build/images/logo-light.png') }}" alt="logo-sm-light" width="25" style="object-fit: contain">
+                        <img src="{{ url('reblate-favicon.png') }}" alt="logo-sm-light" width="50" style="object-fit: contain">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset('build/images/logo-sm-light.png') }}" alt="logo-light" width="25" style="object-fit: contain">
+                        <img src="{{ url('reblate-favicon.png') }}" alt="logo-light" width="50" style="object-fit: contain">
                     </span>
                 </a>
             </div>

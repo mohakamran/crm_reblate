@@ -64,10 +64,9 @@
             }
 
             .vertical-text {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    text-align: center;
-}
+                writing-mode: vertical-rl;
+                text-orientation: mixed;
+            }
 
             .table th {
                 font-size: 12px;
@@ -91,11 +90,11 @@
             }
 
             .stats-box {
-                background-color: #f9f9f9;
-                border: 1px solid #e2e4e6;
-                margin: 0 0 15px;
-                padding: 5px;
-            }
+    background-color: #f9f9f9;
+    border: 1px solid #e2e4e6;
+    margin: 0 0 15px;
+    padding: 5px;
+}
 
             .modal-image {
                 width: 100px;
@@ -132,42 +131,42 @@
             }
 
             .recent-activity .res-activity-list {
-                height: 328px;
-                list-style-type: none;
-                overflow-y: auto;
-                position: relative;
-                margin: 0;
-                padding: 0 0 0 30px;
-            }
+    height: 328px;
+    list-style-type: none;
+    overflow-y: auto;
+    position: relative;
+    margin: 0;
+    padding: 0 0 0 30px;
+}
 
-            .recent-activity .res-activity-list li {
-                margin: 0 0 15px;
-                position: relative;
-            }
+.recent-activity .res-activity-list li {
+    margin: 0 0 15px;
+    position: relative;
+}
 
-            .recent-activity .res-activity-list li:before {
-                content: "";
-                width: 10px;
-                height: 10px;
-                border: 2px solid #ff902f;
-                z-index: 2;
-                background: #fff;
-                border-radius: 100%;
-                margin: 0 0 0 15px;
-                position: absolute;
-                top: 0;
-                left: -45px;
-            }
+.recent-activity .res-activity-list li:before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border: 2px solid #ff902f;
+    z-index: 2;
+    background: #fff;
+    border-radius: 100%;
+    margin: 0 0 0 15px;
+    position: absolute;
+    top: 0;
+    left: -45px;
+}
 
-            .recent-activity p {
-                font-size: 13px;
-                margin: 0;
-            }
+.recent-activity p {
+    font-size: 13px;
+    margin: 0;
+}
 
-            .recent-activity .res-activity-time {
-                color: #bcbebf;
-                font-size: 12px;
-            }
+.recent-activity .res-activity-time {
+    color: #bcbebf;
+    font-size: 12px;
+}
 
             .card .card-title {
                 color: #212529;
@@ -303,6 +302,7 @@
                 width: 100%;
                 height: 400px;
             }
+
         </style>
         {{-- <div class="row">
             <div class="col-xl-12">
@@ -511,34 +511,34 @@
             <div class="card-body">
                 <div class="row">
 
-                    <div class="col-md-3">
-                        <form action="/filter_emp_date" method="post">
-                            {{-- <p class="date_sect">Date: {{ $currentmonth }}, {{ $currentyear }}</p>   --}}
+                            <div class="col-md-3">
+                                <form action="/filter_emp_date" method="post">
+                                {{-- <p class="date_sect">Date: {{ $currentmonth }}, {{ $currentyear }}</p>   --}}
 
-                            @csrf
-                            <input type="month" class="form-control" id="start" name="date_controller" min="2018-03"
-                                value="{{ $currentyear }}-{{ $currentMonth }}" />
-
+                                    @csrf
+                                    <input type="month" class="form-control" id="start" name="date_controller" min="2018-03" value="{{ $currentyear }}-{{ $currentMonth }}" />
 
 
-                    </div>
-                    <div class="col-md-3">
-                        <button class="reblateBtn mt-1" style="padding: 7px 14px;"><svg xmlns="http://www.w3.org/2000/svg"
-                                width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path
-                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                            </svg></button>
-                    </div>
-                    </form>
 
-                    <div class="col-md-3">
-                        {{-- <input type="month" class="form-control" id="start" name="start" min="2018-03" value="{{ $currentyear }}-{{ $currentMonth }}" /> --}}
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" style="background: #e3e3e3;" id="searchInput" class="form-control"
-                            placeholder="Search Employee Name">
-                    </div>
-                </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="reblateBtn mt-1" style="padding: 7px 14px;"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                        </svg></button>
+                                    </div>
+                                </form>
+
+                            <div class="col-md-3">
+                                {{-- <input type="month" class="form-control" id="start" name="start" min="2018-03" value="{{ $currentyear }}-{{ $currentMonth }}" /> --}}
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" style="background: #e3e3e3;" id="searchInput"
+                                    class="form-control" placeholder="Search Employee Name">
+                            </div>
+                        </div>
 
 
 
@@ -558,254 +558,251 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody">
-
-                                    @if ($emp->count() == 0)
+                                    @foreach ($emp as $employee)
                                         <tr>
-                                            <td colspan="8" style="text-align: center;">No Employee Found</td>
-                                        </tr>
-                                    @else
-                                        @foreach ($emp as $employee)
-                                            <tr>
 
-                                                <td class="table-avatar">
-                                                    <a class="avatar avatar-xs text-dark"
-                                                        href="/view-attendence-emp/{{ $employee->Emp_Code }}">
-                                                        @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
-                                                            <img style="width: 35px; height: 35px;" src="{{ asset($employee->Emp_Image) }}" alt="User Image">
-                                                        @else
-                                                            <img src="{{ url('user.png') }}" style="width: 35px; height: 35px;"
-                                                                alt="{{ $employee->Emp_Full_Name }}">
-                                                        @endif
-                                                        {{ $employee->Emp_Full_Name }}
-                                                    </a>
-                                                </td>
+                                            <td class="table-avatar">
+                                                <a class="avatar avatar-xs"
+                                                    href="/view-attendence-emp/{{ $employee->Emp_Code }}">
+                                                    @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
+                                                        {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ asset($employee->Emp_Image) }}" alt=""> --}}
+                                                        <img src="{{ asset($employee->Emp_Image) }}" alt="User Image">
+                                                    @else
+                                                        {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ url('user.png') }}" alt=""> --}}
+                                                        <img src="{{ url('user.png') }}"
+                                                            alt="{{ $employee->Emp_Full_Name }}">
+                                                    @endif
+                                                    {{ $employee->Emp_Full_Name }}
+                                                </a>
+                                            </td>
 
 
-                                                <!-- Display attendance status for each day -->
-                                                @foreach ($daysOfMonth as $day)
-                                                    <td style="text-align: center;">
-                                                        @php
-                                                            $day = Carbon\Carbon::parse($day)->format('Y-m-d');
+                                            <!-- Display attendance status for each day -->
+                                            @foreach ($daysOfMonth as $day)
+                                                <td style="text-align: center;">
+                                                    @php
+                                                        $day = Carbon\Carbon::parse($day)->format('Y-m-d');
 
-                                                            $today = Carbon\Carbon::today()->format('Y-m-d');
-                                                            $attendence_id = null;
+                                                        $today = Carbon\Carbon::today()->format('Y-m-d');
+                                                        $attendence_id = null;
 
-                                                            $attendanceRecord = DB::table('attendence')
-                                                                ->where('emp_id', $employee->Emp_Code)
-                                                                ->whereDate('date', $day)
-                                                                ->first();
-                                                            $attendence_id = null;
-                                                            if ($attendanceRecord) {
-                                                                $attendence_id = $attendanceRecord->id;
-                                                            }
+                                                        $attendanceRecord = DB::table('attendence')
+                                                            ->where('emp_id', $employee->Emp_Code)
+                                                            ->whereDate('date', $day)
+                                                            ->first();
+                                                        $attendence_id = null;
+                                                        if ($attendanceRecord) {
+                                                            $attendence_id = $attendanceRecord->id;
+                                                        }
 
-                                                            $leaveRecord = DB::table('leaves')
-                                                                ->where('emp_code', $employee->Emp_Code)
-                                                                ->whereDate('date', $day)
-                                                                ->first();
+                                                        $leaveRecord = DB::table('leaves')
+                                                            ->where('emp_code', $employee->Emp_Code)
+                                                            ->whereDate('date', $day)
+                                                            ->first();
 
-                                                            // Get the day name
-                                                            $dayName = Carbon\Carbon::parse($day)->format('l');
-                                                            $year_date_name = Carbon\Carbon::parse($day)->format(
-                                                                'jS M Y',
-                                                            );
-                                                            // echo "<br> ".$dayName;
-                                                        @endphp
+                                                        // Get the day name
+                                                        $dayName = Carbon\Carbon::parse($day)->format('l');
+                                                        $year_date_name = Carbon\Carbon::parse($day)->format('jS M Y');
+                                                        // echo "<br> ".$dayName;
+                                                    @endphp
 
-                                                        @if ($day > $today)
-                                                        @elseif ($attendanceRecord && $attendanceRecord->check_in_status == 'done')
-                                                            <!-- Display check mark or any indication of attendance -->
-                                                            <a href="#exampleModal_{{ $attendence_id }}"
-                                                                data-toggle="modal">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="0.6rem"
-                                                                    height="0.6rem" viewBox="0 0 24 24">
-                                                                    <path fill="#06a503"
-                                                                        d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59z" />
-                                                                </svg>
-                                                            </a>
-                                                        @elseif($dayName == 'Saturday' || $dayName == 'Sunday')
-                                                            <div class="vertical-text">
-                                                                weekend
-                                                            </div>
-                                                        @elseif($leaveRecord && $leaveRecord->status == 'approved')
-                                                            <!-- Display Leave indication -->
-                                                            <span style="font-size:12px;">L</span>
-                                                        @else
-                                                            <!-- Display absence indication -->
-
+                                                    @if ($day > $today)
+                                                    @elseif ($attendanceRecord && $attendanceRecord->check_in_status == 'done')
+                                                        <!-- Display check mark or any indication of attendance -->
+                                                        <a href="#exampleModal_{{ $attendence_id }}" data-toggle="modal">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="0.6rem"
-                                                                height="0.75rem" viewBox="0 0 24 24">
-                                                                <path fill="#f9010e"
-                                                                    d="M18.36 19.78L12 13.41l-6.36 6.37l-1.42-1.42L10.59 12L4.22 5.64l1.42-1.42L12 10.59l6.36-6.36l1.41 1.41L13.41 12l6.36 6.36z" />
+                                                                height="0.6rem" viewBox="0 0 24 24">
+                                                                <path fill="#06a503"
+                                                                    d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59z" />
                                                             </svg>
-                                                        @endif
+                                                        </a>
+                                                    @elseif($dayName == 'Saturday' || $dayName == 'Sunday')
+                                                        <div class="vertical-text">
+                                                            weekend
+                                                        </div>
+                                                    @elseif($leaveRecord && $leaveRecord->status == 'approved')
+                                                        <!-- Display Leave indication -->
+                                                        <span style="font-size:12px;">L</span>
+                                                    @else
+                                                        <!-- Display absence indication -->
 
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="exampleModal_{{ $attendence_id }}"
-                                                            tabindex="-1" role="dialog"
-                                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered modal-lg"
-                                                                role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                                            Attendance Info
-                                                                        </h5>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="0.6rem"
+                                                            height="0.75rem" viewBox="0 0 24 24">
+                                                            <path fill="#f9010e"
+                                                                d="M18.36 19.78L12 13.41l-6.36 6.37l-1.42-1.42L10.59 12L4.22 5.64l1.42-1.42L12 10.59l6.36-6.36l1.41 1.41L13.41 12l6.36 6.36z" />
+                                                        </svg>
+                                                    @endif
 
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="exampleModal_{{ $attendence_id }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg"
+                                                        role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    Attendance Info
+                                                                </h5>
+                                                                 {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span> --}}
+                                                        </button>
+                                                            </div>
+                                                            <div class="modal-body">
 
-                                                                        @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
-                                                                            <img class="modal-image" style="border: 5px solid #fca311"
-                                                                                src="{{ asset($employee->Emp_Image) }}"
-                                                                                alt="User Image">
-                                                                        @else
-                                                                            <img class="modal-image"
-                                                                                src="{{ url('user.png') }}" style="border: 5px solid #fca311"
-                                                                                alt="{{ $employee->Emp_Full_Name }}">
-                                                                        @endif
-                                                                        <p
-                                                                            style="margin-top: 12px;font-size:20px;font-weight:500;margin-bottom:25px; color:#14213d;">
-                                                                            {{ $employee->Emp_Full_Name }}
-                                                                        </p>
-                                                                        <div class="row mt-3">
-                                                                            <div class="col-md-6">
-                                                                                <div class="card punch-status">
-                                                                                    <div class="card-body">
-                                                                                        <h5 class="card-title">Timesheet
-                                                                                            <span style="font-size: 12px;"
-                                                                                                class="text-muted">{{ $year_date_name }}
-                                                                                                ({{ $dayName }})
-                                                                                            </span>
-                                                                                        </h5>
-                                                                                        <div class="punch-det" style="border: 1px solid #c7c7c7; border-radius: 5px;">
-                                                                                            <h6 class="mb-0">Check In at</h6>
-                                                                                            <p class="mb-0">{{ isset($attendanceRecord->check_in_time) ? $attendanceRecord->check_in_time : 'No Check In' }}
-                                                                                            </p>
-                                                                                        </div>
-                                                                                        <div class="punch-info">
-                                                                                            <div class="punch-hours" style="border: 5px solid #fca311">
-                                                                                                @if (isset($attendanceRecord->total_time))
-                                                                                                    <span>{{ $attendanceRecord->total_time }}
-                                                                                                        hrs</span>
-                                                                                                @else
-                                                                                                    <span>0 Hours</span>
-                                                                                                @endif
+                                                                @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
+                                                                    {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ asset($employee->Emp_Image) }}" alt=""> --}}
+                                                                    <img class="modal-image"
+                                                                        src="{{ asset($employee->Emp_Image) }}"
+                                                                        alt="User Image">
+                                                                @else
+                                                                     {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ url('user.png') }}" alt=""> --}}
+                                                                    <img class="modal-image"
+                                                                        src="{{ url('user.png') }}"
+                                                                        alt="{{ $employee->Emp_Full_Name }}">
+                                                                @endif
+                                                                <p style="margin-top: 12px;font-size:13px;font-weight:500;margin-bottom:25px;">
+                                                                    {{ $employee->Emp_Full_Name }}
+                                                                </p>
+                                                                <div class="row mt-3">
+                                                                    <div class="col-md-6">
+                                                                        <div class="card punch-status">
+                                                                            <div class="card-body">
+                                                                                <h5 class="card-title">Timesheet <small
+                                                                                        class="text-muted">{{ $year_date_name }} ({{$dayName}})</small>
+                                                                                </h5>
+                                                                                <div class="punch-det">
+                                                                                    <h6>Check In at</h6>
+                                                                                    <p>{{ isset($attendanceRecord->check_in_time) ?  $attendanceRecord->check_in_time : 'No Check In'}}</p>
+                                                                                </div>
+                                                                                <div class="punch-info">
+                                                                                    <div class="punch-hours">
+                                                                                        @if (isset($attendanceRecord->total_time))
+                                                                                            <span>{{$attendanceRecord->total_time}} hrs</span>
+                                                                                            @else
+                                                                                            <span>0 Hours</span>
+                                                                                        @endif
 
 
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <br>
-                                                                                        <div class="punch-det" style="border: 1px solid #c7c7c7; border-radius: 5px;">
-                                                                                            <h6 class="mb-0">Check Out at</h6>
-                                                                                            <p class="mb-0">{{ isset($attendanceRecord->check_out_time) ? $attendanceRecord->check_out_time : 'No Check Out' }}
-                                                                                            </p>
-                                                                                        </div>
-                                                                                        <div class="statistics">
-                                                                                            <div class="row">
-                                                                                                <div
-                                                                                                    class="col-md-6 col-6 text-center">
-                                                                                                    <div class="stats-box" style="border: 1px solid #c7c7c7; border-radius: 5px;">
-                                                                                                        @if (isset($attendanceRecord->break_start) &&
-                                                                                                                $attendanceRecord->break_start != '' &&
-                                                                                                                isset($attendanceRecord->break_end) &&
-                                                                                                                $attendanceRecord->break_end != '')
-                                                                                                            <?php
-                                                                                                            // Assuming $attendanceRecord->break_start and $attendanceRecord->break_end are in a valid format
-
-                                                                                                            // Parse break start and end times
-                                                                                                            $breakStart = \Carbon\Carbon::createFromFormat('h:i A', $attendanceRecord->break_start);
-                                                                                                            $breakEnd = \Carbon\Carbon::createFromFormat('h:i A', $attendanceRecord->break_end);
-
-                                                                                                            // Calculate break duration
-                                                                                                            $breakDuration = $breakEnd->diff($breakStart);
-
-                                                                                                            // Format break duration
-                                                                                                            // Format break duration
-                                                                                                            $hours = $breakDuration->h;
-                                                                                                            $minutes = $breakDuration->i;
-                                                                                                            $breakDurationFormatted = sprintf('%d hrs %02d min', $hours, $minutes);
-                                                                                                            ?>
-                                                                                                        @else
-                                                                                                            @php
-                                                                                                                $breakDurationFormatted =
-                                                                                                                    '0 hrs 0 min';
-                                                                                                            @endphp
-                                                                                                        @endif
-                                                                                                        <h6 class="mb-0">Break</h6>
-                                                                                                        <p class="mb-0"> {{ $breakDurationFormatted }}
-                                                                                                        </p>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div
-                                                                                                    class="col-md-6 col-6 text-center">
-                                                                                                    <div class="stats-box" style="border: 1px solid #c7c7c7; border-radius: 5px;">
-                                                                                                        <h6 class="mb-0">Overtime</h6>
-                                                                                                        <p class="mb-0">0 hrs</p>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="col-md-6">
-                                                                                <div class="card">
-                                                                                    <div class="card-body">
-                                                                                        <h6 class="card-title"> Activity
-                                                                                        </h6>
-                                                                                        <div id="content">
-                                                                                            <ul class="timeliner">
-                                                                                                <li class="event mb-1">
-                                                                                                    <h3 class="fs-4 font-size-18 mb-0"
-                                                                                                        style="color: #14213d">
-                                                                                                        Check In</h3>
-                                                                                                    <p>{{ isset($attendanceRecord->check_in_time) && $attendanceRecord->check_in_time != '' ? $attendanceRecord->check_in_time : 'No Check In' }}
-                                                                                                    </p>
-                                                                                                </li>
-                                                                                                <li class="event mb-1">
-                                                                                                    <h3 class="fs-4 font-size-18 mb-0"
-                                                                                                        style="color: #14213d">
-                                                                                                        Break Start Time
-                                                                                                    </h3>
-                                                                                                    <p>{{ isset($attendanceRecord->break_start) && $attendanceRecord->break_start != '' ? $attendanceRecord->break_start : 'No Break' }}
-                                                                                                    </p>
-                                                                                                </li>
-                                                                                                <li class="event mb-1">
-                                                                                                    <h3 class="fs-4 font-size-18 mb-0"
-                                                                                                        style="color: #14213d">
-                                                                                                        Break End Time</h3>
-                                                                                                    <p>{{ isset($attendanceRecord->break_end) && $attendanceRecord->break_end != '' ? $attendanceRecord->break_end : 'No Break ' }}
-                                                                                                    </p>
-                                                                                                </li>
-                                                                                                <li class="event mb-1">
-                                                                                                    <h3 class="fs-4 font-size-18 mb-0"
-                                                                                                        style="color: #14213d">
-                                                                                                        Check Out</h3>
-                                                                                                    <p>{{ isset($attendanceRecord->check_out_time) && $attendanceRecord->check_out_time != '' ? $attendanceRecord->check_out_time : 'No Check Out' }}
-                                                                                                    </p>
-                                                                                                </li>
-                                                                                            </ul>
+                                                                                <br>
+                                                                                <div class="punch-det">
+                                                                                    <h6>Check Out at</h6>
+                                                                                    <p>{{ isset($attendanceRecord->check_out_time) ?  $attendanceRecord->check_out_time : 'No Check Out'}}</p>
+                                                                                </div>
+                                                                                <div class="statistics">
+                                                                                    <div class="row">
+                                                                                        <div
+                                                                                            class="col-md-6 col-6 text-center">
+                                                                                            <div class="stats-box">
+                                                                                                @if (isset($attendanceRecord->break_start) && $attendanceRecord->break_start !="" && isset($attendanceRecord->break_end)  &&  $attendanceRecord->break_end !="" )
+                                                                                                <?php
+                                                                                                    // Assuming $attendanceRecord->break_start and $attendanceRecord->break_end are in a valid format
+
+                                                                                                        // Parse break start and end times
+                                                                                                        $breakStart = \Carbon\Carbon::createFromFormat('h:i A', $attendanceRecord->break_start);
+                                                                                                        $breakEnd = \Carbon\Carbon::createFromFormat('h:i A', $attendanceRecord->break_end);
+
+
+
+                                                                                                        // Calculate break duration
+                                                                                                        $breakDuration = $breakEnd->diff($breakStart);
+
+                                                                                                        // Format break duration
+                                                                                                       // Format break duration
+                                                                                                        $hours = $breakDuration->h;
+                                                                                                        $minutes = $breakDuration->i;
+                                                                                                        $breakDurationFormatted = sprintf("%d hrs %02d min", $hours, $minutes);
+                                                                                                ?>
+                                                                                                @else
+                                                                                                  @php
+                                                                                                      $breakDurationFormatted = "0 hrs 0 min";
+                                                                                                  @endphp
+                                                                                                @endif
+                                                                                                <p>Break</p>
+                                                                                                <h6> {{$breakDurationFormatted}} </h6>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div  class="col-md-6 col-6 text-center">
+                                                                                            @php
+                                                                                            if($attendanceRecord && $attendanceRecord->overtime_start !=null && $attendanceRecord->overtime_end !=null) {
+
+                                                                                                 $overtime_start = \Carbon\Carbon::createFromFormat('h:i A', $attendanceRecord->overtime_start);
+                                                                                                 $overtime_end = \Carbon\Carbon::createFromFormat('h:i A', $attendanceRecord->overtime_end);
+                                                                                                 // caculate overtime
+                                                                                                 $overTimeDuration = $overtime_end->diff($overtime_start);
+                                                                                                 // Format break duration
+                                                                                                 $overhours = $overTimeDuration->h;
+                                                                                                 $overminutes = $overTimeDuration->i;
+                                                                                                 $overDurationFormatted = sprintf("%d hrs %02d min", $overhours, $overminutes);
+
+                                                                                            }
+                                                                                            else {
+                                                                                             $overDurationFormatted = "0 hrs 0 min";
+                                                                                            }
+
+                                                                                           @endphp
+                                                                                            <div class="stats-box">
+                                                                                                <p>Overtime</p>
+                                                                                                <h6>{{$overDurationFormatted}}</h6>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-
-
-
-
-
                                                                     </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="reblateBtn px-4 py-2"
-                                                                            data-dismiss="modal">Close</button>
-                                                                        <!-- You can add additional buttons here -->
+                                                                    <div class="col-md-6">
+                                                                        <div class="card">
+                                                                            <div class="card-body">
+                                                                                <h6 class="card-title"> Activity</h6>
+                                                                                <div id="content">
+                                                                                    <ul class="timeliner">
+                                                                                        <li class="event mb-1">
+                                                                                            <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Check In</h3>
+                                                                                            <p>{{ (isset($attendanceRecord->check_in_time) && $attendanceRecord->check_in_time!="") ?  $attendanceRecord->check_in_time : 'No Check In'}}</p>
+                                                                                                                            </li>
+                                                                                        <li class="event mb-1">
+                                                                                            <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Break Start Time</h3>
+                                                                                                                                    <p>{{ (isset($attendanceRecord->break_start) && $attendanceRecord->break_start!="") ?  $attendanceRecord->break_start : 'No Break'}}</p>
+                                                                                                                            </li>
+                                                                                        <li class="event mb-1">
+                                                                                            <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Break End Time</h3>
+                                                                                            <p>{{ (isset($attendanceRecord->break_end) && $attendanceRecord->break_end!="") ?  $attendanceRecord->break_end : 'No Break '}}</p>
+                                                                                                                            </li>
+                                                                                        <li class="event mb-1">
+                                                                                            <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Check Out</h3>
+                                                                                            <p>{{ (isset($attendanceRecord->check_out_time) && $attendanceRecord->check_out_time!="") ?  $attendanceRecord->check_out_time : 'No Check Out'}}</p>
+
+                                                                                        <li class="event mb-1">
+                                                                                            <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Over Time Start</h3>
+                                                                                            <p>{{ (isset($attendanceRecord->overtime_start) && $attendanceRecord->overtime_start!="") ?  $attendanceRecord->overtime_start : 'No Over Time'}}</p>
+                                                                                                                            </li>
+                                                                                        <li class="event mb-1">
+                                                                                            <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Over Time End</h3>
+                                                                                            <p>{{ (isset($attendanceRecord->overtime_end) && $attendanceRecord->overtime_end!="") ?  $attendanceRecord->overtime_end : 'No Over Time'}}</p>
+                                                                                                                            </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
+
+
+
+
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <!-- You can add additional buttons here -->
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
 
 
 
@@ -818,7 +815,6 @@
 
                         </tr>
                         @endforeach
-                        @endif
 
                         </tbody>
                         </table>

@@ -91,7 +91,9 @@ Route::group(['middleware' => 'admin'], function () {
 
     // filtered data page of admin page
     Route::get('/filtered-data',[AuthController::class,'filterDataAdmin']);
+    Route::get('/filtered-data',[AuthController::class,'filterDataAdmin']);
     Route::get('/search-filtered-data/{dateRange}', [AuthController::class, 'searchFilteredData']);
+    Route::post('/filter-manager-date', [AuthController::class, 'searchDateManagerHomePage']);
     Route::get('/unauthorized',[AuthController::class,'unauthorized']);
 
     // Employee Routes
@@ -180,6 +182,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/check-out',[AttendenceController::class,'checkOutTime']);
     Route::get('/break-start',[AttendenceController::class,'breakStart']);
     Route::get('/break-end',[AttendenceController::class,'breakEnd']);
+    Route::get('/overtime-start',[AttendenceController::class,'overTimeStart']);
+    Route::get('/overtime-end',[AttendenceController::class,'overTimeEnd']);
 
     // attendenceleave-requests
     Route::get('/view-attendence',[AttendenceController::class,'viewAttendenceEmp']);
@@ -194,6 +198,11 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/show-update-attendence-form', [AttendenceController::class, 'showUpdateAttendenceForm']);
     Route::post('/update-emp-attendence-details', [AttendenceController::class, 'updateEmpAttendenceDetails'])->name('update-emp-attendence-details');
     Route::post('/filter_emp_date',[AttendenceController::class,'filterEmpDateWise']);
+    Route::post('/save-attendance',[AttendenceController::class,'saveAttendence']);
+    // Route::post('/save-attendance', [AttendanceController::class, 'saveAttendence'])->name('save.attendance');
+
+
+
 
     // office time controller
 

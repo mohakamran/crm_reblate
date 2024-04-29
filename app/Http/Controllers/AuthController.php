@@ -31,6 +31,31 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+    // homepage search
+    public function searchDateManagerHomePage(Request $req) {
+        $user = Auth()->user()->user_type;
+        if($user == "manager") {
+            $date = $req->daterange;
+            // Split the date range by the separator " - "
+            $date_parts = explode(" - ", $date);
+
+            // Assign start and end dates
+            $start_date = $date_parts[0];
+            $end_date = $date_parts[1];
+
+            $start_date = \DateTime::createFromFormat('m/d/Y', $start_date);
+            $end_date = \DateTime::createFromFormat('m/d/Y', $end_date);
+
+            // Convert to "YYYY-MM-DD" format
+            $end_date = $end_date->format('Y-m-d');
+            $start_date = $start_date->format('Y-m-d');
+            dd($start_date,$end_date);
+
+
+        } else {
+            return view('errors.404');
+        }
+    }
     public function searchFilteredData($dateRange) {
         // Remove the prefix 'date_range='
         $dateRange = str_replace('date_range=', '', $dateRange);
@@ -657,6 +682,7 @@ class AuthController extends Controller
                     Session::put('show_check_out', false);
                 }
 
+                // dd($attendance);
 
                 if ($attendance && $attendance->break_start != null) {
                     Session::put('break_start_time', $attendance->break_start);
@@ -672,10 +698,48 @@ class AuthController extends Controller
                     Session::forget('break_end_time');
                 }
 
+                Session::forget('show_over_time_end');
+                Session::forget('overtime_start');
+                Session::forget('overtime_end');
+                Session::forget('overtime_status');
+                Session::forget('total_over_time');
+
 
                 if ($attendance && $attendance->check_out_time != null) {
                     Session::put('attendence_status', true);
                     Session::put('check_out_time', $attendance->check_out_time);
+                    if($attendance && $attendance->overtime_start !=null && $attendance->overtime_end ==null) {
+                        // dd('working if');
+                        Session::put('show_over_time_end',true);
+                        Session::put('overtime_status', false);
+                        Session::put('overtime_start', $attendance->overtime_start);
+
+                    }
+                    else if($attendance && $attendance->overtime_end !=null && $attendance && $attendance->overtime_start !=null && $attendance->overtime_end ==null)
+                     {
+                        // dd('else if');
+                        Session::put('overtime_end', $attendance->overtime_end);
+                        Session::put('show_over_time_end',false);
+                        Session::put('overtime_status', false);
+
+                    }
+                    else if($attendance && $attendance->overtime_start ==null && $attendance->overtime_end == null) {
+                        // dd('working all null');
+                        Session::put('show_over_time_end',false);
+                        Session::put('overtime_status', false);
+                        // dd(Session::get('show_over_time_end'));
+                    }
+                     else {
+                        // dd('else');
+                        Session::put('overtime_start', $attendance->overtime_start);
+                        Session::put('overtime_end', $attendance->overtime_end);
+                        Session::put('total_over_time', $attendance->total_over_time);
+                        Session::put('show_over_time_end',false);
+                        Session::put('overtime_status', true);
+                        // dd('else working');
+                    }
+                    // dd(Session::get('show_over_time_end'));
+
                 } else {
                     Session::put('attendence_status', false);
                     Session::forget('check_out_time');
@@ -749,10 +813,47 @@ class AuthController extends Controller
                             Session::forget('break_end_time');
                         }
 
+                        Session::forget('show_over_time_end');
+                        Session::forget('overtime_start');
+                        Session::forget('overtime_end');
+                        Session::forget('overtime_status');
+                        Session::forget('total_over_time');
 
                         if ($attendance && $attendance->check_out_time != null) {
                             Session::put('attendence_status', true);
                             Session::put('check_out_time', $attendance->check_out_time);
+                            if($attendance && $attendance->overtime_start !=null && $attendance->overtime_end ==null) {
+                                // dd('working if');
+                                Session::put('show_over_time_end',true);
+                                Session::put('overtime_status', false);
+                                Session::put('overtime_start', $attendance->overtime_start);
+
+                            }
+                            else if($attendance && $attendance->overtime_end !=null && $attendance && $attendance->overtime_start !=null && $attendance->overtime_end ==null)
+                             {
+                                // dd('else if');
+                                Session::put('overtime_end', $attendance->overtime_end);
+                                Session::put('show_over_time_end',false);
+                                Session::put('overtime_status', false);
+
+                            }
+                            else if($attendance && $attendance->overtime_start ==null && $attendance->overtime_end == null) {
+                                // dd('working all null');
+                                Session::put('show_over_time_end',false);
+                                Session::put('overtime_status', false);
+                                // dd(Session::get('show_over_time_end'));
+                            }
+                             else {
+                                // dd('else');
+                                Session::put('overtime_start', $attendance->overtime_start);
+                                Session::put('overtime_end', $attendance->overtime_end);
+                                Session::put('total_over_time', $attendance->total_over_time);
+                                Session::put('show_over_time_end',false);
+                                Session::put('overtime_status', true);
+                                // dd('else working');
+                            }
+                            // dd(Session::get('show_over_time_end'));
+
                         } else {
                             Session::put('attendence_status', false);
                             Session::forget('check_out_time');
@@ -900,10 +1001,48 @@ class AuthController extends Controller
                     Session::forget('break_end_time');
                 }
 
+                Session::forget('show_over_time_end');
+                Session::forget('overtime_start');
+                Session::forget('overtime_end');
+                Session::forget('overtime_status');
+                Session::forget('total_over_time');
+
 
                 if ($attendance && $attendance->check_out_time != null) {
                     Session::put('attendence_status', true);
                     Session::put('check_out_time', $attendance->check_out_time);
+                    if($attendance && $attendance->overtime_start !=null && $attendance->overtime_end ==null) {
+                        // dd('working if');
+                        Session::put('show_over_time_end',true);
+                        Session::put('overtime_status', false);
+                        Session::put('overtime_start', $attendance->overtime_start);
+
+                    }
+                    else if($attendance && $attendance->overtime_end !=null && $attendance && $attendance->overtime_start !=null && $attendance->overtime_end ==null)
+                     {
+                        // dd('else if');
+                        Session::put('overtime_end', $attendance->overtime_end);
+                        Session::put('show_over_time_end',false);
+                        Session::put('overtime_status', false);
+
+                    }
+                    else if($attendance && $attendance->overtime_start ==null && $attendance->overtime_end == null) {
+                        // dd('working all null');
+                        Session::put('show_over_time_end',false);
+                        Session::put('overtime_status', false);
+                        // dd(Session::get('show_over_time_end'));
+                    }
+                     else {
+                        // dd('else');
+                        Session::put('overtime_start', $attendance->overtime_start);
+                        Session::put('overtime_end', $attendance->overtime_end);
+                        Session::put('total_over_time', $attendance->total_over_time);
+                        Session::put('show_over_time_end',false);
+                        Session::put('overtime_status', true);
+                        // dd('else working');
+                    }
+                    // dd(Session::get('show_over_time_end'));
+
                 } else {
                     Session::put('attendence_status', false);
                     Session::forget('check_out_time');
@@ -915,6 +1054,7 @@ class AuthController extends Controller
                     Session::forget('total_hours');
                 }
             } else {
+
                 // Get the current time
                     $currentTime = Carbon::now();
                     // Define the start and end times of the specified time range in 12-hour format
@@ -978,9 +1118,47 @@ class AuthController extends Controller
                         }
 
 
+                        Session::forget('show_over_time_end');
+                        Session::forget('overtime_start');
+                        Session::forget('overtime_end');
+                        Session::forget('overtime_status');
+                        Session::forget('total_over_time');
+
                         if ($attendance && $attendance->check_out_time != null) {
                             Session::put('attendence_status', true);
                             Session::put('check_out_time', $attendance->check_out_time);
+                            if($attendance && $attendance->overtime_start !=null && $attendance->overtime_end ==null) {
+                                // dd('working if');
+                                Session::put('show_over_time_end',true);
+                                Session::put('overtime_status', false);
+                                Session::put('overtime_start', $attendance->overtime_start);
+
+                            }
+                            else if($attendance && $attendance->overtime_end !=null && $attendance && $attendance->overtime_start !=null && $attendance->overtime_end ==null)
+                             {
+                                // dd('else if');
+                                Session::put('overtime_end', $attendance->overtime_end);
+                                Session::put('show_over_time_end',false);
+                                Session::put('overtime_status', false);
+
+                            }
+                            else if($attendance && $attendance->overtime_start ==null && $attendance->overtime_end == null) {
+                                // dd('working all null');
+                                Session::put('show_over_time_end',false);
+                                Session::put('overtime_status', false);
+                                // dd(Session::get('show_over_time_end'));
+                            }
+                             else {
+                                // dd('else');
+                                Session::put('overtime_start', $attendance->overtime_start);
+                                Session::put('overtime_end', $attendance->overtime_end);
+                                Session::put('total_over_time', $attendance->total_over_time);
+                                Session::put('show_over_time_end',false);
+                                Session::put('overtime_status', true);
+                                // dd('else working');
+                            }
+                            // dd(Session::get('show_over_time_end'));
+
                         } else {
                             Session::put('attendence_status', false);
                             Session::forget('check_out_time');
@@ -1031,12 +1209,15 @@ class AuthController extends Controller
             $total_salary = $this->getTotalSalary();
             // get total expense (PKR)
             $total_expense = $this->getTotalExpense();
-            // get usd to pkr total revenue
+            // dd($total_expense,$total_salary);
+            // // get usd to pkr total revenue
             $usd_pkr_expenses = $this->getExchangeRate($total_expense);
             $usd_pkr_salary = $this->getExchangeRate($total_salary);
+            // dd($usd_pkr_expenses,$usd_pkr_salary);
             // Convert formatted strings back to float values and round to two decimal places
             $usd_pkr_expenses = str_replace(',', '', $usd_pkr_expenses);
             $usd_pkr_salary = str_replace(',', '', $usd_pkr_salary);
+
             // dd($usd_pkr_salary);
             // Perform arithmetic operation
             $total_profit = $total_revenue - $usd_pkr_expenses - $usd_pkr_salary;
@@ -1048,6 +1229,8 @@ class AuthController extends Controller
             $total_profit = number_format($total_profit, 2);
 
             $data = [
+                'usd_pkr_expenses' => $usd_pkr_expenses,
+                'usd_pkr_salary' => $usd_pkr_salary,
                 'absent_days' => $absent_days,
                 'total_present_day' => $total_present_day,
                 'office_start_time' => $office_start_time,
@@ -1092,15 +1275,18 @@ class AuthController extends Controller
             // Convert formatted strings back to float values and round to two decimal places
             $usd_pkr_expenses = str_replace(',', '', $usd_pkr_expenses);
             $usd_pkr_salary = str_replace(',', '', $usd_pkr_salary);
+            // $total_revenue = str_replace(',', '', $total_revenue);
+
             // dd($usd_pkr_salary);
             // Perform arithmetic operation
             $total_profit = $total_revenue - $usd_pkr_expenses - $usd_pkr_salary;
             //  dd($usd_pkr_salary);
-            // $total_profit = $this->getExchangeRate($total_profit);
+            $total_profit = $this->getExchangeRate($total_profit);
             $usd_pkr_expenses = number_format($usd_pkr_expenses,2);
             $usd_pkr_salary = number_format($usd_pkr_salary,2);
 
-            $total_profit = number_format($total_profit, 2);
+            $total_revenue = number_format($total_revenue, 2);
+
 
             // get data montly wise
 
@@ -1741,18 +1927,18 @@ class AuthController extends Controller
 
     //get exchange rate prices
     public function getExchangeRate($amount) {
-        // $client = new GuzzleClient(); // Use the alias GuzzleClient
-        // $response = $client->get('https://open.er-api.com/v6/latest/USD');
-        // $data = json_decode($response->getBody(), true);
+        $client = new GuzzleClient(); // Use the alias GuzzleClient
+        $response = $client->get('https://open.er-api.com/v6/latest/USD');
+        $data = json_decode($response->getBody(), true);
 
-        // // Get the exchange rate for PKR
-        // $usdToPkrRate = $data['rates']['PKR'];
+        // Get the exchange rate for PKR
+        $usdToPkrRate = $data['rates']['PKR'];
 
-        // // Convert PKR to USD using the reciprocal of the exchange rate
-        // $pkrToUsdRate = 1 / $usdToPkrRate;
+        // Convert PKR to USD using the reciprocal of the exchange rate
+        $pkrToUsdRate = 1 / $usdToPkrRate;
 
-        // // Convert amount from PKR to USD
-        // $amountInUSD = $amount * $pkrToUsdRate;
+        // Convert amount from PKR to USD
+        $amountInUSD = $amount * $pkrToUsdRate;
 
         return $amount;
     }
