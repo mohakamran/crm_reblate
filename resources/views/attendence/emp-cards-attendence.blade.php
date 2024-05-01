@@ -516,7 +516,7 @@
                                 {{-- <p class="date_sect">Date: {{ $currentmonth }}, {{ $currentyear }}</p>   --}}
 
                                     @csrf
-                                    <input type="month" class="form-control" id="start" name="date_controller" min="2018-03" value="{{ $currentyear }}-{{ $currentMonth }}" />
+                                    {{-- <input type="month" class="form-control" id="start" name="date_controller" min="2018-03" value="{{ $currentyear }}-{{ $currentMonth }}" /> --}}
 
 
 

@@ -565,68 +565,48 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
        $emp_name = $req->emp_name;
        $emp_designation = $req->emp_designation;
        $emp_shift = $req->emp_shift;
+       $latestEmployees = "";
+       $totalCount = 0;
+
+       $user_type = Auth()->user()->user_type;
+       if($user_type == "employee") {
+           return view('errors.404');
+       }
 
        if($emp_id!=null) {
-           $latestEmployees = DB::table('employees')->where('Emp_Code',$emp_id)->first();
+           $latestEmployees = DB::table('employees')->where('Emp_Status','active')->where('Emp_Code',$emp_id)->get();
+           $totalCount = DB::table('employees')->where('Emp_Status','active')->where('Emp_Code',$emp_id)->count();
 
-           if($latestEmployees) {
-            $full_name_emp = $latestEmployees->Emp_Full_Name;
-            $Emp_Image = $latestEmployees->Emp_Image;
-            $Emp_Designation = $latestEmployees->Emp_Designation;
-            $Emp_Shift_Time = $latestEmployees->Emp_Shift_Time;
-            $Emp_code = $latestEmployees->Emp_Code;
-            // dd($Emp_code);
-            $data = compact('latestEmployees','full_name_emp','Emp_Designation','Emp_Shift_Time','Emp_code','Emp_Image');
-            // dd($Emp_Image);
-              return view('attendence.search-results',$data);
-           } else {
-                $latestEmployees = DB::table('employees')->get();
-                $error = "Employee ID Not Found!";
-                return view('attendence.emp-cards-attendence',compact('latestEmployees','error'));
-           }
        }
 
        if($emp_name!=null) {
-           $latestEmployees = DB::table('employees')->where('Emp_Full_Name', 'like', '%' . $emp_name . '%')->get();
-           if($latestEmployees) {
-            // $full_name_emp = $latestEmployees->Emp_Full_Name;
-            // $Emp_Image = $latestEmployees->Emp_Image;
-            // $Emp_Designation = $latestEmployees->Emp_Designation;
-            // $Emp_Shift_Time = $latestEmployees->Emp_Shift_Time;
-            // $Emp_code = $latestEmployees->Emp_Code;
-            // $data = compact('full_name_emp','Emp_Designation','Emp_Shift_Time','Emp_code','Emp_Image');
-            return view('attendence.emp-cards-attendence',compact('latestEmployees'));
-         } else {
-              $latestEmployees = DB::table('employees')->get();
-              $error = "Employee Name Not Found!";
-              return view('attendence.emp-cards-attendence',compact('latestEmployees','error'));
-         }
+           $latestEmployees = DB::table('employees')->where('Emp_Status','active')->where('Emp_Full_Name', 'like', '%' . $emp_name . '%')->get();
+           $totalCount = DB::table('employees')->where('Emp_Status','active')->where('Emp_Full_Name', 'like', '%' . $emp_name . '%')->count();
        }
        if($emp_designation!=null) {
-           $latestEmployees = DB::table('employees')->where('Emp_Designation',$emp_designation)->get();
-           if($latestEmployees) {
-            return view('attendence.emp-cards-attendence',compact('latestEmployees'));
-         } else {
-              $latestEmployees = DB::table('employees')->get();
-              $error = "Employee ID Not Found!";
-              return view('attendence.emp-cards-attendence',compact('latestEmployees','error'));
-         }
-
+           $latestEmployees = DB::table('employees')->where('Emp_Status','active')->where('Emp_Status','active')->where('Emp_Designation',$emp_designation)->get();
+           $totalCount = DB::table('employees')->where('Emp_Status','active')->where('Emp_Status','active')->where('Emp_Designation',$emp_designation)->count();
        }
 
        if($emp_shift!=null) {
-        $latestEmployees = DB::table('employees')->where('Emp_Shift_Time',$emp_shift)->get();
-        if($latestEmployees) {
-            return view('attendence.emp-cards-attendence',compact('latestEmployees'));
-        } else {
-             $latestEmployees = DB::table('employees')->get();
-             $error = "Employee ID Not Found!";
-             return view('attendence.emp-cards-attendence',compact('latestEmployees','error'));
-        }
-    }
+           $latestEmployees = DB::table('employees')->where('Emp_Status','active')->where('Emp_Status','active')->where('Emp_Shift_Time',$emp_shift)->get();
+           $totalCount = DB::table('employees')->where('Emp_Status','active')->where('Emp_Status','active')->where('Emp_Shift_Time',$emp_shift)->count();
+       }
 
-       $latestEmployees = DB::table('employees')->get();
-       return view('attendence.emp-cards-attendence',compact('latestEmployees'));
+       //    dd($latestEmployees);
+
+
+       if($latestEmployees != null) {
+           $emp="Reblate Solutions Employees";
+           return view('emp.view-employees',compact('latestEmployees','emp','totalCount'));
+       } else {
+            $emp="Reblate Solutions Employees";
+            $latestEmployees = DB::table('employees')->get();
+            $totalCount = DB::table('employees')->count();
+            return view('emp.view-employees',compact('latestEmployees','emp','totalCount'));
+       }
+
+
     }
    // admin can see the the employees card for attendence
    // admin can see the the employees card for attendence
@@ -876,8 +856,8 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
         $check = DB::table('attendence')->where('emp_id', $id)->orderBy('id','desc')->first();
         // dd($check->id);
 
-        if($check->break_end !="") {
-            return back();
+        if($check->break_end !=null) {
+            return redirect('/');
         }
 
         DB::table('attendence')->where('id', $check->id)->update([
@@ -941,6 +921,10 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
                 // $check_in_already_message = "You did not Check In, Please Check In first!";
                 // return view('attendence.index',compact('shift_time','check_in_already_message'));
                 return back();
+            }
+
+            if($check->break_start !=null) {
+                return redirect('/');
             }
 
             $break_start_id = $check->id;
@@ -1210,8 +1194,10 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
                                 'total_time' => $formattedTotalWorkHours
                             ]);
 
-                        return back();
-
+                            return response()->json([
+                                'status' => 'success',
+                                'message' => 'Operation completed successfully.'
+                            ]);
                     } else {
                         return back();
                     }

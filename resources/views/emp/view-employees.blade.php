@@ -171,36 +171,30 @@
                         <p style="color:red;">{{ $error }}</p>
                     @endif
                 </div>
-                {{-- employee dashboards --}}
-                <div class="row mt-5">
-                    @foreach ($latestEmployees as $emp)
-                        <div class="col-md-3">
+                <div class="row mt-2">
+                    <div class="col-md-4">
+                        <a href="/show-all-employees" class="btn btn-primary">All</a>
+                        <a href="/manage-employees" class="btn btn-primary">Active</a>
+                        <a href="/terminated-employees" class="btn btn-primary">Terminated</a>
 
+                    </div>
+
+                </div>
+                {{-- employee dashboards --}}
+
+                <p>(Employees Count: {{ $totalCount }})</p>
+
+                <div class="row mt-3">
+                    @if(isset($totalCount) && $totalCount >= 1)
+                        @foreach ($latestEmployees as $emp)
+                        <div class="col-md-3">
                             <div class="card hovering"
                                 style=" overflow: hidden; border-radius: 10px;">
                                 <div
                                     style="width: 150px;height: 150px;position: absolute;z-index: 100;background-color: #fca311;border-radius: 100px;right: -75px;top: -70px;">
                                 </div>
                                 <div class="card-body" style="box-shadow: none; ">
-
-                                    {{-- <div class="options">
-                                        <div class="group-menu" onclick="toggleFun({{$emp->id}})">
-                                            <svg viewBox="0 0 16 16" width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="#000000" class="bi bi-three-dots-vertical"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path> </g></svg>
-
-                                        </div>
-
-                                        <div id={{$emp->id}} class="frame1">
-                                            <ul class="info">
-                                                <li><a href="/update-employee/{{$emp->Emp_Code}}" style="color: #000">Edit</a></li>
-                                                <li><a href="/view_profile/{{$emp->Emp_Code}}" style="color: #000">View</a></li>
-                                                <li><a href="javascript:void()" onclick="deleteEmployee('{{ $emp->Emp_Code }}')"  style="color: #000" >
-                                                   Disable</a></li>
-                                            </ul>
-                                        </div>
-
-
-                                    </div> --}}
-                                    @if ($emp->Emp_Image != null && file_exists(public_path($emp->Emp_Image)))
+                                    @if (isset($emp->Emp_Image) && $emp->Emp_Image != null && file_exists(public_path($emp->Emp_Image)))
 
                                             <img class="image-center" src="{{ $emp->Emp_Image }}" alt="">
 
@@ -247,7 +241,70 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                        @endforeach
+
+                        {{-- @elseif(isset($totalCount) && $totalCount == 1)
+                        <div class="col-md-3">
+
+                            <div class="card hovering"
+                                style=" overflow: hidden; border-radius: 10px;">
+                                <div
+                                    style="width: 150px;height: 150px;position: absolute;z-index: 100;background-color: #fca311;border-radius: 100px;right: -75px;top: -70px;">
+                                </div>
+                                <div class="card-body" style="box-shadow: none; ">
+
+                                    @if (isset($latestEmployees->Emp_Image) && $latestEmployees->Emp_Image != null && file_exists(public_path($latestEmployees->Emp_Image)))
+
+                                            <img class="image-center" src="{{ $latestEmployees->Emp_Image }}" alt="">
+
+                                    @else
+                                        <a href="{{ url('user.png') }}" target="_blank"
+                                            style="display: flex; justify-content: center;">
+                                            <img class="image-center" src="{{ url('user.png') }}" alt=""
+                                                style="display: flex; justify-content: center;">
+                                        </a>
+                                    @endif
+                                    <div class="card-text-center">
+                                        <p class="emp-name">
+                                            <a href="/view_profile/{{ $latestEmployees->Emp_Code }}"
+                                                style="color: #14213d;">{{ $latestEmployees->Emp_Full_Name }}</a>
+                                        </p>
+                                        <div class="d-flex gap-1 align-items-center mb-2">
+                                            <p
+                                                style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d;">
+                                                Designation:</p>
+                                            <span
+                                                style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">{{ $latestEmployees->Emp_Designation }}
+                                            </span>
+                                        </div>
+                                        <div class="d-flex gap-1 align-items-center mb-2">
+                                            <p
+                                                style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d; ">
+                                                Shift:</p>
+                                            <span
+                                                style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">{{ $latestEmployees->Emp_Shift_Time }}
+                                            </span>
+                                        </div>
+                                        <div class="d-flex gap-1 align-items-center mb-2">
+                                            <p
+                                                style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d; ">
+                                                Employee Code:</p>
+                                            <span
+                                                style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">{{ $latestEmployees->Emp_Code }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div> --}}
+                        @else
+                        <h2 class="mt-2">Employee Not Found! </h2>
+                    @endif
+
+
                 </div>
 
                 </div>

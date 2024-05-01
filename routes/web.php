@@ -100,6 +100,9 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::get('/add-new', [EmployeesController::class, 'index'])->name('add-new-employee');
     Route::get('/manage-employees', [EmployeesController::class, 'manage'])->name('manage-employees');
+    Route::get('/terminated-employees', [EmployeesController::class, 'terminatedEmp']);
+    Route::post('/search-emp-attendence', [AttendenceController::class, 'searchEmpAttendenceAdmin'])->name('view-attendence');
+    Route::get('/show-all-employees', [EmployeesController::class, 'showAllEmployees']);
     Route::post('/add-new-employee-data', [EmployeesController::class, 'getData'])->name('add-new-employee-data');
     Route::get('/change-status/{status}', [EmployeesController::class, 'changeStatus']);
     Route::get('/change-shift/{status}', [EmployeesController::class, 'changeShift']);
@@ -191,7 +194,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/search-emp-details',[AttendenceController::class,'searchAttendenceEmp']);
     Route::get('/view-emp-attendence',[AttendenceController::class,'viewEmpAttendence']);
     // Route::get('/view-attendence-emp', [AttendenceController::class, 'viewAttendanceEmployee']);
-    Route::post('/search-emp-attendence', [AttendenceController::class, 'searchEmpAttendenceAdmin'])->name('view-attendence');
+
     Route::post('/apply-for-leave', [AttendenceController::class, 'empApplyForLeave']);
     Route::get('/leave-records', [AttendenceController::class, 'empLeaveRecords']);
     Route::post('/search-emp-leaves', [AttendenceController::class, 'empSearchRecords']);

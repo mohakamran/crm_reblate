@@ -64,7 +64,7 @@
 
             .punch-info .punch-hours {
                 border: 3px solid #fca311;
-                /* font-size: 20px; */
+                max-width:250px;
                 padding: 20px;
                 margin: 0 auto;
                 border-radius: 12px;
@@ -75,9 +75,9 @@
 
 
             .punch-hours span {
-                font-weight: 300;
+                font-weight: 500;
                 transform: translate(-50%, -50%);
-                font-size: 25px;
+                font-size: 30px;
                 color: #14213d;
             }
 
@@ -92,17 +92,12 @@
             }
 
             .timeliner {
-                border-left: 3px solid #14213d;
-                border-bottom-right-radius: 4px;
-                border-top-right-radius: 4px;
-                background: rgba(114, 124, 245, 0.09);
-                margin: 0 auto;
+               margin: 0 auto;
                 letter-spacing: 0.2px;
                 position: relative;
-                line-height: 1.4em;
-                font-size: 1.03em;
-                padding: 20px;
-                padding-bottom: 12px;
+                padding-top: 20px;
+                margin-left:10px;
+                padding-bottom: 0;
                 list-style: none;
                 text-align: left;
 
@@ -128,7 +123,7 @@
             }
 
             .timeliner .event {
-                border-bottom: 1px dashed #e8ebf1;
+
                 position: relative;
             }
 
@@ -170,13 +165,13 @@
             .timeliner .event:after {
                 -webkit-box-shadow: 0 0 0 3px #fca311;
                 box-shadow: 0 0 0 3px #fca311;
-                left: -26.6px;
+                left: -23.6px;
                 background: #fff;
                 border-radius: 50%;
-                height: 9px;
-                width: 9px;
+                height: 6px;
+                width: 6px;
                 content: "";
-                top: 5px;
+                top: 10px;
             }
 
             @media (max-width: 767px) {
@@ -214,15 +209,15 @@
 
         <div class="row mt-2">
             <div class="card">
-                <div class="card-body d-flex justify-content-lg-between align-items-center flex-wrap">
+                <div class="card-body d-flex justify-content-lg-between align-items-center flex-wrap gap-3">
                     <div class="col-md-3 d-flex align-items-center flex-wrap">
 
-                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image) )
                             <img src="{{ $emp_det->Emp_Image }}"
                                 style="width:120px;height:120px;border-radius:100%; object-fit:cover;" alt="">
                         @else
-                            <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
-                                src="{{ url('user.png') }}">
+                        <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
+                        src="{{ url('user.png') }}">
                         @endif
                         <div class="welcome-det ms-3 text-dark fw-bolder">
                             <h3 style="font-size: 20px; color:#14213d">Welcome, </h3>
@@ -255,18 +250,17 @@
             </div>
 
         </div>
-
         <div class="row">
             <div class="col-md-4 col-xl-4 col-sm-12">
                 <div class="card overflow-hidden">
-                    <div class="card-body overflow-hidden">
+                    <div class="card-body overflow-hidden" style='padding-bottom:12px;'>
                         <div class="position-relative" style="z-index: 10">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h3 class=" font-size-header mb-0" style='color:#000;'>Attendance </h3>
 
                             </div>
-                            <div class="row px-2">
-                                <div class="col-md-4 col-sm-4" style='width:33%'>
+                            <div class="row px-2" >
+                                <div class="col-md-4" style='width:33%'>
                                     <h3 style="color: #14213d;">
                                         @if (isset($total_present_day) && $total_present_day != '')
                                             {{ $total_present_day }}
@@ -276,7 +270,7 @@
                                     </h3>
                                     <p style="color:#14213d;font-size: 16px;">Total <br> Present</p>
                                 </div>
-                                <div class="col-md-4 col-sm-4" style='width:33%'>
+                                <div class="col-md-4" style='width:33%'>
                                     <h3 style='color:red;'>
                                         @if (isset($absent_days) && $absent_days != '')
                                             {{ $absent_days }}
@@ -286,26 +280,20 @@
                                     </h3>
                                     <p style="color:#14213d; font-size: 16px;">Total <br> Absent </p>
                                 </div>
-                                <div class="col-md-4 col-sm-4" style='width:33%'>
+                                <div class="col-md-4" style='width:33%'>
                                     <h3 style='color:orange;'>{{ $total_leaves }}</h3>
                                     <p style="color:#14213d; font-size: 16px;">Total <br> Leaves</p>
                                 </div>
-                                <div class="col-md-4 col-sm-4" style='width:33%'>
+                                <div class="col-md-4" style='width:33%'>
                                     <h3 style='color:red;'>0</h3>
                                     <p style="color:#14213d; font-size: 16px;">Pending <br> Approval</p>
                                 </div>
-                                <div class="col-md-4 col-sm-4" style='width:33%'>
+                                <div class="col-md-4" style='width:33%'>
                                     <h3 style='color:#14213d;'>22</h3>
                                     <p style="color:#14213d; font-size: 16px;">Working <br> Days</p>
                                 </div>
-                                <div class="col-md-4 col-sm-4" style='width:33%'>
-                                    <h3 style='color:red;'>
-                                        @if ($salary_deduct != null && $salary_deduct >= 0)
-                                            {{ $salary_deduct }}
-                                        @else
-                                            0
-                                        @endif
-                                    </h3>
+                                <div class="col-md-4" style='width:33%'>
+                                    <h3 style='color:red;'>2000</h3>
                                     <p style="color:#14213d; font-size: 16px;">Loss of <br> Pay</p>
                                 </div>
                             </div>
@@ -366,7 +354,7 @@
                             <h3 class=" font-size-header mb-0" style='color:#000;'>Today's Activity </h3>
                         </div>
                         <div id="content">
-                            <ul class="timeliner d-grid gap-3" style="grid-template-columns: 1fr 1fr;">
+                            <ul class="timeliner d-grid gap-3" style="grid-template-columns: 1fr 1fr;" >
                                 <li class="event mb-1">
                                     <h4 class="mb-1" style="color: #14213d">Check In</h4>
                                     @if (session()->has('check_in_time') && session('check_in_time') != '')
@@ -400,7 +388,7 @@
                                     @endif
                                 </li>
                                 <li class="event mb-1">
-                                    <h4 class="mb-1" style="color: #14213d">Overtime <br /> Start</h4>
+                                    <h4 class="mb-1" style="color: #14213d">Overtime <br/> Start</h4>
                                     @if (session()->has('overtime_start') && session('overtime_start') != '')
                                         <p class="mb-1">{{ session('overtime_start') }}</p>
                                     @else
@@ -408,7 +396,7 @@
                                     @endif
                                 </li>
                                 <li class="event mb-1">
-                                    <h4 class="mb-1" style="color: #14213d">Overtime <br /> End</h4>
+                                    <h4 class="mb-1" style="color: #14213d">Overtime <br/> End</h4>
                                     @if (session()->has('overtime_end') && session('overtime_end') != '')
                                         <p class="mb-1">{{ session('overtime_end') }}</p>
                                     @else
@@ -423,15 +411,15 @@
             </div>
             <div class="col-md-4 col-xl-4 col-sm-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" >
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h3 class=" font-size-header mb-0" style='color:#000;'>Timesheet </h3>
 
                         </div>
                         <div class="punch-info">
                             <div class="punch-hours">
-                                @if (session()->has('total_over_time') && session('total_over_time') != '')
-                                    <span>{{ session('total_over_time') }}</span>
+                                @if(session()->has('total_over_time') && session('total_over_time')!='')
+                                   <span>{{session('total_over_time')}}</span>
                                 @elseif(session()->has('total_hours') && session('total_hours') != '')
                                     <span>{{ session('total_hours') }}</span>
                                 @else
@@ -455,90 +443,93 @@
                                 <span class="text-center green-text">{{ $success_message }}</span>
                             @endif
 
-                            <div class="break-time d-flex align-items-center justify-content-between mb-3"
-                                style='margin-top:25px;'>
-                                <p class="mb-0 font-size-15">Target Working Hours</p>
-                                <p class="mb-0 font-size-15">7:00 / Day</p>
+                            <div class="break-time d-flex align-items-center justify-content-between mb-3" style='margin-top:25px;'>
+                                <p class="mb-0 font-size-15" >Target Working Hours</p>
+                                <p class="mb-0 font-size-15" >7:00 / Day</p>
                             </div>
                             @if (session()->has('attendence_status') && session('attendence_status') === true)
-                                <div>
-                                    <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
+                                    <div>
+                                        <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
                                             width="1em" height="1em" viewBox="0 0 24 24">
                                             <path fill="#3e7213"
                                                 d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
                                         </svg> Attendence Marked Successfully!</span>
-                                </div>
+                                    </div>
 
-                                @if (session()->has('overtime_status') && session('overtime_status') === true)
+                                    @if ( session()->has('overtime_status') && session('overtime_status') === true)
                                     <div>
-                                        <span style="color:#3e7213;font-size:16px;"> <svg
-                                                xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                                viewBox="0 0 24 24">
-                                                <path fill="#3e7213"
-                                                    d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
-                                            </svg> Over time marked!</span>
+                                        <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
+                                            width="1em" height="1em" viewBox="0 0 24 24">
+                                            <path fill="#3e7213"
+                                                d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
+                                        </svg> Over time marked!</span>
                                     </div>
-                                @elseif(session()->has('show_over_time_end') && session('show_over_time_end') === false)
-                                    <div class="row" style="margin-top:20px;">
-                                        <div class="col-md-12 d-flex justify-content-center">
-                                            <a class="reblateBtn px-4 py-2 w-md" href="/overtime-start">Overtime Start
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                    viewBox="0 0 21 21">
-                                                    <g fill="none" fill-rule="evenodd" stroke="currentColor"
-                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                        <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
-                                                        <path
-                                                            d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
-                                                    </g>
-                                                </svg>
-                                            </a>
-                                        </div>
 
-                                    </div>
-                                @elseif(session()->has('show_over_time_end') && session('show_over_time_end') === true)
-                                    <div class="row" style="margin-top:20px;">
-                                        <div class="col-md-12 d-flex justify-content-center">
-                                            <a class="reblateBtn px-4 py-2 w-md" href="/overtime-end">Overtime End
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                    viewBox="0 0 21 21">
-                                                    <g fill="none" fill-rule="evenodd" stroke="currentColor"
-                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                        <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
-                                                        <path
-                                                            d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
-                                                    </g>
-                                                </svg>
-                                            </a>
+                                        @elseif( session()->has('show_over_time_end') && session('show_over_time_end') === false)
+                                        <div class="row" style="margin-top:20px;">
+                                            <div class="col-md-12 d-flex justify-content-center">
+                                                <a class="reblateBtn px-4 py-2 w-md" href="/overtime-start" >Overtime Start
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                        viewBox="0 0 21 21">
+                                                        <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
+                                                            <path
+                                                                d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
+                                                        </g>
+                                                    </svg>
+                                                </a>
+                                            </div>
+
                                         </div>
-                                @endif
+                                        @elseif( session()->has('show_over_time_end') && session('show_over_time_end') === true)
+                                        <div class="row" style="margin-top:20px;">
+                                            <div class="col-md-12 d-flex justify-content-center">
+                                                <a class="reblateBtn px-4 py-2 w-md" href="/overtime-end" >Overtime End
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                        viewBox="0 0 21 21">
+                                                        <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
+                                                            <path
+                                                                d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
+                                                        </g>
+                                                    </svg>
+                                                </a>
+                                            </div>
+
+                                    @endif
+
+
+
                             @else
                                 <div class="d-flex flex-wrap justify-content-between gap-4 align-items-center">
 
-                                    @if (session()->has('show_check_out') && session('show_check_out') === true)
-                                        <a class="reblateBtn px-4 py-2 w-md" href="/check-out/">Checking Out
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                viewBox="0 0 16 16">
-                                                <g fill="currentColor" fill-rule="evenodd">
-                                                    <path
-                                                        d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                                    <path
-                                                        d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                                                </g>
-                                            </svg>
-                                        </a>
-                                    @else
-                                        <a class="reblateBtn px-4 py-2" href="/check-in">Checking In
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                viewBox="0 0 21 21">
-                                                <g fill="none" fill-rule="evenodd" stroke="currentColor"
-                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
-                                                    <path
-                                                        d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
-                                                </g>
-                                            </svg>
-                                        </a>
-                                    @endif
+                                        @if (session()->has('show_check_out') && session('show_check_out') === true)
+                                            <a class="reblateBtn px-4 py-2 w-md" href="javascript:void()" onclick="checkOut()"   >Checking Out
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                    viewBox="0 0 16 16">
+                                                    <g fill="currentColor" fill-rule="evenodd">
+                                                        <path
+                                                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                                        <path
+                                                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                        @else
+                                            <a class="reblateBtn px-4 py-2" href="/check-in">Checking In
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                    viewBox="0 0 21 21">
+                                                    <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
+                                                        <path
+                                                            d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                        @endif
 
 
                                     @if (session()->has('show_break_end') && session('show_break_end') === true)
@@ -554,7 +545,7 @@
                                             </svg>
                                         </a>
                                     @else
-                                        <a class="reblateBtn px-4 py-2" href="/break-start">BreakStart
+                                        <a class="reblateBtn px-4 py-2" href="/break-start" >BreakStart
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                 viewBox="0 0 16 16">
                                                 <g fill="currentColor" fill-rule="evenodd">
@@ -585,7 +576,6 @@
             </div>
 
         </div>
-
         <!-- END ROW -->
         <div class="row mb-3">
             <div class="col-md-6">
@@ -637,15 +627,16 @@
                                         <td>
                                             @if ($task->task_status == 'completed')
                                                 <span
-                                                    class="badge badge-soft-success font-size-12">{{ $task->task_status }}</span>
+                                                class="badge badge-soft-success font-size-12">{{ $task->task_status }}</span>
                                             @elseif ($task->task_status == 'in-progress')
                                                 <span
-                                                    class="badge badge-soft-warning font-size-12">{{ $task->task_status }}</span>
+                                                class="badge badge-soft-warning font-size-12">{{ $task->task_status }}</span>
                                             @else
                                                 <span
-                                                    class="badge badge-soft-danger font-size-12">{{ $task->task_status }}</span>
+                                                class="badge badge-soft-danger font-size-12">{{ $task->task_status }}</span>
+
                                             @endif
-                                        </td>
+                                            </td>
                                         <td>{{ $task->assigned_by }}</td>
                                         {{-- <td>{{$task->task_title}}</td> --}}
                                     </tr>
@@ -1325,6 +1316,48 @@
                     }
                 });
             }
+
+            function checkOut() {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You want to check out!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                    confirmButtonColor: '#FF5733', // Red color for "Yes"
+                    cancelButtonColor: '#4CAF50', // Green color for "No"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Send an AJAX request to delete the task
+                        $.ajax({
+                            url: '/check-out/',
+                            method: 'GET', // Use the DELETE HTTP method
+                            success: function() {
+                                // Provide user feedback
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'check out marked!',
+                                    icon: 'success'
+                                }).then(() => {
+                                    location.reload(); // Refresh the page
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                // Handle errors, you can display an error message to the user
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'An error occurred while checking out the user!',
+                                    icon: 'error'
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+
         </script>
     @endsection
     @section('scripts')

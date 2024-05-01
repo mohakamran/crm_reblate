@@ -106,15 +106,13 @@
             }
 
             .timeliner {
-                border-left: 3px solid #14213d;
-                border-bottom-right-radius: 4px;
-                border-top-right-radius: 4px;
-                background: rgba(114, 124, 245, 0.09);
+
                 margin: 0 auto;
                 letter-spacing: 0.2px;
                 position: relative;
                 line-height: 1.4em;
                 font-size: 1.03em;
+
                 padding: 20px;
                 list-style: none;
                 text-align: left;
@@ -141,7 +139,7 @@
             }
 
             .timeliner .event {
-                border-bottom: 1px dashed #e8ebf1;
+
 
                 position: relative;
             }
@@ -187,10 +185,10 @@
                 left: -26.6px;
                 background: #fff;
                 border-radius: 50%;
-                height: 9px;
-                width: 9px;
+                height: 6px;
+                width: 6px;
                 content: "";
-                top: 5px;
+                top: 10px;
             }
 
             @media (max-width: 767px) {
@@ -501,13 +499,15 @@
                                    <p style="color:#14213d; font-size: 16px;">Working <br> Days</p>
                                </div>
                                <div class="col-md-4 col-sm-4" style='width:33%'>
-                                   <h3 style='color:red;'>2000</h3>
+                                   <h3 style='color:red;'>
+
                                    @if ($salary_deduct !=null && $salary_deduct>=0)
                                          {{$salary_deduct}}
                                         @else
                                          0
                                     @endif
                                    <p style="color:#14213d; font-size: 16px;">Loss of <br> Pay</p>
+                                   </h3>
                                </div>
                            </div>
                        </div>
@@ -567,7 +567,7 @@
                            <h3 class=" font-size-header mb-0" style='color:#000;'>Today's Activity </h3>
                        </div>
                        <div id="content">
-                           <ul class="timeliner d-grid gap-3" style="grid-template-columns: 1fr 1fr;" >
+                           <ul class="timeliner d-grid gap-3" style="grid-template-columns: 1fr 1fr; margin-left:20px; padding-bottom:5px;" >
                                <li class="event mb-1">
                                    <h4 class="mb-1" style="color: #14213d">Check In</h4>
                                    @if (session()->has('check_in_time') && session('check_in_time') != '')
@@ -719,7 +719,7 @@
                                <div class="d-flex flex-wrap justify-content-between gap-4 align-items-center">
 
                                        @if (session()->has('show_check_out') && session('show_check_out') === true)
-                                           <a class="reblateBtn px-4 py-2 w-md" href="/check-out/" >Checking Out
+                                           <a class="reblateBtn px-4 py-2 w-md" href="javascript:void()" onclick="checkOut()"   >Checking Out
                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                    viewBox="0 0 16 16">
                                                    <g fill="currentColor" fill-rule="evenodd">
@@ -1372,6 +1372,46 @@
         <script>
             const chartId = document.getElementById('chart_div');
 
+            function checkOut() {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You want to check out!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                    confirmButtonColor: '#FF5733', // Red color for "Yes"
+                    cancelButtonColor: '#4CAF50', // Green color for "No"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Send an AJAX request to delete the task
+                        $.ajax({
+                            url: '/check-out/',
+                            method: 'GET', // Use the DELETE HTTP method
+                            success: function() {
+                                // Provide user feedback
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'check out marked!',
+                                    icon: 'success'
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                // Handle errors, you can display an error message to the user
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'An error occurred while checking out the user!',
+                                    icon: 'error'
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
 
             $(function() {
                 $('input[name="daterange"]').daterangepicker({

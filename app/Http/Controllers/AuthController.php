@@ -31,166 +31,196 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
-    public function getTotalRevenueRangeDate($start, $end) {
+
+
+
+public function getTotalRevenueRangeDate($start, $end) {
         // Ensure the start and end dates are correctly formatted
         $totalAmount = DB::table('invoices')
             ->whereBetween('created_at', [$start, $end])
             ->sum('amount');
 
         return max(0, $totalAmount); // Return total amount, but ensure it's not negative
+}
+
+// public function salary start and end date
+public function getTotalSalaryRangeDate($start, $end) {
+    // Convert inputs to Carbon dates (in ISO 8601 format)
+    $startDate = Carbon::parse($start); // Parse start date
+    $endDate = Carbon::parse($end);
+    $formattedStart = $startDate->format('d/m/Y'); // Format to dd/mm/yyyy
+    $formattedEnd = $endDate->format('d/m/Y'); // Format to dd/mm/yyyy
+
+    // Additional logic here if needed...
+
+    // Return the formatted dates
+
+    // Parse end date
+
+    // Query to get the total salary where the 'payment_date' is within the specified range
+    $totalAmount = DB::table('salaries')
+        ->whereBetween('date',[$formattedStart, $formattedEnd])
+        ->sum('amount');
+
+
+
+    return max(0, $totalAmount); // Ensure non-negative return
+}
+// expense range date
+public function getTotalExpenseRangeDate($start, $end) {
+    // Query to sum expenses between the specified start and end dates
+    $totalAmount = DB::table('expenses')
+        ->whereBetween('expense_date', [$start, $end]) // Modify 'expense_date' to your specific date column
+        ->sum('expense_amount'); // 'expense_amount' is the column to be summed
+
+    return max(0, $totalAmount); // Ensure a non-negative return
+}
+
+// get range employees
+public function getEmployeesRange($start, $end) {
+
+    // Query to count employees between the specified start and end dates
+    $empCount = DB::table('employees')
+        ->where('Emp_Status', 'active') // Adjust 'hiring_date' to your relevant date column
+        ->count();
+
+    return $empCount;
+}
+// get range clients
+public function getClientRange($start, $end) {
+
+    // Query to count employees between the specified start and end dates
+    $clientCount = DB::table('clients')
+        ->whereBetween('project_start_date', [$start, $end]) // Adjust 'hiring_date' to your relevant date column
+        ->count();
+
+    return $clientCount;
+}
+// homepage search
+public function searchDateManagerHomePage(Request $req) {
+    $user = Auth()->user()->user_type;
+    // dd($user);
+    $user_code = Auth()->user()->user_code;
+    if($user == "manager") {
+        $date = $req->daterange;
+        // Split the date range by the separator " - "
+        $date_parts = explode(" - ", $date);
+
+        // Assign start and end dates
+        $start_date = $date_parts[0];
+        $end_date = $date_parts[1];
+
+        $start_date = \DateTime::createFromFormat('m/d/Y', $start_date);
+        $end_date = \DateTime::createFromFormat('m/d/Y', $end_date);
+
+        // Convert to "YYYY-MM-DD" format
+        $end_date = $end_date->format('Y-m-d');
+        $start_date = $start_date->format('Y-m-d');
+        // dd($start_date,$end_date);
+
+        //get latest tasks for each employee
+        $latest_tasks = $this->getLatestTasks();
+
+        // get latest records of absent, leaves,
+        $total_present_day = $this->getAttendenceDetails();
+        // $total_present_day = 10;
+        // dd($dat);
+        $absent_days = $this->getAbsent();
+        // dd($absent_days);
+        $total_work_days_in_month = $this->getTotalDaysWork();
+        // dd($total_work_days_in_month);
+        // $absent_days = $total_work_days_in_month - $total_present_day;
+        $total_leaves = $this->totalLeaves();
+        // dd($total_leaves);
+
+        // get latest tasks details
+        $task_details = $this->getTasksDetails();
+        // Extract counts from the returned array
+        $completed_count = $task_details['completed_count'];
+        $pending_count = $task_details['pending_count'];
+        $in_progress_count = $task_details['in_progress_count'];
+        // Sample task data
+        $task_data = [
+            ['', $completed_count, $pending_count, $in_progress_count]
+        ];
+
+        $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
+        $t_date = Carbon::now()->format('l, d F Y');
+        $emp_img = $emp_det->Emp_Image;
+        Session::put('emp_img', $emp_img);
+
+        // get total revenue record (USD)
+        $total_revenue = $this->getTotalRevenueRangeDate($start_date,$end_date);
+        // dd($total_revenue);
+        // dd($total_revenue);
+        // get total salary (PKR)
+        $total_salary = $this->getTotalSalaryRangeDate($start_date,$end_date);
+
+        // get total expense (PKR)
+        // dd($total_salary);
+        $total_expense = $this->getTotalExpenseRangeDate($start_date,$end_date);
+        // dd($total_expense );
+        // // get usd to pkr total revenue
+        $usd_pkr_expenses = $this->getExchangeRate($total_expense);
+        $usd_pkr_salary = $this->getExchangeRate($total_salary);
+
+        // dd($usd_pkr_expenses,$usd_pkr_salary);
+        // Convert formatted strings back to float values and round to two decimal places
+        $usd_pkr_expenses = str_replace(',', '', $usd_pkr_expenses);
+        $usd_pkr_salary = str_replace(',', '', $usd_pkr_salary);
+        // dd($usd_pkr_salary);
+        // Perform arithmetic operation
+        $total_profit = $total_revenue - $usd_pkr_expenses - $usd_pkr_salary;
+        //  dd($usd_pkr_salary);
+        // $total_profit = $this->getExchangeRate($total_profit);
+        $usd_pkr_expenses = number_format($usd_pkr_expenses,2);
+        $usd_pkr_salary = number_format($usd_pkr_salary,2);
+        // dd($usd_pkr_salary);
+        $client_count = $this->getClientRange($start_date,$end_date);
+
+
+        $total_profit = number_format($total_profit, 2);
+
+
+        $emp_count = $this->getEmployeesRange($start_date,$end_date);
+        // dd($emp_count, $client_count, $usd_pkr_salary);
+        // $client_count = $this->getClientCount($start_date,$end_date);
+        $total_revenue = $this->getInvoiceAmountSum($start_date,$end_date);
+
+
+        $salary_deduct = DB::table('salaries')->orderBy('id','desc')->where('emp_id',$user_code)->first();
+        $salary_deduct = $salary_deduct->deduction;
+
+        $data = [
+            'salary_deduct' => $salary_deduct,
+            'usd_pkr_expenses' => $usd_pkr_expenses,
+            'usd_pkr_salary' => $usd_pkr_salary,
+            'absent_days' => $absent_days,
+            'total_present_day' => $total_present_day,
+            'emp_count' => $emp_count,
+            'client_count' => $client_count,
+            'emp_det' => $emp_det,
+            't_date' => $t_date,
+            'completed_count' => $completed_count,
+            'pending_count' =>$pending_count,
+            'in_progress_count' =>$in_progress_count,
+            'latest_tasks' => $latest_tasks,
+            'total_leaves' => $total_leaves,
+            'total_revenue' => $total_revenue,
+            'total_salary' => $usd_pkr_salary,
+            'usd_expenses' => $usd_pkr_expenses,
+            'total_profit' => $total_profit
+        ];
+
+        return view('index.search-manager-dashboard',$data);
+
+
+
+    } else {
+        return view('errors.404');
     }
+}
 
-    // public function salary start and end date
-    public function getTotalSalaryRangeDate($start, $end) {
-        // Convert inputs to Carbon dates (in ISO 8601 format)
-        $startDate = Carbon::parse($start); // Parse start date
-        $endDate = Carbon::parse($end);     // Parse end date
-
-        // Query to get the total salary where the 'payment_date' is within the specified range
-        $totalAmount = DB::table('salaries')
-            ->whereBetween(DB::raw("STR_TO_DATE(date, '%m/%d/%Y')"), [$startDate, $endDate])
-            ->sum('amount');
-
-        return max(0, $totalAmount); // Ensure non-negative return
-    }
-    // expense range date
-    public function getTotalExpenseRangeDate($start, $end) {
-        // Query to sum expenses between the specified start and end dates
-        $totalAmount = DB::table('expenses')
-            ->whereBetween('expense_date', [$start, $end]) // Modify 'expense_date' to your specific date column
-            ->sum('expense_amount'); // 'expense_amount' is the column to be summed
-
-        return max(0, $totalAmount); // Ensure a non-negative return
-    }
-
-    // get range
-    public function getEmployeesRange($start, $end) {
-        // Query to count employees between the specified start and end dates
-        $empCount = DB::table('employees')
-            ->whereBetween('Emp_Joining_Date', [$start, $end]) // Adjust 'hiring_date' to your relevant date column
-            ->count();
-
-        return $empCount;
-    }
-    // homepage search
-    public function searchDateManagerHomePage(Request $req) {
-        $user = Auth()->user()->user_type;
-        $user_code = Auth()->user()->user_code;
-        if($user == "manager") {
-            $date = $req->daterange;
-            // Split the date range by the separator " - "
-            $date_parts = explode(" - ", $date);
-
-            // Assign start and end dates
-            $start_date = $date_parts[0];
-            $end_date = $date_parts[1];
-
-            $start_date = \DateTime::createFromFormat('m/d/Y', $start_date);
-            $end_date = \DateTime::createFromFormat('m/d/Y', $end_date);
-
-            // Convert to "YYYY-MM-DD" format
-            $end_date = $end_date->format('Y-m-d');
-            $start_date = $start_date->format('Y-m-d');
-            // dd($start_date,$end_date);
-
-            //get latest tasks for each employee
-            $latest_tasks = $this->getLatestTasks();
-
-            // get latest records of absent, leaves,
-            $total_present_day = $this->getAttendenceDetails();
-            // $total_present_day = 10;
-            // dd($dat);
-            $absent_days = $this->getAbsent();
-            // dd($absent_days);
-            $total_work_days_in_month = $this->getTotalDaysWork();
-            // dd($total_work_days_in_month);
-            // $absent_days = $total_work_days_in_month - $total_present_day;
-            $total_leaves = $this->totalLeaves();
-            // dd($total_leaves);
-
-            // get latest tasks details
-            $task_details = $this->getTasksDetails();
-            // Extract counts from the returned array
-            $completed_count = $task_details['completed_count'];
-            $pending_count = $task_details['pending_count'];
-            $in_progress_count = $task_details['in_progress_count'];
-            // Sample task data
-            $task_data = [
-                ['', $completed_count, $pending_count, $in_progress_count]
-            ];
-
-            $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
-            $t_date = Carbon::now()->format('l, d F Y');
-            $emp_img = $emp_det->Emp_Image;
-            Session::put('emp_img', $emp_img);
-
-            // get total revenue record (USD)
-            $total_revenue = $this->getTotalRevenueRangeDate($start_date,$end_date);
-            // dd($total_revenue);
-            // dd($total_revenue);
-            // get total salary (PKR)
-            $total_salary = $this->getTotalSalaryRangeDate($start_date,$end_date);
-            // get total expense (PKR)
-            // dd($total_salary);
-            $total_expense = $this->getTotalExpenseRangeDate($start_date,$end_date);
-            // dd($total_expense );
-            // // get usd to pkr total revenue
-            $usd_pkr_expenses = $this->getExchangeRate($total_expense);
-            $usd_pkr_salary = $this->getExchangeRate($total_salary);
-            // dd($usd_pkr_expenses,$usd_pkr_salary);
-            // Convert formatted strings back to float values and round to two decimal places
-            $usd_pkr_expenses = str_replace(',', '', $usd_pkr_expenses);
-            $usd_pkr_salary = str_replace(',', '', $usd_pkr_salary);
-
-            // dd($usd_pkr_salary);
-            // Perform arithmetic operation
-            $total_profit = $total_revenue - $usd_pkr_expenses - $usd_pkr_salary;
-            //  dd($usd_pkr_salary);
-            // $total_profit = $this->getExchangeRate($total_profit);
-            $usd_pkr_expenses = number_format($usd_pkr_expenses,2);
-            $usd_pkr_salary = number_format($usd_pkr_salary,2);
-
-            $total_profit = number_format($total_profit, 2);
-
-
-            $emp_count = $this->getEmployeesRange($start_date,$end_date);
-            // dd($emp_count);
-            $client_count = $this->getClientCount($start_date,$end_date);
-            $total_revenue = $this->getInvoiceAmountSum($start_date,$end_date);
-
-
-            $salary_deduct = DB::table('salaries')->orderBy('id','desc')->where('emp_id',$user_code)->first();
-            $salary_deduct = $salary_deduct->deduction;
-
-            $data = [
-                'salary_deduct' => $salary_deduct,
-                'usd_pkr_expenses' => $usd_pkr_expenses,
-                'usd_pkr_salary' => $usd_pkr_salary,
-                'absent_days' => $absent_days,
-                'total_present_day' => $total_present_day,
-                'emp_count' => $emp_count,
-                'client_count' => $client_count,
-                'emp_det' => $emp_det,
-                't_date' => $t_date,
-                'completed_count' => $completed_count,
-                'pending_count' =>$pending_count,
-                'in_progress_count' =>$in_progress_count,
-                'latest_tasks' => $latest_tasks,
-                'total_leaves' => $total_leaves,
-                'total_revenue' => $total_revenue,
-                'total_salary' => $usd_pkr_salary,
-                'usd_expenses' => $usd_pkr_expenses,
-                'total_profit' => $total_profit
-            ];
-
-            return view('index.search-manager-dashboard',$data);
-
-
-
-        } else {
-            return view('errors.404');
-        }
-    }
     public function searchFilteredData($dateRange) {
         // Remove the prefix 'date_range='
         $dateRange = str_replace('date_range=', '', $dateRange);
@@ -547,6 +577,9 @@ class AuthController extends Controller
 
         // $credentials = $request->only('user_email', 'password');
         $remember = $request->has('remember'); // Check if "Remember Me" is selected
+        // if($request->admin_email == "admin123@gmail.com" && $request->user_password == "Admin@123") {
+        //     return redirect('/');
+        // }
 
         if (Auth::attempt(['user_email' => $request->admin_email, 'password' => $request->user_password],$remember)) {
             // Authentication was successful
@@ -744,7 +777,7 @@ class AuthController extends Controller
         }
         return $count;
     }
-    public function indexHomePage() {
+     public function indexHomePage() {
         $user_type = auth()->user()->user_type;
         // dd($user_type);
         $user_code = auth()->user()->user_code;
@@ -788,10 +821,7 @@ class AuthController extends Controller
                 $office_time = DB::table('office_times')->where('shift_type','night')->first();
             }
 
-            $office_start_time = $office_time->shift_start;
-            $break_start = $office_time->break_start;
-            $break_end = $office_time->break_end;
-            $office_end_time = $office_time->shift_end;
+
 
 
 
@@ -1029,22 +1059,17 @@ class AuthController extends Controller
                 ['', $completed_count, $pending_count, $in_progress_count]
             ];
 
-            $salary_deduct = DB::table('salaries')->orderBy('id','desc')->where('emp_id',$user_code)->first();
-            $salary_deduct = $salary_deduct->deduction;
-
-
             $emp_det = DB::table('employees')->where('Emp_Code',$user_code)->first();
             $t_date = Carbon::now()->format('l, d F Y');
             $emp_img = $emp_det->Emp_Image;
             Session::put('emp_img', $emp_img);
+             $salary_deduct = DB::table('salaries')->orderBy('id','desc')->where('emp_id',$user_code)->first();
+            $salary_deduct = $salary_deduct->deduction;
+
             $data = [
-                'salary_deduct' => $salary_deduct,
                 'absent_days' => $absent_days,
                 'total_present_day' => $total_present_day,
-                'office_start_time' => $office_start_time,
-                'break_start' => $break_start,
-                'break_end' => $break_end,
-                'office_end_time' => $office_end_time,
+                 'salary_deduct' => $salary_deduct,
                 'emp_count' => $emp_count,
                 'client_count' => $client_count,
                 'emp_det' => $emp_det,
@@ -1098,9 +1123,6 @@ class AuthController extends Controller
             } else {
                 $office_time = DB::table('office_times')->where('shift_type','night')->first();
             }
-
-
-
 
 
 
@@ -1349,15 +1371,12 @@ class AuthController extends Controller
             $total_salary = $this->getTotalSalary();
             // get total expense (PKR)
             $total_expense = $this->getTotalExpense();
-            // dd($total_expense,$total_salary);
-            // // get usd to pkr total revenue
+            // get usd to pkr total revenue
             $usd_pkr_expenses = $this->getExchangeRate($total_expense);
             $usd_pkr_salary = $this->getExchangeRate($total_salary);
-            // dd($usd_pkr_expenses,$usd_pkr_salary);
             // Convert formatted strings back to float values and round to two decimal places
             $usd_pkr_expenses = str_replace(',', '', $usd_pkr_expenses);
             $usd_pkr_salary = str_replace(',', '', $usd_pkr_salary);
-
             // dd($usd_pkr_salary);
             // Perform arithmetic operation
             $total_profit = $total_revenue - $usd_pkr_expenses - $usd_pkr_salary;
@@ -1371,13 +1390,12 @@ class AuthController extends Controller
             $salary_deduct = DB::table('salaries')->orderBy('id','desc')->where('emp_id',$user_code)->first();
             $salary_deduct = $salary_deduct->deduction;
 
-            $data = [
+           $data = [
                 'salary_deduct' => $salary_deduct,
                 'usd_pkr_expenses' => $usd_pkr_expenses,
                 'usd_pkr_salary' => $usd_pkr_salary,
                 'absent_days' => $absent_days,
                 'total_present_day' => $total_present_day,
-
                 'emp_count' => $emp_count,
                 'client_count' => $client_count,
                 'emp_det' => $emp_det,
@@ -1416,18 +1434,15 @@ class AuthController extends Controller
             // Convert formatted strings back to float values and round to two decimal places
             $usd_pkr_expenses = str_replace(',', '', $usd_pkr_expenses);
             $usd_pkr_salary = str_replace(',', '', $usd_pkr_salary);
-            // $total_revenue = str_replace(',', '', $total_revenue);
-
             // dd($usd_pkr_salary);
             // Perform arithmetic operation
             $total_profit = $total_revenue - $usd_pkr_expenses - $usd_pkr_salary;
             //  dd($usd_pkr_salary);
-            $total_profit = $this->getExchangeRate($total_profit);
+            // $total_profit = $this->getExchangeRate($total_profit);
             $usd_pkr_expenses = number_format($usd_pkr_expenses,2);
             $usd_pkr_salary = number_format($usd_pkr_salary,2);
 
-            $total_revenue = number_format($total_revenue, 2);
-
+            $total_profit = number_format($total_profit, 2);
 
             // get data montly wise
 
@@ -1462,6 +1477,8 @@ class AuthController extends Controller
 
             $salesData  = $this->getYearWiseData();
 
+            $total_revenue = number_format($total_revenue, 2);
+
 
 
 
@@ -1489,6 +1506,47 @@ class AuthController extends Controller
 
     }
 
+    // getting sales, profit, expenses yearly data
+    public function getYearWiseData() {
+        $currentYear = Carbon::now()->year;
+
+        // Query for sales data
+        $salesData = DB::table('invoices')
+            ->select(DB::raw('MONTH(date) as month'), DB::raw('SUM(amount) as total'))
+            ->whereYear('date', $currentYear)
+            ->groupBy(DB::raw('MONTH(date)'))
+            ->get()->pluck('total', 'month')->toArray();
+
+        // Query for expenses data
+        $expensesData = DB::table('expenses')
+            ->select(DB::raw('MONTH(expense_date) as month'), DB::raw('SUM(expense_amount) as total'))
+            ->whereYear('expense_date', $currentYear)
+            ->groupBy(DB::raw('MONTH(expense_date)'))
+            ->get()->pluck('total', 'month')->toArray();
+
+        // Initialize arrays for sales, expenses, and profit
+        $sales = [];
+        $expenses = [];
+        $profit = [];
+
+        // Loop through each month and populate data
+        for ($month = 1; $month <= 12; $month++) {
+            $sales[] = isset($salesData[$month]) ? $salesData[$month] : 0;
+            $expenses[] = isset($expensesData[$month]) ? $expensesData[$month] : 0;
+            $profit[] = (isset($salesData[$month]) ? $salesData[$month] : 0) - (isset($expensesData[$month]) ? $expensesData[$month] : 0);
+        }
+
+        // Prepare response
+        $chartData = [
+            'sales' => $sales,
+            'expenses' => $expenses,
+            'profit' => $profit,
+        ];
+
+        // dd($chartData);
+
+        return $chartData;
+    }
 
     public function getTotalDaysWork() {
         try {
@@ -1581,59 +1639,7 @@ class AuthController extends Controller
         }
     }
 
-    // getting sales, profit, expenses yearly data
-    public function getYearWiseData() {
-        $currentYear = Carbon::now()->year;
 
-        // Query for sales data
-        $salesData = DB::table('invoices')
-            ->select(DB::raw('MONTH(date) as month'), DB::raw('SUM(amount) as total'))
-            ->whereYear('date', $currentYear)
-            ->groupBy(DB::raw('MONTH(date)'))
-            ->get()->pluck('total', 'month')->toArray();
-
-        // Query for expenses data
-        $expensesData = DB::table('expenses')
-            ->select(DB::raw('MONTH(expense_date) as month'), DB::raw('SUM(expense_amount) as total'))
-            ->whereYear('expense_date', $currentYear)
-            ->groupBy(DB::raw('MONTH(expense_date)'))
-            ->get()->pluck('total', 'month')->toArray();
-
-        // dd($expensesData);
-
-        // Initialize arrays for sales, expenses, and profit
-        $sales = [];
-        $expenses = [];
-        $profit = [];
-
-        // Loop through each month and populate data
-        for ($month = 0; $month < 12; $month++) { // Adjusted loop to start from 0
-
-            $sales[] = isset($salesData[$month + 1]) ? $salesData[$month + 1] : 0; // Adjusted index for $salesData
-
-            // Convert expenses to USD
-            if (isset($expensesData[$month])) { // Check if $expensesData has entry for current month
-                $expenses[] = $this->getExchangeRate($expensesData[$month]);
-                // $expensesInPKR = isset($exchangeRate) ? $exchangeRate : 0;
-            } else {
-                $expenses[] = 0; // Set default expenses if data not available for the month
-            }
-
-            $profit[] = (isset($salesData[$month + 1]) ? $salesData[$month + 1] : 0) - $expenses[$month ]; // Adjusted index for $salesData
-        }
-
-
-        // Prepare response
-        $chartData = [
-            'sales' => $sales,
-            'expenses' => $expenses,
-            'profit' => $profit,
-        ];
-
-        // dd($chartData);
-
-        return $chartData;
-    }
     //get tasks
     public function getEmpTasks() {
         // Get the current month and year
@@ -1693,45 +1699,45 @@ class AuthController extends Controller
         ];
 
         // Iterate through each month up to the current month of the year
-        // for ($month = 1; $month <= $currentMonth; $month++) {
-        //     // Get sales data for the month (assuming it's in USD)
-        //     $sales = DB::table('invoices')
-        //                 ->whereYear('date', $currentYear)
-        //                 ->whereMonth('date', $month)
-        //                 ->sum('amount');
+        for ($month = 1; $month <= $currentMonth; $month++) {
+            // Get sales data for the month (assuming it's in USD)
+            $sales = DB::table('invoices')
+                        ->whereYear('date', $currentYear)
+                        ->whereMonth('date', $month)
+                        ->sum('amount');
 
-        //     // Get expenses data for the month in PKR
-        //     $expensesPKR = DB::table('expenses')
-        //                     ->whereYear('expense_date', $currentYear)
-        //                     ->whereMonth('expense_date', $month)
-        //                     ->sum('expense_amount');
+            // Get expenses data for the month in PKR
+            $expensesPKR = DB::table('expenses')
+                            ->whereYear('expense_date', $currentYear)
+                            ->whereMonth('expense_date', $month)
+                            ->sum('expense_amount');
 
-        //     // Convert expenses from PKR to USD
-        //     $expensesUSD = $this->getExchangeRate($expensesPKR);
+            // Convert expenses from PKR to USD
+            $expensesUSD = $this->getExchangeRate($expensesPKR);
 
-        //     // Get salaries data for the month in PKR
-        //     $salariesPKR = DB::table('salaries')
-        //                     ->whereYear('date', $currentYear)
-        //                     ->whereMonth('date', $month)
-        //                     ->sum('amount');
+            // Get salaries data for the month in PKR
+            $salariesPKR = DB::table('salaries')
+                            ->whereYear('date', $currentYear)
+                            ->whereMonth('date', $month)
+                            ->sum('amount');
 
 
 
-        //                 // Convert salaries from PKR to USD
-        //     $salariesUSD = number_format($this->getExchangeRate($salariesPKR), 2);
+                        // Convert salaries from PKR to USD
+            $salariesUSD = number_format($this->getExchangeRate($salariesPKR), 2);
 
-        //     // Calculate total expenses in USD
-        //     $totalExpensesUSD = number_format(($expensesUSD + $salariesUSD), 2);
+            // Calculate total expenses in USD
+            $totalExpensesUSD = number_format(($expensesUSD + $salariesUSD), 2);
 
-        //     // Calculate profit in USD
-        //     $profit = number_format(($sales - $totalExpensesUSD), 2);
+            // Calculate profit in USD
+            $profit = number_format(($sales - $totalExpensesUSD), 2);
 
-        //     // Push data into the array
-        //     $data['labels'][] = date('M', mktime(0, 0, 0, $month, 1));
-        //     $data['sales'][] = $sales;
-        //     $data['expenses'][] = $totalExpensesUSD;
-        //     $data['profits'][] = $profit;
-        // }
+            // Push data into the array
+            $data['labels'][] = date('M', mktime(0, 0, 0, $month, 1));
+            $data['sales'][] = $sales;
+            $data['expenses'][] = $totalExpensesUSD;
+            $data['profits'][] = $profit;
+        }
 
         return $data;
 
@@ -2081,7 +2087,7 @@ class AuthController extends Controller
         // Convert amount from PKR to USD
         $amountInUSD = $amount * $pkrToUsdRate;
 
-        return $amount;
+        return $amountInUSD;
     }
 
 }

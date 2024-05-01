@@ -164,24 +164,79 @@ class EmployeesController extends Controller
         }
     }
 
+    // show terminated employees
+    public function terminatedEmp() {
+        $user_type = Auth()->user()->user_type;
+        if($user_type == "employee") {
+            return view('errors.404');
+        }
+
+        $latestEmployees = DB::table('employees')
+        ->where('Emp_Status', 'disable')
+        ->orderBy('Emp_Code', 'asc')
+        ->get();
+
+        $totalCount =  DB::table('employees')
+        ->where('Emp_Status', 'disable')
+        ->orderBy('Emp_Code', 'asc')
+        ->count();
+
+
+
+        // dd($latestEmployees);
+        //$count = Employee::where('Emp_Status', 'active')->orderBy('id', 'desc')->count();
+        if($latestEmployees != null) {
+            $emp="Reblate Solutions Employees";
+            return view('emp.view-employees',compact('latestEmployees','emp','totalCount'));
+        } else {
+            return redirect('/');
+        }
+    }
+
+    //show all employees
+    public function showAllEmployees() {
+        $user_type = Auth()->user()->user_type;
+        if($user_type == "employee") {
+            return view('errors.404');
+        }
+        $latestEmployees = DB::table('employees')
+        ->orderBy('Emp_Code', 'asc')
+        ->get();
+
+        // dd($latestEmployees);
+        //$count = Employee::where('Emp_Status', 'active')->orderBy('id', 'desc')->count();
+        $totalCount = DB::table('employees')
+        ->orderBy('Emp_Code', 'asc')
+        ->count();
+
+        if($latestEmployees != null) {
+            $emp="Reblate Solutions Employees";
+            return view('emp.view-employees',compact('latestEmployees','emp','totalCount'));
+        } else {
+            return redirect('/');
+        }
+    }
+
     public function manage() {
         // $title = "Update Employee Details";
         // $data = compact('title');
         // $rec = Employee::orderBy('id', 'desc')->get();
         $user_type = Auth()->user()->user_type;
         if($user_type == "employee") {
-            return view('errors.401');
+            return view('errors.404');
         }
         $latestEmployees = DB::table('employees')
         ->where('Emp_Status', 'active')
         ->orderBy('Emp_Code', 'asc')
         ->get();
 
+        $totalCount = $latestEmployees->count();
+
         // dd($latestEmployees);
         //$count = Employee::where('Emp_Status', 'active')->orderBy('id', 'desc')->count();
         if($latestEmployees != null) {
             $emp="Reblate Solutions Employees";
-            return view('emp.view-employees',compact('latestEmployees','emp'));
+            return view('emp.view-employees',compact('latestEmployees','emp','totalCount'));
         } else {
             return redirect('/');
         }
