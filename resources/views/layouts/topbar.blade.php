@@ -127,50 +127,41 @@
                     </div>
                 </div>
             @endif
-            <div class="dropdown px-3 sidebar-user" style="background-color: #e3e3e3; border-radius: 10px;margin:10px;">
-                <button type="button" class="btn w-100 px-0 border-0" id="page-header-user-dropdown"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
+            <div class="btn-group">
+                <button type="button" class="btn d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #e3e3e3; border-radius: 10px;margin:10px;">
+                    @if (Session::has('emp_img'))
+                    <!-- Debugging: Check if session variable exists -->
 
-                            @if (Session::has('emp_img'))
-                            <!-- Debugging: Check if session variable exists -->
-
-                            <!-- Debugging: Output session variable value -->
+                    <!-- Debugging: Output session variable value -->
 
 
-                            @if (Session::get('emp_img') != "" && file_exists(Session::get('emp_img')))
-                                <!-- Debugging: Output image path -->
+                    @if (Session::get('emp_img') != "" && file_exists(Session::get('emp_img')))
+                        <!-- Debugging: Output image path -->
 
 
-                                <!-- Render image -->
-                                <img src="{{ url(Session::get('emp_img')) }}" class="img-fluid header-profile-user rounded-circle" alt="">
-                            @else
+                        <!-- Render image -->
+                        <img src="{{ url(Session::get('emp_img')) }}" class="img-fluid header-profile-user rounded-circle" alt="">
+                    @else
 
 
-                                <!-- Render default image -->
-                                <img src="{{ url('user.png') }}" class="img-fluid header-profile-user rounded-circle" alt="">
-                            @endif
-                        @endif
-
-                        </div>
-
-                        <div class="flex-grow-1 ms-2 text-start">
-                            <span class="ms-1 fw-medium user-name-text">{{ auth()->user()->user_name }}</span>
-                        </div>
-                    </span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-end">
-                    <!-- item-->
-                    <a class="dropdown-item" href="{{ Route('user.chang-password')}}"><i
-                            class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Change Password</span></a>
-                    <a class="dropdown-item" href="javascript:void()" onclick="confirmLogout()"><i
-                            class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Logout</span></a>
-
+                        <!-- Render default image -->
+                        <img src="{{ url('user.png') }}" class="img-fluid header-profile-user rounded-circle" alt="">
+                    @endif
+                @endif
+                <div class="flex-grow-1 text-start">
+                    <span class="ms-1 fw-medium user-name-text">{{ auth()->user()->user_name }}</span>
                 </div>
-            </div>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{{ Route('user.chang-password')}}"><i
+                    class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
+                    class="align-middle">Change Password</span></a></li>
+                  <li><a class="dropdown-item" href="javascript:void()" onclick="confirmLogout()"><i
+                    class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
+                    class="align-middle">Logout</span></a></li>
+
+                </ul>
+              </div>
 
         </div>
     </div>
