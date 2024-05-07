@@ -3,7 +3,7 @@
     Employee Login
 @endsection
 @section('content')
-    <div class="d-flex align-items-center min-vh-100" style="background-color:lightgray">
+    <div class="d-flex align-items-center min-vh-100 background-circle" style="background-color:#161623 ">
 
         <div class="container">
             <div class="row justify-content-center">
@@ -13,6 +13,27 @@
                             <div class="d-flex flex-column h-100 py-0 py-xl-3">
 
                                 <style>
+                                    .background-circle::before {
+                                        content: '';
+                                        position: absolute;
+                                        top: 0;
+                                        left: 0;
+                                        width: 100%;
+                                        height: 100%;
+                                        background: #2196f3;
+                                        clip-path: circle(20% at 10% 10%);
+                                    }
+
+                                    .background-circle::after {
+                                        content: '';
+                                        position: absolute;
+                                        top: 0;
+                                        left: 0;
+                                        width: 100%;
+                                        height: 100%;
+                                        background:#fca311;
+                                        clip-path: circle(30% at right 90%);
+                                    }
                                        /* Custom checkbox style */
                                        input[type="checkbox"] {
                                         appearance: none;
@@ -20,7 +41,7 @@
                                         -moz-appearance: none;
                                         width: 15px;
                                         height: 15px;
-                                        border: 1px solid #14213d;
+                                        border: 1px solid rgba(255, 255, 255, 0.5);
                                         /* Border color */
                                         border-radius: 4px;
                                         /* Border radius */
@@ -30,9 +51,10 @@
 
                                     /* Checked state */
                                     input[type="checkbox"]:checked {
-                                        background-color: #14213d;
+                                        background-color: rgba(255, 255, 255, 0.5);
                                         /* Background color when checked */
-                                        border-color: #14213d;
+                                        border-color: #fff;
+                                        color: black !important;
                                         /* Border color when checked */
                                     }
 
@@ -41,8 +63,8 @@
                                         content: '\2713';
                                         /* Unicode checkmark character */
                                         display: block;
-                                        width: 16px;
-                                        height: 16px;
+                                        width: 20px;
+                                        height: 20px;
                                         text-align: center;
                                         line-height: 16px;
                                         color: white;
@@ -53,26 +75,31 @@
                                         margin-bottom: 24px;
                                         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
                                         border-radius: 22px;
+                                        position: relative;
+                                        z-index: 10;
                                     }
 
                                     .card-box {
-                                        background: #fff;
-                                        box-shadow: 1px 1px 1px 2px rgba(0, 0, 0, 0.3);
-                                        /* padding: 10px; */
-                                        height: 80px;
-                                        border-radius: 3px;
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: center;
-                                        transition: 0.3s;
-                                    }
 
-                                    .card-box:hover {
-                                        background: #14213d;
-                                        color: #fff;
-                                        box-shadow: none;
-                                        cursor: pointer;
-                                    }
+background-color: rgba(255, 255, 255, 0.3);
+padding: 10px;
+color: #fff;
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: 0.3s;
+flex-wrap: wrap;
+border-radius: 50px;
+border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.card-box:hover {
+background: rgba(255, 255, 255, 0.5);
+color: #fff;
+box-shadow: none;
+cursor: pointer;
+}
 
                                     .img-left {
                                         width: 100%;
@@ -83,34 +110,51 @@
                                         position: absolute;
                                         top: 8px;
                                         right: 20px;
-                                        color:#14213d;
+                                        color:#fff;
+                                    }
+                                    .reblateText{
+                                        color: white;
+                                        font-size: 30px;
+                                        font-weight: 500;
+                                        letter-spacing: 5px;
+                                    }
+                                    .reblateSubText{
+                                        color: white;
+                                        font-size: 35px;
+                                        letter-spacing: 3.5px;
+                                    }
+                                    @media (max-width: 768px) {
+                                        .reblateText{
+                                            font-size: 25px;
+                                        }
+                                        .reblateSubText{
+                                            font-size: 25px;
+                                        }
                                     }
                                 </style>
 
 
                                 <div class="card my-auto overflow-hidden">
                                     <div class="row g-0">
-                                        <div class="col-lg-6">
-                                            <img src="{{ url('emp-image.png') }}" class="img-left">
+                                        <div class="col-lg-6 d-flex align-items-center justify-content-center"  style="backdrop-filter: blur(5px); background-color: rgba(255, 255, 255, 0.1);">
+                                            <img src="{{ url('reblate.png') }}" style="width:90%; object-fit:cover;"
+                                                alt="Reblate Solutions Logo">
                                         </div>
 
-                                        <div class="col-lg-6" style="background-color: #fff;">
-                                            <div class="text-center  mt-2">
-                                                <a href="https://reblatesols.com" class="" target="_blank">
-                                                    <img src="{{ url('reblat-logo.png') }}" alt="" height="60"
-                                                        class="auth-logo logo-dark mx-auto"
-                                                        style="    margin-top: 30px;
-                                                        object-fit: contain;">
-                                                    <img src="{{ url('reblat-logo.png') }}" alt="" height="60"
-                                                        class="auth-logo logo-light mx-auto">
-                                                </a>
+                                        <div class="col-lg-6"  style="backdrop-filter: blur(5px); background-color: rgba(255, 255, 255, 0.1);">
+                                            {{-- <div class="text-center ">
 
-                                            </div>
+                                                <h1 class="reblateText">
+                                                    Reblate Solutions </h1>
+                                                <span class="reblateSubText">&
+                                                    Service Providers</span>
+
+                                            </div> --}}
                                             <div class="p-lg-5 p-4">
                                                 <div>
                                                     <div class="text-center mt-1">
-                                                        <h4 class="font-size-18" style="color: #14213d;"> Employee Dashboard!</h4>
-                                                        <p class="text-muted">Sign in to continue to Reblate Solutions
+                                                        <h4 class="reblateText" style="color: #fff;"> Employee Dashboard!</h4>
+                                                        <p style="color: lightgray">Sign in to continue to Reblate Solutions
                                                             Employee Dashboard!
                                                         </p>
                                                     </div>
@@ -135,7 +179,7 @@
                                                             <label for="text" class="form-label">Emp Code</label>
                                                             <input id="text" type="text"
                                                                 class="inputboxcolor form-control @error('employee_code') is-invalid @enderror"
-                                                                name="employee_code" value="{{ old('employee_code') }}" style="border: 1px solid gray"
+                                                                name="employee_code" value="{{ old('employee_code') }}" style="border: 1px solid rgba(255, 255, 255, 0.5);  background-color: rgba(255, 255, 255, 0.5);"
                                                                 placeholder="Emp Code" maxlength="8">
                                                             @error('employee_code')
                                                                 <span class="invalid-feedback" role="alert">
@@ -148,7 +192,7 @@
                                                             <label class="form-label" for="password-input">Password</label>
                                                             <input type="password"
                                                                 class="form-control inputboxcolor @error('user_password') is-invalid @enderror"
-                                                                placeholder="Enter password" id="password" style="border: 1px solid gray"
+                                                                placeholder="Enter password" id="password" style="border: 1px solid rgba(255, 255, 255, 0.5);  background-color: rgba(255, 255, 255, 0.5);"
                                                                 name="user_password" autocomplete="current-password">
                                                             @error('user_password')
                                                                 <span class="invalid-feedback" role="alert">
@@ -159,7 +203,7 @@
                                                         <div class="mb-3">
 
                                                             <input type="checkbox" onclick="togglePasswordVisibility()">
-                                                            <label for="showPassword">Show Password</label>
+                                                            <label class="text-light" for="showPassword">Show Password</label>
 
                                                         </div>
                                                         <div class="form-check d-flex justify-content-between">
@@ -167,14 +211,14 @@
                                                                 <input class="form-check-input" type="checkbox"
                                                                     name="remember" id="remember"
                                                                     {{ old('remember') ? 'checked' : '' }}>
-                                                                <label class="form-check-label" for="remember">Remember
+                                                                <label class="form-check-label text-light" for="remember">Remember
                                                                     me</label>
                                                             </div>
-                                                            <a href="/forget-password" class="text-end" style="color: gray">Forget Password?</a>
+                                                            <a href="/forget-password" class="text-end" style="color: lightgray">Forget Password?</a>
                                                         </div>
 
                                                         <div class="mt-4">
-                                                            <button class="reblateBtn px-4 py-2 w-100" type="submit">Sign
+                                                            <button class="card-box px-4 py-2 " type="submit">Sign
                                                                 In</button>
                                                         </div>
 

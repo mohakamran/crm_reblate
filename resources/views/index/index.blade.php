@@ -420,13 +420,22 @@
                             <div class="col-md-6 col-6 text-center">
                                 <div class="stats-box mb-4" style="border: 1px solid #e3e3e3; border-radius:5px;">
                                     <p>Total Tasks</p>
-                                    <h3>{{ $tasks_count['total_tasks'] }}</h3>
+                                    <h3> @if ($tasks_count['total_tasks'] == null)
+                                        0
+                                    @else
+                                    {{ $tasks_count['total_tasks'] }}</h3>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-6 col-6 text-center">
                                 <div class="stats-box mb-4" style="border: 1px solid #e3e3e3; border-radius:5px;">
                                     <p>Incomplete Tasks</p>
-                                    <h3>{{ $tasks_count['incomplete_tasks'] }}</h3>
+                                    <h3> @if ($tasks_count['incomplete_tasks'] == null)
+                                        0
+                                        @else
+                                        {{ $tasks_count['incomplete_tasks'] }}</h3>
+
+                                    @endif
                                 </div>
                             </div>
                         </div>

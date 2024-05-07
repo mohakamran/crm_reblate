@@ -64,7 +64,9 @@
 
             .punch-info .punch-hours {
                 border: 3px solid #fca311;
+
                 max-width:250px;
+
                 padding: 20px;
                 margin: 0 auto;
                 border-radius: 12px;
@@ -92,12 +94,14 @@
             }
 
             .timeliner {
+
                margin: 0 auto;
                 letter-spacing: 0.2px;
                 position: relative;
                 padding-top: 20px;
                 margin-left:10px;
                 padding-bottom: 0;
+
                 list-style: none;
                 text-align: left;
 
@@ -253,6 +257,7 @@
         <div class="row">
             <div class="col-md-4 col-xl-4 col-sm-12">
                 <div class="card overflow-hidden">
+
                     <div class="card-body overflow-hidden" style='padding-bottom:12px;'>
                         <div class="position-relative" style="z-index: 10">
                             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -297,9 +302,12 @@
                                     <p style="color:#14213d; font-size: 16px;">Loss of <br> Pay</p>
                                 </div>
                             </div>
+
                         </div>
+
+
                         <div class="d-flex flex-wrap gap-4 justify-content-between">
-                            <div class="w-100 d-flex justify-content-between position-relative" style="z-index: 10;">
+                            <div class="w-100 d-flex justify-content-between">
                                 <button type="button" class="reblateBtn px-3 py-2" data-toggle="modal"
                                     data-target="#exampleModal">Apply for Leave</button>
                                 <a href="/leave-records" class="reblateBtn px-3 py-2">Leave Records</a>
@@ -323,16 +331,14 @@
                                                     <label for="date">Date</label>
                                                     <input type="date" class="form-control inputboxcolor"
                                                         style="border: 1px solid #ced4da;" id="date" name="date">
-                                                    <span class="text-danger" id="dateBox" style="display: none">Please
-                                                        Select
+                                                    <span class="text-danger" id="dateBox" style="display: none">Please Select
                                                         a date!</span>
                                                 </div>
                                                 <div class="form-group mt-3">
                                                     <label for="reason">Reason:</label>
                                                     <textarea class="form-control inputboxcolor" style="border: 1px solid #ced4da; resize: none; height: 100px;"
                                                         id="reason" name="reason" placeholder="Reason:" rows="5"></textarea>
-                                                    <span class="text-danger" id="reasonBox" style="display: none">Please
-                                                        Write a
+                                                    <span class="text-danger" id="reasonBox" style="display: none">Please Write a
                                                         reason!</span>
                                                 </div>
 
@@ -350,40 +356,41 @@
             <div class="col-md-4 col-xl-4 col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h3 class=" font-size-header mb-0" style='color:#000;'>Today's Activity </h3>
-                        </div>
+                        <h6 class="card-title">Today Activity</h6>
                         <div id="content">
+
                             <ul class="timeliner d-grid gap-3" style="grid-template-columns: 1fr 1fr;" >
+
                                 <li class="event mb-1">
-                                    <h4 class="mb-1" style="color: #14213d">Check In</h4>
+                                    <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Check In</h3>
                                     @if (session()->has('check_in_time') && session('check_in_time') != '')
-                                        <p class="mb-1">{{ session('check_in_time') }}</p>
+                                        <p>{{ session('check_in_time') }}</p>
                                     @else
-                                        <p class="mb-1">No Check In</p>
+                                        <p>No Check In</p>
                                     @endif
                                 </li>
                                 <li class="event mb-1">
-                                    <h4 class="mb-1" style="color: #14213d">Break Start</h4>
+                                    <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Break Start Time</h3>
                                     @if (session()->has('break_start_time') && session('break_start_time') != '')
-                                        <p class="mb-1">{{ session('break_start_time') }}</p>
+                                        <p>{{ session('break_start_time') }}</p>
                                     @else
-                                        <p class="mb-1">No Break Start</p>
+                                        <p>No Break Start</p>
                                     @endif
                                 </li>
                                 <li class="event mb-1">
-                                    <h4 class="mb-1" style="color: #14213d">Break End</h4>
+                                    <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Break End Time</h3>
                                     @if (session()->has('break_end_time') && session('break_end_time') != '')
-                                        <p class="mb-1">{{ session('break_end_time') }}</p>
+                                        <p>{{ session('break_end_time') }}</p>
                                     @else
-                                        <p class="mb-1">No Break End Time</p>
+                                        <p>No Break End Time</p>
                                     @endif
                                 </li>
                                 <li class="event mb-1">
-                                    <h4 class="mb-1" style="color: #14213d">Check Out</h4>
+                                    <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Check Out</h3>
                                     @if (session()->has('check_out_time') && session('check_out_time') != '')
-                                        <p class="mb-1">{{ session('check_out_time') }}</p>
+                                        <p>{{ session('check_out_time') }}</p>
                                     @else
+
                                         <p class="mb-1">No Checkout</p>
                                     @endif
                                 </li>
@@ -401,6 +408,7 @@
                                         <p class="mb-1">{{ session('overtime_end') }}</p>
                                     @else
                                         <p class="mb-1">No Overtime End</p>
+
                                     @endif
                                 </li>
                             </ul>
@@ -413,7 +421,7 @@
                 <div class="card">
                     <div class="card-body" >
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h3 class=" font-size-header mb-0" style='color:#000;'>Timesheet </h3>
+                            <h3 class=" font-size-header mb-0">Timesheet </h3>
 
                         </div>
                         <div class="punch-info">
@@ -443,30 +451,30 @@
                                 <span class="text-center green-text">{{ $success_message }}</span>
                             @endif
 
-                            <div class="break-time d-flex align-items-center justify-content-between mb-3" style='margin-top:25px;'>
+
+                            <div class="break-time d-flex align-items-center justify-content-between my-3">
                                 <p class="mb-0 font-size-15" >Target Working Hours</p>
                                 <p class="mb-0 font-size-15" >7:00 / Day</p>
                             </div>
                             @if (session()->has('attendence_status') && session('attendence_status') === true)
-                                    <div>
+
                                         <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
                                             width="1em" height="1em" viewBox="0 0 24 24">
                                             <path fill="#3e7213"
                                                 d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
                                         </svg> Attendence Marked Successfully!</span>
-                                    </div>
 
                                     @if ( session()->has('overtime_status') && session('overtime_status') === true)
-                                    <div>
+
                                         <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
                                             width="1em" height="1em" viewBox="0 0 24 24">
                                             <path fill="#3e7213"
                                                 d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
                                         </svg> Over time marked!</span>
-                                    </div>
+
 
                                         @elseif( session()->has('show_over_time_end') && session('show_over_time_end') === false)
-                                        <div class="row" style="margin-top:20px;">
+                                        <div class="row">
                                             <div class="col-md-12 d-flex justify-content-center">
                                                 <a class="reblateBtn px-4 py-2 w-md" href="/overtime-start" >Overtime Start
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
@@ -502,6 +510,7 @@
 
 
 
+
                             @else
                                 <div class="d-flex flex-wrap justify-content-between gap-4 align-items-center">
 
@@ -532,6 +541,7 @@
                                         @endif
 
 
+
                                     @if (session()->has('show_break_end') && session('show_break_end') === true)
                                         <a class="reblateBtn px-4 py-2" href="/break-end">Break End
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
@@ -559,23 +569,19 @@
                                     @endif
 
 
+
                                 </div>
                             @endif
                             <div class="view-class-more">
                                 <a href="/view-attendence" style="color:#fca311;">View Attendence</a>
                             </div>
-
-
                         </div>
-
-
-
                     </div>
                 </div>
 
             </div>
-
         </div>
+
         <!-- END ROW -->
         <div class="row mb-3">
             <div class="col-md-6">
@@ -1361,15 +1367,14 @@
         </script>
     @endsection
     @section('scripts')
-        <!-- apexcharts -->
+
         {{-- <script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script> --}}
 
-        <!-- Vector map-->
         {{-- <script src="{{ URL::asset('build/libs/jsvectormap/js/jsvectormap.min.js') }}"></script> --}}
         {{-- <script src="{{ URL::asset('build/libs/jsvectormap/maps/world-merc.js') }}"></script> --}}
 
         <script src="{{ URL::asset('build/js/pages/dashboard.init.js') }}"></script>
-        <!-- App js -->
+
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

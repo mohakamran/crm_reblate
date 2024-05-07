@@ -23,7 +23,6 @@
                 padding: 20px;
             }
 
-
             .time-list .dash-stats-list {
                 flex-flow: column wrap;
                 flex-grow: 1;
@@ -78,15 +77,13 @@
 
             .punch-info .punch-hours {
                 border: 3px solid #fca311;
-               max-width: 245px;
+                /* font-size: 20px; */
                 padding: 20px;
                 margin: 0 auto;
                 border-radius: 12px;
                 position: relative;
                 text-align: center;
             }
-
-
 
             .punch-hours span {
                 font-weight: 500;
@@ -116,7 +113,6 @@
                 padding: 20px;
                 list-style: none;
                 text-align: left;
-
             }
 
             @media (max-width: 767px) {
@@ -139,7 +135,7 @@
             }
 
             .timeliner .event {
-
+                border-bottom: 1px dashed #e8ebf1;
 
                 position: relative;
             }
@@ -216,28 +212,23 @@
                 right: -55.8px;
             }
         </style>
-
-
         <div class="row mt-2">
             <div class="card">
-                <div class="card-body d-flex justify-content-lg-between align-items-center flex-wrap" style="gap:10px;">
+                <div class="card-body d-flex justify-content-lg-between align-items-center">
                     <div class="col-md-3 d-flex align-items-center">
-
-                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image) )
+                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                             <img src="{{ $emp_det->Emp_Image }}"
                                 style="width:120px;height:120px;border-radius:100%; object-fit:cover;" alt="">
                         @else
-                        <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
-                        src="{{ url('user.png') }}">
+                            <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
+                                src="{{ url('user.png') }}">
                         @endif
                         <div class="welcome-det ms-3 text-dark fw-bolder">
-                            <h3  style="font-size: 20px; color:#14213d">Welcome, </h3>
+                            <h3 style="font-size: 20px; color:#14213d">Welcome, </h3>
                             <span class="fw-bold"
                                 style="font-size: 20px; color:#fca311;">{{ isset($emp_det->Emp_Full_Name) && $emp_det->Emp_Full_Name ? $emp_det->Emp_Full_Name : 'Guest' }}</span>
                         </div>
-
                     </div>
-
                     <div class="">
                         <h3 style="font-size: 20px; color:#14213d">Designation</h3>
                         <span class="fw-semibold "
@@ -248,7 +239,6 @@
                         <span class="fw-semibold" style="color:#fca311; font-size: 20px;">
                             {{ isset($emp_det->Emp_Shift_Time) && $emp_det->Emp_Shift_Time ? $emp_det->Emp_Shift_Time : '' }}
                         </span>
-
                     </div>
                     <div>
                         <h3 style="font-size: 20px; color:#14213d">Today's Date</h3>
@@ -258,7 +248,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="row" style="display: flex; flex-wrap: wrap;">
@@ -280,8 +269,8 @@
 
                                 <div
                                     class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
-                                    <p class="text-truncate font-size-18 mb-0 fw-bold">Employees</p>
-                                    <h5 class="mb-0">{{ $emp_count }}
+                                    <p class="text-truncate font-size-18 mb-0 fw-bold">Revenue</p>
+                                    <h5 class="mb-0"> ${{$total_revenue}}
                                     </h5>
                                 </div>
 
@@ -368,14 +357,12 @@
                                     </svg>
                                 </span>
                             </div>
-
-
-                            <div class="flex-grow-1 overflow-hidden ms-2">
-
+                            <div class="d-flex flex-column ms-2">
                                 <div
                                     class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
                                     <p class="text-truncate font-size-18 mb-0 fw-bold"> Salaries</p>
-                                    <h5 class="mb-0">${{ $usd_pkr_salary }}
+                                    <h5 class="mb-0"> ${{$total_salary}}
+                                    </h5>
                                 </div>
 
                             </div>
@@ -404,13 +391,12 @@
                                     </svg>
                                 </span>
                             </div>
-
-                            <div class="flex-grow-1 overflow-hidden ms-2">
+                            <div class="d-flex flex-column ms-2">
 
                                 <div
                                     class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Expenses</p>
-                                    <h5 class="mb-0">${{ $usd_pkr_expenses }} </h5>
+                                    <h5 class="mb-0">$ {{$usd_expenses}} </h5>
                                 </div>
 
                             </div>
@@ -435,19 +421,15 @@
                                 </span>
                             </div>
                             <div class="d-flex flex-column ms-2">
-                                <form action="/filter-manager-date" method="post">
-@csrf
-                                    <div
-                                        class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
-
-                                            <input type="text" name="daterange" value="" class="form-control" />
-                                            <button id="submit_dates" class="btn-apply">Apply</button>
-
-
-
-                                    </div>
-                                </form>
-
+                                <div
+                                    class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
+                                    <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Profit</p>
+                                    <h5 class="mb-0">  {{$total_profit}}
+                                    </h5>
+                                </div>
+                                {{-- <p class="text-muted mb-0 text-truncate"><span
+                                        class="badge bg-subtle-success text-success font-size-12 fw-normal me-1"><i
+                                            class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p> --}}
                             </div>
 
                         </div>
@@ -499,15 +481,13 @@
                                    <p style="color:#14213d; font-size: 16px;">Working <br> Days</p>
                                </div>
                                <div class="col-md-4 col-sm-4" style='width:33%'>
-                                   <h3 style='color:red;'>
-
+                                   <h3 style='color:red;'>2000</h3>
                                    @if ($salary_deduct !=null && $salary_deduct>=0)
                                          {{$salary_deduct}}
                                         @else
                                          0
                                     @endif
                                    <p style="color:#14213d; font-size: 16px;">Loss of <br> Pay</p>
-                                   </h3>
                                </div>
                            </div>
                        </div>
@@ -567,7 +547,7 @@
                            <h3 class=" font-size-header mb-0" style='color:#000;'>Today's Activity </h3>
                        </div>
                        <div id="content">
-                           <ul class="timeliner d-grid gap-3" style="grid-template-columns: 1fr 1fr; margin-left:20px; padding-bottom:5px;" >
+                           <ul class="timeliner d-grid gap-3" style="grid-template-columns: 1fr 1fr;" >
                                <li class="event mb-1">
                                    <h4 class="mb-1" style="color: #14213d">Check In</h4>
                                    @if (session()->has('check_in_time') && session('check_in_time') != '')
@@ -638,7 +618,7 @@
                                @else
                                    {{-- <span>0 hrs</span> --}}
 
-                                   <span id="timer" class="text-center timer">00:00:00</span>
+                                        <span id="timer" class="text-center timer">00:00:00</span>
 
                                    {{-- <div id="timer" class="text-center timer">00:00:00</div> --}}
                                @endif
@@ -646,80 +626,31 @@
 
 
 
-                           @if (isset($day_message) && $day_message != '')
-                               <span class="text-center text-danger">{{ $day_message }}</span>
-                           @endif
-                           @if (isset($check_in_already_message) && $check_in_already_message != '')
-                               <span class="font-text text-danger">{{ $check_in_already_message }}</span>
-                           @endif
-                           @if (isset($success_message) && $success_message != '')
-                               <span class="text-center green-text">{{ $success_message }}</span>
-                           @endif
+                            @if (isset($day_message) && $day_message != '')
+                            <span class="text-center text-danger">{{ $day_message }}</span>
+                        @endif
+                        @if (isset($check_in_already_message) && $check_in_already_message != '')
+                            <span class="font-text text-danger">{{ $check_in_already_message }}</span>
+                        @endif
+                        @if (isset($success_message) && $success_message != '')
+                            <span class="text-center green-text">{{ $success_message }}</span>
+                        @endif
 
-                           <div class="break-time d-flex align-items-center justify-content-between mb-3" style='margin-top:25px;'>
-                               <p class="mb-0 font-size-15" >Target Working Hours</p>
-                               <p class="mb-0 font-size-15" >7:00 / Day</p>
-                           </div>
-                           @if (session()->has('attendence_status') && session('attendence_status') === true)
-                                   <div>
-                                       <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
-                                           width="1em" height="1em" viewBox="0 0 24 24">
-                                           <path fill="#3e7213"
-                                               d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
-                                       </svg> Attendence Marked Successfully!</span>
-                                   </div>
-
-                                   @if ( session()->has('overtime_status') && session('overtime_status') === true)
-                                   <div>
-                                       <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
-                                           width="1em" height="1em" viewBox="0 0 24 24">
-                                           <path fill="#3e7213"
-                                               d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
-                                       </svg> Over time marked!</span>
-                                   </div>
-
-                                       @elseif( session()->has('show_over_time_end') && session('show_over_time_end') === false)
-                                       <div class="row" style="margin-top:20px;">
-                                           <div class="col-md-12 d-flex justify-content-center">
-                                               <a class="reblateBtn px-4 py-2 w-md" href="/overtime-start" >Overtime Start
-                                                   <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                       viewBox="0 0 21 21">
-                                                       <g fill="none" fill-rule="evenodd" stroke="currentColor"
-                                                           stroke-linecap="round" stroke-linejoin="round">
-                                                           <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
-                                                           <path
-                                                               d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
-                                                       </g>
-                                                   </svg>
-                                               </a>
-                                           </div>
-
-                                       </div>
-                                       @elseif( session()->has('show_over_time_end') && session('show_over_time_end') === true)
-                                       <div class="row" style="margin-top:20px;">
-                                           <div class="col-md-12 d-flex justify-content-center">
-                                               <a class="reblateBtn px-4 py-2 w-md" href="/overtime-end" >Overtime End
-                                                   <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                       viewBox="0 0 21 21">
-                                                       <g fill="none" fill-rule="evenodd" stroke="currentColor"
-                                                           stroke-linecap="round" stroke-linejoin="round">
-                                                           <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
-                                                           <path
-                                                               d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
-                                                       </g>
-                                                   </svg>
-                                               </a>
-                                           </div>
-
-                                   @endif
-
-
-
-                           @else
-                               <div class="d-flex flex-wrap justify-content-between gap-4 align-items-center">
+                        <div class="break-time d-flex align-items-center justify-content-between my-3 " >
+                            <p class="mb-0 font-size-15" style="margin-top:45px;">Target Working Hours</p>
+                            <p class="mb-0 font-size-15" style="margin-top:45px;">7:00 / Day</p>
+                        </div>
+                        @if (session()->has('attendence_status') && session('attendence_status') === true)
+                            <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
+                                    width="1em" height="1em" viewBox="0 0 24 24">
+                                    <path fill="#3e7213"
+                                        d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
+                                </svg> Attendence Marked Successfully!</span>
+                        @else
+                        <div class="d-flex flex-wrap justify-content-between gap-4">
 
                                        @if (session()->has('show_check_out') && session('show_check_out') === true)
-                                           <a class="reblateBtn px-4 py-2 w-md" href="javascript:void()" onclick="checkOut()"   >Checking Out
+                                           <a class="reblateBtn px-4 py-2 w-md" href="/check-out/" >Checking Out
                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                    viewBox="0 0 16 16">
                                                    <g fill="currentColor" fill-rule="evenodd">
@@ -744,47 +675,52 @@
                                            </a>
                                        @endif
 
+                                <div class="col-md-6">
+                                    @if (session()->has('show_break_end') && session('show_break_end') === true)
+                                        <a class="reblateBtn px-4 py-2" href="/break-end" style="width:100%;">Break End
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                viewBox="0 0 16 16">
+                                                <g fill="currentColor" fill-rule="evenodd">
+                                                    <path
+                                                        d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                                    <path
+                                                        d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                                </g>
+                                            </svg>
+                                        </a>
+                                    @else
+                                        <a class="reblateBtn px-4 py-2" href="/break-start"
+                                            style="width:100%;">BreakStart
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                viewBox="0 0 16 16">
+                                                <g fill="currentColor" fill-rule="evenodd">
+                                                    <path
+                                                        d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                                    <path
+                                                        d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                                </g>
+                                            </svg>
+                                        </a>
+                                    @endif
+                                </div>
 
-                                   @if (session()->has('show_break_end') && session('show_break_end') === true)
-                                       <a class="reblateBtn px-4 py-2" href="/break-end">Break End
-                                           <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                               viewBox="0 0 16 16">
-                                               <g fill="currentColor" fill-rule="evenodd">
-                                                   <path
-                                                       d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                                   <path
-                                                       d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                                               </g>
-                                           </svg>
-                                       </a>
-                                   @else
-                                       <a class="reblateBtn px-4 py-2" href="/break-start" >BreakStart
-                                           <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                               viewBox="0 0 16 16">
-                                               <g fill="currentColor" fill-rule="evenodd">
-                                                   <path
-                                                       d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                                   <path
-                                                       d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                                               </g>
-                                           </svg>
-                                       </a>
-                                   @endif
-
-
-                               </div>
-                           @endif
-                           <div class="view-class-more">
-                               <a href="/view-attendence" style="color:#fca311;">View Attendence</a>
-                           </div>
-
-
-                       </div>
-
+                    </div>
+                        @endif
+                        <div class="view-class-more">
+                            <a href="/view-attendence" style="color:#fca311; border-bottom:1px solid #14213d;">View
+                                Attendence</a>
+                        </div>
 
 
-                   </div>
-               </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <!-- end card -->
+            </div>
 
            </div>
 
@@ -850,16 +786,15 @@
                                                             <td>
                                                                 @if ($task->task_status == 'completed')
                                                                     <span
-                                                                    class="badge badge-soft-success font-size-12">{{ $task->task_status }}</span>
+                                                                        class="badge badge-soft-success font-size-12">{{ $task->task_status }}</span>
                                                                 @elseif ($task->task_status == 'in-progress')
                                                                     <span
-                                                                    class="badge badge-soft-warning font-size-12">{{ $task->task_status }}</span>
+                                                                        class="badge badge-soft-warning font-size-12">{{ $task->task_status }}</span>
                                                                 @else
                                                                     <span
-                                                                    class="badge badge-soft-danger font-size-12">{{ $task->task_status }}</span>
-
+                                                                        class="badge badge-soft-danger font-size-12">{{ $task->task_status }}</span>
                                                                 @endif
-                                                                </td>
+                                                            </td>
                                                             <td>{{ $task->assigned_by }}</td>
                                                             {{-- <td>{{$task->task_title}}</td> --}}
                                                         </tr>
@@ -1448,39 +1383,39 @@
 
 
             new Chart(chartId, {
-              type: 'bar',
-              data: {
-                labels: ['Presents', 'Absents', 'Leaves'],
-                datasets: [{
-                  label: 'Attendance',
-                  data: [<?php echo $total_present_day; ?>, <?php echo $absent_days; ?>, <?php echo $total_leaves; ?>],
-                  backgroundColor: [
+                type: 'bar',
+                data: {
+                    labels: ['Presents', 'Absents', 'Leaves'],
+                    datasets: [{
+                        label: 'Attendance',
+                        data: [<?php echo $total_present_day; ?>, <?php echo $absent_days; ?>, <?php echo $total_leaves; ?>],
+                        backgroundColor: [
                             'rgba(75, 192, 192, 0.5)',
                             'rgba(255, 99, 132, 0.5)',
                             'rgba(255, 205, 86, 0.5)',
 
                         ],
-                }]
-              },
-              options: {
-                indexAxis: 'x',
-              }
+                    }]
+                },
+                options: {
+                    indexAxis: 'x',
+                }
             });
             const chartId2 = document.getElementById('bar_chart');
 
             new Chart(chartId2, {
-              type: 'bar',
-              data: {
-                labels: ['Completed', 'Pending', 'In Progress'],
-                datasets: [{
-                  label: 'Tasks',
-                  data: [<?php echo $completed_count ?>, <?php echo $pending_count ?>, <?php echo $in_progress_count ?>],
-                  borderWidth: 1
-                }]
-              },
-              options: {
-                indexAxis: 'y',
-              }
+                type: 'bar',
+                data: {
+                    labels: ['Completed', 'Pending', 'In Progress'],
+                    datasets: [{
+                        label: 'Tasks',
+                        data: [<?php echo $completed_count; ?>, <?php echo $pending_count; ?>, <?php echo $in_progress_count; ?>],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                }
             });
 
 
