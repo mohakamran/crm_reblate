@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div style="margin-bottom: 20px;">
-                            <p class="card-title">Fill below form to add your data as new employee in our database system. Fields with(<span
+                            <p class="card-title font-size-14">Fill below form to add your data as new employee in our database system. Fields with(<span
                                 style="color:red;">*</span>) are mandatory to fill, remaining are optional.</p>
                             </div>
 
@@ -48,7 +48,7 @@
                                                 </a>
                                             @endisset --}}
 
-                                            @if ($emp_data->Emp_Image !="" && file_exists($emp_data->Emp_Image))
+                                            @if (isset($emp_data->Emp_Image) &&  $emp_data->Emp_Image!=null && file_exists($emp_data->Emp_Image))
                                 <img src="{{  url($emp_data->Emp_Image)  }}"
                                 style="width:150px;height:150px" alt="">
                                 @else
@@ -197,22 +197,49 @@
                                                 </div>
                                             </div>
                                         @endif
-
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
+                                        <h4 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Salery Details</h4>
+                                        <div class="row" style="margin-top: 15px;">
+                                            <div class="col-md-6">
                                                 <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
-                                                    <input class="form-control" style="background-color: transparent; border:none;"
-                                                        value="{{ isset($emp_data->Emp_Joining_Date) ? $emp_data->Emp_Joining_Date : old('employee_joining_date') }}"
-                                                        placeholder="Employee Joining Date" name="employee_joining_date"
-                                                        type="date">
-                                                    @error('employee_joining_date')
+                                                    <input class="form-control " placeholder="Basic Salary" style="background-color: transparent; border:none;"
+                                                        value="25000"
+                                                        type="text" name="basic_salary" >
+
+                                                    <label for="">Basic Salary <span class="text-danger">*</span></label>
+                                                    @error('employee_code')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
-                                                    <label for="">Emp Joining Date <span class="text-danger">*</span></label>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
+                                                    <input class="form-control " placeholder="Designation Bonus" style="background-color: transparent; border:none;"
+                                                        value="5000"
+                                                        type="text" name="designation_bonus">
+                                                    <label for="">Designation Bonus <span class="text-danger">*</span></label>
+                                                    @error('employee_department')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
+                                                    <input class="form-control" type="text" style="background-color: transparent; border:none;" placeholder="Employee Designation"
+                                                        name="travel_allounce"
+                                                        value="5000">
+                                                    @error('employee_designation')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+
+                                                    <label for="">Travel Allounce <span class="text-danger">*</span></label>
+
+                                                </div>
+                                            </div>
+
                                         </div>
+
+
 
                                     </div>
 
