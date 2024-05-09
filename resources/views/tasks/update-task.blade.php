@@ -64,7 +64,7 @@ Update Tasks
                                     <th>Month</th>
                                     <th>Year</th>
                                     <th>Task Status</th>
-                                    {{-- <th>Task Percentage</th> --}}
+                                    <th>Task Percentage</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -86,7 +86,7 @@ Update Tasks
                                         <td>{{ $monthName }}</td>
                                         <td>{{ $year }}</td>
                                         <td>{{  $task->task_status }}</td>
-                                        {{-- <td>{{  $task->task_percentage }}%</td> --}}
+                                        <td>{{  $task->task_percentage }}%</td>
                                         <td>
 
                                             <form action="/update-each-task" method="post">

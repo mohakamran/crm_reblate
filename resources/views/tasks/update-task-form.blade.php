@@ -58,10 +58,10 @@
                                         </h5>
                                         <P style="font-size: 15px; margin-bottom: 5px;">Task Desc: {{ $task->task_description }}</P>
 
-                                        {{-- <div class="progress mb-2" style="height: 20px;">
+                                        <div class="progress mb-2" style="height: 20px;">
                                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 90%;"
                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{$task->task_percentage}}% Complete</div>
-                                        </div> --}}
+                                        </div>
                                         <p>Task Statue: {{$task->task_status}}</p>
                                         <p class="mb-0"  style="font-size:15px;margin-top:10px; color:gray;">deadline: {{$task->task_date}}</p>
                                     </div>
@@ -75,7 +75,7 @@
             <div class="col-xl-4">
                 <div class="card">
                     <div class="card-body">
-                        <form method="post" action="/task-save-update/{{$task->id}}">
+                        <form method="post" action="#" enctype="multipart/form-data">
                             @csrf
 
                             @if (session('success'))
@@ -92,31 +92,28 @@
                             <h4 style="font-size: 16px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Task Update </h4>
 
                             <div class="form-floating mb-3">
-                                    <textarea class="form-control inputboxcolor" name="task_desc" style="height:180px;" name="" id="" cols="30" rows="30"></textarea>
+                                    <textarea class="form-control inputboxcolor" style="height:180px;" name="" id="" cols="30" rows="30"></textarea>
                                 <label for="">Task Update <span class="text-danger">*</span></label>
-                                @error('task_desc')
+                                @error('shift_start_morning')
                                     <span style="color:red">{{$message}}</span>
                                 @enderror
                             </div>
                             <div class="form-floating mb-3">
-                                {{-- <input id="slider" type="range" style="width:100%;" min="0" max="100" value="{{$task->task_percentage}}" class="custom-range">
-                                <p id="sliderValue">Task Progress (%): {{$task->task_percentage}}</p> --}}
+                                <input id="slider" type="range" style="width:100%;" min="0" max="100" value="{{$task->task_percentage}}" class="custom-range">
+                                <p id="sliderValue">Task Progress (%): {{$task->task_percentage}}</p>
                                 {{-- <label for="">Task Update (%) <span class="text-danger">*</span></label> --}}
                                 @error('shift_start_morning')
                                     <span style="color:red">{{$message}}</span>
                                 @enderror
                             </div>
                             <div class="form-floating mb-3">
-                                <select name="task_status" id="" class="form-control">
+                                <select name="" id="" class="form-control">
                                     <option value="" disabled selected>Select Task Status</option>
-                                    <option value="completed" {{(isset($task->task_status) && $task->task_status == "completed") ? 'selected' : ''}}>Completed</option>
-                                    <option value="pending" {{(isset($task->task_status) && $task->task_status == "pending") ? 'selected' : ''}}>Pending</option>
-                                    <option value="in-progress" {{(isset($task->task_status) && $task->task_status == "in-progress") ? 'selected' : ''}}>In Progress</option>
+                                    <option value="">Completed</option>
+                                    <option value="">Pending</option>
+                                    <option value="">In Progress</option>
                                 </select>
                                 <label for="">Task Status<span class="text-danger">*</span></label>
-                                @error('task_status')
-                                <span style="color:red">{{$message}}</span>
-                            @enderror
                             </div>
 
 

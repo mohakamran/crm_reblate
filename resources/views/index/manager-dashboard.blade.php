@@ -330,7 +330,7 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Projects</p>
-                                    <h5 class="mb-0">15 </h5>
+                                    <h5 class="mb-0">{{ $client_count }} </h5>
                                 </div>
 
                             </div>
@@ -441,7 +441,7 @@
         <div class="row">
             <div class="col-md-4 col-xl-4 col-sm-12">
                <div class="card overflow-hidden">
-                   <div class="card-body overflow-hidden">
+                   <div class="card-body overflow-hidden" style='padding-bottom:12px'>
                        <div class="position-relative" style="z-index: 10">
                            <div class="d-flex justify-content-between align-items-center mb-3">
                                <h3 class=" font-size-header mb-0" style='color:#000;'>Attendance </h3>

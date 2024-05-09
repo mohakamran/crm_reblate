@@ -14,7 +14,7 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title" style="color:#6b6b6b">Fill below form to add new employee. Fields with(<span
+                        <p class="card-title">Fill below form to add new employee. Fields with(<span
                                 style="color:red;">*</span>) are mandatory to fill, remaining are optional.</p>
                                 <form method="post" action="{{ $route }}" enctype="multipart/form-data">
 
@@ -35,11 +35,11 @@
                             <div class="row">
                                 <div class="col-md-6 col-xl-6 ">
                                     <h3 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Client Details </h3>
-
-                                    <div class="row">
+                                    
+                                                                        <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
-                                                <input class="form-control" style="background-color: transparent; border:none;"  type="text" placeholder="text" name="client_id"
+                                            <div class="form-floating mb-3">
+                                                <input class="form-control" style="border:1px solid #c7c7c7;" type="text" placeholder="text" name="client_id"
                                                     disabled value="{{ $client->client_id }}">
                                                 <input type="hidden" value="{{ $client->client_id }}"
                                                     name="client_id">
@@ -47,10 +47,10 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                            <div class="form-floating mb-3 inputboxcolor">
                                                 <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="text" name="emp_code"
                                                     disabled value="{{ $client->client_name }}">
                                                 <input type="hidden" style="background-color: transparent; border:none;" value="{{ $client->client_name }}" name="emp_code_hidden">
@@ -58,7 +58,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                            <div class="form-floating mb-3 inputboxcolor">
                                                 <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="User Name" disabled
                                                     value="{{ $client->project_name }}" min="0" name="emp_name">
                                                 <input type="hidden" style="background-color: transparent; border:none;" value="{{ $client->project_name }}" name="emp_name_hidden">
@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                            <div class="form-floating mb-3 inputboxcolor">
                                                 <input class="form-control" style="background-color: transparent; border:none;" type="email" placeholder="email" disabled
                                                     value="{{ $client->project_type }}" name="emp_email">
 
@@ -82,7 +82,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                            <div class="form-floating mb-3 inputboxcolor" >
                                                 <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="User Name"
                                                     name="emp_designation" disabled value="{{ $client->client_email }}"
                                                     min="0">
@@ -95,16 +95,15 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                            <div class="form-floating mb-3 inputboxcolor">
                                                 <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="text" name="emp_code"
                                                     disabled value="{{ $client->client_phone }}">
                                                 <input type="hidden" style="background-color: transparent; border:none;" value="{{ $client->client_phone }}" name="emp_code_hidden">
-                                                <label for="" ><span style="position: relative ;top: -9px;bottom: 1rem;left: -3px;z-index: 1; padding:2px;font-size: 12px; height: 1.5em;background-color:#fff;
-                                                    border-radius: .25rem;">Client Phone</span></label>
+                                                <label for="">Client Phone</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                            <div class="form-floating mb-3 inputboxcolor">
                                                 <input class="form-control" style="background-color: transparent; border:none;" type="text" placeholder="text" name="emp_code"
                                                     disabled value="{{ $client->project_start_date }}">
                                                 <input type="hidden" style="background-color: transparent; border:none;" value="{{ $client->project_start_date }}"
@@ -114,15 +113,11 @@
                                         </div>
 
                                     </div>
-
-
-
-
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
-                                                <textarea name="project_description" class="form-control" style="background-color: transparent; border:none; resize: none; height: 70px" disabled cols="30" rows="10">{{ $client->project_description }}</textarea>
-                                                <label for=""><span>Project Description</span></label>
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                <textarea name="" class="form-control" style="background-color: transparent; border:none; resize: none; height: 50px" disabled cols="30" rows="10">{{ $client->project_description }}</textarea>
+                                                <label for="">Project Description</label>
                                             </div>
                                         </div>
                                     </div>
@@ -132,7 +127,7 @@
                                     <h3 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Invoice Details</h3>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                            <div class="form-floating mb-3 inputboxcolor">
                                                 <input type="month"  name="invoice_month" style="background-color: transparent; border:none;" value="{{old('invoice_month')}}" class="form-control">
                                                 <label for="envoice_month">Period <span style="color:red">*</span></label>
                                                 <div class="text-danger">
@@ -143,7 +138,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                            <div class="form-floating mb-3 inputboxcolor">
                                                 <input type="text" style="background-color: transparent; border:none;" value="{{old('invoice_description')}}" name="invoice_description" class="form-control">
                                                 <label for="">Description <span style="color:red">*</span></label>
                                                 <div class="text-danger">
@@ -156,7 +151,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                            <div class="form-floating mb-3 inputboxcolor">
                                                 <input type="number" style="background-color: transparent; border:none;" min="0" value="{{old('invoice_profit')}}" class="form-control" name="invoice_profit">
                                                 <label for="">Profit($)   </label>
                                                 {{-- <div class="text-danger">
@@ -167,7 +162,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                            <div class="form-floating mb-3 inputboxcolor">
                                                 <input type="number" style="background-color: transparent; border:none;" value="{{old('invoice_amount')}}" min="0" class="form-control" name="invoice_amount">
                                                 <label for="invoice_amount">Amount($) <span style="color:red">*</span></label>
                                                 <div class="text-danger">
@@ -180,7 +175,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                            <div class="form-floating mb-3 inputboxcolor">
                                                 <input type="date" value="{{old('invoice_due_date')}}" class="form-control" style="background-color: transparent; border:none;" name="invoice_due_date">
                                                 <label for="">Due Date <span style="color:red">*</span></label>
                                                 <div class="text-danger">
@@ -191,7 +186,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                            <div class="form-floating mb-3 inputboxcolor">
                                                 <input type="text" value="{{old('invoice_method')}}" style="background-color: transparent; border:none;" class="form-control" name="invoice_method">
                                                 <label for="">Payment Method <span style="color:red">*</span></label>
                                                 <div class="text-danger">
@@ -204,9 +199,9 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-floating mb-3 inputboxcolor" style="border:1px solid #c7c7c7;">
+                                            <div class="form-floating mb-3 inputboxcolor">
                                                 {{-- <input type="date" value="" class="form-control" name="emp_code_hidden"> --}}
-                                                <textarea class="form-control" style="background-color: transparent; border:none; resize: none; height: 150px" name="invoice_notes" id="" cols="50" rows="20"></textarea>
+                                                <textarea class="form-control" style="background-color: transparent; border:none; resize: none; height: 50px" name="invoice_notes" id="" cols="50" rows="20"></textarea>
                                                 <label for="">Additional Notes (optional)</label>
                                             </div>
                                         </div>
@@ -216,6 +211,7 @@
                             </div>
 
                             <div>
+                                <br>
 
                                 <button type="submit" class="reblateBtn py-2 px-4 w-md" target="_blank">{{ $btn_text }}</button>
                                 {{-- <a href="/preview-salary/{{$id}}" target="_blank" class="btn btn-danger">Preview</a> --}}

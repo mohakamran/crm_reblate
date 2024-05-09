@@ -19,6 +19,9 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ReportingController;
 
 
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -98,21 +101,21 @@ Route::group(['middleware' => 'admin'], function () {
 
     // Employee Routes
 
-    Route::get('/add-new', [EmployeesController::class, 'index'])->name('add-new-employee');
-    Route::get('/manage-employees', [EmployeesController::class, 'manage'])->name('manage-employees');
-    Route::get('/terminated-employees', [EmployeesController::class, 'terminatedEmp']);
-    Route::post('/search-emp-attendence', [AttendenceController::class, 'searchEmpAttendenceAdmin'])->name('view-attendence');
-    Route::get('/show-all-employees', [EmployeesController::class, 'showAllEmployees']);
+    Route::get('/add-new', [EmployeesController::class, 'index'])->name('add-new-employee')->middleware('checkUserRole');
+    Route::get('/manage-employees', [EmployeesController::class, 'manage'])->name('manage-employees')->middleware('checkUserRole');
+    Route::get('/terminated-employees', [EmployeesController::class, 'terminatedEmp'])->middleware('checkUserRole');
+    Route::post('/search-emp-attendence', [AttendenceController::class, 'searchEmpAttendenceAdmin'])->name('view-attendence')->middleware('checkUserRole');
+    Route::get('/show-all-employees', [EmployeesController::class, 'showAllEmployees'])->middleware('checkUserRole');
     Route::post('/add-new-employee-data', [EmployeesController::class, 'getData'])->name('add-new-employee-data');
-    Route::get('/change-status/{status}', [EmployeesController::class, 'changeStatus']);
-    Route::get('/change-shift/{status}', [EmployeesController::class, 'changeShift']);
-    Route::get('/delete-employee/{emp_id}', [EmployeesController::class, 'delEmployee'])->name('del-emp');
-    Route::get('/change-status/{emp_id}', [EmployeesController::class, 'changeStatus']);
-    Route::get('/update-employee/{emp_id}', [EmployeesController::class, 'updateEmployee']);
+    Route::get('/change-status/{status}', [EmployeesController::class, 'changeStatus'])->middleware('checkUserRole');
+    Route::get('/change-shift/{status}', [EmployeesController::class, 'changeShift'])->middleware('checkUserRole');
+    Route::get('/delete-employee/{emp_id}', [EmployeesController::class, 'delEmployee'])->name('del-emp')->middleware('checkUserRole');
+    Route::get('/change-status/{emp_id}', [EmployeesController::class, 'changeStatus'])->middleware('checkUserRole');
+    Route::get('/update-employee/{emp_id}', [EmployeesController::class, 'updateEmployee'])->middleware('checkUserRole');
     Route::post('/update-employee-data/{emp_id}', [EmployeesController::class, 'updateEmployeeData']);
-    Route::get('/view_emp_details/{emp_id}', [EmployeesController::class, 'viewEmployeeData']);
+    Route::get('/view_emp_details/{emp_id}', [EmployeesController::class, 'viewEmployeeData'])->middleware('checkUserRole');
     Route::get('/view_info', [EmployeesController::class, 'viewInfo']);
-    Route::get('/view_profile/{id}', [EmployeesController::class, 'viewProfile']);
+    Route::get('/view_profile/{id}', [EmployeesController::class, 'viewProfile'])->middleware('checkUserRole');
 
     // users
 
@@ -121,58 +124,58 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/change-password',[AuthController::class,'changePasswordData']);
 
     //expenses
-    Route::get('/add-new-expense', [ExpenseController::class,'addExpenseRoute'])->name('add-new-expense');
-    Route::post('/add-new-expense', [ExpenseController::class,'addExpenseData']);
-    Route::get('/view-expenses', [ExpenseController::class,'viewExpenses'])->name('view-expenses');
-    Route::get('delete-expense/{expense_id}', [ExpenseController::class,'deleteExpenses']);
-    Route::get('/update-expense/{expense_id}', [ExpenseController::class,'updateExpenseRoute']);
-    Route::post('/update-expense-data/{expense_id}', [ExpenseController::class,'updateExpenseData']);
+    Route::get('/add-new-expense', [ExpenseController::class,'addExpenseRoute'])->name('add-new-expense')->middleware('ExpenseRole');
+    Route::post('/add-new-expense', [ExpenseController::class,'addExpenseData'])->middleware('ExpenseRole');
+    Route::get('/view-expenses', [ExpenseController::class,'viewExpenses'])->name('view-expenses')->middleware('ExpenseRole');
+    Route::get('delete-expense/{expense_id}', [ExpenseController::class,'deleteExpenses'])->middleware('ExpenseRole');
+    Route::get('/update-expense/{expense_id}', [ExpenseController::class,'updateExpenseRoute'])->middleware('ExpenseRole');
+    Route::post('/update-expense-data/{expense_id}', [ExpenseController::class,'updateExpenseData'])->middleware('ExpenseRole');
     // clients
-    Route::get('/add-new-client', [ClientController::class,'addClientRoute'])->name('add-new-client');
-    Route::post('/add-new-client', [ClientController::class,'addClientData']);
-    Route::get('/delete-client/{client_id}', [ClientController::class,'deleteClientData']);
-    Route::get('/view-clients', [ClientController::class,'viewClients'])->name('view-clients');
-    Route::get('/view-client-detail/{client_id}', [ClientController::class,'viewClientDetail'])->name('view-client-detail');
-    Route::get('/update_client/{client_id}', [ClientController::class,'updateClientRoute'])->name('update_client');
-    Route::post('/update-client/{client_id}', [ClientController::class,'updateClientData'])->name('update_client_data');
+    Route::get('/add-new-client', [ClientController::class,'addClientRoute'])->name('add-new-client')->middleware('ClienteCheck');
+    Route::post('/add-new-client', [ClientController::class,'addClientData'])->middleware('ClienteCheck');
+    Route::get('/delete-client/{client_id}', [ClientController::class,'deleteClientData'])->middleware('ClienteCheck');
+    Route::get('/view-clients', [ClientController::class,'viewClients'])->name('view-clients')->middleware('ClienteCheck');
+    Route::get('/view-client-detail/{client_id}', [ClientController::class,'viewClientDetail'])->name('view-client-detail')->middleware('ClienteCheck');
+    Route::get('/update_client/{client_id}', [ClientController::class,'updateClientRoute'])->name('update_client')->middleware('ClienteCheck');
+    Route::post('/update-client/{client_id}', [ClientController::class,'updateClientData'])->name('update_client_data')->middleware('ClienteCheck');
     // salaries
-    Route::get('/generate-new-salary-slip', [SalaryController::class,'generateNewSalarySlip']);
-    Route::get('/generate-new/{u_id}', [SalaryController::class,'generateNewSlip']);
-    Route::post('/preview-salary/{u_id}', [SalaryController::class,'generateNewSlipTable']);
-    Route::post('/send-reciept/{u_id}', [SalaryController::class,'sendReciept']);
-    Route::get('/view-slips', [SalaryController::class,'viewReciepts']);
-    Route::get('/view-salaries/{id}', [SalaryController::class,'viewSalaries']);
+    Route::get('/generate-new-salary-slip', [SalaryController::class,'generateNewSalarySlip'])->middleware('SalaryCheck');
+    Route::get('/generate-new/{u_id}', [SalaryController::class,'generateNewSlip'])->middleware('SalaryCheck');
+    Route::post('/preview-salary/{u_id}', [SalaryController::class,'generateNewSlipTable'])->middleware('SalaryCheck');
+    Route::post('/send-reciept/{u_id}', [SalaryController::class,'sendReciept'])->middleware('SalaryCheck');
+    Route::get('/view-slips', [SalaryController::class,'viewReciepts'])->middleware('SalaryCheck');
+    Route::get('/view-salaries/{id}', [SalaryController::class,'viewSalaries'])->middleware('SalaryCheck');
     Route::get('/preview-slip-employee-page/{id}', [SalaryController::class,'viewSlipBrowser']);
     // Route::get('/testpdf', [SalaryController::class,'testPdf']);
 
     // invoices
-    Route::get('/create-new-invoice',[InvoiceController::class,'createNewInvoice']);
-    Route::get('/create-invoice/{id}',[InvoiceController::class,'createNewInvoiceTable']);
-    Route::post('/confirm-invoice/{id}',[InvoiceController::class,'previewInvoice']);
-    Route::post('/send-invoice/{id}',[InvoiceController::class,'sendInvoice']);
-    Route::get('/view-invoices',[InvoiceController::class,'viewInvoices']);
-    Route::get('/preview-invoices/{id}',[InvoiceController::class,'viewIndividualInvoices']);
-    Route::get('/preview/{id}',[InvoiceController::class,'previewOnBrowser']);
+    Route::get('/create-new-invoice',[InvoiceController::class,'createNewInvoice'])->middleware('ClienteCheck');
+    Route::get('/create-invoice/{id}',[InvoiceController::class,'createNewInvoiceTable'])->middleware('ClienteCheck');
+    Route::post('/confirm-invoice/{id}',[InvoiceController::class,'previewInvoice'])->middleware('ClienteCheck');
+    Route::post('/send-invoice/{id}',[InvoiceController::class,'sendInvoice'])->middleware('ClienteCheck');
+    Route::get('/view-invoices',[InvoiceController::class,'viewInvoices'])->middleware('ClienteCheck');
+    Route::get('/preview-invoices/{id}',[InvoiceController::class,'viewIndividualInvoices'])->middleware('ClienteCheck');
+    Route::get('/preview/{id}',[InvoiceController::class,'previewOnBrowser'])->middleware('ClienteCheck');
 
     // logins
-    Route::get('/create-new-login',[LoginController::class,'createLoginView']);
-    Route::get('/create-new-employee-login',[LoginController::class,'createNewEmployeeLogin']);
-    Route::post('/register-new-emp-login-access',[LoginController::class,'registerNewEmployeeLogin']);
-    Route::get('/create-login-emp/{id}',[LoginController::class,'createLoginEmp']);
-    Route::get('/update-login-emp/{id}',[LoginController::class,'updateLoginEmp']);
-    Route::post('/register-login-access/{id}',[LoginController::class,'registerLoginEmp']);
-    Route::post('/update-login-access/{id}',[LoginController::class,'updateLoginAccess']);
-    Route::get('/view-login',[LoginController::class,'viewLoginEmp']);
-    Route::get('/delete-employee-login/{id}',[LoginController::class,'delviewLoginEmp']);
-    Route::get('/reset-password/{id}',[LoginController::class,'resetPassword']);
+    Route::get('/create-new-login',[LoginController::class,'createLoginView'])->middleware('AdminCheck');
+    Route::get('/create-new-employee-login',[LoginController::class,'createNewEmployeeLogin'])->middleware('AdminCheck');
+    Route::post('/register-new-emp-login-access',[LoginController::class,'registerNewEmployeeLogin'])->middleware('AdminCheck');
+    Route::get('/create-login-emp/{id}',[LoginController::class,'createLoginEmp'])->middleware('AdminCheck');
+    Route::get('/update-login-emp/{id}',[LoginController::class,'updateLoginEmp'])->middleware('AdminCheck');
+    Route::post('/register-login-access/{id}',[LoginController::class,'registerLoginEmp'])->middleware('AdminCheck');
+    Route::post('/update-login-access/{id}',[LoginController::class,'updateLoginAccess'])->middleware('AdminCheck');
+    Route::get('/view-login',[LoginController::class,'viewLoginEmp'])->middleware('AdminCheck');
+    Route::get('/delete-employee-login/{id}',[LoginController::class,'delviewLoginEmp'])->middleware('AdminCheck');
+    Route::get('/reset-password/{id}',[LoginController::class,'resetPassword'])->middleware('AdminCheck');
 
     // client logins
-    Route::get('/create-client-logins',[ClientController::class,'createClientLoginView']);
-    Route::get('/send-credentials-clients/{id}',[ClientController::class,'sendDetailsClients']);
-    Route::post('/create-credentials/{id}',[ClientController::class,'sendDetails']);
-    Route::get('/view-clients-logins',[ClientController::class,'viewClientLogins']);
-    Route::get('/delete-client-login/{id}',[ClientController::class,'deleteClientLogin']);
-    Route::get('/reset-password-client/{id}',[ClientController::class,'resetPasswordClient']);
+    Route::get('/create-client-logins',[ClientController::class,'createClientLoginView'])->middleware('AdminCheck');
+    Route::get('/send-credentials-clients/{id}',[ClientController::class,'sendDetailsClients'])->middleware('AdminCheck');
+    Route::post('/create-credentials/{id}',[ClientController::class,'sendDetails'])->middleware('AdminCheck');
+    Route::get('/view-clients-logins',[ClientController::class,'viewClientLogins'])->middleware('AdminCheck');
+    Route::get('/delete-client-login/{id}',[ClientController::class,'deleteClientLogin'])->middleware('AdminCheck');
+    Route::get('/reset-password-client/{id}',[ClientController::class,'resetPasswordClient'])->middleware('AdminCheck');
 
     // employee
     Route::get('view-my-slips',[SalaryController::class,'viewSlips']);
@@ -190,13 +193,14 @@ Route::group(['middleware' => 'admin'], function () {
 
     // attendenceleave-requests
     Route::get('/view-attendence',[AttendenceController::class,'viewAttendenceEmp']);
-    Route::get('/view-attendence-emp/{id}',[AttendenceController::class,'viewEachAttendenceEmp']);
-    Route::post('/search-emp-details',[AttendenceController::class,'searchAttendenceEmp']);
-    Route::get('/view-emp-attendence',[AttendenceController::class,'viewEmpAttendence']);
+    Route::get('/view-attendence-emp/{id}',[AttendenceController::class,'viewEachAttendenceEmp'])->middleware('AttendenceCheck');
+    Route::post('/search-emp-details',[AttendenceController::class,'searchAttendenceEmp'])->middleware('AttendenceCheck');
+    Route::get('/view-emp-attendence',[AttendenceController::class,'viewEmpAttendence'])->middleware('AttendenceCheck');
     // Route::get('/view-attendence-emp', [AttendenceController::class, 'viewAttendanceEmployee']);
 
     Route::post('/apply-for-leave', [AttendenceController::class, 'empApplyForLeave']);
     Route::get('/leave-records', [AttendenceController::class, 'empLeaveRecords']);
+
     Route::post('/search-emp-leaves', [AttendenceController::class, 'empSearchRecords']);
     Route::post('/show-update-attendence-form', [AttendenceController::class, 'showUpdateAttendenceForm']);
     Route::post('/update-emp-attendence-details', [AttendenceController::class, 'updateEmpAttendenceDetails'])->name('update-emp-attendence-details');
@@ -218,13 +222,13 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/update-emp-info',[EmployeesController::class,'updateEmpInfo']);
 
     // tasks
-    Route::get('/create-new-task',[TaskController::class,'index']);
-    Route::get('/view-tasks',[TaskController::class,'viewTasks']);
-    Route::post('/add-new-task',[TaskController::class,'addNewTask']);
-    Route::post('/search-emp-tasks',[TaskController::class,'searchEmpAttendenceAdmin']);
-    Route::post('/view-tasks-employees', [TaskController::class, 'viewTaskEachEmployee']);
-    Route::get('/update-tasks/{id}', [TaskController::class, 'updateTaskEachEmployee']);
-    Route::post('/update-each-task', [TaskController::class, 'updateEachTask']);
+    Route::get('/create-new-task',[TaskController::class,'index'])->middleware('TasksCheck');
+    Route::get('/view-tasks',[TaskController::class,'viewTasks'])->middleware('TasksCheck');
+    Route::post('/add-new-task',[TaskController::class,'addNewTask'])->middleware('TasksCheck');
+    Route::post('/search-emp-tasks',[TaskController::class,'searchEmpAttendenceAdmin'])->middleware('TasksCheck');
+    Route::post('/view-tasks-employees', [TaskController::class, 'viewTaskEachEmployee'])->middleware('TasksCheck');
+    Route::get('/update-tasks/{id}', [TaskController::class, 'updateTaskEachEmployee'])->middleware('TasksCheck');
+    Route::post('/update-each-task', [TaskController::class, 'updateEachTask'])->middleware('TasksCheck');
     Route::post('/update-each-task-emp', [TaskController::class, 'updateEachTaskEmp']);
     Route::get('/view-emp-tasks-each', [TaskController::class, 'employeeCanSeeTask']);
 
@@ -235,8 +239,8 @@ Route::group(['middleware' => 'admin'], function () {
 
 
     // announcement
-    Route::get('/announcements',[AnnouncementController::class,'viewindexPage']);
-    Route::post('/add-annoucement', [AnnouncementController::class, 'addAnnouncement']);
+    Route::get('/announcements',[AnnouncementController::class,'viewindexPage'])->middleware('AdminCheck');
+    Route::post('/add-annoucement', [AnnouncementController::class, 'addAnnouncement'])->middleware('AdminCheck');
 
     // attendence time sheets
     Route::get('/attendence-time-sheet',[AttendenceController::class,'viewTimeSheet']);
@@ -265,3 +269,4 @@ Route::group(['middleware' => 'admin'], function () {
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

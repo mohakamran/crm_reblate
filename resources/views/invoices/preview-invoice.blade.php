@@ -313,7 +313,7 @@ table {
             <tr >
                 <th>Name</th>
                 <th>Service</th>
-                @if ($invoice_profit != "")
+                @if ($invoice_profit == 0 || $invoice_profit=="" )
                   <th>Profit</th>
                 @endif
                 <th>Amount</th>
@@ -323,7 +323,7 @@ table {
             <tr style="width: auto; ">
                 <td style="text-align: center;">{{$client_name}}</td>
                 <td style="text-align: center;">{{$invoice_description}}</td>
-                @if ($invoice_profit != "")
+                 @if ($invoice_profit == 0 || $invoice_profit=="" )
                   <td>{{$invoice_profit}}</td>
                 @endif
                 <td style="text-align: center;">${{$invoice_amount}}</td>

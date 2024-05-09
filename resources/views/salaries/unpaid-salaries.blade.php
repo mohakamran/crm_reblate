@@ -75,6 +75,10 @@
                                             {{-- {{file_exists($pdf)}} --}}
                                         </td>
                                         @php
+                                            $pdfPath = 'generated-salaries/' . $emp->Emp_Code . '_' . date('m_Y') . '.pdf';
+                                            // echo $pdfPath;
+                                        @endphp
+                                                                              @php
                                             $pdfPath = 'generated-salaries/' . $emp->Emp_Code . '_' . $last_month_date . '.pdf';
                                             // echo $pdfPath;
                                         @endphp

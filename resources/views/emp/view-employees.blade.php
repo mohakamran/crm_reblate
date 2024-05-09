@@ -154,12 +154,44 @@
                                             <path
                                                 d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                         </svg></button>
-                                    <a href="/add-new" class="reblateBtn " style="padding: 10px 14px;"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd"
-                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                                        </svg></a>
+
+
+
+
+                                    @if (auth()->user()->user_type == 'admin')
+                                     <a href="/add-new" class="reblateBtn " style="padding: 10px 14px;"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd"
+                                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                                    </svg></a>
+                                        @elseif(Session::has('employees_access'))
+                                        @php
+                                            $employees_access = Session::get('employees_access');
+                                            // Convert to an array if it's a single value
+                                            if (!is_array($employees_access)) {
+                                                $employees_access = explode(',', $employees_access);
+                                                // Remove any empty elements resulting from the explode function
+                                                $employees_access = array_filter($employees_access);
+                                            }
+                                         @endphp
+                                            @if (is_array($employees_access) && (in_array('all', $employees_access) ||  in_array('create', $employees_access)  ) )
+                                                <a href="/add-new" class="reblateBtn " style="padding: 10px 14px;"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd"
+                                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                                    </svg></a>
+                                          @endif
+
+                                    @endif
+
+
+
+
+
+
+
                                 </div>
                             </div>
                         </form>
@@ -199,16 +231,32 @@
                                             <img class="image-center" src="{{ $emp->Emp_Image }}" alt="">
 
                                     @else
-                                        <a href="{{ url('user.png') }}" target="_blank"
-                                            style="display: flex; justify-content: center;">
+
+
                                             <img class="image-center" src="{{ url('user.png') }}" alt=""
                                                 style="display: flex; justify-content: center;">
-                                        </a>
+
                                     @endif
                                     <div class="card-text-center">
+
+                                        @php
+                                            $employees_access = Session::get('employees_access');
+                                            // Convert to an array if it's a single value
+                                            if (!is_array($employees_access)) {
+                                                $employees_access = explode(',', $employees_access);
+                                                // Remove any empty elements resulting from the explode function
+                                                $employees_access = array_filter($employees_access);
+                                            }
+                                         @endphp
+
                                         <p class="emp-name">
-                                            <a href="/view_profile/{{ $emp->Emp_Code }}"
-                                                style="color: #14213d;">{{ $emp->Emp_Full_Name }}</a>
+                                            @if(auth()->user()->user_type == 'admin')
+                                                <a href="/view_profile/{{ $emp->Emp_Code }}" style="color: #14213d;">{{ $emp->Emp_Full_Name }}</a>
+                                            @elseif( is_array($employees_access) && (in_array('all', $employees_access) || in_array('view', $employees_access) ) )
+                                                <a href="/view_profile/{{ $emp->Emp_Code }}" style="color: #14213d;">{{ $emp->Emp_Full_Name }}</a>
+                                            @else
+                                                {{ $emp->Emp_Full_Name }}
+                                            @endif
                                         </p>
                                         <div class="d-flex gap-1 align-items-center mb-2">
                                             <p

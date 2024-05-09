@@ -28,14 +28,47 @@
 
 
 
-                        <div class="d-flex justify-content-end mb-5">
-                                <a href="/add-new-client" class="reblateBtn mt-1" style="padding: 10px 14px;"><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                                    </svg></a>
+                        <div class="row d-flex justify-content-between mb-5">
+                            <h4 class="card-title" style="width:50%">{{$title}}</h4>
+                            <div style="width: 13%">
 
+
+                                 @if (auth()->user()->user_type == 'admin')
+                                     <a href="/add-new-client" class="reblateBtn w-75" style="padding:10px;text-align:center"><span
+                                        style="width: 15px; height: 15px; margin-right: 5px;"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                            class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                        </svg></span> Add New</a>
+                                 @endif
+
+                                 @if (auth()->user()->user_type == 'employee' || auth()->user()->user_type == 'manager')
+                                                    @if (Session::has('clients_access'))
+                                                        @php
+                                                            $clients_access = Session::get('clients_access');
+                                                            // Convert to an array if it's a single value
+                                                            if (!is_array($clients_access)) {
+                                                                $clients_access = explode(',', $clients_access);
+                                                                // Remove any empty elements resulting from the explode function
+                                                                $clients_access = array_filter($clients_access);
+                                                            }
+                                                        @endphp
+                                                   @endif
+
+                                                   @if (is_array($clients_access) && in_array('all', $clients_access) || in_array('create', $clients_access) )
+                                                        <a href="/add-new-client" class="reblateBtn w-75" style="padding:10px;text-align:center"><span
+                                        style="width: 15px; height: 15px; margin-right: 5px;"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                            class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                        </svg></span> Add New</a>
+                                                   @endif
+
+                                @endif
+
+                            </div>
                         </div>
                         {{-- <p class="card-title-desc">The Buttons extension for DataTables
                             provides a common set of options, API methods and styling to display
@@ -84,25 +117,20 @@
                                                             }
                                                         @endphp
                                                         {{-- update --}}
-                                                        @if (is_array($clients_access) && in_array('update', $clients_access) && in_array('delete', $clients_access))
+                                                        @if (is_array($clients_access) && in_array('update', $clients_access) || in_array('all', $clients_access) )
                                                             <a href="{{ Route('update_client', $client->client_id)}}" data-toggle="tooltip" class="btn btn-success btn-sm"
                                                                 data-original-title="Edit">
                                                                 <i class="mdi mdi-pencil"></i>
                                                             </a>
+
+                                                            @elseif (is_array($clients_access) &&   in_array('all', $clients_access) || in_array('delete', $clients_access))
+                                                             </a>
                                                                 <a href="javascript:void()" onclick="deleteClient({{ $client->id }})" class="btn btn-danger btn-sm"
                                                                 data-toggle="tooltip" data-original-title="Close">
                                                                 <i class="mdi mdi-delete"></i>
                                                             </a>
-                                                            @elseif (is_array($clients_access) && in_array('update', $clients_access))
-                                                            <a href="{{ Route('update_client', $client->client_id)}}" data-toggle="tooltip" class="btn btn-success btn-sm"
-                                                                data-original-title="Edit">
-                                                                <i class="mdi mdi-pencil"></i>
-                                                            </a>
-                                                            @elseif (is_array($clients_access) && in_array('delete', $clients_access))
-                                                            <a href="javascript:void()" onclick="deleteClient({{ $client->id }})" class="btn btn-danger btn-sm"
-                                                                data-toggle="tooltip" data-original-title="Close">
-                                                                <i class="mdi mdi-delete"></i>
-                                                            </a>
+
+
                                                             @else
                                                             no action allowed
                                                         @endif

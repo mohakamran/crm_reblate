@@ -32,8 +32,6 @@ use Illuminate\Support\Str;
 class AuthController extends Controller
 {
 
-
-
 public function getTotalRevenueRangeDate($start, $end) {
         // Ensure the start and end dates are correctly formatted
         $totalAmount = DB::table('invoices')
@@ -50,7 +48,7 @@ public function getTotalSalaryRangeDate($start, $end) {
     $endDate = Carbon::parse($end);
     $formattedStart = $startDate->format('d/m/Y'); // Format to dd/mm/yyyy
     $formattedEnd = $endDate->format('d/m/Y'); // Format to dd/mm/yyyy
-
+    // dd($formattedStart, $formattedEnd);
     // Additional logic here if needed...
 
     // Return the formatted dates
@@ -61,6 +59,9 @@ public function getTotalSalaryRangeDate($start, $end) {
     $totalAmount = DB::table('salaries')
         ->whereBetween('date',[$formattedStart, $formattedEnd])
         ->sum('amount');
+
+        // dd($totalAmount);
+
 
 
 
@@ -79,11 +80,13 @@ public function getTotalExpenseRangeDate($start, $end) {
 // get range employees
 public function getEmployeesRange($start, $end) {
 
+
     // Query to count employees between the specified start and end dates
     $empCount = DB::table('employees')
         ->where('Emp_Status', 'active') // Adjust 'hiring_date' to your relevant date column
         ->count();
 
+    // dd($empCount);
     return $empCount;
 }
 // get range clients
@@ -91,7 +94,8 @@ public function getClientRange($start, $end) {
 
     // Query to count employees between the specified start and end dates
     $clientCount = DB::table('clients')
-        ->whereBetween('project_start_date', [$start, $end]) // Adjust 'hiring_date' to your relevant date column
+
+        ->where('project_type', 'on going') // Adjust 'hiring_date' to your relevant date column
         ->count();
 
     return $clientCount;
@@ -189,7 +193,9 @@ public function searchDateManagerHomePage(Request $req) {
 
 
         $salary_deduct = DB::table('salaries')->orderBy('id','desc')->where('emp_id',$user_code)->first();
-        $salary_deduct = $salary_deduct->deduction;
+                    if($salary_deduct) {
+                $salary_deduct = $salary_deduct->deduction;
+            }
 
         $data = [
             'salary_deduct' => $salary_deduct,
@@ -798,6 +804,15 @@ public function searchDateManagerHomePage(Request $req) {
             $clients = Client::all();
             $client_count = count($clients);
 
+                            Session::forget('employees_access');
+                Session::forget('expenses_access');
+                Session::forget('clients_access');
+                Session::forget('invoices_access');
+                Session::forget('salary_slips_access');
+                Session::forget('reports_access');
+                Session::forget('tasks_access');
+                Session::forget('attendance_access');
+
 
 
             // create session for
@@ -1063,8 +1078,10 @@ public function searchDateManagerHomePage(Request $req) {
             $t_date = Carbon::now()->format('l, d F Y');
             $emp_img = $emp_det->Emp_Image;
             Session::put('emp_img', $emp_img);
-             $salary_deduct = DB::table('salaries')->orderBy('id','desc')->where('emp_id',$user_code)->first();
-            $salary_deduct = $salary_deduct->deduction;
+            $salary_deduct = DB::table('salaries')->orderBy('id','desc')->where('emp_id',$user_code)->first();
+              if($salary_deduct) {
+                $salary_deduct = $salary_deduct->deduction;
+            }
 
             $data = [
                 'absent_days' => $absent_days,
@@ -1100,6 +1117,15 @@ public function searchDateManagerHomePage(Request $req) {
             // dd($count);
             $clients = Client::all();
             $client_count = count($clients);
+
+                Session::forget('employees_access');
+                Session::forget('expenses_access');
+                Session::forget('clients_access');
+                Session::forget('invoices_access');
+                Session::forget('salary_slips_access');
+                Session::forget('reports_access');
+                Session::forget('tasks_access');
+                Session::forget('attendance_access');
 
 
             // create session for
@@ -1388,7 +1414,9 @@ public function searchDateManagerHomePage(Request $req) {
             $total_profit = number_format($total_profit, 2);
 
             $salary_deduct = DB::table('salaries')->orderBy('id','desc')->where('emp_id',$user_code)->first();
-            $salary_deduct = $salary_deduct->deduction;
+              if($salary_deduct) {
+                $salary_deduct = $salary_deduct->deduction;
+            }
 
            $data = [
                 'salary_deduct' => $salary_deduct,

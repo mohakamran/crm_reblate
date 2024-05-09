@@ -29,15 +29,19 @@
                     <div class="card-body">
 
 
-                        <div class="d-flex justify-content-end mb-5">
+                        <div class="row d-flex justify-content-between mb-5">
+                            <h4 class="card-title" style="width:50%">{{$title}}</h4>
+                            <div style="width: 13%">
 
-                                <a href="/generate-new-salary-slip" class="reblateBtn mt-1" style="padding: 10px 14px;"><svg
+                                <a href="/generate-new-salary-slip" class="reblateBtn w-75" style="padding:10px;text-align:center"><span
+                                    style="width: 15px; height: 15px; margin-right: 5px;"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-plus-lg" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
                                             d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                                    </svg></a>
+                                    </svg></span> Add New</a>
                             </div>
+                        </div>
                         {{-- <p class="card-title-desc">The Buttons extension for DataTables
                             provides a common set of options, API methods and styling to display
                             buttons on a page that will interact with a DataTable. The core library

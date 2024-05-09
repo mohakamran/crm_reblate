@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.4",
         "pragmarx/google2fa-laravel": "^2.1",
+        "ramsey/uuid": "^4.7",
         "tecnickcom/tcpdf": "^6.6"
     },
     "require-dev": {

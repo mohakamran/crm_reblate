@@ -134,4 +134,6 @@ $(document).ready(function() {
             $(".dataTables_length select").addClass('form-select form-select-sm');
         }
     });
+
+
 } );

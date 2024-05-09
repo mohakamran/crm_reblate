@@ -65,5 +65,14 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         '2fa' => \PragmaRX\Google2FALaravel\Middleware::class,
+        'checkUserRole' => \App\Http\Middleware\empCheck::class,
+        'ExpenseRole' => \App\Http\Middleware\ExpensesCheck::class,
+        'AttendenceCheck' => \App\Http\Middleware\AttendenceCheck::class,
+        'ClienteCheck' => \App\Http\Middleware\ClienteCheck::class,
+        'InvoicesCheck' => \App\Http\Middleware\InvoicesCheck::class,
+        'TasksCheck' => \App\Http\Middleware\TasksCheck::class,
+        'SalaryCheck' => \App\Http\Middleware\SalaryCheck::class,
+        'ReportsCheck' => \App\Http\Middleware\ReportsCheck::class,
+        'AdminCheck' => \App\Http\Middleware\AdminCheck::class,
     ];
 }
