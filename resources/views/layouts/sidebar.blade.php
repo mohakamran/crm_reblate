@@ -2,7 +2,7 @@
 <div class="vertical-menu">
 
     <!-- LOGO -->
-    <div class="navbar-brand-box" style="background-color: #14213d">
+    <div class="navbar-brand-box" style="background-color: rgba(255, 255, 255, 0.3)">
         <a href="/" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="{{ url('fav-reblate.png') }}" alt="logo-sm-dark" height="24">
@@ -27,7 +27,7 @@
         <i class="ri-menu-2-line align-middle"></i>
     </button>
 
-    <div data-simplebar class="vertical-scroll">
+    <div data-simplebar class="vertical-scroll" style="background-color: rgba(255, 255, 255, 0.1); height:100vh; border:none">
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
@@ -364,8 +364,8 @@
 
     <style>
         body[data-sidebar=colored] .vertical-menu {
-            background: #14213d;
-            border-color: #14213d;
+            background: #000;
+            /* border-color: #14213d; */
         }
     </style>
 

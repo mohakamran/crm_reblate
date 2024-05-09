@@ -1,5 +1,5 @@
 
-<header id="page-topbar">
+<header id="page-topbar" style="background-color: rgba(255, 255, 255, 0.3); backdrop-filter:blur(5px);">
     <div class="navbar-header">
         <div class="d-flex">
               <!-- LOGO -->
@@ -29,7 +29,7 @@
 
           <!-- start page title -->
           <div class="page-title-box align-self-center d-none d-md-block">
-            <h4 class="page-title mb-0">@yield('page-title')</h4>
+            <h4 class="page-title mb-0 text-light">@yield('page-title')</h4>
           </div>
           <!-- end page title -->
         </div>
@@ -128,7 +128,7 @@
                 </div>
             @endif
             <div class="btn-group">
-                <button type="button" class="btn d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #e3e3e3; border-radius: 10px;margin:10px;">
+                <button type="button" class="btn d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: rgba(255, 255, 255, 0.5); border-radius: 50px;margin:10px;">
                     @if (Session::has('emp_img'))
                     <!-- Debugging: Check if session variable exists -->
 
@@ -148,11 +148,11 @@
                         <img src="{{ url('user.png') }}" class="img-fluid header-profile-user rounded-circle" alt="">
                     @endif
                 @endif
-                <div class="flex-grow-1 text-start">
+                <div class="flex-grow-1 text-start" style="color: #14213d">
                     <span class="ms-1 fw-medium user-name-text">{{ auth()->user()->user_name }}</span>
                 </div>
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" style="backdrop-filter:blur(10px);">
                   <li><a class="dropdown-item" href="{{ Route('user.chang-password')}}"><i
                     class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
                     class="align-middle">Change Password</span></a></li>
