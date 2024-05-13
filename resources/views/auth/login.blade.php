@@ -116,7 +116,8 @@
                                         bottom:-30px;
                                     }
                                     .stylingImagePic{
-                                        width: 1200px; max-width: 680px;
+                                        width: 1200px;
+                                        max-width: 580px;
                                     }
                                     @media (max-width: 768px) {
                                         .reblateText{
@@ -208,12 +209,12 @@
                                         <div class="col-lg-6 d-flex align-items-left flex-column flex-wrap pb-5 justify-content-center"
                                             style="backdrop-filter: blur(5px); background-color: #14213d;">
                                             <div class="px-5 pt-3">
-                                                <h1 class="reblateText mb-0 pt-4" style="color: #fca311; font-size: 60px;">Welcome</h1>
-                                                <h1 class="reblateSubText my-0" style="color: #fff">Reblate CMS</h1>
+                                                <h1 class="reblateText mb-0 pt-4" style="color: #fca311; font-size: 60px;">Welcome To</h1>
+                                                <h1 class="reblateSubText my-0" style="color: #fff">RMS</h1>
                                             </div>
 
-                                            <div class="row container" style="">
-                                                <img class="" style="" src="{{ url('logoFront.png') }}" alt="">
+                                            <div class="stylingImage d-flex justify-content-center">
+                                                <img class="stylingImagePic" src="{{ url('logoFront.png') }}" alt="">
                                             </div>
                                         </div>
                                     </div>
