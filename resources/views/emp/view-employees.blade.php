@@ -134,6 +134,7 @@
                                             <path
                                                 d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                         </svg></button>
+
                                 </div>
                                 <div class="w-25 d-flex gap-2 justify-content-end align-items-center">
                                     <div class="row">
@@ -151,6 +152,45 @@
                                         <a href="/show-all-employees" class="btn btn-primary">All</a>
                                 <a href="/manage-employees" class="btn btn-primary">Active</a>
                                 <a href="/terminated-employees" class="btn btn-primary">Terminated</a>
+
+
+
+
+
+                                    @if (auth()->user()->user_type == 'admin')
+                                     <a href="/add-new" class="reblateBtn " style="padding: 10px 14px;"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd"
+                                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                                    </svg></a>
+                                        @elseif(Session::has('employees_access'))
+                                        @php
+                                            $employees_access = Session::get('employees_access');
+                                            // Convert to an array if it's a single value
+                                            if (!is_array($employees_access)) {
+                                                $employees_access = explode(',', $employees_access);
+                                                // Remove any empty elements resulting from the explode function
+                                                $employees_access = array_filter($employees_access);
+                                            }
+                                         @endphp
+                                            @if (is_array($employees_access) && (in_array('all', $employees_access) ||  in_array('create', $employees_access)  ) )
+                                                <a href="/add-new" class="reblateBtn " style="padding: 10px 14px;"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd"
+                                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                                    </svg></a>
+                                          @endif
+
+                                    @endif
+
+
+
+
+
+
+
 
                                 </div>
 
@@ -288,6 +328,146 @@
 
                 {{-- employee dashboards --}}
 
+
+
+                <div class="row mt-3">
+                    @if(isset($totalCount) && $totalCount >= 1)
+                        @foreach ($latestEmployees as $emp)
+                        <div class="col-md-3">
+                            <div class="card hovering"
+                                style=" overflow: hidden; border-radius: 10px;">
+                                <div
+                                    style="width: 150px;height: 150px;position: absolute;z-index: 100;background-color: #fca311;border-radius: 100px;right: -75px;top: -70px;">
+                                </div>
+                                <div class="card-body" style="box-shadow: none; ">
+                                    @if (isset($emp->Emp_Image) && $emp->Emp_Image != null && file_exists(public_path($emp->Emp_Image)))
+
+                                            <img class="image-center" src="{{ $emp->Emp_Image }}" alt="">
+
+                                    @else
+
+
+                                            <img class="image-center" src="{{ url('user.png') }}" alt=""
+                                                style="display: flex; justify-content: center;">
+
+                                    @endif
+                                    <div class="card-text-center">
+
+                                        @php
+                                            $employees_access = Session::get('employees_access');
+                                            // Convert to an array if it's a single value
+                                            if (!is_array($employees_access)) {
+                                                $employees_access = explode(',', $employees_access);
+                                                // Remove any empty elements resulting from the explode function
+                                                $employees_access = array_filter($employees_access);
+                                            }
+                                         @endphp
+
+                                        <p class="emp-name">
+                                            @if(auth()->user()->user_type == 'admin')
+                                                <a href="/view_profile/{{ $emp->Emp_Code }}" style="color: #14213d;">{{ $emp->Emp_Full_Name }}</a>
+                                            @elseif( is_array($employees_access) && (in_array('all', $employees_access) || in_array('view', $employees_access) ) )
+                                                <a href="/view_profile/{{ $emp->Emp_Code }}" style="color: #14213d;">{{ $emp->Emp_Full_Name }}</a>
+                                            @else
+                                                {{ $emp->Emp_Full_Name }}
+                                            @endif
+                                        </p>
+                                        <div class="d-flex gap-1 align-items-center mb-2">
+                                            <p
+                                                style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d;">
+                                                Designation:</p>
+                                            <span
+                                                style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">{{ $emp->Emp_Designation }}
+                                            </span>
+                                        </div>
+                                        <div class="d-flex gap-1 align-items-center mb-2">
+                                            <p
+                                                style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d; ">
+                                                Shift:</p>
+                                            <span
+                                                style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">{{ $emp->Emp_Shift_Time }}
+                                            </span>
+                                        </div>
+                                        <div class="d-flex gap-1 align-items-center mb-2">
+                                            <p
+                                                style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d; ">
+                                                Employee Code:</p>
+                                            <span
+                                                style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">{{ $emp->Emp_Code }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+
+                        {{-- @elseif(isset($totalCount) && $totalCount == 1)
+                        <div class="col-md-3">
+
+                            <div class="card hovering"
+                                style=" overflow: hidden; border-radius: 10px;">
+                                <div
+                                    style="width: 150px;height: 150px;position: absolute;z-index: 100;background-color: #fca311;border-radius: 100px;right: -75px;top: -70px;">
+                                </div>
+                                <div class="card-body" style="box-shadow: none; ">
+
+                                    @if (isset($latestEmployees->Emp_Image) && $latestEmployees->Emp_Image != null && file_exists(public_path($latestEmployees->Emp_Image)))
+
+                                            <img class="image-center" src="{{ $latestEmployees->Emp_Image }}" alt="">
+
+                                    @else
+                                        <a href="{{ url('user.png') }}" target="_blank"
+                                            style="display: flex; justify-content: center;">
+                                            <img class="image-center" src="{{ url('user.png') }}" alt=""
+                                                style="display: flex; justify-content: center;">
+                                        </a>
+                                    @endif
+                                    <div class="card-text-center">
+                                        <p class="emp-name">
+                                            <a href="/view_profile/{{ $latestEmployees->Emp_Code }}"
+                                                style="color: #14213d;">{{ $latestEmployees->Emp_Full_Name }}</a>
+                                        </p>
+                                        <div class="d-flex gap-1 align-items-center mb-2">
+                                            <p
+                                                style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d;">
+                                                Designation:</p>
+                                            <span
+                                                style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">{{ $latestEmployees->Emp_Designation }}
+                                            </span>
+                                        </div>
+                                        <div class="d-flex gap-1 align-items-center mb-2">
+                                            <p
+                                                style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d; ">
+                                                Shift:</p>
+                                            <span
+                                                style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">{{ $latestEmployees->Emp_Shift_Time }}
+                                            </span>
+                                        </div>
+                                        <div class="d-flex gap-1 align-items-center mb-2">
+                                            <p
+                                                style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d; ">
+                                                Employee Code:</p>
+                                            <span
+                                                style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">{{ $latestEmployees->Emp_Code }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div> --}}
+                        @else
+                        <h2 class="mt-2">Employee Not Found! </h2>
+                    @endif
+
+
+                </div>
 
 
                 </div>

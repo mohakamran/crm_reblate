@@ -194,11 +194,12 @@
                                             <input class="form-control inputboxcolor"
                                                 style="background-color: #e3e3e3; border:none;" type="number"
                                                 name="emp_basic_salary" min="0" id="basicSalary"
-                                                onchange="calculateSalary()" value="0">
+                                                onchange="calculateSalary()" value="{{($emp->basic_salary!=null) ? $emp->basic_salary : '0'  }}">
 
                                         </div>
-                                        <div class="col-md-3 col-sm-12">
-                                            <a id="popupButton">Open Popup</a>
+                                        <div class="col-md-3 col-sm-12 d-flex flex-column">
+                                            <label required class=" col-form-label">Calculate KPI</label>
+                                            <a class="reblateBtn px-4 py-1" style="cursor: pointer;" id="popupButton">Caculate KPI</a>
                                             <div class="popup" id="popup">
                                                 <div class="popup-content flex-column">
                                                     <div class="d-flex mb-3 align-items-center justify-content-between">
@@ -262,6 +263,7 @@
                                                                                                 type="text"
                                                                                                 value="0"
                                                                                                 id="communicationPoint"
+                                                                                                name="communication_point"
                                                                                                 onchange="calculateSalary()"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
                                                                                         </td>
@@ -277,6 +279,7 @@
                                                                                                 type="text"
                                                                                                 value="0"
                                                                                                 id="ProblemSolvingPoint"
+                                                                                                name="problem_solving_point"
                                                                                                 onchange="calculateSalary()"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
                                                                                         </td>
@@ -292,6 +295,7 @@
                                                                                                 type="text"
                                                                                                 value="0"
                                                                                                 id="TeamWorkPoint"
+                                                                                                name="team_work_point"
                                                                                                 onchange="calculateSalary()"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
                                                                                         </td>
@@ -308,6 +312,7 @@
                                                                                                 type="text"
                                                                                                 value="0"
                                                                                                 id="TimeManagementPoint"
+                                                                                                name="team_management_point"
                                                                                                 onchange="calculateSalary()"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
                                                                                         </td>
@@ -317,9 +322,12 @@
                                                                                         <td>20</td>
                                                                                         <td><input type="text"
                                                                                                 value="0"
+                                                                                                disabled
                                                                                                 id="Total1"
+                                                                                                                                                                                     "
                                                                                                 type="number"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
+
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
@@ -344,6 +352,7 @@
                                                                                                 type="text"
                                                                                                 value="0"
                                                                                                 id="QualityOfWork"
+                                                                                                name="quality_of_work"
                                                                                                 onchange="calculateSalary()"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
                                                                                         </td>
@@ -359,6 +368,7 @@
                                                                                                 type="text"
                                                                                                 value="0"
                                                                                                 id="Productivity"
+                                                                                                name="productivity"
                                                                                                 onchange="calculateSalary()"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
                                                                                         </td>
@@ -374,6 +384,7 @@
                                                                                                 type="text"
                                                                                                 value="0"
                                                                                                 id="Innovation"
+                                                                                                name="innovation"
                                                                                                 onchange="calculateSalary()"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
                                                                                         </td>
@@ -388,6 +399,7 @@
                                                                                         <td colspan="1"><input
                                                                                                 type="text"
                                                                                                 value="0"
+                                                                                                name="professionalism"
                                                                                                 id="Professionalism"
                                                                                                 onchange="calculateSalary()"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
@@ -399,6 +411,7 @@
                                                                                         <td><input type="text"
                                                                                                 value="0"
                                                                                                 id="Total2"
+                                                                                                disabled
                                                                                                 type="number"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
                                                                                         </td>
@@ -425,6 +438,7 @@
                                                                                             <input type="text"
                                                                                                 value="0"
                                                                                                 id="DevelopmentAndGrwoth"
+                                                                                                name="development_and_growth"
                                                                                                 onchange="calculateSalary()"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
                                                                                         </td>
@@ -440,6 +454,7 @@
                                                                                         <th colspan="6">Total Marks</th>
                                                                                         <th colspan="1"><input
                                                                                                 type="text"
+                                                                                                disabled
                                                                                                 value="0"
                                                                                                 id="Total3"
                                                                                                 type="number"
@@ -493,32 +508,21 @@
                                             <input class="form-control inputboxcolor"
                                                 style="background-color: #e3e3e3; border:none;" type="number"
                                                 id="emp_designation_bonus" name="emp_designation_bonus" min="0"
-                                                id="" onchange="calculateSalary()" value="0">
-                                        </div>
-
-                                    </div>
-                                    <div class="form-group  row">
-
-                                        <div class="col-md-3 col-sm-12">
-                                            <label for="example-text-input" required class=" col-form-label">Absent
-                                                Days</label>
-                                            <input class="form-control inputboxcolor"
-                                                style="background-color: #e3e3e3; border:none;" type="number"
-                                                name="emp_absent" min="0" value="0">
-
+                                                id="" onchange="calculateSalary()" value="{{($emp->designation_bonus!=null) ? $emp->designation_bonus : '0'}}">
                                         </div>
                                         <div class="col-md-3 col-sm-12">
                                             <label required class=" col-form-label">Travel Allowence</label>
                                             <input class="form-control inputboxcolor" min="0"
                                                 id="emp_travel_allowence" name="emp_travel_allowence"
                                                 style="background-color: #e3e3e3; border:none;" type="number"
-                                                onchange="calculateSalary()" value="0">
+                                                onchange="calculateSalary()" value="{{ ($emp->travel_allowance!=null) ? $emp->travel_allowance : '0' }}">
                                         </div>
                                         <div class="col-md-3 col-sm-12">
-                                            <label required class=" col-form-label">Leave Days</label>
-                                            <input class="form-control inputboxcolor"
-                                                style="background-color: #e3e3e3; border:none;" min="0"
-                                                name="emp_leave" type="number" value="0">
+                                            <label required class=" col-form-label">Quarterly Bonus</label>
+                                            <input class="form-control inputboxcolor" min="0"
+                                                id="quarterly_bonus" name="quarterly_bonus"
+                                                style="background-color: #e3e3e3; border:none;" type="number"
+                                                onchange="calculateSalary()" value="0">
                                         </div>
                                         <div class="col-md-3 col-sm-12">
                                             <label for="example-text-input" min="0" required
@@ -531,21 +535,42 @@
                                         </div>
 
                                     </div>
-                                    <div class="row form-group">
+                                    <div class="form-group  row">
                                         <div class="col-md-3 col-sm-12">
                                             <label for="example-text-input" min="0" required
                                                 class=" col-form-label">No of Working Days</label>
                                             <input class="form-control inputboxcolor"
                                                 style="background-color: #e3e3e3; border:none;" type="number"
-                                                value="0" name="emp_no_of_working_days" min="0"
+                                                value="{{ ($total_days > 0 ) ? $total_days : '22'}}" name="emp_no_of_working_days" min="0"
                                                 id="">
 
                                         </div>
-                                        <div class="col-md-9 col-sm-12">
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <label for="example-text-input" required class=" col-form-label">Absent
+                                                Days</label>
+                                            <input class="form-control inputboxcolor"
+                                                style="background-color: #e3e3e3; border:none;" type="number"
+                                                name="emp_absent" min="0" value="{{($total_absents > 0) ? $total_absents : '0' }}">
+
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <label required class=" col-form-label">Leave Days</label>
+                                            <input class="form-control inputboxcolor"
+                                                style="background-color: #e3e3e3; border:none;" min="0"
+                                                name="emp_leave"  type="number" value="{{($total_leaves > 0) ? $total_leaves : '0' }}">
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row form-group">
+
+                                        <div class="col-md-12 col-sm-12">
                                             <label required class=" col-form-label">Reason of Deduction</label>
 
                                             <textarea class="form-control inputboxcolor" rows="5" name="emp_reason_deduction"
-                                                style="resize: none; height:15px; background-color: #e3e3e3; border:none;" placeholder=""></textarea>
+                                                style="resize-x: none; background-color: #e3e3e3; border:none;" placeholder=""></textarea>
                                             <br>
                                         </div>
                                     </div>
@@ -599,27 +624,27 @@
                                             <tr>
                                                 <td style="width: 25%">5 - Outstanding</td>
                                                 <td style="width: 70%">Consistently exceeds expectations</td>
-                                                <td class="text-center"><input type="checkbox"></td>
+                                                <td class="text-center"><input type="radio" value="outstanding" name="over_all_performance"></td>
                                             </tr>
                                             <tr>
                                                 <td style="width: 25%">4 - Exceeds Expectations</td>
                                                 <td style="width: 50%">Frequently exceeds expectations</td>
-                                                <td class="text-center"><input type="checkbox"></td>
+                                                <td class="text-center"><input type="radio"  value="exceeds_expectation" name="over_all_performance"></td>
                                             </tr>
                                             <tr>
                                                 <td style="width: 25%">3 - Meets Expectations</td>
                                                 <td style="width: 50%">Regularly meets expectations</td>
-                                                <td class="text-center"><input type="checkbox"></td>
+                                                <td class="text-center"><input type="radio" value="meets_expectation" name="over_all_performance"></td>
                                             </tr>
                                             <tr>
                                                 <td style="width: 25%">2 - Needs Improvement</td>
                                                 <td style="width: 50%">Occasionally fails to meet expectations</td>
-                                                <td class="text-center"><input type="checkbox"></td>
+                                                <td class="text-center"><input type="radio" value="needs_expectation" name="over_all_performance"></td>
                                             </tr>
                                             <tr>
                                                 <td style="width: 25%">1 - Unsatisfactory</td>
                                                 <td style="width: 50%">Consistently fails to meet expectations</td>
-                                                <td class="text-center"><input type="checkbox"></td>
+                                                <td class="text-center"><input type="radio" value="unsatisfactory" name="over_all_performance"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -660,6 +685,7 @@
                 const basicSalary = parseFloat(document.getElementById('basicSalary').value) || 0;
                 const emp_travel_allowence = parseFloat(document.getElementById('emp_travel_allowence').value) || 0;
                 const emp_designation_bonus = parseFloat(document.getElementById('emp_designation_bonus').value) || 0;
+                const quarterly_bonus = parseFloat(document.getElementById('quarterly_bonus').value) || 0;
                 // const kpiBonus = parseFloat(document.getElementById('kpiBonus').value) || 0;
                 const projectBonus = parseFloat(document.getElementById('projectBonus').value) || 0;
                 const deduction = parseFloat(document.getElementById('deduction').value) || 0;
@@ -693,7 +719,7 @@
 
 
 
-                const totalSalary = basicSalary + KPIBonous + projectBonus + emp_travel_allowence + emp_designation_bonus;
+                const totalSalary = basicSalary + KPIBonous + projectBonus + emp_travel_allowence + emp_designation_bonus + quarterly_bonus;
                 const netSalary = totalSalary - deduction;
 
                 document.getElementById('totalSalary').value = totalSalary;

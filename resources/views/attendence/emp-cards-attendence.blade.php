@@ -516,7 +516,7 @@
                                 {{-- <p class="date_sect">Date: {{ $currentmonth }}, {{ $currentyear }}</p>   --}}
 
                                     @csrf
-                                    {{-- <input type="month" class="form-control" id="start" name="date_controller" min="2018-03" value="{{ $currentyear }}-{{ $currentMonth }}" /> --}}
+                                    <input type="month" class="form-control" id="start" name="date_controller" min="2018-03" value="{{ $currentyear }}-{{ $currentMonth }}" />
 
 
 
@@ -562,18 +562,65 @@
                                         <tr>
 
                                             <td class="table-avatar">
-                                                <a class="avatar avatar-xs"
-                                                    href="/view-attendence-emp/{{ $employee->Emp_Code }}">
-                                                    @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
-                                                        {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ asset($employee->Emp_Image) }}" alt=""> --}}
-                                                        <img src="{{ asset($employee->Emp_Image) }}" alt="User Image">
-                                                    @else
-                                                        {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ url('user.png') }}" alt=""> --}}
-                                                        <img src="{{ url('user.png') }}"
-                                                            alt="{{ $employee->Emp_Full_Name }}">
-                                                    @endif
-                                                    {{ $employee->Emp_Full_Name }}
-                                                </a>
+
+                                                @if(Auth()->user()->user_type == "admin")
+                                                    <a class="avatar avatar-xs"
+                                                        href="/view-attendence-emp/{{ $employee->Emp_Code }}">
+                                                        @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
+                                                            {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ asset($employee->Emp_Image) }}" alt=""> --}}
+                                                            <img src="{{ asset($employee->Emp_Image) }}" alt="User Image">
+                                                        @else
+                                                            {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ url('user.png') }}" alt=""> --}}
+                                                            <img src="{{ url('user.png') }}"
+                                                                alt="{{ $employee->Emp_Full_Name }}">
+                                                        @endif
+                                                        {{ $employee->Emp_Full_Name }}
+                                                    </a>
+                                                @endif
+                                                @if(Auth()->user()->user_type == "manager" || Auth()->user()->user_type == "employee" )
+                                                        @if (Session::has('expenses_access'))
+                                                                @php
+                                                                    $attendance_access = Session::get('attendance_access');
+                                                                    // Convert to an array if it's a single value
+                                                                    if (!is_array($attendance_access)) {
+                                                                        $attendance_access = explode(',', $attendance_access);
+                                                                        // Remove any empty elements resulting from the explode function
+                                                                        $attendance_access = array_filter($attendance_access);
+                                                                    }
+                                                                @endphp
+                                                        @endif
+
+                                                        @if (is_array($attendance_access) && in_array('all', $attendance_access) || in_array('update', $attendance_access) )
+                                                               <a class="avatar avatar-xs"
+                                                                    href="/view-attendence-emp/{{ $employee->Emp_Code }}">
+                                                                    @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
+                                                                        {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ asset($employee->Emp_Image) }}" alt=""> --}}
+                                                                        <img src="{{ asset($employee->Emp_Image) }}" alt="User Image">
+                                                                    @else
+                                                                        {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ url('user.png') }}" alt=""> --}}
+                                                                        <img src="{{ url('user.png') }}"
+                                                                            alt="{{ $employee->Emp_Full_Name }}">
+                                                                    @endif
+                                                                    {{ $employee->Emp_Full_Name }}
+                                                                </a>
+                                                            @else
+                                                            <span class="avatar avatar-xs"
+                                                         >
+                                                        @if ($employee->Emp_Image != null && file_exists(public_path($employee->Emp_Image)))
+                                                            {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ asset($employee->Emp_Image) }}" alt=""> --}}
+                                                            <img src="{{ asset($employee->Emp_Image) }}" alt="User Image">
+                                                        @else
+                                                            {{-- <img style="width:50px;height:50px;border-radius:50%;" src="{{ url('user.png') }}" alt=""> --}}
+                                                            <img src="{{ url('user.png') }}"
+                                                                alt="{{ $employee->Emp_Full_Name }}">
+                                                        @endif
+                                                        {{ $employee->Emp_Full_Name }}
+                                                      </span>
+
+                                                        @endif
+
+                                                @endif
+
                                             </td>
 
 

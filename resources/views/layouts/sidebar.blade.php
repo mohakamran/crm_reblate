@@ -5,10 +5,10 @@
     <div class="navbar-brand-box" style="background-color: rgba(255, 255, 255, 0.3)">
         <a href="/" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ url('fav-reblate.png') }}" alt="logo-sm-dark" height="24">
+                <img src="{{ URL::asset('build/images/logo-sm-dark.png') }}" alt="logo-sm-dark" height="24">
             </span>
             <span class="logo-lg">
-                <img src="{{ url('reblate-favicon.png') }}" alt="logo-dark" height="22">
+                <img src="{{ URL::asset('build/images/logo-dark.png') }}" alt="logo-dark" height="22">
             </span>
         </a>
 
@@ -150,6 +150,8 @@
 
                     </ul>
                 </li>
+                
+                @if(auth()->user()->user_code !="adm102")
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <svg xmlns="http://www.w3.org/2000/svg" width="384" height="512" viewBox="0 0 384 512">
@@ -213,6 +215,9 @@
                         </li>
                     </ul>
                 </li>
+                @endif
+                
+                @if(auth()->user()->user_code !="adm102")
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1792"
@@ -250,6 +255,9 @@
 
                     </ul>
                 </li>
+                @endif
+                
+                
                 {{-- <li>
                     <a href="/manage-employees" class="waves-effect">
                         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">

@@ -515,7 +515,7 @@
                                 <div class="d-flex flex-wrap justify-content-between gap-4 align-items-center">
 
                                         @if (session()->has('show_check_out') && session('show_check_out') === true)
-                                            <a class="reblateBtn px-4 py-2 w-md" href="javascript:void()" onclick="checkOut()"   >Checking Out
+                                            <a class="reblateBtn px-4 py-2 w-md" href="javascript:void()" onclick="checkOut()">Checking Out 
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                     viewBox="0 0 16 16">
                                                     <g fill="currentColor" fill-rule="evenodd">
@@ -555,7 +555,7 @@
                                             </svg>
                                         </a>
                                     @else
-                                        <a class="reblateBtn px-4 py-2" href="/break-start" >BreakStart
+                                        <a class="reblateBtn px-4 py-2" href="/break-start" >Break Start 
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                 viewBox="0 0 16 16">
                                                 <g fill="currentColor" fill-rule="evenodd">
@@ -1204,6 +1204,7 @@
 
 
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js" type="text/javascript"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script type="text/javascript">
             const chartDiv = document.getElementById('chartDiv');

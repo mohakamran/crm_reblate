@@ -155,6 +155,8 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
         <div class="row" style="display: flex; flex-wrap: wrap;">
             <div class="col-md-4 col-xl-3">
@@ -1529,31 +1531,34 @@
 
         <script>
             // Sample data for absent, present, and leaves
+            var data = {
+                labels: ['Absent', 'Present', 'Leaves'],
+                datasets: [{
+                    data: [<?php echo $emp_absent_count; ?>, <?php echo $emp_present_count; ?>, <?php echo $emp_leave_count; ?>],
+                    backgroundColor: ['#dc3545', '#28a745', '#ffc107']
+                }]
+            };
 
+            // Configuration options
+            var options = {
+                cutoutPercentage: 70,
+                responsive: false, // Set to true for responsiveness
+                legend: {
+                    display: true,
+                    position: 'right'
+                }
+            };
 
             // Create the chart
             var ctx = document.getElementById('attendenceRecord').getContext('2d');
             var myDonutChart = new Chart(ctx, {
                 type: 'doughnut',
-                data: {
-                    labels: ['Present', 'Absent', 'Leaves'],
-                    datasets: [{
-                        data: [<?php echo $emp_present_count; ?>, <?php echo $emp_absent_count; ?>, <?php echo $emp_leave_count; ?>],
-                        backgroundColor: ['#28a745', '#dc3545', '#ffc107']
-                    }]
-                },
-                options: {
-                    cutoutPercentage: 70,
-                    responsive: false, // Set to true for responsiveness
-                    legend: {
-                        display: true,
-                        position: 'right'
-                    }
-                },
+                data: data,
+                options: options
             });
         </script>
 
-
+        {{-- end of expense chart --}}
         <script type="text/javascript">
             $(document).ready(function() {
                 $('#date_range_picker').daterangepicker({

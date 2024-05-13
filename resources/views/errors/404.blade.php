@@ -12,12 +12,13 @@
                         <div class="text-center mb-4">
                             <div class="mt-5">
                                 <h1 class="error-title mt-5"><span>404!</span></h1>
-                                <h4 class="mt-2 text-uppercase mt-4">Sorry, You are searching for Not Found!</h4>
-
+                                <h4 class="mt-2 text-uppercase mt-4">Sorry, page not found</h4>
+                                <p class="mt-4 text-muted w-50 mx-auto">It will be as simple as Occidental in fact, it will
+                                    Occidental to an English person</p>
                             </div>
 
                             <div class="mt-5 text-center">
-                                {{-- <a class="btn btn-primary waves-effect waves-light" href="/">Back to Dashboard</a> --}}
+                                <a class="btn btn-primary waves-effect waves-light" href="/">Back to Dashboard</a>
                             </div>
                         </div>
                     </div>

@@ -33,8 +33,8 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 inputboxcolor">
-                                        <input class="form-control" style="background-color: transparent; border: none;" type="text" placeholder="User Name" name="user_name"
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" type="text" placeholder="User Name" name="user_name"
                                             value="{{ isset($user->user_name) ? $user->user_name : old('user_name') }}">
                                         @error('user_name')
                                             <span class="text-danger">{{ $message }}</span>
@@ -56,8 +56,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 inputboxcolor">
-                                        <input class="form-control" style="background-color: transparent; border: none;" type="password" placeholder="Password"
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" type="password" placeholder="Password"
                                             name="user_password" id="user_password">
                                         @error('user_password')
                                             <span class="text-danger">{{ $message }}</span>
@@ -72,8 +72,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 inputboxcolor">
-                                        <input class="form-control" style="background-color: transparent; border: none;" type="password" placeholder="Password"
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" type="password" placeholder="Password"
                                             name="user_password_confirmation" id="confirmPassword">
                                         @error('user_password_confirmation')
                                             <span class="text-danger">{{ $message }}</span>
@@ -92,7 +92,8 @@
 
 
                             <div>
-                                <button type="submit" class="reblateBtn px-4 py-2 w-md">{{ $btn_text }}</button>
+                                <button type="submit" class="btn btn-primary  w-md"
+                                    style="background-color: #14213D ; border-color: #fff;">{{ $btn_text }}</button>
                             </div>
                         </form>
                     </div>

@@ -20,18 +20,19 @@
                             </div>
 
 
-                            @if (session('success'))
 
-                            <div class="container-fluid d-flex justify-content-end">
-                                <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" style="max-width: 300px;" id="close-now">
+
+                            @if (session('success'))
+                            <div class="container-fluid d-flex justify-content-end" id="container">
+                                <div class="alert alert-success " style="max-width: 300px;" id="close-alert">
                                     {{ session('success') }}
 
-                                    <a type="button" onclick="hideNow()" class="close" data-dismiss="alert"
-                                        aria-label="Close" style="float: right; font-size:20px; margin-left:10px;">
+                                    <a type="button" onclick="hideNow()" class="close" data-dismiss="alert" aria-label="Close" style="float: right; font-size:20px; margin-left:10px;">
                                         <span aria-hidden="true">&times;</span>
                                     </a>
                                 </div>
                             </div>
+
                             @endif
 
 
@@ -110,11 +111,12 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
-                                                    <input type="text" name="emp_cnic" value="{{ isset($emp_data->emp_cnic) ? $emp_data->emp_cnic : old('emp_cnic') }}" style="background-color: transparent; border:none; resize: none; height: 50px" placeholder="Employee Address" class="form-control">
+                                                    {{-- {{ isset($emp_data->emp_cnic) ? $emp_data->emp_cnic : '' }} --}}
+                                                    <input type="text" name="emp_cnic" value="{{ isset($emp_data->emp_cnic) ? $emp_data->emp_cnic : '' }}" style="background-color: transparent; border:none; resize: none; height: 50px" placeholder="Employee Address" class="form-control">
                                                     @error('emp_cnic')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
-                                                    <label for="">CNIC <span class="text-danger">*</span></label>
+                                                    <label for="">CNIC<span class="text-danger">*</span></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -196,43 +198,53 @@
 
                                                 </div>
                                             </div>
+
                                         @endif
-                                        <h4 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Salery Details</h4>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
+                                                    <input type="date" value="{{ isset($emp_data->Emp_Joining_Date) ? $emp_data->Emp_Joining_Date : ''}}" class="form-control" style="background-color: transparent; border:none;" name="employee_joining_date" id="">
+
+
+                                                    @error('employee_joining_date')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                    <label for="">Employee Joining Date <span
+                                                            class="text-danger">*</span></label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h4 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Salary Details</h4>
                                         <div class="row" style="margin-top: 15px;">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control " placeholder="Basic Salary" style="background-color: transparent; border:none;"
-                                                        value="25000"
+                                                        value="{{ isset($emp_data->basic_salary) ? $emp_data->basic_salary : '25000' }}"
                                                         type="text" name="basic_salary" >
 
                                                     <label for="">Basic Salary <span class="text-danger">*</span></label>
-                                                    @error('employee_code')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control " placeholder="Designation Bonus" style="background-color: transparent; border:none;"
-                                                        value="5000"
+                                                        value="{{ isset($emp_data->designation_bonus) ? $emp_data->designation_bonus : '5000' }}"
                                                         type="text" name="designation_bonus">
                                                     <label for="">Designation Bonus <span class="text-danger">*</span></label>
-                                                    @error('employee_department')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
+
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <input class="form-control" type="text" style="background-color: transparent; border:none;" placeholder="Employee Designation"
-                                                        name="travel_allounce"
-                                                        value="5000">
-                                                    @error('employee_designation')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
+                                                        name="travel_allowance"
+                                                        value="{{ isset($emp_data->travel_allowance) ? $emp_data->travel_allowance : '5000' }}">
 
-                                                    <label for="">Travel Allounce <span class="text-danger">*</span></label>
+
+                                                    <label for="">Travel Allowance <span class="text-danger">*</span></label>
 
                                                 </div>
                                             </div>
@@ -335,8 +347,9 @@
         <!-- end row -->
         <script>
             function hideNow() {
-                var divElement = document.getElementById('close-now');
-                divElement.style.display = 'none';
+                // console.log('good');
+                document.getElementById('close-alert').style.display = 'none';
+                // divElement.style.display = 'none';
             }
         </script>
     @endsection

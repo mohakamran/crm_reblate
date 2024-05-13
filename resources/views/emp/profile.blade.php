@@ -33,23 +33,63 @@
                                     {{ \Carbon\Carbon::parse($emp_data->Emp_Joining_Date)->format('j F Y') }}
                                 </p>
                                 <p>
+                                    @if(Session::has('employees_access'))
+                                    @php
+                                        $employees_access = Session::get('employees_access');
+                                        // Convert to an array if it's a single value
+                                        if (!is_array($employees_access)) {
+                                            $employees_access = explode(',', $employees_access);
+                                            // Remove any empty elements resulting from the explode function
+                                            $employees_access = array_filter($employees_access);
+                                        }
+                                    @endphp
+                                @endif
+
+                                @if(auth()->user()->user_type == 'admin')
                                     <a href="/update-employee/{{$emp_data->Emp_Code}}" class="btn btn-primary">Edit</a>
 
                                     @if (isset($show_disable) && $show_disable == TRUE)
-                                         {{-- <a href="/update-employee/{{$emp_data->Emp_Code}}" class="btn btn-primary">Disable</a> --}}
-                                         @if (isset($emp_data->Emp_Status) && $emp_data->Emp_Status == "disable")
-                                           <a href="javascript:void()" onclick="deleteEmployee('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Enable</a>
-                                           @else
-                                           <a href="javascript:void()" onclick="deleteEmployee('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Disable</a>
-                                         @endif
-
+                                        {{-- <a href="/update-employee/{{$emp_data->Emp_Code}}" class="btn btn-primary">Disable</a> --}}
+                                        @if (isset($emp_data->Emp_Status) && $emp_data->Emp_Status == "disable")
+                                            <a href="javascript:void()" onclick="deleteEmployee('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Enable</a>
+                                        @else
+                                            <a href="javascript:void()" onclick="deleteEmployee('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Disable</a>
+                                        @endif
                                     @endif
 
                                     @if (isset($emp_data->Emp_Status) && $emp_data->Emp_Status == "active")
                                         <a href="javascript:void()" onclick="statusChange('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Terminate</a>
-                                        @else
+                                    @else
                                         <a href="javascript:void()" onclick="statusChange('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Activate</a>
                                     @endif
+                                @elseif( is_array($employees_access) && (in_array('all', $employees_access) || in_array('update', $employees_access) ) )
+                                    <a href="/update-employee/{{$emp_data->Emp_Code}}" class="btn btn-primary">Edit</a>
+                                    @if (isset($show_disable) && $show_disable == TRUE)
+                                        {{-- <a href="/update-employee/{{$emp_data->Emp_Code}}" class="btn btn-primary">Disable</a> --}}
+                                        @if (isset($emp_data->Emp_Status) && $emp_data->Emp_Status == "disable")
+                                            <a href="javascript:void()" onclick="deleteEmployee('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Enable</a>
+                                        @else
+                                            <a href="javascript:void()" onclick="deleteEmployee('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Disable</a>
+                                        @endif
+                                    @endif
+                                    @if (isset($emp_data->Emp_Status) && $emp_data->Emp_Status == "active")
+                                        <a href="javascript:void()" onclick="statusChange('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Terminate</a>
+                                    @else
+                                        <a href="javascript:void()" onclick="statusChange('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Activate</a>
+                                    @endif
+                                @endif
+
+
+
+
+
+
+
+
+
+
+
+
                                 </p>
                             </div>
                         </div>

@@ -169,13 +169,7 @@
                     <div class="d-flex justify-content-end mb-5">
                         <button type="button"class="reblateBtn p-2" data-toggle="modal"
                             data-target="#exampleModal">
-
-                            <span style="width: 15px; height: 15px;"><svg xmlns="http://www.w3.org/2000/svg"
-                                width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
-                                viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                            </svg>
+                            Add Office Time
                         </button>
 
 
@@ -190,42 +184,36 @@
                                     <div class="modal-header">
 
                                         <h5 class="modal-title" id="exampleModalLabel">Change Shift Time</h5>
-                                        <button type="button" class="close"
-                                        style="border: none;background-color: transparent;" data-dismiss="modal"
-                                        aria-label="Close">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                            <path
-                                                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                                        </svg>
-                                    </button>
+                                        {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button> --}}
                                     </div>
                                     <div class="modal-body">
                                         <p class="text-success" style="display: none;" id="success_message_id">
                                             Time Added Succcessfully!</p>
                                             <div class="container">
-                                                <label for="">Office Start <span style="color:red">*</span></label>
-                                                <input type="time" id="office_start" class="form-control inputboxcolor" style="border:1px solid #c7c7c7c7">
+                                                <label for="">Office Start (<span style="color:red">*</span>)</label>
+                                                <input type="time" id="office_start" class="form-control">
                                                 <span style="color:red; display: none;" id="message_start"  >Office Start Time Required!</span>
                                             </div>
                                             <div class="container mt-2">
-                                                <label for="">Office End <span style="color:red">*</span></label>
-                                                <input type="time" id="office_end" class="form-control inputboxcolor" style="border:1px solid #c7c7c7c7">
+                                                <label for="">Office End  (<span style="color:red">*</span>)</label>
+                                                <input type="time" id="office_end" class="form-control">
                                                 <span style="color:red; display: none;" id="message_end" >Office End Time Required!</span>
                                             </div>
 
                                             <div class="container mt-2">
                                                 <label for="">Break Start</label>
-                                                <input type="time" id="break_start" class="form-control inputboxcolor" style="border:1px solid #c7c7c7c7">
+                                                <input type="time" id="break_start" class="form-control">
                                             </div>
                                             <div class="container mt-2">
                                                 <label for="">Break End</label>
-                                                <input type="time" id="break_end" class="form-control inputboxcolor" style="border:1px solid #c7c7c7c7">
+                                                <input type="time" id="break_end" class="form-control">
 
                                             </div>
                                             <div class="container mt-2">
-                                                <label for="">Select Shift <span style="color:red">*</span></label>
-                                                <select id="shift_time" id="" class="form-control inputboxcolor" style="border:1px solid #c7c7c7c7">
+                                                <label for="">Select Shift (<span style="color:red">*</span>)</label>
+                                                <select id="shift_time" id="" class="form-control">
                                                     <option value=""  selected>select shift</option>
                                                     <option value="morning" >Morning</option>
                                                     <option value="night" >Night</option>
@@ -235,7 +223,8 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" onclick="saveOfficeTime()" class="px-4 py-2 reblateBtn">Save
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="location.reload()">Close</button>
+                                        <button type="button" onclick="saveOfficeTime()" class="btn btn-primary">Save
                                             changes</button>
                                     </div>
                                 </div>
@@ -244,8 +233,8 @@
 
 
                 </div>
-                    <table id="datatable-buttons" class="table table-striped dt-responsive nowrap"
-                    style="border-collapse: collapse; border-spacing: 0; width: 100%; border:1px solid #e3e3e3" >
+                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                      <thead>
                          <tr>
                              <th>Shift Type</th>

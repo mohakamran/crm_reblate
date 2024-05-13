@@ -37,11 +37,11 @@
                             <h5 class="card-title ">{{ $tasks->task_title }}</h5>
                             <P class="task-description">Task Desc: {{ $tasks->task_description }}</P>
 
-                            {{-- <div class="progress mb-2">
+                            <div class="progress mb-2">
                                 <div class="progress-bar bg-success" role="progressbar" style="width: 90%;"
                                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{ $tasks->task_percentage }}%
                                     Complete</div>
-                            </div> --}}
+                            </div>
                             <p style="font-size:12px;margin-top:10x;">deadline: {{ $tasks->task_date }}</p>
                         </div>
 

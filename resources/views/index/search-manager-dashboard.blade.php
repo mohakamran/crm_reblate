@@ -341,7 +341,7 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
                                     <p class="text-dark text-truncate font-size-18 mb-0 fw-bold">Projects</p>
-                                    <h5 class="mb-0">15 </h5>
+                                    <h5 class="mb-0">{{ $client_count }} </h5>
                                 </div>
 
                             </div>
@@ -1395,7 +1395,7 @@
                                     text: 'check out marked!',
                                     icon: 'success'
                                 }).then(() => {
-                                    location.reload();
+                                    location.reload(); // Refresh the page
                                 });
                             },
                             error: function(xhr, status, error) {

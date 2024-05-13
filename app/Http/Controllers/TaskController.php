@@ -8,40 +8,6 @@ use Carbon\Carbon;
 
 class TaskController extends Controller
 {
-      public function taskSaveDatabase(Request $req) {
-        // Retrieve data from the request
-        $task_status = $req->input('task_status');
-        $task_update = $req->input('task_update');
-        $id = $req->input('id');
-
-
-        $task = DB::Table('tasks')->where('id',$id)->first();
-        if($task) {
-            DB::table('tasks')->where('id',$id)->update([
-                'task_report' => $task_update,
-                'task_status' => $task_status,
-            ]);
-            // Return a response
-            return response()->json([
-                'message' => 'Data received successfully',
-                'id' => $id,
-                'task_status' => $task_status,
-                'task_update' => $task_update
-            ]);
-        } else {
-            return response()->json([
-                'error' => 'Not Found!',
-            ],404);
-        }
-
-      }
-       // get task report and save in database
-       public function taskUpdateDatabase(Request $req, $id) {
-            $validatedData = $req->validate([
-                'task_desc' => 'required',
-                'task_status' => 'required'
-            ]);
-       }
        // to update task open form for task update
        public function taskUpdateForm($id) {
         //  dd($id);
@@ -69,12 +35,9 @@ class TaskController extends Controller
 
             $tasks = DB::table('tasks')
             ->where('emp_id', $emp_id)
-            // ->whereMonth('assigned_date', $currentMonth)
-            ->orderBy('id', 'desc')
+            ->whereMonth('assigned_date', $currentMonth)
+            // ->orderBy('id', 'desc')
             ->get();
-
-            // dd($tasks);
-
             return view('tasks.tasks-cards-of-each-employee',compact('tasks','emp_name','emp_id','Emp_Designation','Emp_Image','Emp_Shift_Time'));
        }
        // get task details and save in database
@@ -267,7 +230,7 @@ class TaskController extends Controller
             'task_description' => $first_task_description,
             'task_date' => $first_task_deadline,
             'task_status' => "pending",
-            'task_report' => "",
+            'task_percentage' => "0",
             'assigned_by' => $name, // Assuming admin is the default assigned_by value
             'assigned_date' => $dateAssigned, // Save the current date as date_assigned
         ]);
@@ -288,7 +251,7 @@ class TaskController extends Controller
                     'task_description' => $descriptions[$index],
                     'task_date' => $deadlines[$index],
                     'task_status' => 'pending',
-                    'task_report' => "",
+                    'task_percentage' => "0",
                     'assigned_by' => 'admin', // Assuming admin is the default assigned_by value
                     'assigned_date' => $dateAssigned, // Save the current date as date_assigned
                 ];

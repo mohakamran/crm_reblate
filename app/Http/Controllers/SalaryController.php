@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Support\Facades\Auth;
 
+use Carbon\CarbonPeriod;
+
 use DB;
 
 use Storage;
@@ -22,33 +24,38 @@ use PDF;
 
 class SalaryController extends Controller
 {
-    //view hightest paid employee
-    public function viewHighPaidEmployee() {
-        $currentMonth = Carbon::now()->month;
-        $currentYear = Carbon::now()->year;
 
-        // $currentMonth = Carbon::now()->subMonth()->month;
-        // dd($currentMonth);
+    //view highest paid employee
+public function viewHighPaidEmployee() {
+    $currentMonth = Carbon::now()->month;
+    $currentYear = Carbon::now()->year;
+    $previousMonth = $currentMonth;
+    dd($currentYear);
 
+    $rankedEmployees = DB::table('salaries')
+        ->whereMonth('date', $currentMonth) // Replace 'date_column_name' with the actual column name in your 'salaries' table that holds the date information.
+        ->whereYear('date', $currentYear) // Optionally, you can also filter by year.
+        ->orderByDesc('amount')
+        ->get();
 
-        $rankedEmployees = DB::table('salaries')
-            ->whereYear('date', $currentYear)
-            ->whereMonth('date', $currentMonth)
-            ->orderByDesc('amount')
-            ->get();
-
-            // echo $rankedEmployees;
-
-        // dd($rankedEmployees);
-
-        if ($rankedEmployees->isEmpty()) {
-            echo "No records found for the current month and year.";
-        } else {
-            foreach ($rankedEmployees as $employee) {
-                echo $employee->name . " - Salary: " . $employee->amount . "<br>";
-            }
+    if ($rankedEmployees->isEmpty()) {
+        echo "No records found for the current month and year.";
+    } else {
+        echo "<table>";
+        echo "<tr>";
+        echo "<th> Name </th> ";
+        echo "<th> Amount </th>";
+        echo "<th> Month </th>";
+        echo "</tr>";
+        foreach ($rankedEmployees as $employee) {
+            echo "<tr>";
+            echo "<td>".$employee->emp_name . " </td> <td> Salary: " . "<td> ".$employee->amount . "</td> <td>".$previousMonth."</td>";
+            echo "</tr>";
         }
+        echo "</table>";
     }
+}
+
     // view slips
     public function viewSlips(){
         $emp_id = auth()->user()->user_code;
@@ -81,8 +88,10 @@ class SalaryController extends Controller
 
     public function generateNewSlip($id) {
         $emp = Employee::find($id);
+
         if($emp) {
             $id = $emp->id;
+            // dd($id);
             $route = "/preview-salary/".$emp->id;
             $title = "Employee ".$emp->Emp_Full_Name;
             $emp_date_of_joining = $emp->Emp_Joining_Date;
@@ -102,15 +111,134 @@ class SalaryController extends Controller
             // Format the result in 'F, Y' format
             $emp_month_salary = date('F, Y', $last_day_previous_month);
 
+            $emp_basic_salary  = $emp->basic_salary;
+            $emp_code = $emp->Emp_Code;
+            // dd($emp_code);
+            // dd($emp_basic_salary);
+
+             $total_days = $this->getNumberOfDays();
+
+             $total_absents = $this->getTotalAbsents($emp_code);
+
+             $total_leaves = $this->getTotalLeaves($emp_code);
+
+            //  dd($total_leaves);
+
+
+
             $btn_text = "Proceed";
-            return view('salaries.add-new',compact('id','title','emp','btn_text','route','emp_date_of_joining','emp_month_salary'));
+            return view('salaries.add-new',compact('total_leaves','total_absents','total_days','id','title','emp','btn_text','route','emp_date_of_joining','emp_month_salary'));
         } else {
-            return view('index.index');
+           return back();
         }
     }
 
+    public function getTotalLeaves($emp_code) {
+        $currentYear = Carbon::now()->year;
+        $lastMonth = Carbon::now()->subMonth();
+
+        // Get the first and last day of the last month
+        $firstDayLastMonth = $lastMonth->copy()->firstOfMonth()->toDateString();
+        $lastDayLastMonth = $lastMonth->copy()->endOfMonth()->toDateString();
+        $total = 0;
+
+        // Get all attendance records for the last month
+        $getNumberOfDays = DB::table('leaves')
+            ->where('emp_code', $emp_code)
+            ->whereBetween('date', [$firstDayLastMonth, $lastDayLastMonth])
+            ->where('status','approved')
+            ->count();
+        if($getNumberOfDays != null) {
+            $total = $getNumberOfDays;
+        }
+        return $total;
+    }
+
+    public function getTotalAbsents($emp_code) {
+
+            // Get the current year and last month
+            $currentYear = Carbon::now()->year;
+            $lastMonth = Carbon::now()->subMonth();
+
+            // Get the first and last day of the last month
+            $firstDayLastMonth = $lastMonth->copy()->firstOfMonth()->toDateString();
+            $lastDayLastMonth = $lastMonth->copy()->endOfMonth()->toDateString();
+
+            // Get all attendance records for the last month
+            $getNumberOfDays = DB::table('attendence')
+                ->where('emp_id', $emp_code)
+                ->whereBetween('date', [$firstDayLastMonth, $lastDayLastMonth])
+                ->count();
+
+            $get_total = $this->getNumberOfDays();
+            // dd($get_total);
+            $total = $get_total - $getNumberOfDays;
+
+            // return $attendanceRecords;
+            return $total;
+
+    }
+
+
+    public function getNumberOfDays() {
+            // Get the last month
+            $lastMonth = Carbon::now()->subMonth();
+
+            // Get the total number of days in the last month
+            $totalDays = $lastMonth->daysInMonth;
+
+            // Initialize counters
+            $numWeekdays = 0;
+
+            // Loop through each day in the last month
+            for ($day = 1; $day <= $totalDays; $day++) {
+                $date = Carbon::createFromDate($lastMonth->year, $lastMonth->month, $day);
+
+                // Check if the day is a weekday (Monday to Friday)
+                if (!$date->isWeekend()) {
+                    $numWeekdays++;
+                }
+            }
+
+            // Calculate the number of weekend days
+            $numWeekendDays = $totalDays - $numWeekdays;
+
+;
+
+            return $numWeekdays;
+
+    }
+
     public function generateNewSlipTable($id, Request $req) {
-       $id = $id;
+
+        $id = $id;
+        $quarterly_bonus = $req->quarterly_bonus;
+        // basic attributes
+        $communication_point = $req->communication_point;
+        $problem_solving_point = $req->problem_solving_point;
+        $team_work_point = $req->team_work_point;
+        $team_management_point = $req->team_management_point;
+
+        // job performance
+        $quality_of_work = $req->quality_of_work;
+        $productivity = $req->productivity;
+        $innovation = $req->innovation;
+        $professionalism = $req->professionalism;
+
+
+
+        // development_and_growth
+        $development_and_growth = $req->development_and_growth;
+
+        // total Marks
+        $total_basic_attributes = $communication_point + $problem_solving_point + $team_work_point + $team_management_point;
+        $total_job_performance = $quality_of_work + $productivity + $innovation + $professionalism;
+        $all_total = $total_basic_attributes + $total_job_performance + $development_and_growth;
+
+        // over all assesment
+        $over_all_performance = $req->over_all_performance;
+        // dd($over_all_performance);
+
        $title = "Salary Receipt of ".$req->emp_name_hidden;
        $route = "/send-reciept/".$id;
        $emp_name = $req->emp_name_hidden;
@@ -137,7 +265,7 @@ class SalaryController extends Controller
         $emp_total_salary = $emp_basic_salary + $emp_kpi_bonus + $emp_project_bonus + $emp_travel_allowence + $emp_designation_bonus;
         $emp_net_salary =  $emp_total_salary - $emp_deduction;
 
-        $data = compact('emp_month_salary_hidden','emp_designation_bonus','emp_travel_allowence','emp_date_of_joining_hidden','emp_no_of_working_days','title', 'emp_code','route','emp_name','emp_shift_time','id','emp_email','emp_designation','emp_basic_salary','emp_kpi_bonus','emp_project_bonus','emp_absent','emp_leave','emp_deduction','emp_reason_deduction','emp_total_salary','emp_net_salary');
+        $data = compact('over_all_performance','all_total','total_job_performance','total_basic_attributes','development_and_growth','professionalism','innovation','productivity','quality_of_work','team_management_point','team_work_point','problem_solving_point','quarterly_bonus','communication_point','emp_month_salary_hidden','emp_designation_bonus','emp_travel_allowence','emp_date_of_joining_hidden','emp_no_of_working_days','title', 'emp_code','route','emp_name','emp_shift_time','id','emp_email','emp_designation','emp_basic_salary','emp_kpi_bonus','emp_project_bonus','emp_absent','emp_leave','emp_deduction','emp_reason_deduction','emp_total_salary','emp_net_salary');
               return view('salaries.confirm-page',$data);
         //    $pdf_name = "sample.pdf";
         //    $pdf = PDF::loadView('salaries.preview-slip', $data);
@@ -219,9 +347,10 @@ class SalaryController extends Controller
                     ]);
         });
 
-        if($emp_reason_deduction==null) {
+         if($emp_reason_deduction==null) {
             $emp_reason_deduction = "";
         }
+
         $emp->emp_id = $emp_code;
         $emp->emp_name =  $emp_name;
         $emp->file_name  = $pdf_name;

@@ -3,7 +3,7 @@
     <div class="navbar-header">
         <div class="d-flex">
               <!-- LOGO -->
-            <div class="navbar-brand-box">
+            <div class="navbar-brand-box" style="background-color: #14213d;">
                 <a href="index" class="logo logo-dark">
                     <span class="logo-sm">
                         <img src="{{ url('reblate-favicon.png') }}" alt="logo-sm-dark" width="50" style="object-fit: contain">
@@ -127,26 +127,41 @@
                     </div>
                 </div>
             @endif
+
             <div class="btn-group">
                 <button type="button" class="btn d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: rgba(255, 255, 255, 0.5); border-radius: 50px;margin:10px;">
                     @if (Session::has('emp_img'))
                     <!-- Debugging: Check if session variable exists -->
 
-                    <!-- Debugging: Output session variable value -->
+            <div class="dropdown px-3 sidebar-user" style="background-color: #e3e3e3; border-radius: 10px;margin:10px;">
+                <button type="button" class="btn w-100 px-0 border-0" id="page-header-user-dropdown"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+
+                           @if(auth()->user()->user_type=="admin")
+                            <img src="{{ url('user.png') }}" style='object-fit:cover;' class="img-fluid header-profile-user rounded-circle" alt="">
+                        @elseif (Session::has('emp_img'))
+                            @if (Session::get('emp_img') != "" && file_exists(Session::get('emp_img')))
+                                <!-- Debugging: Output image path -->
+                                <!-- Render image -->
+                                <img src="{{ url(Session::get('emp_img')) }}" style='object-fit:cover;' class="img-fluid header-profile-user rounded-circle" alt="">
+                            @else
+                                <!-- Render default image -->
+                                <img src="{{ url('user.png') }}" style='object-fit:cover;' class="img-fluid header-profile-user rounded-circle" alt="">
+                            @endif
+                        @endif
 
 
-                    @if (Session::get('emp_img') != "" && file_exists(Session::get('emp_img')))
-                        <!-- Debugging: Output image path -->
 
 
-                        <!-- Render image -->
-                        <img src="{{ url(Session::get('emp_img')) }}" class="img-fluid header-profile-user rounded-circle" alt="">
-                    @else
+                        </div>
+
 
 
                         <!-- Render default image -->
                         <img src="{{ url('user.png') }}" class="img-fluid header-profile-user rounded-circle" alt="">
-                    @endif
+
                 @endif
                 <div class="flex-grow-1 text-start" style="color: #14213d">
                     <span class="ms-1 fw-medium user-name-text">{{ auth()->user()->user_name }}</span>
@@ -160,8 +175,22 @@
                     class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
                     class="align-middle">Logout</span></a></li>
 
-                </ul>
-              </div>
+                        <div class="flex-grow-1 ms-2 text-start">
+                            <span class="ms-1 fw-medium user-name-text">{{ auth()->user()->user_name }}</span>
+                        </div>
+                    </span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <!-- item-->
+                    <a class="dropdown-item" href="{{ Route('user.chang-password')}}"><i
+                            class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Change Password</span></a>
+                    <a class="dropdown-item" href="javascript:void()" onclick="confirmLogout()"><i
+                            class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
+                            class="align-middle">Logout</span></a>
+
+                </div>
+            </div>
 
         </div>
     </div>

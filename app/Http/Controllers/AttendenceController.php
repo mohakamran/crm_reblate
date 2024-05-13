@@ -122,8 +122,8 @@ class AttendenceController extends Controller
         $overtime_end = $req->overtime_end;
 
        // Create an associative array to represent your JSON object
-
-
+       
+       
         $id = $req->id;
 
         if($break_start == '') {
@@ -142,20 +142,20 @@ class AttendenceController extends Controller
                 $hours_over = floor($totalWorkHoursTime);
                 $minutes_over = ($totalWorkHoursTime - $hours_over) * 60;
                 $formattedTotalWorkHoursTime = sprintf('%02d:%02d', $hours_over, $minutes_over);
-
+          
         } else {
             $overtime_start = null;
             $overtime_end = null;
             $formattedTotalWorkHoursTime = null;
         }
+        
+      
+        
 
-
-
-
-
-
-
-
+        
+       
+            
+            
 
 
 
@@ -163,10 +163,10 @@ class AttendenceController extends Controller
             // Parse the check-in and check-out times
             $checkIn = Carbon::createFromFormat('h:i A', $check_in);
             $checkOut = Carbon::createFromFormat('h:i A', $check_out);
+            
 
 
-
-
+           
 
             if ($checkOut < $checkIn) {
                 $checkOut->addDay(); // Add a day to check-out time
@@ -177,12 +177,12 @@ class AttendenceController extends Controller
             // If break times are not empty, adjust the total work hours
             if ($break_start =="" && $break_end == "") {
 
-
-
+                
+                
                $breakStart = Carbon::createFromFormat('h:i A', $break_start);
               $breakEnd = Carbon::createFromFormat('h:i A', $break_end);
-
-
+            
+            
 
                 // Ensure break times are within working hours before adjusting
                 if ($breakStart >= $checkIn && $breakEnd <= $checkOut) {
@@ -195,13 +195,13 @@ class AttendenceController extends Controller
                // Calculate total work hours
                $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to hours
             }
+            
+             
+            
+           
 
 
-
-
-
-
-
+           
 
 
             // Format total worked hours into HH:MM format
@@ -216,7 +216,7 @@ class AttendenceController extends Controller
                 $break_end = "";
             }
 
-
+            
 
 
 
@@ -560,51 +560,54 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
 
     }
     // search button admin view by name, id or designation
-    public function searchEmpAttendenceAdmin(Request $req) {
+       public function searchEmpAttendenceAdmin(Request $req) {
        $emp_id = $req->emp_id;
        $emp_name = $req->emp_name;
        $emp_designation = $req->emp_designation;
-       $emp_shift = $req->emp_shift;
-       $latestEmployees = "";
-       $totalCount = 0;
+        //    dd($emp_designation);
+        $emp_shift = $req->emp_shift;
+        $latestEmployees = "";
+        $totalCount = 0;
 
-       $user_type = Auth()->user()->user_type;
-       if($user_type == "employee") {
-           return view('errors.404');
-       }
+        //    dd($emp_designation);
 
-       if($emp_id!=null) {
-           $latestEmployees = DB::table('employees')->where('Emp_Status','active')->where('Emp_Code',$emp_id)->get();
-           $totalCount = DB::table('employees')->where('Emp_Status','active')->where('Emp_Code',$emp_id)->count();
+        $user_type = Auth()->user()->user_type;
+        if($user_type == "employee") {
+            return view('errors.404');
+        }
 
-       }
+        if($emp_id!=null) {
+            $latestEmployees = DB::table('employees')->where('Emp_Status','active')->where('Emp_Code',$emp_id)->get();
+            $totalCount = DB::table('employees')->where('Emp_Status','active')->where('Emp_Code',$emp_id)->count();
 
-       if($emp_name!=null) {
-           $latestEmployees = DB::table('employees')->where('Emp_Status','active')->where('Emp_Full_Name', 'like', '%' . $emp_name . '%')->get();
-           $totalCount = DB::table('employees')->where('Emp_Status','active')->where('Emp_Full_Name', 'like', '%' . $emp_name . '%')->count();
-       }
-       if($emp_designation!=null) {
-           $latestEmployees = DB::table('employees')->where('Emp_Status','active')->where('Emp_Status','active')->where('Emp_Designation',$emp_designation)->get();
-           $totalCount = DB::table('employees')->where('Emp_Status','active')->where('Emp_Status','active')->where('Emp_Designation',$emp_designation)->count();
-       }
+        }
 
-       if($emp_shift!=null) {
-           $latestEmployees = DB::table('employees')->where('Emp_Status','active')->where('Emp_Status','active')->where('Emp_Shift_Time',$emp_shift)->get();
-           $totalCount = DB::table('employees')->where('Emp_Status','active')->where('Emp_Status','active')->where('Emp_Shift_Time',$emp_shift)->count();
-       }
+        if($emp_name!=null) {
+            $latestEmployees = DB::table('employees')->where('Emp_Status','active')->where('Emp_Full_Name', 'like', '%' . $emp_name . '%')->get();
+            $totalCount = DB::table('employees')->where('Emp_Status','active')->where('Emp_Full_Name', 'like', '%' . $emp_name . '%')->count();
+        }
+        if($emp_designation!=null) {
+            $latestEmployees = DB::table('employees')->where('Emp_Status','active')->where('Emp_Status','active')->where('Emp_Designation',$emp_designation)->get();
+            $totalCount = DB::table('employees')->where('Emp_Status','active')->where('Emp_Status','active')->where('Emp_Designation',$emp_designation)->count();
+        }
 
-       //    dd($latestEmployees);
+        if($emp_shift!=null) {
+            $latestEmployees = DB::table('employees')->where('Emp_Status','active')->where('Emp_Status','active')->where('Emp_Shift_Time',$emp_shift)->get();
+            $totalCount = DB::table('employees')->where('Emp_Status','active')->where('Emp_Status','active')->where('Emp_Shift_Time',$emp_shift)->count();
+        }
+
+        //    dd($latestEmployees);
 
 
-       if($latestEmployees != null) {
-           $emp="Reblate Solutions Employees";
-           return view('emp.view-employees',compact('latestEmployees','emp','totalCount'));
-       } else {
+        if($latestEmployees != null) {
             $emp="Reblate Solutions Employees";
-            $latestEmployees = DB::table('employees')->get();
-            $totalCount = DB::table('employees')->count();
             return view('emp.view-employees',compact('latestEmployees','emp','totalCount'));
-       }
+        } else {
+                $emp="Reblate Solutions Employees";
+                $latestEmployees = DB::table('employees')->get();
+                $totalCount = DB::table('employees')->count();
+                return view('emp.view-employees',compact('latestEmployees','emp','totalCount'));
+        }
 
 
     }
@@ -922,7 +925,7 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
                 // return view('attendence.index',compact('shift_time','check_in_already_message'));
                 return back();
             }
-
+            
             if($check->break_start !=null) {
                 return redirect('/');
             }
@@ -1194,10 +1197,8 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
                                 'total_time' => $formattedTotalWorkHours
                             ]);
 
-                            return response()->json([
-                                'status' => 'success',
-                                'message' => 'Operation completed successfully.'
-                            ]);
+                        return back();
+
                     } else {
                         return back();
                     }
