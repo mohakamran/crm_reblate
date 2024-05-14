@@ -144,6 +144,7 @@
                             <div class="row justify-content-between"  style="background-color: #14213d; border-radius:10px; padding:10px;">
 
                                 @csrf
+
                                 <div class="ms-2 w-50">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"
@@ -154,7 +155,51 @@
                                     <input class="form-control searchInput " type="text" name="emp_name"
                                         placeholder="Enter Employee Name...">
 
+
                                 </div>
+
+
+                                {{-- <div class="col-md-3 d-flex gap-2 justify-content-end">
+
+
+
+
+
+                                    @if (auth()->user()->user_type == 'admin')
+                                     <a href="/add-new" class="reblateBtn " style="padding: 10px 14px;"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd"
+                                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                                    </svg></a>
+                                        @elseif(Session::has('employees_access'))
+                                        @php
+                                            $employees_access = Session::get('employees_access');
+                                            // Convert to an array if it's a single value
+                                            if (!is_array($employees_access)) {
+                                                $employees_access = explode(',', $employees_access);
+                                                // Remove any empty elements resulting from the explode function
+                                                $employees_access = array_filter($employees_access);
+                                            }
+                                         @endphp
+                                            @if (is_array($employees_access) && (in_array('all', $employees_access) ||  in_array('create', $employees_access)  ) )
+                                                <a href="/add-new" class="reblateBtn " style="padding: 10px 14px;"><svg
+                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd"
+                                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                                    </svg></a>
+                                          @endif
+
+                                    @endif
+
+
+
+
+
+
+
+                                </div> --}}
                                 <div class="w-25 d-flex gap-2 justify-content-end align-items-center">
                                     <div class="row">
                                         @if (isset($error) && $error != '')
@@ -218,6 +263,7 @@
                                 <div class="card" style=" overflow: hidden; border-radius: 10px; box-shadow:none;">
                                     <div class="card-body" style="box-shadow: none; padding-top:9.5rem; padding-bottom:9.5rem; backdrop-filter: blur(0px); max-height: 350px;">
                                     <div class="d-flex flex-column justify-content-center align-items-center">
+                                        @if (auth()->user()->user_type == 'admin')
                                         <a href="/add-new" class="reblateBtn " style="padding: 14px;"><svg
                                             xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                             fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -225,6 +271,26 @@
                                                 d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
                                         </svg></a>
                                         <h3 style="color: lightgrey; font-family:'Poppins'; margin-top:5px; font-size:18px;">Add Members</h3>
+                                        @elseif(Session::has('employees_access'))
+                                        @php
+                                            $employees_access = Session::get('employees_access');
+                                            // Convert to an array if it's a single value
+                                            if (!is_array($employees_access)) {
+                                                $employees_access = explode(',', $employees_access);
+                                                // Remove any empty elements resulting from the explode function
+                                                $employees_access = array_filter($employees_access);
+                                            }
+                                         @endphp
+                                          @if (is_array($employees_access) && (in_array('all', $employees_access) ||  in_array('create', $employees_access)  ) )
+                                          <a href="/add-new" class="reblateBtn " style="padding: 10px 14px;"><svg
+                                                      xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                      fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                      <path fill-rule="evenodd"
+                                                          d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                              </svg></a>
+                                    @endif
+
+                                        @endif
                                     </div>
                                     </div>
                                 </div>

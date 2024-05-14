@@ -479,7 +479,8 @@ class EmployeesController extends Controller
                     'employee_relative_phone_num' => 'required',
                     'employee_relative_address' => 'required',
                     'employee_code' => 'required|max:255',
-                    'emp_cnic' => 'required'
+                    'emp_cnic' => 'required',
+                    'employee_shift_time' => 'required',
                 ]);
 
                 // dd("this");
@@ -550,6 +551,7 @@ class EmployeesController extends Controller
                 $id_rec->designation_bonus = $req->designation_bonus;
                 $id_rec->travel_allowance = $req->travel_allowance;
                 $id_rec->emp_cnic = $req->emp_cnic;
+                $id_rec->Emp_Shift_Time = $req->employee_shift_time;
 
 
                 $id_rec->save();

@@ -27,7 +27,7 @@
                             </div>
                         @endif
                         <hr>
-                        <form method="post" action="/register-new-emp-login-access/">
+                        <form method="POST" action="/create-login-new-employee-access">
                             @csrf
 
                             {{-- @if (session('success'))

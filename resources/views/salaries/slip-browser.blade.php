@@ -191,12 +191,12 @@ Salary Slip
                                 <th colspan="2">Income</th>
                                 <th colspan="2">Deductions</th>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td>Particular</td>
                                 <td>Amount</td>
                                 <td>Particular</td>
                                 <td>Amount</td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <td>Basic Salary</td>
                                 <td>Rs. {{ $emp_basic_salary }}</td>
@@ -220,6 +220,10 @@ Salary Slip
                                 <td>Travel Allowance</td>
                                 <td>Rs. {{ $emp_travel_allowence }}</td>
                             </tr>
+                            <tr>
+                                <td>Quartarly Bonus</td>
+                                <td>Rs. {{ $quarterly_bonus }}</td>
+                            </tr>
 
                             <tr>
                                 <th>Total</th>
@@ -232,8 +236,8 @@ Salary Slip
                                 <td>Rs. {{ $emp_net_salary }}</td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="names">Muhammad Abuzar</td>
-                                <td colspan="2" class="names">Muhammad Danyal</td>
+                                <td colspan="2" class="names">{{$created_by}}</td>
+                                <td colspan="2" class="names">{{$authorized_by}}</td>
                             </tr>
                             <tr>
                                 <td class="role" colspan="2">Created By</td>

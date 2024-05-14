@@ -63,51 +63,7 @@
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
-                        {{-- <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" type="text" placeholder="User Name"
-                                    disabled
-                                    value="{{$emp_name}}" min="0" name="emp_name">
 
-                                    <label for=""> Name <span class="text-danger">*</span></label>
-
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" type="email" placeholder="email"
-                                    disabled
-                                    value="{{$emp_email}}" name="emp_email">
-                                    @error('ex_date')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                    <label for=""> Email<span class="text-danger">*</span></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" type="text" placeholder="User Name" name="emp_designation"
-
-                                    disabled
-                                        value="{{$emp_designation}}" min="0">
-
-                                    <label for=""> Designation <span class="text-danger">*</span></label>
-
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" type="text" placeholder="email" name="emp_shift_time"
-                                    disabled
-                                    value="{{$emp_shift_time}}">
-
-                                    <label for=""> Shift Time<span class="text-danger">*</span></label>
-                                </div>
-                            </div>
-                        </div> --}}
                         <br>
                         <h3> Preview Salary Details</h3><hr>
                         <form method="post" action="{{ $route }}" enctype="multipart/form-data">
@@ -171,10 +127,13 @@
                                         {{-- total Marks --}}
                                         <input type="hidden" value="{{$total_basic_attributes}}" name="total_basic_attributes">
                                         <input type="hidden" value="{{$total_job_performance}}" name="total_job_performance">
+                                        <input type="hidden" value="{{$over_all_performance}}" name="over_all_performance">
                                         <input type="hidden" value="{{$all_total}}" name="all_total">
 
                                         {{--  over all assesment --}}
-                                        <input type="hidden" value="{{$over_all_performance}}" name="over_all_performance">
+                                        <input type="hidden" value="{{$created_by}}" name="created_by">
+                                        <input type="hidden" value="{{$authorized_by}}" name="authorized_by">
+                                        <input type="hidden" value="{{$salary_id}}" name="salary_id">
 
 
 

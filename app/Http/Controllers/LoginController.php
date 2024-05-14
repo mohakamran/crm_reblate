@@ -105,23 +105,18 @@ class LoginController extends Controller
         $login_user_type = $req->emp_login_user_type_hidden;
         $login_user_code = $req->emp_code;
 
-        $user_check = UserEmployee::where('emp_code', $login_user_code)->first();
+        // $user_check = UserEmployee::where('emp_code', $login_user_code)->first();
         $email_check = DB::table('users')->where('user_email',$login_user_email)->first();
         if($email_check) {
-            $check =  DB::table('table_login_details')->where('email',$login_user_email)->first();
-            if($check) {
-                session()->flash('fail', 'Email Already Exists!');
-                session()->flash('fail', 'Email Already Exists!');
-                return back();
-            }
-                session()->flash('fail', 'Email Already Exists!');
-                return back();
+            session()->flash('fail', 'Email Already Exists!');
+            return back();
         }
+        $user_check =  DB::table('table_login_details')->where('email',$login_user_email)->first();
         if($user_check) {
             session()->flash('fail', 'Employee ID already exists!');
             return back();
         }
-        else {
+
              // emp access
             $emp_access = $req->input('emp_access', []);
             // expenses access
@@ -210,13 +205,14 @@ class LoginController extends Controller
             session()->flash('success', 'Login Invitation Sent successfully!');
             return redirect('/create-new-login');
 
-        }
+
 
     }
 
     // create login and save data in databse
     public function registerLoginEmp($id, Request $req) {
         $employee = Employee::where('Emp_Code', $id)->first();
+
 
         if($employee) {
             $login_user_name = $req->emp_login_name_hidden;

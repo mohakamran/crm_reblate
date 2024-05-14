@@ -796,7 +796,7 @@ public function searchDateManagerHomePage(Request $req) {
         if (!$active_emp) {
             // If $active_emp is null, it means no active employee found
             // Sending the message
-            return back()->with('error', 'You are not an active employee. Please Contact Admin! ');
+            return back()->with('error', 'You have been disabled. Please Contact Admin! ');
         }
             $employees = Employee::all();
             $emp_count = count($employees);

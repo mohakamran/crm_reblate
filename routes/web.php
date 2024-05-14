@@ -109,7 +109,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/add-new-employee-data', [EmployeesController::class, 'getData'])->name('add-new-employee-data');
     Route::get('/change-status/{status}', [EmployeesController::class, 'changeStatus'])->middleware('checkUserRole');
     Route::get('/change-shift/{status}', [EmployeesController::class, 'changeShift'])->middleware('checkUserRole');
-    Route::get('/delete-employee/{emp_id}', [EmployeesController::class, 'delEmployee'])->name('del-emp')->middleware('checkUserRole');
     Route::get('/change-status/{emp_id}', [EmployeesController::class, 'changeStatus'])->middleware('checkUserRole');
     Route::get('/update-employee/{emp_id}', [EmployeesController::class, 'updateEmployee'])->middleware('checkUserRole');
     Route::post('/update-employee-data/{emp_id}', [EmployeesController::class, 'updateEmployeeData']);
@@ -145,8 +144,13 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/send-reciept/{u_id}', [SalaryController::class,'sendReciept'])->middleware('SalaryCheck');
     Route::get('/view-slips', [SalaryController::class,'viewReciepts'])->middleware('SalaryCheck');
     Route::get('/view-salaries/{id}', [SalaryController::class,'viewSalaries'])->middleware('SalaryCheck');
+    Route::get('/update-salary/{id}', [SalaryController::class,'updateSalary'])->middleware('SalaryCheck');
     Route::get('/preview-slip-employee-page/{id}', [SalaryController::class,'viewSlipBrowser']);
     // Route::get('/testpdf', [SalaryController::class,'testPdf']);
+
+    // salaries by month
+    Route::get('/salary-by-month', [SalaryController::class,'showMonthWiseSalaries'])->middleware('AdminUser');
+    Route::post('/search-salary-by-month', [SalaryController::class,'showMonthWiseSalariesByMonth'])->middleware('AdminUser');
 
     // invoices
     Route::get('/create-new-invoice',[InvoiceController::class,'createNewInvoice'])->middleware('ClienteCheck');
@@ -157,10 +161,12 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/preview-invoices/{id}',[InvoiceController::class,'viewIndividualInvoices'])->middleware('ClienteCheck');
     Route::get('/preview/{id}',[InvoiceController::class,'previewOnBrowser'])->middleware('ClienteCheck');
 
+
+
     // logins
     Route::get('/create-new-login',[LoginController::class,'createLoginView'])->middleware('AdminCheck');
     Route::get('/create-new-employee-login',[LoginController::class,'createNewEmployeeLogin'])->middleware('AdminCheck');
-    Route::post('/register-new-emp-login-access',[LoginController::class,'registerNewEmployeeLogin'])->middleware('AdminCheck');
+    Route::post('/create-login-new-employee-access',[LoginController::class,'registerNewEmployeeLogin'])->middleware('AdminCheck');
     Route::get('/create-login-emp/{id}',[LoginController::class,'createLoginEmp'])->middleware('AdminCheck');
     Route::get('/update-login-emp/{id}',[LoginController::class,'updateLoginEmp'])->middleware('AdminCheck');
     Route::post('/register-login-access/{id}',[LoginController::class,'registerLoginEmp'])->middleware('AdminCheck');

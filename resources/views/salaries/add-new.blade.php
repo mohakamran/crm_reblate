@@ -25,7 +25,7 @@
 
             .popup-content {
                 /* overflow-y: scroll;
-                        scroll-behavior: smooth scroll; */
+                            scroll-behavior: smooth scroll; */
                 display: flex;
                 max-width: 700px;
                 margin: auto auto;
@@ -170,6 +170,41 @@
                                                 <label for="">Employee Shift Time</label>
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 inputboxcolor">
+                                                @if (isset($status) && $status =="update" )
+                                                    <input class="form-control"
+                                                    style="background-color: transparent; border:none;" type="text"
+                                                    placeholder="" name="created_by"
+                                                    value="{{ $salary_id->created_by != null ? $salary_id->created_by : old('created_by') }}"
+                                                    required>
+                                                @else
+                                                <input class="form-control"
+                                                    style="background-color: transparent; border:none;" type="text"
+                                                    placeholder="" name="created_by"
+                                                    value=""
+                                                    required>
+                                                @endif
+
+                                                @error('created_by')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+
+                                                @php
+                                                    if ($emp->Emp_Shift_Time == 'Morning') {
+                                                        $authorized_by = 'Roveem Dar';
+                                                    } else {
+                                                        $authorized_by = 'Muhammad Abu Zar';
+                                                    }
+                                                @endphp
+
+
+                                                <input type="hidden" name="authorized_by"
+                                                    value="{{ $authorized_by != null ? $authorized_by : '' }}">
+
+                                                <label for="">Created By</label>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -191,15 +226,26 @@
                                     <div class="row form-group">
                                         <div class="col-md-3 col-sm-12">
                                             <label required class=" col-form-label">Basic Salary</label>
-                                            <input class="form-control inputboxcolor"
-                                                style="background-color: #e3e3e3; border:none;" type="number"
-                                                name="emp_basic_salary" min="0" id="basicSalary"
-                                                onchange="calculateSalary()" value="{{($emp->basic_salary!=null) ? $emp->basic_salary : '0'  }}">
+                                            @if (isset($status) && $status == 'update')
+                                                <input class="form-control inputboxcolor"
+                                                    style="background-color: #e3e3e3; border:none;" type="number"
+                                                    name="emp_basic_salary" min="0" id="basicSalary"
+                                                    onchange="calculateSalary()"
+                                                    value="{{ $salary_id->basic_salary != null ? $salary_id->basic_salary : old('emp_basic_salary') }}">
+                                            @else
+                                                <input class="form-control inputboxcolor"
+                                                    style="background-color: #e3e3e3; border:none;" type="number"
+                                                    name="emp_basic_salary" min="0" id="basicSalary"
+                                                    onchange="calculateSalary()"
+                                                    value="{{ $emp->basic_salary != null ? $emp->basic_salary : '0' }}">
+                                            @endif
+
 
                                         </div>
                                         <div class="col-md-3 col-sm-12 d-flex flex-column">
                                             <label required class=" col-form-label">Calculate KPI</label>
-                                            <a class="reblateBtn px-4 py-1" style="cursor: pointer;" id="popupButton">Caculate KPI</a>
+                                            <a class="reblateBtn px-4 py-1" style="cursor: pointer;"
+                                                id="popupButton">Caculate KPI</a>
                                             <div class="popup" id="popup">
                                                 <div class="popup-content flex-column">
                                                     <div class="d-flex mb-3 align-items-center justify-content-between">
@@ -259,13 +305,25 @@
                                                                                             convey information clearly and
                                                                                             effectively</td>
                                                                                         <td colspan="1">5</td>
-                                                                                        <td colspan="1"><input
+                                                                                        <td colspan="1">
+                                                                                            @if (isset($status) && $status == "update")
+                                                                                                <input
                                                                                                 type="text"
-                                                                                                value="0"
+                                                                                                value="{{ $salary_id->communication_point != null ? $salary_id->communication_point : '' }}"
                                                                                                 id="communicationPoint"
                                                                                                 name="communication_point"
                                                                                                 onchange="calculateSalary()"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                            @else
+                                                                                            <input
+                                                                                            type="text"
+                                                                                            value=""
+                                                                                            id="communicationPoint"
+                                                                                            name="communication_point"
+                                                                                            onchange="calculateSalary()"
+                                                                                            style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                            @endif
+
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
@@ -275,13 +333,26 @@
                                                                                             identify and resolve complex
                                                                                             issues</td>
                                                                                         <td colspan="1">5</td>
-                                                                                        <td colspan="1"><input
+                                                                                        <td colspan="1">
+                                                                                            @if (isset($status) && $status == "update")
+                                                                                                <input
+                                                                                                type="text"
+                                                                                                value="{{ $salary_id->problem_solving_point != null ? $salary_id->problem_solving_point : '' }}"
+                                                                                                id="ProblemSolvingPoint"
+                                                                                                name="problem_solving_point"
+                                                                                                onchange="calculateSalary()"
+                                                                                                style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                            @else
+                                                                                                <input
                                                                                                 type="text"
                                                                                                 value="0"
                                                                                                 id="ProblemSolvingPoint"
                                                                                                 name="problem_solving_point"
                                                                                                 onchange="calculateSalary()"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
+
+                                                                                            @endif
+
                                                                                         </td>
                                                                                     </tr>
 
@@ -291,13 +362,25 @@
                                                                                             and contribution towards
                                                                                             achieving team goals</td>
                                                                                         <td colspan="1">5</td>
-                                                                                        <td colspan="1"><input
+                                                                                        <td colspan="1">
+                                                                                            @if (isset($status) && $status == "update")
+                                                                                                <input
+                                                                                                type="text"
+                                                                                                value="{{ $salary_id->team_work_point != null ? $salary_id->team_work_point : '' }}"
+                                                                                                id="TeamWorkPoint"
+                                                                                                name="team_work_point"
+                                                                                                onchange="calculateSalary()"
+                                                                                                style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                            @else
+                                                                                            <input
                                                                                                 type="text"
                                                                                                 value="0"
                                                                                                 id="TeamWorkPoint"
                                                                                                 name="team_work_point"
                                                                                                 onchange="calculateSalary()"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                            @endif
+
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
@@ -308,356 +391,677 @@
                                                                                             Punctuality, and Attendance.
                                                                                         </td>
                                                                                         <td colspan="1">5</td>
-                                                                                        <td colspan="1"><input
+                                                                                        <td colspan="1">
+                                                                                            @if (isset($status) && $status == "update")
+                                                                                                <input
+                                                                                                type="text"
+                                                                                                value="{{ $salary_id->team_management_point != null ? $salary_id->team_management_point : '' }}"
+                                                                                                id="TimeManagementPoint"
+                                                                                                name="team_management_point"
+                                                                                                onchange="calculateSalary()"
+                                                                                                style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                            @else
+                                                                                            <input
                                                                                                 type="text"
                                                                                                 value="0"
                                                                                                 id="TimeManagementPoint"
                                                                                                 name="team_management_point"
                                                                                                 onchange="calculateSalary()"
                                                                                                 style="width: 50px; height:40px; background-color:transparent; border:none;">
+
+                                                                                            @endif
+
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <th colspan="5">Total</th>
                                                                                         <td>20</td>
-                                                                                        <td><input type="text"
-                                                                                                value="0"
-                                                                                                disabled
-                                                                                                id="Total1"
-                                                                                                                                                                                     "
-                                                                                                type="number"
-                                                                                                style="width: 50px; height:40px; background-color:transparent; border:none;">
-
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <th colspan="8">Job Performance
-                                                                                        </th>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <th colspan="2">Criteria</th>
-                                                                                        <th colspan="3">Description</th>
-                                                                                        <th colspan="1">Marks</th>
-                                                                                        <th colspan="1">Obtained</th>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td colspan="2">Quality of Work
-                                                                                        </td>
-                                                                                        <td colspan="3">Accuracy,
-                                                                                            attention to detail, and
-                                                                                            consistency in delivering
-                                                                                            high-quality work</td>
-                                                                                        <td colspan="1">5</td>
-                                                                                        <td colspan="1"><input
-                                                                                                type="text"
-                                                                                                value="0"
-                                                                                                id="QualityOfWork"
-                                                                                                name="quality_of_work"
-                                                                                                onchange="calculateSalary()"
-                                                                                                style="width: 50px; height:40px; background-color:transparent; border:none;">
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td colspan="2">Productivity
-                                                                                        </td>
-                                                                                        <td colspan="3">Ability to meet
-                                                                                            or exceed productivity targets
-                                                                                            and output expectations</td>
-                                                                                        <td colspan="1">5</td>
-                                                                                        <td colspan="1"><input
-                                                                                                type="text"
-                                                                                                value="0"
-                                                                                                id="Productivity"
-                                                                                                name="productivity"
-                                                                                                onchange="calculateSalary()"
-                                                                                                style="width: 50px; height:40px; background-color:transparent; border:none;">
-                                                                                        </td>
-                                                                                    </tr>
-
-                                                                                    <tr>
-                                                                                        <td colspan="2">Innovation</td>
-                                                                                        <td colspan="3">Proactive
-                                                                                            approach towards suggesting and
-                                                                                            implementing creative ideas</td>
-                                                                                        <td colspan="1">5</td>
-                                                                                        <td colspan="1"><input
-                                                                                                type="text"
-                                                                                                value="0"
-                                                                                                id="Innovation"
-                                                                                                name="innovation"
-                                                                                                onchange="calculateSalary()"
-                                                                                                style="width: 50px; height:40px; background-color:transparent; border:none;">
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td colspan="2">Professionalism
-                                                                                        </td>
-                                                                                        <td colspan="3">Adherence to
-                                                                                            company policies, ethics, and
-                                                                                            professional conduct</td>
-                                                                                        <td colspan="1">5</td>
-                                                                                        <td colspan="1"><input
-                                                                                                type="text"
-                                                                                                value="0"
-                                                                                                name="professionalism"
-                                                                                                id="Professionalism"
-                                                                                                onchange="calculateSalary()"
-                                                                                                style="width: 50px; height:40px; background-color:transparent; border:none;">
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <th colspan="5">Total</th>
-                                                                                        <td>20</td>
-                                                                                        <td><input type="text"
-                                                                                                value="0"
-                                                                                                id="Total2"
-                                                                                                disabled
-                                                                                                type="number"
-                                                                                                style="width: 50px; height:40px; background-color:transparent; border:none;">
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <th colspan="8">Development &
-                                                                                            Growth </th>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <th colspan="2">Criteria</th>
-                                                                                        <th colspan="3">Description</th>
-                                                                                        <th colspan="1">Marks</th>
-                                                                                        <th colspan="1">Obtained</th>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td colspan="2">Skill
-                                                                                            Enhancement</td>
-                                                                                        <td colspan="3">Participation in
-                                                                                            training programs, acquiring new
-                                                                                            skills, and knowledge.</td>
-                                                                                        <td colspan="1" rowspan="2">
-                                                                                            10</td>
-                                                                                        <td colspan="1" rowspan="2">
-                                                                                            <input type="text"
-                                                                                                value="0"
-                                                                                                id="DevelopmentAndGrwoth"
-                                                                                                name="development_and_growth"
-                                                                                                onchange="calculateSalary()"
-                                                                                                style="width: 50px; height:40px; background-color:transparent; border:none;">
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td colspan="2">Initiative</td>
-                                                                                        <td colspan="4">Willingness to
-                                                                                            take initiative for personal and
-                                                                                            professional growth</td>
-
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <th colspan="6">Total Marks</th>
-                                                                                        <th colspan="1"><input
-                                                                                                type="text"
-                                                                                                disabled
-                                                                                                value="0"
-                                                                                                id="Total3"
-                                                                                                type="number"
-                                                                                                style="width: 50px; height:40px; background-color:transparent; border:none;">
-                                                                                        </th>
-                                                                                    </tr>
+                                                                                        <td>
+                                                                                            @if (isset($status) && $status == "update")
+                                                                                                <input type="text"
+                                                                                                value="{{ $salary_id->total_basic_attributes != null ? $salary_id->total_basic_attributes : '' }}"
+                                                                                                disabled id="Total1"
+                                                                                                    type="number"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                            @else
+                                                                                                <input type="text"
+                                                                                                value=""
+                                                                                                disabled id="Total1"
+                                                                                                    type="number"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                            @endif
 
 
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th colspan="8">Job Performance
+                                                                                            </th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th colspan="2">Criteria</th>
+                                                                                            <th colspan="3">Description</th>
+                                                                                            <th colspan="1">Marks</th>
+                                                                                            <th colspan="1">Obtained</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td colspan="2">Quality of Work
+                                                                                            </td>
+                                                                                            <td colspan="3">Accuracy,
+                                                                                                attention to detail, and
+                                                                                                consistency in delivering
+                                                                                                high-quality work</td>
+                                                                                            <td colspan="1">5</td>
+                                                                                            <td colspan="1">
+                                                                                                @if (isset($status) && $status == "update")
+                                                                                                    <input
+                                                                                                    type="text"
+                                                                                                    value="{{ $salary_id->quality_of_work != null ? $salary_id->quality_of_work : '' }}"
+                                                                                                    id="QualityOfWork"
+                                                                                                    name="quality_of_work"
+                                                                                                    onchange="calculateSalary()"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @else
+                                                                                                <input
+                                                                                                    type="text"
+                                                                                                    value="0"
+                                                                                                    id="QualityOfWork"
+                                                                                                    name="quality_of_work"
+                                                                                                    onchange="calculateSalary()"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @endif
 
-                                                                                </tbody>
-                                                                            </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td colspan="2">Productivity
+                                                                                            </td>
+                                                                                            <td colspan="3">Ability to meet
+                                                                                                or exceed productivity targets
+                                                                                                and output expectations</td>
+                                                                                            <td colspan="1">5</td>
+                                                                                            <td colspan="1">
+                                                                                                @if (isset($status) && $status == "update")
+                                                                                                    <input
+                                                                                                    type="text"
+                                                                                                    value="{{ $salary_id->productivity != null ? $salary_id->productivity : '' }}"
+                                                                                                    id="Productivity"
+                                                                                                    name="productivity"
+                                                                                                    onchange="calculateSalary()"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @else
+                                                                                                <input
+                                                                                                    type="text"
+                                                                                                    value="0"
+                                                                                                    id="Productivity"
+                                                                                                    name="productivity"
+                                                                                                    onchange="calculateSalary()"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @endif
+
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        <tr>
+                                                                                            <td colspan="2">Innovation</td>
+                                                                                            <td colspan="3">Proactive
+                                                                                                approach towards suggesting and
+                                                                                                implementing creative ideas</td>
+                                                                                            <td colspan="1">5</td>
+                                                                                            <td colspan="1">
+                                                                                                @if (isset($status) && $status == "update")
+                                                                                                    <input
+                                                                                                    type="text"
+                                                                                                    value="{{ $salary_id->innovation != null ? $salary_id->innovation : '' }}"
+                                                                                                    id="Innovation"
+                                                                                                    name="innovation"
+                                                                                                    onchange="calculateSalary()"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @else
+                                                                                                <input
+                                                                                                    type="text"
+                                                                                                    value="0"
+                                                                                                    id="Innovation"
+                                                                                                    name="innovation"
+                                                                                                    onchange="calculateSalary()"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @endif
+
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td colspan="2">Professionalism
+                                                                                            </td>
+                                                                                            <td colspan="3">Adherence to
+                                                                                                company policies, ethics, and
+                                                                                                professional conduct</td>
+                                                                                            <td colspan="1">5</td>
+                                                                                            <td colspan="1">
+                                                                                                @if (isset($status) && $status == "update")
+                                                                                                    <input
+                                                                                                    type="text"
+                                                                                                    value="{{ $salary_id->professionalism != null ? $salary_id->professionalism : '' }}"
+                                                                                                    name="professionalism"
+                                                                                                    id="Professionalism"
+                                                                                                    onchange="calculateSalary()"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @else
+                                                                                                <input
+                                                                                                    type="text"
+                                                                                                    value="0"
+                                                                                                    name="professionalism"
+                                                                                                    id="Professionalism"
+                                                                                                    onchange="calculateSalary()"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @endif
+
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th colspan="5">Total</th>
+                                                                                            <td>20</td>
+                                                                                            <td>
+                                                                                                @if (isset($status) && $status == "update")
+                                                                                                    <input type="text"
+                                                                                                    value="{{ $salary_id->total_job_performance != null ? $salary_id->total_job_performance : '' }}"
+                                                                                                    id="Total2"
+                                                                                                    disabled
+                                                                                                    type="number"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @else
+                                                                                                <input type="text"
+                                                                                                    value="0"
+                                                                                                    id="Total2"
+                                                                                                    disabled
+                                                                                                    type="number"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @endif
+
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th colspan="8">Development &
+                                                                                                Growth </th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th colspan="2">Criteria</th>
+                                                                                            <th colspan="3">Description</th>
+                                                                                            <th colspan="1">Marks</th>
+                                                                                            <th colspan="1">Obtained</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td colspan="2">Skill
+                                                                                                Enhancement</td>
+                                                                                            <td colspan="3">Participation in
+                                                                                                training programs, acquiring new
+                                                                                                skills, and knowledge.</td>
+                                                                                            <td colspan="1" rowspan="2">
+                                                                                                10</td>
+                                                                                            <td colspan="1" rowspan="2">
+                                                                                                @if (isset($status) && $status == "update")
+                                                                                                <input type="text"
+                                                                                                    value="{{ $salary_id->development_and_growth != null ? $salary_id->development_and_growth : '' }}"
+                                                                                                    id="DevelopmentAndGrwoth"
+                                                                                                    name="development_and_growth"
+                                                                                                    onchange="calculateSalary()"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @else
+                                                                                                <input type="text"
+                                                                                                    value="0"
+                                                                                                    id="DevelopmentAndGrwoth"
+                                                                                                    name="development_and_growth"
+                                                                                                    onchange="calculateSalary()"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @endif
+
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td colspan="2">Initiative</td>
+                                                                                            <td colspan="4">Willingness to
+                                                                                                take initiative for personal and
+                                                                                                professional growth</td>
+
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th colspan="6">Total Marks</th>
+                                                                                            <th colspan="1">
+                                                                                                @if (isset($status) && $status == "update")
+                                                                                                    <input
+                                                                                                    type="text"
+                                                                                                    disabled
+                                                                                                    value="{{ $salary_id->all_total != null ? $salary_id->all_total : '' }}"
+                                                                                                    id="Total3"
+                                                                                                    type="number"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @else
+                                                                                                <input
+                                                                                                    type="text"
+                                                                                                    disabled
+                                                                                                    value="0"
+                                                                                                    id="Total3"
+                                                                                                    type="number"
+                                                                                                    style="width: 50px; height:40px; background-color:transparent; border:none;">
+                                                                                                @endif
+
+                                                                                            </th>
+                                                                                        </tr>
+
+
+
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="simplebar-placeholder"
+                                                                    style="width: 440px; height: 469px;"></div>
                                                             </div>
-                                                            <div class="simplebar-placeholder"
-                                                                style="width: 440px; height: 469px;"></div>
+
+                                                            <div class="simplebar-track simplebar-vertical"
+                                                                style="visibility: visible;">
+                                                                <div class="simplebar-scrollbar"
+                                                                    style="height: 273px; transform: translate3d(0px, 0px, 0px); display: block;">
+                                                                </div>
+                                                            </div>
                                                         </div>
 
-                                                        <div class="simplebar-track simplebar-vertical"
-                                                            style="visibility: visible;">
-                                                            <div class="simplebar-scrollbar"
-                                                                style="height: 273px; transform: translate3d(0px, 0px, 0px); display: block;">
-                                                            </div>
-                                                        </div>
                                                     </div>
-
                                                 </div>
+
                                             </div>
-
-                                        </div>
-                                        <div class="col-md-3 col-sm-12">
-                                            <label for="example-text-input" required class=" col-form-label">KPI
-                                                Bonus</label>
-                                            <input class="form-control inputboxcolor"
-                                                style="background-color: #e3e3e3; border:none;" type="number"
-                                                name="emp_kpi_bonus" min="0" id="kpiBonus"
-                                                onchange="calculateSalary()" value="0">
-
-                                        </div>
-                                        <div class="col-md-3 col-sm-12">
-                                            <label required class=" col-form-label">Project Bonus</label>
-                                            <input class="form-control inputboxcolor"
-                                                style="background-color: #e3e3e3; border:none;" type="number"
-                                                name="emp_project_bonus" min="0" id="projectBonus"
-                                                onchange="calculateSalary()" value="0">
-
-                                        </div>
-                                        <div class="col-md-3 col-sm-12">
-                                            <label required class=" col-form-label">Designation Bonus</label>
-                                            <input class="form-control inputboxcolor"
-                                                style="background-color: #e3e3e3; border:none;" type="number"
-                                                id="emp_designation_bonus" name="emp_designation_bonus" min="0"
-                                                id="" onchange="calculateSalary()" value="{{($emp->designation_bonus!=null) ? $emp->designation_bonus : '0'}}">
-                                        </div>
-                                        <div class="col-md-3 col-sm-12">
-                                            <label required class=" col-form-label">Travel Allowence</label>
-                                            <input class="form-control inputboxcolor" min="0"
-                                                id="emp_travel_allowence" name="emp_travel_allowence"
-                                                style="background-color: #e3e3e3; border:none;" type="number"
-                                                onchange="calculateSalary()" value="{{ ($emp->travel_allowance!=null) ? $emp->travel_allowance : '0' }}">
-                                        </div>
-                                        <div class="col-md-3 col-sm-12">
-                                            <label required class=" col-form-label">Quarterly Bonus</label>
-                                            <input class="form-control inputboxcolor" min="0"
-                                                id="quarterly_bonus" name="quarterly_bonus"
-                                                style="background-color: #e3e3e3; border:none;" type="number"
-                                                onchange="calculateSalary()" value="0">
-                                        </div>
-                                        <div class="col-md-3 col-sm-12">
-                                            <label for="example-text-input" min="0" required
-                                                class=" col-form-label">Deduction</label>
-                                            <input class="form-control inputboxcolor"
-                                                style="background-color: #e3e3e3; border:none;" type="number"
-                                                value="0" name="emp_deduction" min="0" id="deduction"
-                                                onchange="calculateSalary()">
-
-                                        </div>
-
-                                    </div>
-                                    <div class="form-group  row">
-                                        <div class="col-md-3 col-sm-12">
-                                            <label for="example-text-input" min="0" required
-                                                class=" col-form-label">No of Working Days</label>
-                                            <input class="form-control inputboxcolor"
-                                                style="background-color: #e3e3e3; border:none;" type="number"
-                                                value="{{ ($total_days > 0 ) ? $total_days : '22'}}" name="emp_no_of_working_days" min="0"
-                                                id="">
-
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-12">
-                                            <label for="example-text-input" required class=" col-form-label">Absent
-                                                Days</label>
-                                            <input class="form-control inputboxcolor"
-                                                style="background-color: #e3e3e3; border:none;" type="number"
-                                                name="emp_absent" min="0" value="{{($total_absents > 0) ? $total_absents : '0' }}">
-
-                                        </div>
-
-                                        <div class="col-md-3 col-sm-12">
-                                            <label required class=" col-form-label">Leave Days</label>
-                                            <input class="form-control inputboxcolor"
-                                                style="background-color: #e3e3e3; border:none;" min="0"
-                                                name="emp_leave"  type="number" value="{{($total_leaves > 0) ? $total_leaves : '0' }}">
-                                        </div>
+                                            <div class="col-md-3 col-sm-12">
+                                                <label for="example-text-input" required class=" col-form-label">KPI
+                                                    Bonus</label>
+                                                    @if (isset($status) && $status == "update")
+                                                        <input class="form-control inputboxcolor"
+                                                        style="background-color: #e3e3e3; border:none;" type="number"
+                                                        name="emp_kpi_bonus" min="0" id="kpiBonus"
+                                                        onchange="calculateSalary()" value="{{ $salary_id->kpi_bonus != null ? $salary_id->kpi_bonus : old('emp_kpi_bonus') }}" required>
+                                                    @else
+                                                    <input class="form-control inputboxcolor"
+                                                    style="background-color: #e3e3e3; border:none;" type="number"
+                                                    name="emp_kpi_bonus" min="0" id="kpiBonus"
+                                                    onchange="calculateSalary()" value="0" required>
+                                                    @endif
 
 
-                                    </div>
-                                    <div class="row form-group">
+                                            </div>
+                                            <div class="col-md-3 col-sm-12">
+                                                <label required class=" col-form-label">Project Bonus</label>
 
-                                        <div class="col-md-12 col-sm-12">
-                                            <label required class=" col-form-label">Reason of Deduction</label>
+                                                 @if (isset($status) && $status == 'update')
+                                                                                            <input
+                                                                                                class="form-control inputboxcolor"
+                                                                                                style="background-color: #e3e3e3; border:none;"
+                                                                                                type="number"
+                                                                                                name="emp_project_bonus"
+                                                                                                min="0"
+                                                                                                id="projectBonus"
+                                                                                                onchange="calculateSalary()"
+                                                                                                value="{{ $salary_id->project_bonus != null ? $salary_id->project_bonus : old('emp_project_bonus') }}"
+                                                                                                required>
+                                                                                        @else
+                                                                                            <input
+                                                                                                class="form-control inputboxcolor"
+                                                                                                style="background-color: #e3e3e3; border:none;"
+                                                                                                type="number"
+                                                                                                name="emp_project_bonus"
+                                                                                                min="0"
+                                                                                                id="projectBonus"
+                                                                                                onchange="calculateSalary()"
+                                                                                                value="0" required>
+                                                                                            @endif
 
-                                            <textarea class="form-control inputboxcolor" rows="5" name="emp_reason_deduction"
-                                                style="resize-x: none; background-color: #e3e3e3; border:none;" placeholder=""></textarea>
-                                            <br>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-md-4 col-sm-12">
-                                            <label required class=" col-form-label">Total Salary</label>
-                                            <input class="form-control inputboxcolor"
-                                                style="background-color: #e3e3e3; border:none;" type="number"
-                                                name="emp_total_salary" disabled min="0" id="totalSalary"
-                                                value="0">
-                                            <input type="hidden" name="emp_total_salary_hidden"
-                                                id="emp_total_salary_hidden">
-                                        </div>
-                                        <div class="col-md-4 col-sm-12">
-                                            <label required class=" col-form-label"> Deducation</label>
-                                            <input class="form-control inputboxcolor"
-                                                style="background-color: #e3e3e3; border:none;" type="number"
-                                                name="emp_deduction" disabled min="0" id="displayDeduction"
-                                                value="0">
-                                            <input type="hidden" name="emp_deduction_hidden" id="emp_deduction_hidden">
-                                        </div>
-                                        <div class="col-md-4 col-sm-12">
-                                            <label required class=" col-form-label">Net Salary</label>
-                                            <input class="form-control inputboxcolor"
-                                                style="background-color: #e3e3e3; border:none;" type="number"
-                                                name="emp_net_salary" disabled min="0" id="netSalary"
-                                                value="0">
-                                            <input type="hidden" name="emp_net_salary_hidden"
-                                                id="emp_net_salary_hidden">
-                                        </div>
 
-                                    </div>
 
-                                </div>
-                                <div class="col-md-8 col-sm-12 mx-auto mt-4">
-                                    <table class="table table-striped table-bordered dt-responsive nowrap"
-                                        style="border-collapse: collapse; border-spacing: 0; width: 100%; border-radius: 10px;">
-                                        <thead>
-                                            <tr>
-                                                <th colspan="3" class="text-center"
-                                                    style="font-size: 30px; color:#14213d; background-color:#e3e3e3">
-                                                    Overall Assessment</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="width: 25%">Rating Scale</td>
-                                                <td style="width: 50%">Description</td>
-                                                <td>Remarks</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="width: 25%">5 - Outstanding</td>
-                                                <td style="width: 70%">Consistently exceeds expectations</td>
-                                                <td class="text-center"><input type="radio" value="outstanding" name="over_all_performance"></td>
-                                            </tr>
-                                            <tr>
-                                                <td style="width: 25%">4 - Exceeds Expectations</td>
-                                                <td style="width: 50%">Frequently exceeds expectations</td>
-                                                <td class="text-center"><input type="radio"  value="exceeds_expectation" name="over_all_performance"></td>
-                                            </tr>
-                                            <tr>
-                                                <td style="width: 25%">3 - Meets Expectations</td>
-                                                <td style="width: 50%">Regularly meets expectations</td>
-                                                <td class="text-center"><input type="radio" value="meets_expectation" name="over_all_performance"></td>
-                                            </tr>
-                                            <tr>
-                                                <td style="width: 25%">2 - Needs Improvement</td>
-                                                <td style="width: 50%">Occasionally fails to meet expectations</td>
-                                                <td class="text-center"><input type="radio" value="needs_expectation" name="over_all_performance"></td>
-                                            </tr>
-                                            <tr>
-                                                <td style="width: 25%">1 - Unsatisfactory</td>
-                                                <td style="width: 50%">Consistently fails to meet expectations</td>
-                                                <td class="text-center"><input type="radio" value="unsatisfactory" name="over_all_performance"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="my-4">
-                                    <button type="submit" onclick="confirmSalary({{ $emp->id }})"
-                                        class="reblateBtn py-2 px-4 w-md" target="_blank">{{ $btn_text }}</button>
-                                    {{-- <a href="/preview-salary/{{$id}}" target="_blank" class="btn btn-danger">Preview</a> --}}
-                                    <button class="reblateBtn py-2 px-4 w-md text-light">
-                                        <a href="/generate-new-salary-slip" class="text-light">Go Back</a>
-                                    </button>
+                                                                        </div>
+                                                                        <div class="col-md-3 col-sm-12">
+                                                                            <label required
+                                                                                class=" col-form-label">Designation
+                                                                                Bonus</label>
+                                                                            @if (isset($status) && $status == 'update')
+                                                                                <input class="form-control inputboxcolor"
+                                                                                    style="background-color: #e3e3e3; border:none;"
+                                                                                    type="number"
+                                                                                    id="emp_designation_bonus"
+                                                                                    name="emp_designation_bonus"
+                                                                                    min="0" id=""
+                                                                                    onchange="calculateSalary() " required
+                                                                                    value="{{ $salary_id->designation_bonus != null ? $salary_id->designation_bonus : old('emp_designation_bonus') }}">
+                                                                            @else
+                                                                                <input class="form-control inputboxcolor"
+                                                                                    style="background-color: #e3e3e3; border:none;"
+                                                                                    type="number"
+                                                                                    id="emp_designation_bonus"
+                                                                                    name="emp_designation_bonus"
+                                                                                    min="0" id=""
+                                                                                    onchange="calculateSalary() " required
+                                                                                    value="{{ $emp->designation_bonus != null ? $emp->designation_bonus : '0' }}">
+                                                                            @endif
 
-                                </div>
+                                                                        </div>
+                                                                        <div class="col-md-3 col-sm-12">
+                                                                            <label required class=" col-form-label">Travel
+                                                                                Allowence</label>
+                                                                            @if (isset($status) && $status == 'update')
+                                                                                <input class="form-control inputboxcolor"
+                                                                                    min="0"
+                                                                                    id="emp_travel_allowence"
+                                                                                    name="emp_travel_allowence"
+                                                                                    style="background-color: #e3e3e3; border:none;"
+                                                                                    type="number"
+                                                                                    onchange="calculateSalary()" required
+                                                                                    value="{{ $salary_id->travel_allowence != null ? $salary_id->travel_allowence : old('emp_travel_allowence') }}">
+                                                                            @else
+                                                                                <input class="form-control inputboxcolor"
+                                                                                    min="0"
+                                                                                    id="emp_travel_allowence"
+                                                                                    name="emp_travel_allowence"
+                                                                                    style="background-color: #e3e3e3; border:none;"
+                                                                                    type="number"
+                                                                                    onchange="calculateSalary()" required
+                                                                                    value="{{ $emp->travel_allowance != null ? $emp->travel_allowance : '0' }}">
+                                                                            @endif
+
+                                                                        </div>
+                                                                        <div class="col-md-3 col-sm-12">
+                                                                            <label required
+                                                                                class=" col-form-label">Quarterly
+                                                                                Bonus</label>
+                                                                                @if (isset($status) && $status == 'update')
+                                                                                    <input class="form-control inputboxcolor"
+                                                                                    min="0" id="quarterly_bonus"
+                                                                                    name="quarterly_bonus"
+                                                                                    style="background-color: #e3e3e3; border:none;"
+                                                                                    type="number"
+                                                                                    onchange="calculateSalary()" required
+                                                                                    value="{{ $salary_id->quarterly_bonus != null ? $salary_id->quarterly_bonus : '0' }}">
+                                                                                @else
+                                                                                <input class="form-control inputboxcolor"
+                                                                                min="0" id="quarterly_bonus"
+                                                                                name="quarterly_bonus"
+                                                                                style="background-color: #e3e3e3; border:none;"
+                                                                                type="number"
+                                                                                onchange="calculateSalary()" required
+                                                                                value="0">
+                                                                                @endif
+
+                                                                                @if (isset($status) && $status == "update")
+                                                                                    <input type="hidden" value="{{$salary_id->id}}" name="salary_id">
+                                                                                @else
+                                                                                    <input type="hidden" value="" name="salary_id">
+                                                                                @endif
+
+                                                                        </div>
+                                                                        <div class="col-md-3 col-sm-12">
+                                                                            <label for="example-text-input" min="0"
+                                                                                required
+                                                                                class=" col-form-label">Deduction</label>
+                                                                                @if (isset($status) && $status == 'update')
+                                                                                <input class="form-control inputboxcolor"
+                                                                                style="background-color: #e3e3e3; border:none;"
+                                                                                type="number"
+                                                                                value="{{ $salary_id->deduction != null ? $salary_id->deduction : '0' }}"
+                                                                                name="emp_deduction" required
+                                                                                min="0" id="deduction"
+                                                                                onchange="calculateSalary()">
+                                                                                @else
+                                                                                <input class="form-control inputboxcolor"
+                                                                                style="background-color: #e3e3e3; border:none;"
+                                                                                type="number"
+                                                                                value="0"
+                                                                                name="emp_deduction" required
+                                                                                min="0" id="deduction"
+                                                                                onchange="calculateSalary()">
+                                                                                @endif
+
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="form-group  row">
+                                                                        <div class="col-md-3 col-sm-12">
+                                                                            <label for="example-text-input" min="0"
+                                                                                required class=" col-form-label">No of
+                                                                                Working Days</label>
+                                                                            <input class="form-control inputboxcolor"
+                                                                                style="background-color: #e3e3e3; border:none;"
+                                                                                type="number"
+                                                                                value="{{ $total_days > 0 ? $total_days : '22' }}"
+                                                                                name="emp_no_of_working_days"
+                                                                                min="0" id="">
+
+                                                                        </div>
+
+                                                                        <div class="col-md-3 col-sm-12">
+                                                                            <label for="example-text-input" required
+                                                                                class=" col-form-label">Absent
+                                                                                Days</label>
+                                                                            <input class="form-control inputboxcolor"
+                                                                                style="background-color: #e3e3e3; border:none;"
+                                                                                type="number" name="emp_absent"
+                                                                                min="0"
+                                                                                value="{{ $total_absents > 0 ? $total_absents : '0' }}">
+
+                                                                        </div>
+
+                                                                        <div class="col-md-3 col-sm-12">
+                                                                            <label required class=" col-form-label">Leave
+                                                                                Days</label>
+                                                                            <input class="form-control inputboxcolor"
+                                                                                style="background-color: #e3e3e3; border:none;"
+                                                                                min="0" name="emp_leave"
+                                                                                type="number"
+                                                                                value="{{ $total_leaves > 0 ? $total_leaves : '0' }}">
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    <div class="row form-group">
+
+                                                                        <div class="col-md-12 col-sm-12">
+                                                                            <label required class=" col-form-label">Reason
+                                                                                of Deduction</label>
+                                                                                @if (isset($status) && $status == 'update')
+                                                                                <textarea class="form-control inputboxcolor" rows="5" name="emp_reason_deduction"
+                                                                                style="resize-x: none; background-color: #e3e3e3; border:none;" placeholder="">{{ $salary_id->reason_of_deduction != null ? $salary_id->reason_of_deduction : '' }}</textarea>
+                                                                                @else
+                                                                                <textarea class="form-control inputboxcolor" rows="5" name="emp_reason_deduction"
+                                                                                style="resize-x: none; background-color: #e3e3e3; border:none;" placeholder=""></textarea>
+                                                                                @endif
+
+
+
+                                                                            <br>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-md-4 col-sm-12">
+                                                                            <label required class=" col-form-label">Total
+                                                                                Salary</label>
+                                                                            @if (isset($status) && $status == 'update')
+                                                                                    <input class="form-control inputboxcolor"
+                                                                                    style="background-color: #e3e3e3; border:none;"
+                                                                                    type="number" name="emp_total_salary"
+                                                                                    disabled min="0" id="totalSalary"
+                                                                                    value="{{ $salary_id->amount != null ? $salary_id->amount : '0' }}">
+                                                                                <input type="hidden"
+                                                                                    name="emp_total_salary_hidden"
+                                                                                    id="emp_total_salary_hidden"
+                                                                                    value="{{ $salary_id->amount != null ? $salary_id->amount : '0' }}">
+                                                                            @else
+                                                                            <input class="form-control inputboxcolor"
+                                                                                style="background-color: #e3e3e3; border:none;"
+                                                                                type="number" name="emp_total_salary"
+                                                                                disabled min="0" id="totalSalary"
+                                                                                value="0">
+                                                                            <input type="hidden"
+                                                                                name="emp_total_salary_hidden"
+                                                                                id="emp_total_salary_hidden"
+                                                                                value="0">
+                                                                            @endif
+
+                                                                        </div>
+                                                                        <div class="col-md-4 col-sm-12">
+                                                                            <label required class=" col-form-label">
+                                                                                Deducation</label>
+                                                                            @if (isset($status) && $status == 'update')
+                                                                                    <input class="form-control inputboxcolor"
+                                                                                    style="background-color: #e3e3e3; border:none;"
+                                                                                    type="number" name="emp_deduction"
+                                                                                    disabled min="0"
+                                                                                    id="displayDeduction"
+                                                                                    value="{{ $salary_id->deduction != null ? $salary_id->deduction : '0' }}">
+                                                                                <input type="hidden"
+                                                                                    value="{{ $salary_id->deduction != null ? $salary_id->deduction : '0' }}"
+                                                                                    name="emp_deduction_hidden"
+                                                                                    id="emp_deduction_hidden">
+                                                                            @else
+                                                                                <input class="form-control inputboxcolor"
+                                                                                    style="background-color: #e3e3e3; border:none;"
+                                                                                    type="number" name="emp_deduction"
+                                                                                    disabled min="0"
+                                                                                    id="displayDeduction"
+                                                                                    value="0">
+                                                                                <input type="hidden"
+                                                                                    value="0"
+                                                                                    name="emp_deduction_hidden"
+                                                                                    id="emp_deduction_hidden">
+                                                                            @endif
+
+                                                                        </div>
+                                                                        <div class="col-md-4 col-sm-12">
+                                                                            <label required class=" col-form-label">Net
+                                                                                Salary</label>
+                                                                                @php
+                                                                                if(isset($salary_id->amount) && isset($salary_id->deduction) ) {
+                                                                                    $total_salary = intval($salary_id->amount) - intval($salary_id->deduction);
+                                                                                } else {
+                                                                                    $total_salary = 0;
+                                                                                }
+
+                                                                            @endphp
+                                                                            @if (isset($status) && $status == 'update')
+                                                                                    <input class="form-control inputboxcolor"
+                                                                                    style="background-color: #e3e3e3; border:none;"
+                                                                                    type="number" name="emp_net_salary"
+                                                                                    disabled min="0" id="netSalary"
+                                                                                    value="{{ $total_salary != null ? $total_salary : '0' }}">
+                                                                                <input type="hidden"
+                                                                                    name="emp_net_salary_hidden"
+                                                                                    id="emp_net_salary_hidden"
+                                                                                    value="{{ $total_salary != null ? $total_salary : '0' }}">
+                                                                            @else
+                                                                                <input class="form-control inputboxcolor"
+                                                                                    style="background-color: #e3e3e3; border:none;"
+                                                                                    type="number" name="emp_net_salary"
+                                                                                    disabled min="0" id="netSalary"
+                                                                                    value="0">
+                                                                                <input type="hidden"
+                                                                                    name="emp_net_salary_hidden"
+                                                                                    id="emp_net_salary_hidden"
+                                                                                    value="0">
+                                                                            @endif
+
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="col-md-8 col-sm-12 mx-auto mt-4">
+                                                                    <table
+                                                                        class="table table-striped table-bordered dt-responsive nowrap"
+                                                                        style="border-collapse: collapse; border-spacing: 0; width: 100%; border-radius: 10px;">
+                                                                        <thead>
+
+                                                                            <tr>
+                                                                                <th colspan="3" class="text-center"
+                                                                                    style="font-size: 30px; color:#14213d; background-color:#e3e3e3">
+                                                                                    Overall Assessment</th>
+                                                                                @error('over_all_performance')
+                                                                                    <span
+                                                                                        class="text-danger text-center">{{ $message }}</span>
+                                                                                @enderror
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td style="width: 25%">Rating Scale</td>
+                                                                                <td style="width: 50%">Description</td>
+                                                                                <td>Remarks</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="width: 25%">5 - Outstanding</td>
+                                                                                <td style="width: 70%">Consistently exceeds
+                                                                                    expectations</td>
+                                                                                <td class="text-center"><input
+                                                                                        type="radio"
+                                                                                        {{ (isset($salary_id->over_all_performance) && $salary_id->over_all_performance == 'outstanding') ? 'checked' : '' }}
+                                                                                        value="outstanding"
+                                                                                        name="over_all_performance"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="width: 25%">4 - Exceeds
+                                                                                    Expectations</td>
+                                                                                <td style="width: 50%">Frequently exceeds
+                                                                                    expectations</td>
+                                                                                <td class="text-center"><input
+                                                                                        type="radio"
+                                                                                        value="exceeds_expectation"
+                                                                                        {{ (isset($salary_id->over_all_performance) && $salary_id->over_all_performance == 'exceeds_expectation') ? 'checked' : '' }}
+                                                                                        name="over_all_performance"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="width: 25%">3 - Meets
+                                                                                    Expectations</td>
+                                                                                <td style="width: 50%">Regularly meets
+                                                                                    expectations</td>
+                                                                                <td class="text-center"><input
+                                                                                        type="radio"
+                                                                                        value="meets_expectation"
+                                                                                        {{ (isset($salary_id->over_all_performance) && $salary_id->over_all_performance == 'meets_expectation') ? 'checked' : '' }}
+                                                                                        name="over_all_performance"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="width: 25%">2 - Needs
+                                                                                    Improvement</td>
+                                                                                <td style="width: 50%">Occasionally fails
+                                                                                    to meet expectations</td>
+                                                                                <td class="text-center"><input
+                                                                                        type="radio"
+                                                                                        value="needs_expectation"
+                                                                                        {{ (isset($salary_id->over_all_performance) && $salary_id->over_all_performance == 'needs_expectation') ? 'checked' : '' }}
+                                                                                        name="over_all_performance"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="width: 25%">1 - Unsatisfactory
+                                                                                </td>
+                                                                                <td style="width: 50%">Consistently fails
+                                                                                    to meet expectations</td>
+                                                                                <td class="text-center"><input
+                                                                                        type="radio"
+                                                                                        value="unsatisfactory"
+                                                                                        {{ (isset($salary_id->over_all_performance) && $salary_id->over_all_performance == 'unsatisfactory') ? 'checked' : '' }}
+                                                                                        name="over_all_performance"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="my-4">
+                                                                    <button type="submit"
+                                                                        onclick="confirmSalary({{ $emp->id }})"
+                                                                        class="reblateBtn py-2 px-4 w-md"
+                                                                        target="_blank">{{ $btn_text }}</button>
+                                                                    {{-- <a href="/preview-salary/{{$id}}" target="_blank" class="btn btn-danger">Preview</a> --}}
+                                                                    <button class="reblateBtn py-2 px-4 w-md text-light">
+                                                                        <a href="/generate-new-salary-slip"
+                                                                            class="text-light">Go Back</a>
+                                                                    </button>
+
+                                                                </div>
                         </form>
 
                     </div>
@@ -714,12 +1118,13 @@
                 document.getElementById('Total3').value = thirdSum;
 
                 const KPIBonous = thirdSum * 100;
-                document.getElementById('kpiBonus').value =KPIBonous;
+                document.getElementById('kpiBonus').value = KPIBonous;
                 console.log(KPIBonous)
 
 
 
-                const totalSalary = basicSalary + KPIBonous + projectBonus + emp_travel_allowence + emp_designation_bonus + quarterly_bonus;
+                const totalSalary = basicSalary + KPIBonous + projectBonus + emp_travel_allowence + emp_designation_bonus +
+                    quarterly_bonus;
                 const netSalary = totalSalary - deduction;
 
                 document.getElementById('totalSalary').value = totalSalary;

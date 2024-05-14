@@ -178,16 +178,16 @@
 
                                                 </div>
                                             </div>
-                                            @if (!isset($emp_data->Emp_Shift_Time))
+
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
                                                     <select class="form-control" style="background-color: transparent; border:none;" name="employee_shift_time" id="">
                                                         <option value="" selected disabled>Select Time Shift</option>
                                                         <option value="Morning"
-                                                            {{ old('employee_shift_time') === 'Morning' ? 'selected' : '' }}>
+                                                            {{( isset($emp_data->Emp_Shift_Time) && $emp_data->Emp_Shift_Time == "Morning") ? 'selected' : ''}}>
                                                             Morning Shift</option>
                                                         <option value="Night"
-                                                            {{ old('employee_shift_time') === 'Morning' ? 'selected' : '' }}>Night
+                                                        {{( isset($emp_data->Emp_Shift_Time) && $emp_data->Emp_Shift_Time == "Night") ? 'selected' : ''}}>Night
                                                             Shift</option>
                                                     </select>
                                                     @error('employee_shift_time')
@@ -199,7 +199,7 @@
                                                 </div>
                                             </div>
 
-                                        @endif
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 inputboxcolor" style="border: 1px solid #c7c7c7;">
