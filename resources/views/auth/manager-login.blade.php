@@ -9,7 +9,7 @@
 
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-10">
+                <div class="col-md-11 col-lg-11 col-xl-11">
                     <div class="auth-full-page-content d-flex min-vh-100 py-sm-5 py-4">
                         <div class="w-100">
                             <div class="d-flex flex-column h-100 py-0 py-xl-3">

@@ -1,46 +1,51 @@
-
-<header id="page-topbar" style="background-color: rgba(255, 255, 255, 0.3); backdrop-filter:blur(5px);">
+<header id="page-topbar" style="background-color: #14213d; margin:5px;border-radius:10px">
     <div class="navbar-header">
         <div class="d-flex">
-              <!-- LOGO -->
+            <!-- LOGO -->
             <div class="navbar-brand-box" style="background-color: #14213d;">
                 <a href="index" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ url('reblate-favicon.png') }}" alt="logo-sm-dark" width="50" style="object-fit: contain">
+                        <img src="{{ url('reblate-favicon.png') }}" alt="logo-sm-dark" width="50"
+                            style="object-fit: contain">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ url('reblate-favicon.png') }}" alt="logo-dark" width="50" style="object-fit: contain">
+                        <img src="{{ url('reblate-favicon.png') }}" alt="logo-dark" width="50"
+                            style="object-fit: contain">
                     </span>
                 </a>
 
                 <a href="index" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ url('reblate-favicon.png') }}" alt="logo-sm-light" width="50" style="object-fit: contain">
+                        <img src="{{ url('reblate-favicon.png') }}" alt="logo-sm-light" width="50"
+                            style="object-fit: contain">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ url('reblate-favicon.png') }}" alt="logo-light" width="50" style="object-fit: contain">
+                        <img src="{{ url('reblate-favicon.png') }}" alt="logo-light" width="50"
+                            style="object-fit: contain">
                     </span>
                 </a>
             </div>
 
-            <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect vertical-menu-btn" id="vertical-menu-btn">
+            <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect vertical-menu-btn"
+                id="vertical-menu-btn">
                 <i class="ri-menu-2-line align-middle"></i>
             </button>
 
-          <!-- start page title -->
-          <div class="page-title-box align-self-center d-none d-md-block">
-            <h4 class="page-title mb-0 text-light">@yield('page-title')</h4>
-          </div>
-          <!-- end page title -->
+            <!-- start page title -->
+            <div class="page-title-box align-self-center d-none d-md-block">
+                <h4 class="page-title mb-0 text-light" style="font-size: 25px;">@yield('page-title')</h4>
+            </div>
+            <!-- end page title -->
         </div>
 
         <div class="d-flex align-items-center">
 
 
-            @if(Auth()->user()->user_type == "employee" || Auth()->user()->user_type == "manager")
+            @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager')
                 <div class="dropdown d-inline-block">
-                    <button type="button" class="btn noti-icon waves-effect" style="background-color: #14213d17; border-radius: 100px;" id="page-header-notifications-dropdown"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <button type="button" class="btn noti-icon waves-effect"
+                        style="background-color: #14213d17; border-radius: 100px;"
+                        id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="ri-notification-3-line"></i>
                         <span class="noti-dot"></span>
                     </button>
@@ -128,68 +133,71 @@
                 </div>
             @endif
 
-            <div class="btn-group">
-                <button type="button" class="btn d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: rgba(255, 255, 255, 0.5); border-radius: 50px;margin:10px;">
+            <div class="btn-group align-items-center">
+                <div class="flex-grow-1 text-start" >
+                    <span class="ms-1 fw-medium user-name-text text-light">{{ auth()->user()->user_name }}</span>
+                </div>
+                <button type="button" class="btn d-flex align-items-center dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false"
+                    style="background-color: #fca311; border-radius: 10px;margin:10px;">
                     @if (Session::has('emp_img'))
-                    <!-- Debugging: Check if session variable exists -->
+                        <!-- Debugging: Check if session variable exists -->
 
-            <div class="dropdown px-3 sidebar-user" style="background-color: #e3e3e3; border-radius: 10px;margin:10px;">
-                <button type="button" class="btn w-100 px-0 border-0" id="page-header-user-dropdown"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
+                        <div class="dropdown px-3 sidebar-user">
+                            <button type="button" class="btn w-100 px-0 border-0" id="page-header-user-dropdown"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                         @if (Session::get('emp_img') != '' && file_exists(Session::get('emp_img')))
+                                                <!-- Debugging: Output image path -->
+                                                <!-- Render image -->
+                                                <img src="{{ url(Session::get('emp_img')) }}"
+                                                    style='object-fit:cover;'
+                                                    class="img-fluid header-profile-user rounded-circle"
+                                                    alt="">
+                                            @else
+                                                <!-- Render default image -->
+                                                <img src="{{ url('user.png') }}" style='object-fit:cover;'
+                                                    class="img-fluid header-profile-user rounded-circle"
+                                                    alt="">
+                                            @endif
 
-                           @if(auth()->user()->user_type=="admin")
-                            <img src="{{ url('user.png') }}" style='object-fit:cover;' class="img-fluid header-profile-user rounded-circle" alt="">
-                        @elseif (Session::has('emp_img'))
-                            @if (Session::get('emp_img') != "" && file_exists(Session::get('emp_img')))
-                                <!-- Debugging: Output image path -->
-                                <!-- Render image -->
-                                <img src="{{ url(Session::get('emp_img')) }}" style='object-fit:cover;' class="img-fluid header-profile-user rounded-circle" alt="">
-                            @else
-                                <!-- Render default image -->
-                                <img src="{{ url('user.png') }}" style='object-fit:cover;' class="img-fluid header-profile-user rounded-circle" alt="">
-                            @endif
-                        @endif
+                                        @if (auth()->user()->user_type == 'admin')
+                                            <img src="{{ url('user.png') }}" style='object-fit:cover;'
+                                                class="img-fluid header-profile-user rounded-circle" alt="">
+                                        @elseif (Session::has('emp_img'))
 
+                                        @endif
+                                    </div>
+                                    <!-- Render default image -->
 
-
-
+                                </span>
+                            </button>
                         </div>
-
-
-
-                        <!-- Render default image -->
-                        <img src="{{ url('user.png') }}" class="img-fluid header-profile-user rounded-circle" alt="">
-
-                @endif
-                <div class="flex-grow-1 text-start" style="color: #14213d">
-                    <span class="ms-1 fw-medium user-name-text">{{ auth()->user()->user_name }}</span>
-                </div>
+                    @endif
                 </button>
+
                 <ul class="dropdown-menu" style="backdrop-filter:blur(10px);">
-                  <li><a class="dropdown-item" href="{{ Route('user.chang-password')}}"><i
-                    class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Change Password</span></a></li>
-                  <li><a class="dropdown-item" href="javascript:void()" onclick="confirmLogout()"><i
-                    class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">Logout</span></a></li>
+                    <li><a class="dropdown-item" href="{{ Route('user.chang-password') }}"><i
+                                class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
+                                class="align-middle">Change Password</span></a></li>
+                    <li><a class="dropdown-item" href="javascript:void()" onclick="confirmLogout()"><i
+                                class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
+                                class="align-middle">Logout</span></a></li>
 
-                        <div class="flex-grow-1 ms-2 text-start">
-                            <span class="ms-1 fw-medium user-name-text">{{ auth()->user()->user_name }}</span>
-                        </div>
+
                     </span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-end">
-                    <!-- item-->
-                    <a class="dropdown-item" href="{{ Route('user.chang-password')}}"><i
-                            class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Change Password</span></a>
-                    <a class="dropdown-item" href="javascript:void()" onclick="confirmLogout()"><i
-                            class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
-                            class="align-middle">Logout</span></a>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <!-- item-->
+                        <a class="dropdown-item" href="{{ Route('user.chang-password') }}"><i
+                                class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
+                                class="align-middle">Change Password</span></a>
+                        <a class="dropdown-item" href="javascript:void()" onclick="confirmLogout()"><i
+                                class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span
+                                class="align-middle">Logout</span></a>
 
-                </div>
+                    </div>
             </div>
 
         </div>

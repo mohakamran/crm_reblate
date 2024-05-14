@@ -224,7 +224,7 @@
                                                         </div>
                                                     @endif
 
-                                                    <div class="mb-2 d-flex inputboxcolor mb-3 form-control @error('employee_code') is-invalid @enderror" style="border: 1px solid #14213d; border-radius:50px; background-color: white;">
+                                                    <div class="mb-2 d-flex inputboxcolor mb-3 form-control @error('client_email') is-invalid @enderror" style="border: 1px solid #14213d; border-radius:50px; background-color: white;">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#9e9e9e" class="bi bi-envelope" viewBox="0 0 16 16">
                                                             <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
                                                           </svg>
@@ -240,7 +240,7 @@
                                                         @enderror
                                                     </div>
 
-                                                    <div class="mb-3 d-flex form-control inputboxcolor @error('user_password') is-invalid @enderror" style="border: 1px solid #14213d; border-radius:50px; background-color: white;">
+                                                    <div class="mb-3 d-flex form-control inputboxcolor @error('client_password') is-invalid @enderror" style="border: 1px solid #14213d; border-radius:50px; background-color: white;">
                                                         <svg fill="#9e9e9e" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="XMLID_509_"> <path id="XMLID_510_" d="M65,330h200c8.284,0,15-6.716,15-15V145c0-8.284-6.716-15-15-15h-15V85c0-46.869-38.131-85-85-85 S80,38.131,80,85v45H65c-8.284,0-15,6.716-15,15v170C50,323.284,56.716,330,65,330z M180,234.986V255c0,8.284-6.716,15-15,15 s-15-6.716-15-15v-20.014c-6.068-4.565-10-11.824-10-19.986c0-13.785,11.215-25,25-25s25,11.215,25,25 C190,223.162,186.068,230.421,180,234.986z M110,85c0-30.327,24.673-55,55-55s55,24.673,55,55v45H110V85z"></path> </g> </g></svg>
                                                         <input type="password"
                                                             placeholder="Enter password" id="password" style="border: none; margin-left: 10px; background-color:transparent; outline: none;width:100%"
