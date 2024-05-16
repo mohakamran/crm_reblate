@@ -111,26 +111,70 @@
             list-style: none;
             cursor: pointer;
         }
-        .searchInput{
-            outline: none;
-    border: none;
-    border-radius: 30px;
-    padding: 1rem 2rem;
-    width: 0;
-    transition: width .5s;
-        }
-        .searchInput:focus{
-            width: 450px;
-        }
-        .searchIcon{
-            position: absolute;
-            top: 18px;
-            left:30px;
-        }
-        .searchIcon:focus{
+
+        .form {
+            position: relative;
+            top: 50%;
             left: 30px;
+            transform: translate(-50%, -50%);
+            transition: all 1s;
+            width: 50px;
+            height: 50px;
+            background: white;
+            box-sizing: border-box;
+            border-radius: 25px;
+            border: 4px solid white;
+            padding: 5px;
         }
 
+        input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+
+            height: 42.5px;
+            line-height: 30px;
+            outline: 0;
+            border: 0;
+            display: none;
+            font-size: 1em;
+            border-radius: 20px;
+            padding: 0 20px;
+        }
+
+        .form .bi {
+            box-sizing: border-box;
+            padding: 10px;
+            width: 42.5px;
+            height: 42.5px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-radius: 50%;
+            color: #07051a;
+            text-align: center;
+            font-size: 1.2em;
+            transition: all 1s;
+        }
+
+        .form:hover,
+        .form:valid {
+            width: 300px;
+            cursor: pointer;
+            transform: translate(-39px, -26px)
+        }
+
+        .form:hover input,
+        .form:valid input {
+            display: block;
+        }
+
+        .form:hover .bi,
+        .form:valid .bi {
+            background: #fca311;
+            color: #14213d;
+        }
     </style>
 
     <body data-sidebar="colored">
@@ -141,19 +185,23 @@
                 <div class="card" style="box-shadow: none">
                     <div class="card-body bg-light pt-1">
                         <form action="/search-emp-attendence" method="post">
-                            <div class="row justify-content-between"  style="background-color: #14213d; border-radius:10px; padding:10px;">
+                            <div class="row justify-content-between mx-1 mt-2"
+                                style="background-color: #14213d; border-radius:10px; padding:10px;">
 
                                 @csrf
 
                                 <div class="ms-2 w-50">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"
-                                        class="bi bi-search searchIcon" viewBox="0 0 16 16">
-                                        <path
-                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg>
-                                    <input class="form-control searchInput " type="text" name="emp_name"
-                                        placeholder="Enter Employee Name...">
+                                    <div class="form">
+                                        <input class="" type="text" name="emp_name"
+                                            placeholder="Enter Employee Name...">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black"
+                                            class="bi bi-search" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                        </svg>
+                                    </div>
+
+
 
 
                                 </div>
@@ -209,8 +257,8 @@
 
 
                                     <div class="dropdown">
-                                        <button class=" dropdown-toggle" style="border: none; background-color:transparent;" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class=" dropdown-toggle" style="border: none; background-color:transparent;"
+                                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <span style="color: #fff; font-size: 15px;">Filters</span>
                                             <svg style="cursor: pointer; width: 30px; height:30px; margin-left:10px;"
                                                 viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#fca311">
@@ -263,34 +311,9 @@
                                 <div class="card" style=" overflow: hidden; border-radius: 10px; box-shadow:none;">
                                     <div class="card-body" style="box-shadow: none; padding-top:9.5rem; padding-bottom:9.5rem; backdrop-filter: blur(0px); max-height: 350px;">
                                     <div class="d-flex flex-column justify-content-center align-items-center">
-                                        @if (auth()->user()->user_type == 'admin')
-                                        <a href="/add-new" class="reblateBtn " style="padding: 14px;"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                                            fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd"
-                                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                        <a href="/add-new" class="reblateBtn " style="padding: 18px;background-color: transparent;color: #000"><svg fill="currentcolor" height="50px" width="50px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 328.5 328.5" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <polygon points="96.333,150.918 96.333,135.918 55.667,135.918 55.667,95.251 40.667,95.251 40.667,135.918 0,135.918 0,150.918 40.667,150.918 40.667,191.583 55.667,191.583 55.667,150.918 "></polygon> <path d="M259.383,185.941H145.858c-38.111,0-69.117,31.006-69.117,69.117v39.928H328.5v-39.928 C328.5,216.948,297.494,185.941,259.383,185.941z M313.5,279.987H91.741v-24.928c0-29.84,24.276-54.117,54.117-54.117h113.524 c29.84,0,54.117,24.277,54.117,54.117L313.5,279.987L313.5,279.987z"></path> <path d="M202.621,178.84c40.066,0,72.662-32.597,72.662-72.663s-32.596-72.663-72.662-72.663s-72.663,32.596-72.663,72.663 S162.555,178.84,202.621,178.84z M202.621,48.515c31.795,0,57.662,25.867,57.662,57.663s-25.867,57.663-57.662,57.663 c-31.796,0-57.663-25.868-57.663-57.663S170.825,48.515,202.621,48.515z"></path> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </g> </g></svg>
                                         </svg></a>
                                         <h3 style="color: lightgrey; font-family:'Poppins'; margin-top:5px; font-size:18px;">Add Members</h3>
-                                        @elseif(Session::has('employees_access'))
-                                        @php
-                                            $employees_access = Session::get('employees_access');
-                                            // Convert to an array if it's a single value
-                                            if (!is_array($employees_access)) {
-                                                $employees_access = explode(',', $employees_access);
-                                                // Remove any empty elements resulting from the explode function
-                                                $employees_access = array_filter($employees_access);
-                                            }
-                                         @endphp
-                                          @if (is_array($employees_access) && (in_array('all', $employees_access) ||  in_array('create', $employees_access)  ) )
-                                          <a href="/add-new" class="reblateBtn " style="padding: 10px 14px;"><svg
-                                                      xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                      fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                                      <path fill-rule="evenodd"
-                                                          d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                                              </svg></a>
-                                    @endif
-
-                                        @endif
                                     </div>
                                     </div>
                                 </div>
@@ -375,7 +398,6 @@
                                         </div>
                                     </div>
                                 @endforeach
-
                             @else
                                 <h2 class="mt-2">Employee Not Found! </h2>
                             @endif

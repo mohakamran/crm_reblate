@@ -35,46 +35,89 @@
                 margin-top: 15px;
             }
 
-            .searchInput {
-                outline: none;
-                border: none;
-                border-radius: 30px;
-                padding: 1rem 2rem;
-                width: 0;
-                transition: width .5s;
-            }
+            .form {
+            position: relative;
+            top: 50%;
+            left: 30px;
+            transform: translate(-50%, -50%);
+            transition: all 1s;
+            width: 50px;
+            height: 50px;
+            background: white;
+            box-sizing: border-box;
+            border-radius: 25px;
+            border: 4px solid white;
+            padding: 5px;
+        }
 
-            .searchInput:focus {
-                width: 450px;
-            }
+        input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
 
-            .searchIcon {
-                position: absolute;
-                top: 18px;
-                left: 30px;
-            }
+            height: 42.5px;
+            line-height: 30px;
+            outline: 0;
+            border: 0;
+            display: none;
+            font-size: 1em;
+            border-radius: 20px;
+            padding: 0 20px;
+        }
 
-            .searchIcon:focus {
-                left: 30px;
-            }
+        .form .bi {
+            box-sizing: border-box;
+            padding: 10px;
+            width: 42.5px;
+            height: 42.5px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-radius: 50%;
+            color: #07051a;
+            text-align: center;
+            font-size: 1.2em;
+            transition: all 1s;
+        }
+
+        .form:hover,
+        .form:valid {
+            width: 300px;
+            cursor: pointer;
+            transform: translate(-39px, -26px)
+        }
+
+        .form:hover input,
+        .form:valid input {
+            display: block;
+        }
+
+        .form:hover .bi,
+        .form:valid .bi {
+            background: #fca311;
+            color: #14213d;
+        }
         </style>
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body bg-light">
                         <form action="/search-emp-attendence" method="post">
-                            <div class="row justify-content-between"
+                            <div class="row justify-content-between mx-1 "
                                 style="background-color: #14213d; border-radius:10px; padding:10px;">
 
                                 @csrf
                                 <div class="ms-2 w-50">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"
-                                        class="bi bi-search searchIcon" viewBox="0 0 16 16">
-                                        <path
-                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg>
-                                    <input class="form-control searchInput " type="text" name="emp_name"
-                                        placeholder="Enter Employee Name...">
+                                    <div class="form">
+                                        <input class="" type="text" name="emp_name"
+                                            placeholder="Enter Employee Name...">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black"
+                                            class="bi bi-search" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                        </svg>
+                                    </div>
 
                                 </div>
                                 <div class="w-25 d-flex gap-2 justify-content-end align-items-center">
@@ -211,8 +254,8 @@
                                     <div class="card-body"
                                         style="box-shadow: none; padding-top:9.5rem; padding-bottom:9.5rem; backdrop-filter: blur(0px); max-height: 350px;">
                                         <div class="d-flex flex-column justify-content-center align-items-center">
-                                            <a href="/create-new-task" class="reblateBtn " style="padding: 14px;"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                            <a href="/create-new-task" class="reblateBtn " style="padding: 14px;background-color: transparent;color:black"><svg
+                                                    xmlns="http://www.w3.org/2000/svg" width="35" height="35"
                                                     fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                                     <path fill-rule="evenodd"
                                                         d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
