@@ -112,6 +112,31 @@
             cursor: pointer;
         }
 
+        .EmpMenu {
+            display: none;
+            position: absolute;
+            top: 30px;
+            right: 0;
+            background-color: #f1f1f1;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .EmpMenu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .EmpMenu li {
+            padding: 12px 16px;
+            cursor: pointer;
+        }
+
+        .EmpMenu li:hover {
+            background-color: #ddd;
+        }
+
         .form {
             position: relative;
             top: 50%;
@@ -230,7 +255,7 @@
                                                 $employees_access = array_filter($employees_access);
                                             }
                                          @endphp
-                                            @if (is_array($employees_access) && (in_array('all', $employees_access) ||  in_array('create', $employees_access)  ) )
+                                            @if (is_array($employees_access) && (in_array('all', $employees_access) || in_array('create', $employees_access)))
                                                 <a href="/add-new" class="reblateBtn " style="padding: 10px 14px;"><svg
                                                             xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                             fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -307,17 +332,59 @@
                         {{-- <p>(Employees Count: {{ $totalCount }})</p> --}}
                         <div class="row mt-3">
                             @if (isset($totalCount) && $totalCount >= 1)
-                            <div class="col-md-3">
-                                <div class="card" style=" overflow: hidden; border-radius: 10px; box-shadow:none;">
-                                    <div class="card-body" style="box-shadow: none; padding-top:9.5rem; padding-bottom:9.5rem; backdrop-filter: blur(0px); max-height: 350px;">
-                                    <div class="d-flex flex-column justify-content-center align-items-center">
-                                        <a href="/add-new" class="reblateBtn " style="padding: 18px;background-color: transparent;color: #000"><svg fill="currentcolor" height="50px" width="50px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 328.5 328.5" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <polygon points="96.333,150.918 96.333,135.918 55.667,135.918 55.667,95.251 40.667,95.251 40.667,135.918 0,135.918 0,150.918 40.667,150.918 40.667,191.583 55.667,191.583 55.667,150.918 "></polygon> <path d="M259.383,185.941H145.858c-38.111,0-69.117,31.006-69.117,69.117v39.928H328.5v-39.928 C328.5,216.948,297.494,185.941,259.383,185.941z M313.5,279.987H91.741v-24.928c0-29.84,24.276-54.117,54.117-54.117h113.524 c29.84,0,54.117,24.277,54.117,54.117L313.5,279.987L313.5,279.987z"></path> <path d="M202.621,178.84c40.066,0,72.662-32.597,72.662-72.663s-32.596-72.663-72.662-72.663s-72.663,32.596-72.663,72.663 S162.555,178.84,202.621,178.84z M202.621,48.515c31.795,0,57.662,25.867,57.662,57.663s-25.867,57.663-57.662,57.663 c-31.796,0-57.663-25.868-57.663-57.663S170.825,48.515,202.621,48.515z"></path> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </g> </g></svg>
-                                        </svg></a>
-                                        <h3 style="color: lightgrey; font-family:'Poppins'; margin-top:5px; font-size:18px;">Add Members</h3>
-                                    </div>
+                                <div class="col-md-3">
+                                    <div class="card" style=" overflow: hidden; border-radius: 10px; box-shadow:none;">
+                                        <div class="card-body"
+                                            style="box-shadow: none; padding-top:9.5rem; padding-bottom:9.5rem; backdrop-filter: blur(0px); max-height: 350px;">
+                                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                                <a href="/add-new" class="reblateBtn "
+                                                    style="padding: 18px;background-color: transparent;color: #000"><svg
+                                                        fill="currentcolor" height="50px" width="50px" version="1.1"
+                                                        id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 328.5 328.5"
+                                                        xml:space="preserve">
+                                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                            stroke-linejoin="round"></g>
+                                                        <g id="SVGRepo_iconCarrier">
+                                                            <g>
+                                                                <g>
+                                                                    <polygon
+                                                                        points="96.333,150.918 96.333,135.918 55.667,135.918 55.667,95.251 40.667,95.251 40.667,135.918 0,135.918 0,150.918 40.667,150.918 40.667,191.583 55.667,191.583 55.667,150.918 ">
+                                                                    </polygon>
+                                                                    <path
+                                                                        d="M259.383,185.941H145.858c-38.111,0-69.117,31.006-69.117,69.117v39.928H328.5v-39.928 C328.5,216.948,297.494,185.941,259.383,185.941z M313.5,279.987H91.741v-24.928c0-29.84,24.276-54.117,54.117-54.117h113.524 c29.84,0,54.117,24.277,54.117,54.117L313.5,279.987L313.5,279.987z">
+                                                                    </path>
+                                                                    <path
+                                                                        d="M202.621,178.84c40.066,0,72.662-32.597,72.662-72.663s-32.596-72.663-72.662-72.663s-72.663,32.596-72.663,72.663 S162.555,178.84,202.621,178.84z M202.621,48.515c31.795,0,57.662,25.867,57.662,57.663s-25.867,57.663-57.662,57.663 c-31.796,0-57.663-25.868-57.663-57.663S170.825,48.515,202.621,48.515z">
+                                                                    </path>
+                                                                </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                                <g> </g>
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                    </svg></a>
+                                                <h3
+                                                    style="color: lightgrey; font-family:'Poppins'; margin-top:5px; font-size:18px;">
+                                                    Add Members</h3>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                                 @foreach ($latestEmployees as $emp)
                                     <div class="col-md-3">
                                         <div class="card hovering" style=" overflow: hidden; border-radius: 10px; ">
@@ -326,19 +393,51 @@
                                                 <img style="width: 18px; height: 18px; position: absolute; z-index: 100; left: 15px; top: 15px"
                                                     src="{{ url('/tick.png') }}" alt="">
                                                 <div>
-                                                    <svg style="width: 20px; height:20px; position:absolute; right:15px; top:15px; cursor:pointer"
-                                                        viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
-                                                        fill="#14213d" class="bi bi-three-dots-vertical"
-                                                        stroke="#14213d">
-                                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                            stroke-linejoin="round"></g>
-                                                        <g id="SVGRepo_iconCarrier">
-                                                            <path
-                                                                d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z">
-                                                            </path>
-                                                        </g>
-                                                    </svg>
+                                                    <div class="dropdown" style="position:absolute; right:15px; top:15px; cursor:pointer">
+                                                        <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <svg  style="width: 20px; height:20px; "
+                                                            viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+                                                            fill="#14213d" class="bi bi-three-dots-vertical"
+                                                            stroke="#14213d">
+                                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                stroke-linejoin="round"></g>
+                                                            <g id="SVGRepo_iconCarrier">
+                                                                <path
+                                                                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z">
+                                                                </path>
+                                                            </g>
+                                                        </svg>
+                                                        </a>
+
+                                                        <ul class="dropdown-menu">
+                                                          <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                          <li><a class="dropdown-item" href="#">Terminate</a></li>
+
+                                                        </ul>
+                                                      </div>
+                                                    {{-- <div style="position:absolute; right:15px; top:15px; cursor:pointer" onclick="toggleMenu()">
+                                                        <svg class="three-dots" onclick="toggleMenu()"  style="width: 20px; height:20px; "
+                                                            viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+                                                            fill="#14213d" class="bi bi-three-dots-vertical"
+                                                            stroke="#14213d">
+                                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                stroke-linejoin="round"></g>
+                                                            <g id="SVGRepo_iconCarrier">
+                                                                <path
+                                                                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z">
+                                                                </path>
+                                                            </g>
+                                                        </svg>
+                                                        <div class="EmpMenu" id="menu">
+                                                            <ul>
+                                                                <li>Edit</li>
+                                                                <li>Terminate</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div> --}}
+
                                                 </div>
                                                 <div
                                                     style="background-color: #fca311; width:100%; height:120px; border-radius:10px;">
@@ -414,6 +513,27 @@
 
 
         <script>
+            function toggleMenu() {
+                const menu = document.getElementById('menu');
+                if (menu.style.display === 'block') {
+                    menu.style.display = 'none';
+                } else {
+                    menu.style.display = 'block';
+                }
+            }
+
+            // Close the menu if the user clicks outside of it
+            window.onclick = function(event) {
+                if (!event.target.matches('.three-dots')) {
+                    const menus = document.getElementsByClassName('EmpMenu');
+                    for (let i = 0; i < menus.length; i++) {
+                        const openMenu = menus[i];
+                        if (openMenu.style.display === 'block') {
+                            openMenu.style.display = 'none';
+                        }
+                    }
+                }
+            }
             // Function to confirm deletion with SweetAlert
             function confirmDelete(id) {
                 Swal.fire({
