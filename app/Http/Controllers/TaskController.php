@@ -182,6 +182,7 @@ class TaskController extends Controller
         public function index() {
             $emp = DB::table('employees')->get();
             return view('tasks.add-task',compact('emp'));
+            return view('tasks.tasks-cards-of-each-employee',compact('emp'));
         }
 
     // view tasks
