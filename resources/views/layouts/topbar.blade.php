@@ -142,38 +142,16 @@
                     style="background-color: #fca311; border-radius: 10px;margin:10px;">
                     @if (Session::has('emp_img'))
                         <!-- Debugging: Check if session variable exists -->
+                        <img src="{{ url(Session::get('emp_img')) }}"
+                        style='object-fit:cover;'
+                        class="img-fluid header-profile-user rounded-circle"
+                        alt="">
+                        @else
+                        <img src="{{ url('user.png') }}" style='object-fit:cover;'
+                        class="img-fluid header-profile-user rounded-circle"
+                        alt="">
 
-                        <div class="dropdown px-3 sidebar-user">
-                            <button type="button" class="btn w-100 px-0 border-0" id="page-header-user-dropdown"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                         @if (Session::get('emp_img') != '' && file_exists(Session::get('emp_img')))
-                                                <!-- Debugging: Output image path -->
-                                                <!-- Render image -->
-                                                <img src="{{ url(Session::get('emp_img')) }}"
-                                                    style='object-fit:cover;'
-                                                    class="img-fluid header-profile-user rounded-circle"
-                                                    alt="">
-                                            @else
-                                                <!-- Render default image -->
-                                                <img src="{{ url('user.png') }}" style='object-fit:cover;'
-                                                    class="img-fluid header-profile-user rounded-circle"
-                                                    alt="">
-                                            @endif
 
-                                        @if (auth()->user()->user_type == 'admin')
-                                            <img src="{{ url('user.png') }}" style='object-fit:cover;'
-                                                class="img-fluid header-profile-user rounded-circle" alt="">
-                                        @elseif (Session::has('emp_img'))
-
-                                        @endif
-                                    </div>
-                                    <!-- Render default image -->
-
-                                </span>
-                            </button>
-                        </div>
                     @endif
                 </button>
 

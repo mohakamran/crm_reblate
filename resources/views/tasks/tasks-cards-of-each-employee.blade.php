@@ -98,6 +98,16 @@
                 box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.3);
                 border-radius: 10px;
             }
+            .swim-lane{
+
+                display: flex;
+                flex-direction: column;
+                min-height: 120px;
+                flex-shrink: 0;
+                gap: 12px;
+                padding: 12px;
+
+            }
         </style>
 
         <div class="row mt-2 align-items-center justify-content-center">
@@ -183,7 +193,7 @@
                                                 @if ($task->task_status == 'in-progress')
                                                     <div class="task-card" draggable="true">
                                                         <h5 class="empTitle mb-0" style="text-transform: capitalize">
-                                                            @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager')
+                                                            @if ( Auth()->user()->user_type == 'manager')
                                                                 <a
                                                                     href="/task-update/{{ $task->id }}">{{ $task->task_title }}</a>
                                                             @else
@@ -255,14 +265,23 @@
                                             @foreach ($tasks as $task)
                                                 @if ($task->task_status == 'pending')
                                                     <div class="task task-card" draggable="true">
-                                                        <h5 class="empTitle mb-0" style="text-transform: capitalize">
-                                                            @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager')
-                                                                <a
-                                                                    href="/task-update/{{ $task->id }}">{{ $task->task_title }}</a>
-                                                            @else
-                                                                {{ $task->task_title }}
-                                                            @endif
-                                                        </h5>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <h5 class="empTitle mb-0" style="text-transform: capitalize">
+                                                                    {{ $task->task_title }}
+                                                            </h5>
+                                                            <div class="btn-group">
+                                                                <button class="dropdown-toggle" style="border:none; background-color:transparent" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16"><path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/></svg>
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                  <li>
+                                                                    @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager' || Auth()->user()->user_type == 'admin')
+                                                                    <a class="dropdown-item" href="/task-update/{{ $task->id }}">Update</a></li>
+                                                                    <li><a class="dropdown-item" href="/task-update/{{ $task->id }}">Delete</a></li>
+                                                                    @endif
+                                                                </ul>
+                                                              </div>
+                                                        </div>
                                                         <p class="empSubTitle mb-0">
                                                             {{ $task->task_description }}</p>
 
@@ -273,8 +292,10 @@
                                                                 aria-valuemax="100">50%</div>
                                                         </div>
                                                         <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="d-flex align-items-center gap-2">
-                                                                <svg width="20px" height="20px" viewBox="0 0 24 24"
+                                                            <div class="d-flex align-items-center text-start flex-column">
+                                                                <h4 class="mb-0"style="font-size:15px; color:gray;">Assign Date</h4>
+                                                                <div class="d-flex align-items-center gap-2">
+                                                                    <svg width="15px" height="15px" viewBox="0 0 24 24"
                                                                     fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
@@ -288,16 +309,39 @@
                                                                             stroke-linejoin="round"></path>
                                                                     </g>
                                                                 </svg>
-                                                                <p class="mb-0"style="font-size:15px; color:gray;">
+                                                                <p class="mb-0"style="font-size:13px; color:gray;">
+                                                                    Assign Date</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex align-items-center text-end flex-column">
+                                                                <h4 class="mb-0"style="font-size:15px; color:gray;">Due Date</h4>
+                                                                <div class="d-flex align-items-center gap-2">
+                                                                    <svg width="15px" height="15px" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                        stroke-linejoin="round"></g>
+                                                                    <g id="SVGRepo_iconCarrier">
+                                                                        <circle opacity="0.5" cx="12"
+                                                                            cy="12" r="10" stroke="#9e9e9e"
+                                                                            stroke-width="1.5"></circle>
+                                                                        <path d="M12 8V12L14.5 14.5" stroke="#9e9e9e"
+                                                                            stroke-width="1.5" stroke-linecap="round"
+                                                                            stroke-linejoin="round"></path>
+                                                                    </g>
+                                                                </svg>
+                                                                <p class="mb-0"style="font-size:13px; color:gray;">
                                                                     {{ $task->task_date }}</p>
+
+                                                                </div>
                                                             </div>
-                                                            <div
-                                                                style="background-color: #ff000020;
-                                                            border-radius: 10px;
-                                                            padding: 1px 5px;
-                                                            font-size: 11px;">
-                                                                <p class="mb-0 text-danger">High</p>
-                                                            </div>
+                                                        </div>
+                                                        <div class="mt-1"
+                                                            style="width:10%;background-color: #ff000020;
+                                                        border-radius: 10px;
+                                                        padding: 1px 5px;
+                                                        font-size: 11px;">
+                                                            <p class="mb-0 text-danger">High</p>
                                                         </div>
 
                                                     </div>
@@ -511,28 +555,28 @@
                                             <label for="">Due Date:</label>
                                             <div class="mb-0 d-flex form-control inputboxcolor "
                                                 style="border: 1px solid #14213d; border-radius:50px;padding:10px; background-color: white;">
-                                                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                        stroke-linejoin="round"></g>
-                                                    <g id="SVGRepo_iconCarrier">
-                                                        <path
-                                                            d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
-                                                            stroke="#9e9e9e" stroke-width="2" stroke-linecap="round">
-                                                        </path>
-                                                        <rect x="6" y="12" width="3" height="3" rx="0.5"
-                                                            fill="#9e9e9e"></rect>
-                                                        <rect x="10.5" y="12" width="3" height="3"
-                                                            rx="0.5" fill="#9e9e9e"></rect>
-                                                        <rect x="15" y="12" width="3" height="3" rx="0.5"
-                                                            fill="#9e9e9e"></rect>
-                                                    </g>
-                                                </svg>
+                                                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round"stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path><rect x="6" y="12" width="3" height="3" rx="0.5"fill="#9e9e9e"></rect><rect x="10.5" y="12" width="3" height="3"rx="0.5" fill="#9e9e9e"></rect><rect x="15" y="12" width="3" height="3" rx="0.5"fill="#9e9e9e"></rect></g></svg>
                                                 <input type="date" value="{{ old('first_task_deadline') }}"
                                                     name="first_task_deadline"
                                                     style="border: none; margin-left: 10px; background-color:transparent; outline: none;width:100%;padding:0;"
                                                     placeholder="Enter the Task Title">
+                                            </div>
+                                            @error('first_task_deadline')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                        <div class="d-flex flex-column">
+                                            <label for="">Priority:</label>
+                                            <div class="mb-0 d-flex form-control inputboxcolor "
+                                                style="border: 1px solid #14213d; border-radius:50px;padding:10px; background-color: white;">
+                                                <svg width="20px" height="20px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect width="240" height="32" x="256" y="416" fill="var(--ci-primary-color, #9e9e9e)" class="ci-primary"></rect> <rect width="240" height="32" x="256" y="309.333" fill="var(--ci-primary-color, #9e9e9e)" class="ci-primary"></rect> <rect width="240" height="32" x="256" y="202.667" fill="var(--ci-primary-color, #9e9e9e)" class="ci-primary"></rect> <rect width="168" height="32" x="328" y="96" fill="var(--ci-primary-color, #9e9e9e)" class="ci-primary"></rect> <path fill="var(--ci-primary-color, #9e9e9e)" d="M302,111,167.2,27.216V96h-5.965C121.783,96,84.91,114.755,57.4,148.81,30.7,181.866,16,225.616,16,272s14.7,90.134,41.4,123.19C84.91,429.245,121.783,448,161.231,448H216V416H161.231C98.8,416,48,351.4,48,272S98.8,128,161.231,128H167.2v69.228ZM199.2,84.784,242,111.391,199.2,138.772Z" class="ci-primary"></path> </g></svg>
+                                                <select name="" id="" style="border: none; margin-left: 10px; background-color:transparent; outline: none;width:100%;padding:0;">
+                                                    <option value="High">High</option>
+                                                    <option value="Medium">Medium</option>
+                                                    <option value="Low">Low</option>
+                                                </select>
                                             </div>
                                             @error('first_task_deadline')
                                                 <span class="text-danger">{{ $message }}</span>
