@@ -236,69 +236,32 @@
                             </div>
 
 
-                            <div class="col-md-4">
-                                @php
-                                    $pendingTasksCount = $tasks->where('task_status', 'pending')->count();
-                                @endphp
-                                <div class="card" style="box-shadow: 0px 0px 10px 10px #00000021;border-radius: 10px;">
-                                    <p class="p-2 rounded-top text-white mb-0"
-                                        style="font-size: 17px; background-color: red">Pending</p>
-                                    <div class="p-2 rounded-bottom bg-white swim-lane" id="todo-lane">
-                                        @if ($pendingTasksCount == 0)
-                                            <div class="text-center d-flex align-items-center justify-content-center"
-                                                style="height: 100px">
-                                                <a class="mb-0 empTitle font-size-18" style="color: gray"
-                                                    href="#">Add
-                                                    a New Task</a>
-                                            </div>
-                                        @else
-                                            @foreach ($tasks as $task)
-                                                @if ($task->task_status == 'pending')
-                                                    <div class="task task-card" draggable="true">
-                                                        <h5 class="empTitle mb-0" style="text-transform: capitalize">
-                                                            @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager')
-                                                                <a
-                                                                    href="/task-update/{{ $task->id }}">{{ $task->task_title }}</a>
-                                                            @else
-                                                                {{ $task->task_title }}
-                                                            @endif
-                                                        </h5>
-                                                        <p class="empSubTitle mb-0">
-                                                            {{ $task->task_description }}</p>
-
-                                                        <div class="progress mb-2" style="height: 15px;">
-                                                            <div class="progress-bar progress-bar-animated bg-success"
-                                                                role="progressbar" style="width: 50%;"
-                                                                aria-valuenow="100" aria-valuemin="0"
-                                                                aria-valuemax="100">50%</div>
-                                                        </div>
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="d-flex align-items-center gap-2">
-                                                                <svg width="20px" height="20px" viewBox="0 0 24 24"
-                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                                        stroke-linejoin="round"></g>
-                                                                    <g id="SVGRepo_iconCarrier">
-                                                                        <circle opacity="0.5" cx="12"
-                                                                            cy="12" r="10" stroke="#9e9e9e"
-                                                                            stroke-width="1.5"></circle>
-                                                                        <path d="M12 8V12L14.5 14.5" stroke="#9e9e9e"
-                                                                            stroke-width="1.5" stroke-linecap="round"
-                                                                            stroke-linejoin="round"></path>
-                                                                    </g>
-                                                                </svg>
-                                                                <p class="mb-0"style="font-size:15px; color:gray;">
-                                                                    {{ $task->task_date }}</p>
-                                                            </div>
-                                                            <div
-                                                                style="background-color: #ff000020;
-                                                            border-radius: 10px;
-                                                            padding: 1px 5px;
-                                                            font-size: 11px;">
-                                                                <p class="mb-0 text-danger">High</p>
-                                                            </div>
-                                                        </div>
+            <div class="col-md-4">
+                @php
+                    $pendingTasksCount = $tasks->where('task_status', 'pending')->count();
+                @endphp
+                <div class="card" style="box-shadow: 0px 0px 10px 10px #00000021;border-radius: 10px;">
+                    <p class="p-4 rounded-top bg-danger text-white mb-0" style="font-size: 17px;">Pending</p>
+                    <div class="p-4 rounded-bottom bg-white">
+                        @if ($pendingTasksCount == 0)
+                            <p class="mb-0">No Tasks Available</p>
+                        @else
+                            @foreach ($tasks as $task)
+                                @if ($task->task_status == 'pending')
+                                    <div style="border-bottom: 1px solid #e3e3e3;margin-top:10px;">
+                                        <h5 style="font-size: 20px;">
+                                            @if (Auth()->user()->user_type == "employee" || Auth()->user()->user_type == "manager")
+                                               <a href="/task-update/{{$task->id}}">{{ $task->task_title }}</a>
+                                               @else
+                                               {{ $task->task_title }}
+                                            @endif
+                                        </h5>
+                                        <p style="font-size: 15px; margin-bottom: 5px;">{{ $task->task_description }}</p>
+                                        <div class="progress mb-2" style="height: 20px;">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: {{$task->task_percentage}}%;"
+                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{$task->task_percentage}}% Complete</div>
+                                        </div>
+                                        <p class="mb-0"  style="font-size:15px;margin-top:10px; color:gray;">deadline: {{$task->task_date}}</p>
 
                                                     </div>
                                                 @endif

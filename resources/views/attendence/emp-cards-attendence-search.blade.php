@@ -540,6 +540,21 @@
                             </div>
                         </div>
 
+                        <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="0.6rem" height="0.6rem" viewBox="0 0 24 24">
+                                <path fill="#06a503" d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59z" />
+                            </svg> = Present,
+                            <svg xmlns="http://www.w3.org/2000/svg" width="0.6rem" height="0.75rem" viewBox="0 0 24 24">
+                                <path fill="#f9010e"
+                                    d="M18.36 19.78L12 13.41l-6.36 6.37l-1.42-1.42L10.59 12L4.22 5.64l1.42-1.42L12 10.59l6.36-6.36l1.41 1.41L13.41 12l6.36 6.36z" />
+                            </svg> = Absent, H = Holiday, L = Leaves
+
+                        </p>
+                        <p>
+                            Holidays = {{($numberOfHolidays!=null) ? $numberOfHolidays : '0'}},
+                            Total Working Days = {{($total_days!=null) ? $total_days : '0'}},
+                            Actual Days Worked = {{$total_days - $numberOfHolidays  }}
+                        </p>
 
 
 
@@ -582,7 +597,7 @@
                                                 <td style="text-align: center;">
                                                     @php
                                                         $day = Carbon\Carbon::parse($day)->format('Y-m-d');
-
+                                                        $formattedDate = Carbon\Carbon::parse($day)->format('m/d/Y');
                                                         $today = Carbon\Carbon::today()->format('Y-m-d');
                                                         $attendence_id = null;
 
@@ -606,32 +621,72 @@
                                                         // echo "<br> ".$dayName;
                                                     @endphp
 
-                                                    @if ($day > $today)
-                                                    @elseif ($attendanceRecord && $attendanceRecord->check_in_status == 'done')
-                                                        <!-- Display check mark or any indication of attendance -->
-                                                        <a href="#exampleModal_{{ $attendence_id }}" data-toggle="modal">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="0.6rem"
-                                                                height="0.6rem" viewBox="0 0 24 24">
-                                                                <path fill="#06a503"
-                                                                    d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59z" />
-                                                            </svg>
-                                                        </a>
-                                                    @elseif($dayName == 'Saturday' || $dayName == 'Sunday')
-                                                        <div class="vertical-text">
-                                                            weekend
-                                                        </div>
-                                                    @elseif($leaveRecord && $leaveRecord->status == 'approved')
-                                                        <!-- Display Leave indication -->
-                                                        <span style="font-size:12px;">L</span>
-                                                    @else
-                                                        <!-- Display absence indication -->
 
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="0.6rem"
-                                                            height="0.75rem" viewBox="0 0 24 24">
-                                                            <path fill="#f9010e"
-                                                                d="M18.36 19.78L12 13.41l-6.36 6.37l-1.42-1.42L10.59 12L4.22 5.64l1.42-1.42L12 10.59l6.36-6.36l1.41 1.41L13.41 12l6.36 6.36z" />
-                                                        </svg>
-                                                    @endif
+
+
+
+@if (isset($datesForMonth) && $datesForMonth != null)
+    @php
+        $isHoliday = false;
+        foreach ($datesForMonth as $date) {
+            if ($date == $formattedDate) {
+                $isHoliday = true;
+                break;
+            }
+        }
+    @endphp
+    @if ($isHoliday)
+        <span title="holiday">H</span>
+    @elseif ($day > $today)
+        @php
+            $formattedDate = Carbon\Carbon::parse($day)->format('m/d/Y');
+        @endphp
+    @elseif ($attendanceRecord && $attendanceRecord->check_in_status == 'done')
+        <!-- Display check mark or any indication of attendance -->
+        <a href="#exampleModal_{{ $attendence_id }}" data-toggle="modal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="0.6rem" height="0.6rem" viewBox="0 0 24 24">
+                <path fill="#06a503" d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59z" />
+            </svg>
+        </a>
+    @elseif ($dayName == 'Saturday' || $dayName == 'Sunday')
+        <div class="vertical-text">
+            weekend
+        </div>
+    @elseif ($leaveRecord && $leaveRecord->status == 'approved')
+        <!-- Display Leave indication -->
+        <span style="font-size:12px;">L</span>
+    @else
+        <!-- Display absence indication -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="0.6rem" height="0.75rem" viewBox="0 0 24 24">
+            <path fill="#f9010e" d="M18.36 19.78L12 13.41l-6.36 6.37l-1.42-1.42L10.59 12L4.22 5.64l1.42-1.42L12 10.59l6.36-6.36l1.41 1.41L13.41 12l6.36 6.36z" />
+        </svg>
+    @endif
+@else
+    @if ($day > $today)
+        @php
+            $formattedDate = Carbon\Carbon::parse($day)->format('m/d/Y');
+        @endphp
+    @elseif ($attendanceRecord && $attendanceRecord->check_in_status == 'done')
+        <!-- Display check mark or any indication of attendance -->
+        <a href="#exampleModal_{{ $attendence_id }}" data-toggle="modal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="0.6rem" height="0.6rem" viewBox="0 0 24 24">
+                <path fill="#06a503" d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59z" />
+            </svg>
+        </a>
+    @elseif ($dayName == 'Saturday' || $dayName == 'Sunday')
+        <div class="vertical-text">
+            weekend
+        </div>
+    @elseif ($leaveRecord && $leaveRecord->status == 'approved')
+        <!-- Display Leave indication -->
+        <span style="font-size:12px;">L</span>
+    @else
+        <!-- Display absence indication -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="0.6rem" height="0.75rem" viewBox="0 0 24 24">
+            <path fill="#f9010e" d="M18.36 19.78L12 13.41l-6.36 6.37l-1.42-1.42L10.59 12L4.22 5.64l1.42-1.42L12 10.59l6.36-6.36l1.41 1.41L13.41 12l6.36 6.36z" />
+        </svg>
+    @endif
+@endif
 
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="exampleModal_{{ $attendence_id }}"

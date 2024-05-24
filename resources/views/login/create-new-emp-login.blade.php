@@ -322,6 +322,7 @@
                                     <td><input type="checkbox" id="attendance_check_none" name="attendance_access[]"
                                             value="none" checked></td>
                                 </tr>
+                                
                             </table>
 
 

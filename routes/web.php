@@ -17,6 +17,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ReportingController;
+use App\Http\Controllers\VacationController;
 
 
 
@@ -140,7 +141,8 @@ Route::group(['middleware' => 'admin'], function () {
     // salaries
     Route::get('/generate-new-salary-slip', [SalaryController::class,'generateNewSalarySlip'])->middleware('SalaryCheck');
     Route::get('/generate-new/{u_id}', [SalaryController::class,'generateNewSlip'])->middleware('SalaryCheck');
-    Route::post('/preview-salary/{u_id}', [SalaryController::class,'generateNewSlipTable'])->middleware('SalaryCheck');
+    Route::match(['get', 'post'], '/preview-salary/{u_id}', [SalaryController::class,'generateNewSlipTable'])->middleware('SalaryCheck');
+
     Route::post('/send-reciept/{u_id}', [SalaryController::class,'sendReciept'])->middleware('SalaryCheck');
     Route::get('/view-slips', [SalaryController::class,'viewReciepts'])->middleware('SalaryCheck');
     Route::get('/view-salaries/{id}', [SalaryController::class,'viewSalaries'])->middleware('SalaryCheck');
@@ -162,6 +164,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/preview/{id}',[InvoiceController::class,'previewOnBrowser'])->middleware('ClienteCheck');
 
 
+    // vacations
+    Route::get('/office-vacations', [VacationController::class,'index'])->middleware('AdminUser');
+    Route::match(['get', 'post'], '/create-holidays', [VacationController::class, 'createHolidays'])->middleware('AdminUser');
+    Route::match(['get', 'post'], '/update-holidays', [VacationController::class, 'createHolidays'])->middleware('AdminUser');
 
     // logins
     Route::get('/create-new-login',[LoginController::class,'createLoginView'])->middleware('AdminCheck');
@@ -219,8 +225,8 @@ Route::group(['middleware' => 'admin'], function () {
 
     // office time controller
 
-    Route::get('/office-time', [TimeController::class, 'indexPage']);
-    Route::post('/office-times', [TimeController::class, 'setShift']);
+    Route::get('/office-time', [TimeController::class, 'indexPage'])->middleware('AdminCheck');
+    Route::post('/office-times', [TimeController::class, 'setShift'])->middleware('AdminCheck');
     // Route::post('/office-times-night', [TimeController::class, 'setEveningShift'])
 
     // employee dashboard

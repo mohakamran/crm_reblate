@@ -33,6 +33,7 @@ class EmployeesController extends Controller
                 'employee_relative_name' => 'required',
                 'employee_relative_phone_num' => 'required',
                 'employee_relative_address' => 'required',
+                'emp_cnic' => 'required',
             ]);
             $bank_name = "";
             $bank_iban = "";
@@ -66,7 +67,7 @@ class EmployeesController extends Controller
                     'Emp_Relation_Phone' => $req->employee_relative_phone_num,
                     'Emp_Relation_Address' => $req->employee_relative_address,
                     'Emp_Bank_Name' => $bank_name,
-                    'Emp_Bank_IBAN' => $bank_iban
+                    'emp_cnic' => $req->emp_cnic
                 ]);
 
                 session()->flash('success', 'Data Updated successfully!');
@@ -82,7 +83,9 @@ class EmployeesController extends Controller
                     'Emp_Relation_Phone' => $req->employee_relative_phone_num,
                     'Emp_Relation_Address' => $req->employee_relative_address,
                     'Emp_Bank_Name' => $bank_name,
-                    'Emp_Bank_IBAN' => $bank_iban
+                    'Emp_Bank_IBAN' => $bank_iban,
+                    'Emp_Bank_IBAN' => $bank_iban,
+                    'emp_cnic' => $req->emp_cnic
                 ]);
                 session()->flash('success', 'Data Updated successfully!');
                 return back();
@@ -380,18 +383,20 @@ class EmployeesController extends Controller
 
     // change status
     public function changeStatus($id) {
-        $emp_data = Employee::find($id);
+        $emp_data = DB::table('employees')->where('Emp_Code',$id)->first();
 
         if ($emp_data !=null) {
 
             $get_status = $emp_data->Emp_Status;
 
             if($get_status == "active") {
-                $emp_data->Emp_Status = "inactive";
-                $emp_data->save();
-            } else if($get_status == "inactive") {
-                $emp_data->Emp_Status = "active";
-                $emp_data->save();
+                DB::table('employees')->where('Emp_Code',$id)->update([
+                    'Emp_Status' => "disable"
+                ]);
+            } else if($get_status == "disable") {
+                DB::table('employees')->where('Emp_Code',$id)->update([
+                    'Emp_Status' => "active"
+                ]);
             }
             return redirect('manage-employees');
         } else {

@@ -134,6 +134,7 @@
                                         <input type="hidden" value="{{$created_by}}" name="created_by">
                                         <input type="hidden" value="{{$authorized_by}}" name="authorized_by">
                                         <input type="hidden" value="{{$salary_id}}" name="salary_id">
+                                        <input type="hidden" value="{{$emp_present_days}}" name="emp_present_days">
 
 
 
@@ -191,6 +192,8 @@
                                             <td>
                                                 Rs. {{$quarterly_bonus}}
                                             </td>
+                                            <td>Present Days</td>
+                                            <td> {{$emp_present_days}}</td>
                                         </tr>
                                         <tr>
                                             <td> <strong>Reason of Deduction</strong> </td>

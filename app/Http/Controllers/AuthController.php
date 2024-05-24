@@ -735,9 +735,15 @@ public function searchDateManagerHomePage(Request $req) {
     }
     // get latest leaves
     public function totalLeaves() {
+        // Get current month and year
+        $currentMonth = now()->month;
+        $currentYear = now()->year;
+
         $user_code = auth()->user()->user_code;
         $total_leaves = DB::table('leaves')
             ->where('emp_code', $user_code)
+            ->whereMonth('date', $currentMonth)
+            ->whereYear('date', $currentYear)
             ->where('status', 'approved')
             ->get();
 
@@ -748,6 +754,28 @@ public function searchDateManagerHomePage(Request $req) {
         }
 
         return $total_leaves;
+    }
+    // get total pending
+    public function totalPending() {
+         // Get current month and year
+         $currentMonth = now()->month;
+         $currentYear = now()->year;
+
+         $user_code = auth()->user()->user_code;
+         $total_leaves = DB::table('leaves')
+             ->where('emp_code', $user_code)
+             ->whereMonth('date', $currentMonth)
+             ->whereYear('date', $currentYear)
+             ->where('status', 'pending')
+             ->get();
+
+         if ($total_leaves->isEmpty()) {
+             $total_leaves = 0;
+         } else {
+             $total_leaves = $total_leaves->count();
+         }
+
+         return $total_leaves;
     }
     // attendence report
     public function getAttendeceReport() {
@@ -783,20 +811,21 @@ public function searchDateManagerHomePage(Request $req) {
         }
         return $count;
     }
-     public function indexHomePage() {
+    public function indexHomePage() {
         $user_type = auth()->user()->user_type;
         // dd($user_type);
         $user_code = auth()->user()->user_code;
         if($user_type == "employee") {
             $active_emp = DB::table('employees')
             ->where('Emp_Code', $user_code)
-            ->where('Emp_Status', 'active')
+            ->where('Emp_Status', 'disable')
             ->first();
 
-        if (!$active_emp) {
+        if ($active_emp) {
             // If $active_emp is null, it means no active employee found
             // Sending the message
-            return back()->with('error', 'You have been disabled. Please Contact Admin! ');
+            Auth::logout();
+            return back()->with('error', 'Your account is not active. Please Contact Admin! ');
         }
             $employees = Employee::all();
             $emp_count = count($employees);
@@ -804,7 +833,7 @@ public function searchDateManagerHomePage(Request $req) {
             $clients = Client::all();
             $client_count = count($clients);
 
-                            Session::forget('employees_access');
+                Session::forget('employees_access');
                 Session::forget('expenses_access');
                 Session::forget('clients_access');
                 Session::forget('invoices_access');
@@ -1061,7 +1090,7 @@ public function searchDateManagerHomePage(Request $req) {
             // dd($total_work_days_in_month);
             // $absent_days = $total_work_days_in_month - $total_present_day;
             $total_leaves = $this->totalLeaves();
-            // dd($total_leaves);
+
 
             // get latest tasks details
             $task_details = $this->getTasksDetails();
@@ -1083,7 +1112,23 @@ public function searchDateManagerHomePage(Request $req) {
                 $salary_deduct = $salary_deduct->deduction;
             }
 
+            $currentMonth = Carbon::now()->format('m');
+            $currentYear = Carbon::now()->format('Y');
+
+            $datesForMonth  = $this->getHolidays($currentMonth,$currentYear);
+            // dd($get_holidays);
+            $numberOfHolidays = count($datesForMonth);
+
+
+
+            $total_work_days_in_month = $total_work_days_in_month - $numberOfHolidays;
+            // get pending count for emp
+            $total_pending = $this->totalPending();
+            // dd($total_pending);
+
             $data = [
+                'total_pending' => $total_pending,
+                'total_work_days_in_month'=>$total_work_days_in_month,
                 'absent_days' => $absent_days,
                 'total_present_day' => $total_present_day,
                  'salary_deduct' => $salary_deduct,
@@ -1104,13 +1149,14 @@ public function searchDateManagerHomePage(Request $req) {
 
             $active_emp = DB::table('employees')
             ->where('Emp_Code', $user_code)
-            ->where('Emp_Status', 'active')
+            ->where('Emp_Status', 'disable')
             ->first();
 
-            if (!$active_emp) {
+            if ($active_emp) {
                 // If $active_emp is null, it means no active employee found
                 // Sending the message
-                return back()->with('error', 'You are not an active employee. Please Contact Admin! ');
+                Auth::logout();
+                return back()->with('error', 'Your account is not active. Please Contact Admin');
             }
             $employees = Employee::all();
             $emp_count = count($employees);
@@ -1418,7 +1464,24 @@ public function searchDateManagerHomePage(Request $req) {
                 $salary_deduct = $salary_deduct->deduction;
             }
 
+            $currentMonth = Carbon::now()->format('m');
+            $currentYear = Carbon::now()->format('Y');
+
+            $datesForMonth  = $this->getHolidays($currentMonth,$currentYear);
+            // dd($get_holidays);
+            $numberOfHolidays = count($datesForMonth);
+
+
+
+            $total_work_days_in_month = $total_work_days_in_month - $numberOfHolidays;
+
+            // get pending count for emp
+            $total_pending = $this->totalPending();
+            // dd($total_pending);
+
            $data = [
+                'total_pending' => $total_pending,
+                'total_work_days_in_month'=>$total_work_days_in_month,
                 'salary_deduct' => $salary_deduct,
                 'usd_pkr_expenses' => $usd_pkr_expenses,
                 'usd_pkr_salary' => $usd_pkr_salary,
@@ -1534,6 +1597,36 @@ public function searchDateManagerHomePage(Request $req) {
 
     }
 
+
+    // get public holidays
+   public function getHolidays($month, $year) {
+    // Get the first day of the month
+    $startDate = Carbon::createFromDate($year, $month, 1);
+
+    // Get the last day of the month
+    $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth();
+
+    // Array to store the list of dates
+    $datesForMonth = [];
+
+    // Iterate over each day from the start date to the end date
+    for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+        // Check if the current date falls within any of the holiday ranges
+        $isHoliday = DB::table('holidays')
+            ->where('startDate', '<=', $date->format('m/d/Y'))
+            ->where('endDate', '>=', $date->format('m/d/Y'))
+            ->exists();
+
+        // If the date is a holiday, add it to the array
+        if ($isHoliday) {
+            $datesForMonth[] = $date->format('m/d/Y');
+        }
+    }
+
+    // Return the list of dates for the month
+    return  $datesForMonth;
+   }
+
     // getting sales, profit, expenses yearly data
     public function getYearWiseData() {
         $currentYear = Carbon::now()->year;
@@ -1611,7 +1704,7 @@ public function searchDateManagerHomePage(Request $req) {
 
     // get attendence
     public function getAbsent() {
-        try {
+
             // Get the user code
             $user = auth()->user();
             if (!$user) {
@@ -1620,7 +1713,8 @@ public function searchDateManagerHomePage(Request $req) {
             $user_code = $user->user_code;
 
             // Get current month and year
-            $currentMonth = now()->month;
+            $currentMonth = now()->format('m');
+
             $currentYear = now()->year;
 
             // Get all attendance records for the current month and year
@@ -1630,12 +1724,24 @@ public function searchDateManagerHomePage(Request $req) {
                 ->whereYear('date', $currentYear)
                 ->get();
 
-                // dd($attendanceRecords);
+                $currentDay = now()->day;
+
+            // Get all holidays for the current month and year
+            $getHolidays = $this->get_Holidays($currentMonth, $currentYear);
+            $count = count($getHolidays);
+            $leaves  = DB::table('leaves')->where('emp_code',$user_code)
+            ->where('status','approved')
+            ->whereMonth('date', $currentMonth)
+            ->whereYear('date', $currentYear)
+            ->count();
+
+
+            $total_absents = $count + $leaves;
+
+
 
             // Initialize absent count
             $absentCount = 0;
-
-
 
             // Get the current day
             $currentDay = now()->day;
@@ -1648,9 +1754,6 @@ public function searchDateManagerHomePage(Request $req) {
                     // If it's a Saturday or Sunday, skip to the next iteration
                     continue;
                 }
-
-                // echo "<br> Date: ".$date;
-
                 // Check if there is an attendance record for the current date
                 $record = $attendanceRecords->where('date', $date->format('Y-m-d'))->first();
 
@@ -1660,12 +1763,45 @@ public function searchDateManagerHomePage(Request $req) {
                 }
             }
 
-            return $absentCount;
-        } catch (\Exception $e) {
-            // Log or handle the exception
-            return 0; // or throw $e; depending on your requirements
+
+
+        $absentCount =  $absentCount - $total_absents;
+        return $absentCount;
+
+    }
+
+
+       // get public holidays
+   public function get_Holidays($month, $year) {
+    // Get the first day of the month
+    $startDate = Carbon::createFromDate($year, $month, 1);
+
+    // Get the last day of the month
+    $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth();
+
+    // Array to store the list of dates
+    $datesForMonth = [];
+
+    // Iterate over each day from the start date to the end date
+    for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+        // Check if the current date falls within any of the holiday ranges
+        $isHoliday = DB::table('holidays')
+            ->where('startDate', '<=', $date->format('m/d/Y'))
+            ->where('endDate', '>=', $date->format('m/d/Y'))
+            ->exists();
+
+        // If the date is a holiday, add it to the array
+        if ($isHoliday) {
+            $datesForMonth[] = $date->format('m/d/Y');
         }
     }
+
+    // Return the list of dates for the month
+    return  $datesForMonth;
+}
+
+
+
 
 
     //get tasks
@@ -1675,8 +1811,8 @@ public function searchDateManagerHomePage(Request $req) {
         $currentYear = date('Y');
 
         // Retrieve all employees
-        $employees = DB::table('employees')->get();
-
+        $employees = DB::table('employees')->get(); // all records
+        // DB::table('employees')->where('Emp_Shift_Time','Morning')->orderBy('id','desc')->get();
         // Initialize an array to store matched employee data
         $matchedEmployeesData = [];
 

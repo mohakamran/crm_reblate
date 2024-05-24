@@ -360,6 +360,32 @@
         </script>
 
 <script>
+                $(document).ready(function() {
+                $('#datatable-buttons').DataTable({
+                    dom: "<'container-fluid'" +
+                        "<'row'" +
+                        "<'col-md-8'l>" +
+                        "<'col-md-4 text-right'f>" +
+                        ">" +
+                        "<'row dt-table'" +
+                        "<'col-md-12'tr>" +
+                        ">" +
+                        "<'row'" +
+                        "<'col-md-7'i>" +
+                        "<'col-md-5 text-right'p>" +
+                        ">" +
+                        ">",
+                    lengthMenu: [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, "All"]
+                    ],
+                    buttons: [
+                        'excel', 'print'
+                    ],
+
+                });
+            });
+
     $(function() {
         $('input[name="daterange"]').daterangepicker({
             opens: 'right'
@@ -415,7 +441,7 @@
         <script src="{{ URL::asset('build/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
 
         <!-- Datatable init js -->
-        <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
+        {{-- <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script> --}}
         <!-- App js -->
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
 

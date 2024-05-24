@@ -26,21 +26,22 @@ Salaries By Month
                 <div class="card">
                     <div class="card-body">
 
-                        <div class="row d-flex justify-content-between mb-5">
-                            <h5>{{$salary_month}}<h5>
-                                <h5>Total : {{$sum_total_salaries[0]->total_amount}} </h5>
-                        </div>
+
 
                         <div class="row">
-                            <div class="col-md-3">
-                                <form action="/search-salary-by-month" method="post">
-                                {{-- <p class="date_sect">Date: {{ $currentmonth }}, {{ $currentyear }}</p>   --}}
+                            <form action="/search-salary-by-month" method="post">
+                                @csrf
+                                <div class="row">
 
-                                    @csrf
-                                    <input type="month" class="form-control" id="start" name="monthly_salaries" min="2018-03" value="{{ $currentYear }}-{{ $currentMonth }}" />
-
-
-
+                                    <div class="col-md-3">
+                                        <select name="shift_type" class="form-control" id="">
+                                            <option value="all" {{ isset($shift_type) && $shift_type == "all" ? 'selected' : '' }}>All</option>
+                                            <option value="Night" {{ isset($shift_type) && $shift_type == "Night" ? 'selected' : '' }}>Night</option>
+                                            <option value="Morning" {{ isset($shift_type) && $shift_type == "Morning" ? 'selected' : '' }}>Morning</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="month" class="form-control" id="start" name="monthly_salaries" min="2018-03" value="{{ $currentYear }}-{{ $currentMonth }}" />
                                     </div>
                                     <div class="col-md-3">
                                         <button class="reblateBtn mt-1" style="padding: 7px 14px;"><svg
@@ -50,9 +51,13 @@ Salaries By Month
                                                 d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                         </svg></button>
                                     </div>
-                                </form>
-                            </div>
+                               </div>
+                          </form>
                         </div>
+
+                        <div class="mb-3">
+                            <span>Total : {{$sum_total_salaries}} PKR</span>
+                          </div>
                         {{-- <p class="card-title-desc">The Buttons extension for DataTables
                             provides a common set of options, API methods and styling to display
                             buttons on a page that will interact with a DataTable. The core library
@@ -61,15 +66,14 @@ Salaries By Month
 
                         <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+
+
                             <thead>
                                 <tr>
                                     <th>Emp ID</th>
                                     <th>Employee Name</th>
-                                    <th>Total Salary</th>
-                                    <th>Deduction</th>
                                     <th>Net Salary</th>
                                     <th>Month Salary</th>
-                                    <th>Generated Date</th>
                                 </tr>
                             </thead>
 
@@ -80,21 +84,31 @@ Salaries By Month
 
 
                                         {{-- <td>{{ ( $emp->Emp_Code < 10) ? '00'.$emp->Emp_Code : $emp->Emp_Code }}sols</td> --}}
-                                        <td>{{ $emp->emp_id }} </td>
                                         <td>
-                                            <a href="view_profile/{{$emp->emp_id}}">
+                                            <a href="/view_profile/{{$emp->emp_id}}">
+                                                {{ $emp->emp_id }}
+                                            </a> </td>
+                                        <td>
+                                            <a href="/view-salaries/{{$emp->emp_id}}">
                                                 {{ $emp->emp_name }}
                                             </a>
 
                                         </td>
-                                        <td>{{ $emp->total_salary }} </td>
-                                        <td>{{ $emp->deduction }} </td>
-                                        <td>{{ $emp->amount }} </td>
-                                        <td>{{ $emp->month_salary }} </td>
-                                        <td>{{ $emp->date }}</td>
+
+
+                                        <td>{{ number_format((float)$emp->amount, 2) }}</td>
+                                        <td>{{ $emp->month_salary }}</td>
+
 
                                     </tr>
                                 @endforeach
+
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Total: {{$sum_total_salaries}}</td>
+                                    <td></td>
+                                </tr>
                             </tbody>
 
 
@@ -152,7 +166,47 @@ Salaries By Month
                 confirmDelete(id);
             }
 
+            $(document).ready(function() {
+    $('#datatable-buttons').DataTable({
+        dom: "<'container-fluid'" +
+            "<'row'" +
+            "<'col-md-8'lB>" +
+            "<'col-md-4 text-right'f>" +
+            ">" +
+            "<'row dt-table'" +
+            "<'col-md-12'tr>" +
+            ">" +
+            "<'row'" +
+            "<'col-md-7'i>" +
+            "<'col-md-5 text-right'p>" +
+            ">" +
+            ">",
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        buttons: [
+            'excel', 'print'
+        ],
+
+    });
+});
+
         </script>
+
+        <style>
+            /* Adjust layout of DataTable components */
+.dataTables_length,
+.dataTables_filter {
+    display: inline-block;
+    margin-right: 10px; /* Adjust margin as needed */
+}
+
+.dataTables_filter {
+    float: right; /* Align search bar to the right */
+}
+
+.dataTables_buttons {
+    float: right; /* Align buttons to the right */
+}
+        </style>
     @endsection
     @section('scripts')
         <!-- Required datatable js -->
@@ -176,7 +230,7 @@ Salaries By Month
         <script src="{{ URL::asset('build/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
 
         <!-- Datatable init js -->
-        <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
+
         <!-- App js -->
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
     @endsection

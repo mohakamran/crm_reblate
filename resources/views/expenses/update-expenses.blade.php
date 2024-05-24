@@ -134,7 +134,7 @@
 
                             // Define a mapping of parent categories to child categories
                             const parentToChildCategories = {
-                                "Office": ["Rent", "Blectricity Bill","Water Bill", "Kitchen","Internet Bill","Others", "Charity"],
+                                "Office": ["Rent", "Electricity Bill","Water Bill", "Kitchen","Internet Bill","Others", "Charity"],
                                 "Salaries": ["Day Shift", "Night Shift"],
                                 "Maintenance": ["none"],
                                 "Day Food": ["none"],

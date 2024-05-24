@@ -264,7 +264,7 @@
                                 <h3 class=" font-size-header mb-0" style='color:#000;'>Attendance </h3>
 
                             </div>
-                            <div class="row px-2" >
+                            <div class="row px-2">
                                 <div class="col-md-4" style='width:33%'>
                                     <h3 style="color: #14213d;">
                                         @if (isset($total_present_day) && $total_present_day != '')
@@ -286,19 +286,38 @@
                                     <p style="color:#14213d; font-size: 16px;">Total <br> Absent </p>
                                 </div>
                                 <div class="col-md-4" style='width:33%'>
-                                    <h3 style='color:orange;'>{{ $total_leaves }}</h3>
+                                    <h3 style='color:orange;'>
+
+                                        @if (isset($total_leaves) && $total_leaves != '')
+                                            {{ $total_leaves }}
+                                        @else
+                                            0
+                                        @endif
+                                    </h3>
                                     <p style="color:#14213d; font-size: 16px;">Total <br> Leaves</p>
                                 </div>
                                 <div class="col-md-4" style='width:33%'>
-                                    <h3 style='color:red;'>0</h3>
+                                    <h3 style='color:red;'>
+                                        @if (isset($total_pending) && $total_pending != '')
+                                            {{ $total_pending }}
+                                        @else
+                                            0
+                                        @endif
+                                    </h3>
                                     <p style="color:#14213d; font-size: 16px;">Pending <br> Approval</p>
                                 </div>
                                 <div class="col-md-4" style='width:33%'>
-                                    <h3 style='color:#14213d;'>22</h3>
+                                    <h3 style='color:#14213d;'>{{ $total_work_days_in_month }}</h3>
                                     <p style="color:#14213d; font-size: 16px;">Working <br> Days</p>
                                 </div>
                                 <div class="col-md-4" style='width:33%'>
-                                    <h3 style='color:red;'>2000</h3>
+                                    <h3 style='color:red;'>
+                                        @if (isset($salary_deduct) && $salary_deduct != '')
+                                            {{ $salary_deduct }}
+                                        @else
+                                            0
+                                        @endif
+                                    </h3>
                                     <p style="color:#14213d; font-size: 16px;">Loss of <br> Pay</p>
                                 </div>
                             </div>
@@ -515,7 +534,7 @@
                                 <div class="d-flex flex-wrap justify-content-between gap-4 align-items-center">
 
                                         @if (session()->has('show_check_out') && session('show_check_out') === true)
-                                            <a class="reblateBtn px-4 py-2 w-md" href="javascript:void()" onclick="checkOut()">Checking Out 
+                                            <a class="reblateBtn px-4 py-2 w-md" href="javascript:void()" onclick="checkOut()">Checking Out
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                     viewBox="0 0 16 16">
                                                     <g fill="currentColor" fill-rule="evenodd">
@@ -555,7 +574,7 @@
                                             </svg>
                                         </a>
                                     @else
-                                        <a class="reblateBtn px-4 py-2" href="/break-start" >Break Start 
+                                        <a class="reblateBtn px-4 py-2" href="/break-start" >Break Start
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                 viewBox="0 0 16 16">
                                                 <g fill="currentColor" fill-rule="evenodd">

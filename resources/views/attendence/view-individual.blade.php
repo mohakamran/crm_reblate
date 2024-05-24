@@ -93,11 +93,44 @@
                                 provides the based framework upon which plug-ins can built.
                             </p> --}}
 
+                        <div class="d-flex justify-content-end mb-5">
+                            @if (auth()->user()->user_type == "admin")
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                Launch Popup
+                              </button>
+                            @elseif (is_array($attendance_access) && in_array('all', $attendance_access) || in_array('create', $attendance_access) )
+                                <a href="#popupButton" class="reblateBtn p-2" style="float:right;margin-right:15px;"> Create</a>
+                            @endif
+                        </div>
+
+                        <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Popup Title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                            Your popup content goes here.
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <!-- You can add additional buttons here -->
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+
+
 
                         <form action="/search-emp-details" method="post">
                             @csrf
                             <div class="row mt-3 mb-3">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     {{-- <input placeholder="Select date" type="date" name="date_controller"
                                         class="form-control" value="{{ old('date_controller') }}">
 
@@ -119,95 +152,30 @@
 
 
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <button class="reblateBtn px-3 py-2">Search</button>
                                 </div>
                         </form>
 
+                        @if (Session::has('attendance_access'))
+                            @php
+                                $attendance_access = Session::get('attendance_access');
+                                // Convert to an array if it's a single value
+                                if (!is_array($attendance_access)) {
+                                    $attendance_access = explode(',', $attendance_access);
+                                    // Remove any empty elements resulting from the explode function
+                                    $attendance_access = array_filter($attendance_access);
+                                }
+                            @endphp
+                        @endif
+                        <div class="col-md-4">
 
-
-                        <!-- Bootstrap modal -->
-                        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
-                            aria-labelledby="updateModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="updateModalLabel">Update Attendance</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- Form fields for updating attendance -->
-                                        <form id="updateForm">
-                                            <div class="form-group">
-                                                <label for="date">Date</label>
-                                                <input type="text" class="form-control" id="date" name="date"
-                                                    readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="checkIn">Check In Time</label>
-                                                <input type="text" class="form-control" id="checkIn" name="checkIn">
-                                            </div>
-                                            <!-- Add more form fields for other attendance data -->
-                                            <button type="submit" class="btn btn-primary">Update</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-
-
-
-
-
-
-                        {{-- <div class="col-md-3">
-                                    <div class="card att-statistics">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Statistics</h5>
-                                            <div class="stats-list">
-                                                <div class="stats-info">
-                                                    <p>Today <strong>3.45 <small>/ 8 hrs</small></strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-primary w-31" role="progressbar"
-                                                            aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="stats-info">
-                                                    <p>This Week <strong>28 <small>/ 40 hrs</small></strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-warning w-31" role="progressbar"
-                                                            aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="stats-info">
-                                                    <p>This Month <strong>90 <small>/ 160 hrs</small></strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-success w-62" role="progressbar"
-                                                            aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="stats-info">
-                                                    <p>Remaining <strong>90 <small>/ 160 hrs</small></strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-danger w-62" role="progressbar"
-                                                            aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="stats-info">
-                                                    <p>Overtime <strong>4</strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-info w-62" role="progressbar"
-                                                            aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-
                     </div>
+
+
+
+
 
                     <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -350,48 +318,56 @@
                                                     <span class="label label-success" style="display: none;"
                                                         id="text-success"></span>
                                                     <p class="text-danger" id="show_error_{{ $emp->id }}"></p>
-                                                    <p class="text-primary" id="show_success_message_{{ $emp->id }}"></p>
+                                                    <p class="text-primary"
+                                                        id="show_success_message_{{ $emp->id }}"></p>
 
                                                     <div class="form-group mt-2">
                                                         <label for="editCheckIn_{{ $emp->id }}">Check In Time
-                                                             </label>
-                                                        <input type="time" class="form-control" id="editCheckIn_{{ $emp->id }}"
-                                                            name="checkInTime_{{ $emp->id }}" value="{{ $check_in_time_24 ?? '' }}">
+                                                        </label>
+                                                        <input type="time" class="form-control"
+                                                            id="editCheckIn_{{ $emp->id }}"
+                                                            name="checkInTime_{{ $emp->id }}"
+                                                            value="{{ $check_in_time_24 ?? '' }}">
                                                         <span style="color:red;display:none;"
-                                                            id="show_error_check_in__{{ $emp->id }}">Check in time required!</span>
+                                                            id="show_error_check_in__{{ $emp->id }}">Check in time
+                                                            required!</span>
                                                         <!-- Corrected -->
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editCheckOut_{{ $emp->id }}">Check Out Time
                                                             {{ $emp->check_out_time ?? '' }}</label>
-                                                        <input type="time" value="{{ $check_out_time_24 ?? '' }}" class="form-control"
-                                                            id="editCheckOut_{{ $emp->id }}" name="checkOutTime">
+                                                        <input type="time" value="{{ $check_out_time_24 ?? '' }}"
+                                                            class="form-control" id="editCheckOut_{{ $emp->id }}"
+                                                            name="checkOutTime">
                                                         <span style="color:red;display:none; "
-                                                            id="show_error_check_out_{{ $emp->id }}">Check out time required!</span>
+                                                            id="show_error_check_out_{{ $emp->id }}">Check out time
+                                                            required!</span>
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editBreakStart">Break Start
-                                                             </label>
-                                                        <input type="time" value="{{$break_start_24 ?? '' }}" class="form-control"
-                                                            id="editBreakStart_{{ $emp->id }}" name="breakStart">
+                                                        </label>
+                                                        <input type="time" value="{{ $break_start_24 ?? '' }}"
+                                                            class="form-control" id="editBreakStart_{{ $emp->id }}"
+                                                            name="breakStart">
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editBreakEnd">Break End
-                                                             </label>
-                                                        <input type="time" value="{{$break_end_24 ?? '' }}" class="form-control"
-                                                            id="editBreakEnd_{{ $emp->id }}" name="breakEnd">
+                                                        </label>
+                                                        <input type="time" value="{{ $break_end_24 ?? '' }}"
+                                                            class="form-control" id="editBreakEnd_{{ $emp->id }}"
+                                                            name="breakEnd">
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editOverStart">Over Time Start
-                                                             </label>
-                                                        <input type="time" value="{{$overtime_start_24 ?? '' }}" class="form-control"
-                                                            id="overTimeStart_{{ $emp->id }}"  >
+                                                        </label>
+                                                        <input type="time" value="{{ $overtime_start_24 ?? '' }}"
+                                                            class="form-control" id="overTimeStart_{{ $emp->id }}">
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editOverEnd">Over Time End
-                                                             </label>
-                                                        <input type="time" value="{{$overtime_end_24 ?? '' }}" class="form-control"
-                                                            id="overTimeEnd_{{ $emp->id }}"  >
+                                                        </label>
+                                                        <input type="time" value="{{ $overtime_end_24 ?? '' }}"
+                                                            class="form-control" id="overTimeEnd_{{ $emp->id }}">
                                                     </div>
                                                     <!-- Add more fields as needed -->
                                                     <button type="submit" class="btn btn-primary mt-2"
@@ -419,6 +395,30 @@
 
 
         <script>
+            $(document).ready(function() {
+                $('#datatable-buttons').DataTable({
+                    dom: "<'container-fluid'" +
+                        "<'row'" +
+                        "<'col-md-8'l>" +
+                        "<'col-md-4 text-right'f>" +
+                        ">" +
+                        "<'row dt-table'" +
+                        "<'col-md-12'tr>" +
+                        ">" +
+                        "<'row'" +
+                        "<'col-md-7'i>" +
+                        "<'col-md-5 text-right'p>" +
+                        ">" +
+                        ">",
+                    lengthMenu: [
+                        [10, 20, 30, 40, 50, -1],
+                        [10, 20, 30, 40, 50, "All"]
+                    ],
+
+
+                });
+            });
+
             function convertTo12Hour(time24) {
                 if (!time24 || time24 === "") {
                     return ''; // If the time is null or empty, return an empty string
@@ -444,18 +444,18 @@
                 // var editBreakStart = document.getElementById('editBreakStart_'+id).value;
                 // var editBreakEnd = document.getElementById('editBreakEnd_'+id).value;
                 // var attendence_id = document.getElementById('attendence_id_'+id).value;
-                var show_error = document.getElementById('show_error_'+id);
-                var show_success_message = document.getElementById('show_success_message_'+id);
+                var show_error = document.getElementById('show_error_' + id);
+                var show_success_message = document.getElementById('show_success_message_' + id);
 
-                var editCheckIn = document.getElementById('editCheckIn_'+id).value;
-                var editCheckOut = document.getElementById('editCheckOut_'+id).value;
+                var editCheckIn = document.getElementById('editCheckIn_' + id).value;
+                var editCheckOut = document.getElementById('editCheckOut_' + id).value;
                 // var editCheckOut = document.getElementById('editCheckOut_' +id).value;
-                var editBreakStart = document.getElementById('editBreakStart_' +id).value;
-                var editBreakEnd = document.getElementById('editBreakEnd_' +id).value;
-                var attendence_id = document.getElementById('attendence_id__' +id).value;
+                var editBreakStart = document.getElementById('editBreakStart_' + id).value;
+                var editBreakEnd = document.getElementById('editBreakEnd_' + id).value;
+                var attendence_id = document.getElementById('attendence_id__' + id).value;
 
-                var editOverStart = document.getElementById('overTimeStart_' +id).value;
-                var editOverEnd = document.getElementById('overTimeEnd_' +id).value;
+                var editOverStart = document.getElementById('overTimeStart_' + id).value;
+                var editOverEnd = document.getElementById('overTimeEnd_' + id).value;
 
 
 
@@ -481,19 +481,19 @@
                 editCheckIn = convertTo12Hour(editCheckIn);
                 editCheckOut = convertTo12Hour(editCheckOut);
 
-                if(editBreakStart != "") {
+                if (editBreakStart != "") {
                     editBreakStart = convertTo12Hour(editBreakStart);
                 }
 
-                if(editBreakEnd != "") {
+                if (editBreakEnd != "") {
                     editBreakEnd = convertTo12Hour(editBreakEnd);
                 }
 
-                if(editOverStart != "") {
+                if (editOverStart != "") {
                     editOverStart = convertTo12Hour(editOverStart);
                 }
 
-                if(editOverEnd != "") {
+                if (editOverEnd != "") {
                     editOverEnd = convertTo12Hour(editOverEnd);
                 }
 
@@ -525,7 +525,8 @@
                         console.log('Response:', response);
 
                         // Original innerHTML with updated href to trigger window reload
-show_success_message.innerHTML = "Attendance Saved Successfully! <a style='text-decoration:underline !important;' href='#' onclick='window.location.reload()'>Close Window</a>";
+                        show_success_message.innerHTML =
+                            "Attendance Saved Successfully! <a style='text-decoration:underline !important;' href='#' onclick='window.location.reload()'>Close Window</a>";
 
 
                     },
@@ -642,7 +643,7 @@ show_success_message.innerHTML = "Attendance Saved Successfully! <a style='text-
         <script src="{{ URL::asset('build/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
 
         <!-- Datatable init js -->
-        <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
+        {{-- <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script> --}}
         <!-- App js -->
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
 

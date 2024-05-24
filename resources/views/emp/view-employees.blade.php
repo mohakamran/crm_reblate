@@ -390,8 +390,14 @@
                                         <div class="card hovering" style=" overflow: hidden; border-radius: 10px; ">
                                             <div class="card-body"
                                                 style="box-shadow: none; backdrop-filter: blur(0px); padding:5px; max-height: 350px;">
-                                                <img style="width: 18px; height: 18px; position: absolute; z-index: 100; left: 15px; top: 15px"
+                                                @if ($emp->Emp_Status == "active")
+                                                    <img style="width: 18px; height: 18px; position: absolute; z-index: 100; left: 15px; top: 15px"
                                                     src="{{ url('/tick.png') }}" alt="">
+                                                @else
+                                                <img style="width: 18px; height: 18px; position: absolute; z-index: 100; left: 15px; top: 15px"
+                                                    src="{{ url('/cross.png') }}" alt="">
+                                                @endif
+
                                                 <div>
                                                     <div class="dropdown" style="position:absolute; right:15px; top:15px; cursor:pointer">
                                                         <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

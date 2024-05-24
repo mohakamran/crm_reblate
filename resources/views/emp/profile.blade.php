@@ -275,26 +275,18 @@
                                             @endif
 
                                             @if (auth()->user()->user_type == 'admin')
-                                                {{-- <a href="/update-employee/{{$emp_data->Emp_Code}}" class="btn btn-primary">Edit</a> --}}
 
-                                                {{-- @if (isset($show_disable) && $show_disable == true)
-
-                                                @if (isset($emp_data->Emp_Status) && $emp_data->Emp_Status == 'disable')
-                                                    <a href="javascript:void()" onclick="deleteEmployee('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Enable</a>
-                                                @else
-                                                    <a href="javascript:void()" onclick="deleteEmployee('{{ $emp_data->Emp_Code }}')" class="btn btn-primary">Disable</a>
-                                                @endif
-                                            @endif --}}
 
                                                 @if (isset($emp_data->Emp_Status) && $emp_data->Emp_Status == 'active')
                                                     <a href="javascript:void()"
                                                         onclick="statusChange('{{ $emp_data->Emp_Code }}')"
                                                         class="reblateBtn px-4 py-2"
-                                                        style="border-radius: 10px;">Terminate</a>
+                                                        style="border-radius: 10px;">Disable</a>
                                                 @else
                                                     <a href="javascript:void()"
                                                         onclick="statusChange('{{ $emp_data->Emp_Code }}')"
-                                                        class="btn btn-primary">Activate</a>
+                                                        class="reblateBtn px-4 py-2"
+                                                        style="border-radius: 10px;">Activate</a>
                                                 @endif
                                             @elseif(is_array($employees_access) && (in_array('all', $employees_access) || in_array('update', $employees_access)))
                                                 <a href="/update-employee/{{ $emp_data->Emp_Code }}"
@@ -304,22 +296,16 @@
                                                     @if (isset($emp_data->Emp_Status) && $emp_data->Emp_Status == 'disable')
                                                         <a href="javascript:void()"
                                                             onclick="deleteEmployee('{{ $emp_data->Emp_Code }}')"
-                                                            class="btn btn-primary">Enable</a>
+                                                            class="reblateBtn px-4 py-2"
+                                                        style="border-radius: 10px;">Activate</a>
                                                     @else
                                                         <a href="javascript:void()"
                                                             onclick="deleteEmployee('{{ $emp_data->Emp_Code }}')"
-                                                            class="btn btn-primary">Disable</a>
+                                                            class="reblateBtn px-4 py-2"
+                                                        style="border-radius: 10px;">Disable</a>
                                                     @endif
                                                 @endif
-                                                @if (isset($emp_data->Emp_Status) && $emp_data->Emp_Status == 'active')
-                                                    <a href="javascript:void()"
-                                                        onclick="statusChange('{{ $emp_data->Emp_Code }}')"
-                                                        class="btn btn-primary">Terminate</a>
-                                                @else
-                                                    <a href="javascript:void()"
-                                                        onclick="statusChange('{{ $emp_data->Emp_Code }}')"
-                                                        class="btn btn-primary">Activate</a>
-                                                @endif
+
                                             @endif
                                         </div>
                                     </div>

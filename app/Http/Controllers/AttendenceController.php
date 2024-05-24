@@ -122,8 +122,8 @@ class AttendenceController extends Controller
         $overtime_end = $req->overtime_end;
 
        // Create an associative array to represent your JSON object
-       
-       
+
+
         $id = $req->id;
 
         if($break_start == '') {
@@ -142,20 +142,20 @@ class AttendenceController extends Controller
                 $hours_over = floor($totalWorkHoursTime);
                 $minutes_over = ($totalWorkHoursTime - $hours_over) * 60;
                 $formattedTotalWorkHoursTime = sprintf('%02d:%02d', $hours_over, $minutes_over);
-          
+
         } else {
             $overtime_start = null;
             $overtime_end = null;
             $formattedTotalWorkHoursTime = null;
         }
-        
-      
-        
 
-        
-       
-            
-            
+
+
+
+
+
+
+
 
 
 
@@ -163,10 +163,10 @@ class AttendenceController extends Controller
             // Parse the check-in and check-out times
             $checkIn = Carbon::createFromFormat('h:i A', $check_in);
             $checkOut = Carbon::createFromFormat('h:i A', $check_out);
-            
 
 
-           
+
+
 
             if ($checkOut < $checkIn) {
                 $checkOut->addDay(); // Add a day to check-out time
@@ -177,12 +177,12 @@ class AttendenceController extends Controller
             // If break times are not empty, adjust the total work hours
             if ($break_start =="" && $break_end == "") {
 
-                
-                
+
+
                $breakStart = Carbon::createFromFormat('h:i A', $break_start);
               $breakEnd = Carbon::createFromFormat('h:i A', $break_end);
-            
-            
+
+
 
                 // Ensure break times are within working hours before adjusting
                 if ($breakStart >= $checkIn && $breakEnd <= $checkOut) {
@@ -195,13 +195,13 @@ class AttendenceController extends Controller
                // Calculate total work hours
                $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to hours
             }
-            
-             
-            
-           
 
 
-           
+
+
+
+
+
 
 
             // Format total worked hours into HH:MM format
@@ -216,7 +216,7 @@ class AttendenceController extends Controller
                 $break_end = "";
             }
 
-            
+
 
 
 
@@ -620,13 +620,22 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
             $currentmonth = Carbon::now()->format('F');
             $currentyear = Carbon::now()->format('Y');
 
-            // dd($currentmonth);
+            // dd($currentMonth,$currentYear );
 
             // Get the first day of the current month
             $firstDayOfMonth = Carbon::now()->startOfMonth();
 
             // Get the current date
             $today = Carbon::now()->toDateString();
+
+            $datesForMonth  = $this->getHolidays($currentMonth,$currentYear);
+            // dd($get_holidays);
+            $numberOfHolidays = count($datesForMonth);
+            // dd($numberOfHolidays);
+
+            // total working days
+            $total_days = $this->getNumberOfDays($currentMonth,$currentyear);
+            // dd($total_days);
 
             // Query attendance records for the current month up to today's date
             // Query employees and their attendance records for the current month up to today's date
@@ -673,15 +682,63 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
             }
 
 
-            // dd($attendances);
-
-            // Assuming you have retrieved the latest employees elsewhere in your code
-            // $latestEmployees = DB::table('employees')->get();
 
 
-        return view('attendence.emp-cards-attendence', compact('currentyear','currentMonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
+        return view('attendence.emp-cards-attendence', compact('total_days','numberOfHolidays','datesForMonth','currentyear','currentMonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
 
    }
+
+
+   public function getNumberOfDays($month,$year) {
+    // Initialize counters
+    $numWeekdays = 0;
+
+    // Get the total number of days in the month
+    $totalDays = Carbon::createFromDate($year, $month)->daysInMonth;
+
+    // Loop through each day in the month
+    for ($day = 1; $day <= $totalDays; $day++) {
+        $date = Carbon::createFromDate($year, $month, $day);
+
+        // Check if the day is a weekday (Monday to Friday)
+        if (!$date->isWeekend()) {
+            $numWeekdays++;
+        }
+    }
+
+    return $numWeekdays;
+
+}
+
+   // get public holidays
+   public function getHolidays($month, $year) {
+        // Get the first day of the month
+        $startDate = Carbon::createFromDate($year, $month, 1);
+
+        // Get the last day of the month
+        $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth();
+
+        // Array to store the list of dates
+        $datesForMonth = [];
+
+        // Iterate over each day from the start date to the end date
+        for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+            // Check if the current date falls within any of the holiday ranges
+            $isHoliday = DB::table('holidays')
+                ->where('startDate', '<=', $date->format('m/d/Y'))
+                ->where('endDate', '>=', $date->format('m/d/Y'))
+                ->exists();
+
+            // If the date is a holiday, add it to the array
+            if ($isHoliday) {
+                $datesForMonth[] = $date->format('m/d/Y');
+            }
+        }
+
+        // Return the list of dates for the month
+        return  $datesForMonth;
+}
+
    // function to filter overall employees attendence
    public function filterEmpDateWise(Request $req) {
 
@@ -690,6 +747,8 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
     $date_parts = explode('-', $date_controller);
     $emp_attendence_month = $date_parts[1];
     $emp_attendance_year = $date_parts[0];
+
+
 
     // dd($emp_attendence_month,$emp_attendance_year );
 
@@ -771,6 +830,15 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
 
         $currentMonth = $date_parts[1];
 
+        $datesForMonth  = $this->getHolidays($emp_attendence_month,$emp_attendance_year);
+        // dd($get_holidays);
+        $numberOfHolidays = count($datesForMonth);
+        // dd($numberOfHolidays);
+
+        // total working days
+        $total_days = $this->getNumberOfDays($emp_attendence_month,$emp_attendance_year);
+        // dd($total_days);
+
 
         // dd($attendances);
 
@@ -778,7 +846,7 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
         // $latestEmployees = DB::table('employees')->get();
 
 
-    return view('attendence.emp-cards-attendence-search', compact('currentyear','currentMonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
+    return view('attendence.emp-cards-attendence-search', compact('total_days','numberOfHolidays','datesForMonth','currentyear','currentMonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
 
 
 
@@ -925,7 +993,7 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
                 // return view('attendence.index',compact('shift_time','check_in_already_message'));
                 return back();
             }
-            
+
             if($check->break_start !=null) {
                 return redirect('/');
             }

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-   Office Times
+    Office Times
 @endsection
 @section('page-title')
     Office Times
@@ -167,8 +167,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-end mb-5">
-                        <button type="button"class="reblateBtn p-2" data-toggle="modal"
-                            data-target="#exampleModal">
+                        <button type="button"class="reblateBtn p-2" data-toggle="modal" data-target="#exampleModal">
                             Add Office Time
                         </button>
 
@@ -191,39 +190,42 @@
                                     <div class="modal-body">
                                         <p class="text-success" style="display: none;" id="success_message_id">
                                             Time Added Succcessfully!</p>
-                                            <div class="container">
-                                                <label for="">Office Start (<span style="color:red">*</span>)</label>
-                                                <input type="time" id="office_start" class="form-control">
-                                                <span style="color:red; display: none;" id="message_start"  >Office Start Time Required!</span>
-                                            </div>
-                                            <div class="container mt-2">
-                                                <label for="">Office End  (<span style="color:red">*</span>)</label>
-                                                <input type="time" id="office_end" class="form-control">
-                                                <span style="color:red; display: none;" id="message_end" >Office End Time Required!</span>
-                                            </div>
+                                        <div class="container">
+                                            <label for="">Office Start (<span style="color:red">*</span>)</label>
+                                            <input type="time" id="office_start" class="form-control">
+                                            <span style="color:red; display: none;" id="message_start">Office Start Time
+                                                Required!</span>
+                                        </div>
+                                        <div class="container mt-2">
+                                            <label for="">Office End (<span style="color:red">*</span>)</label>
+                                            <input type="time" id="office_end" class="form-control">
+                                            <span style="color:red; display: none;" id="message_end">Office End Time
+                                                Required!</span>
+                                        </div>
 
-                                            <div class="container mt-2">
-                                                <label for="">Break Start</label>
-                                                <input type="time" id="break_start" class="form-control">
-                                            </div>
-                                            <div class="container mt-2">
-                                                <label for="">Break End</label>
-                                                <input type="time" id="break_end" class="form-control">
+                                        <div class="container mt-2">
+                                            <label for="">Break Start</label>
+                                            <input type="time" id="break_start" class="form-control">
+                                        </div>
+                                        <div class="container mt-2">
+                                            <label for="">Break End</label>
+                                            <input type="time" id="break_end" class="form-control">
 
-                                            </div>
-                                            <div class="container mt-2">
-                                                <label for="">Select Shift (<span style="color:red">*</span>)</label>
-                                                <select id="shift_time" id="" class="form-control">
-                                                    <option value=""  selected>select shift</option>
-                                                    <option value="morning" >Morning</option>
-                                                    <option value="night" >Night</option>
-                                                </select>
-                                                <span style="color:red; display: none;" id="message_shift" >Select Shift!</span>
-                                            </div>
+                                        </div>
+                                        <div class="container mt-2">
+                                            <label for="">Select Shift (<span style="color:red">*</span>)</label>
+                                            <select id="shift_time" id="" class="form-control">
+                                                <option value="" selected>select shift</option>
+                                                <option value="morning">Morning</option>
+                                                <option value="night">Night</option>
+                                            </select>
+                                            <span style="color:red; display: none;" id="message_shift">Select Shift!</span>
+                                        </div>
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="location.reload()">Close</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                            onclick="location.reload()">Close</button>
                                         <button type="button" onclick="saveOfficeTime()" class="btn btn-primary">Save
                                             changes</button>
                                     </div>
@@ -232,32 +234,32 @@
                         </div>
 
 
-                </div>
+                    </div>
                     <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
-                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                     <thead>
-                         <tr>
-                             <th>Shift Type</th>
-                             <th>Shift Start</th>
-                             <th>Break Start</th>
-                             <th>Break End</th>
-                             <th>Shift End</th>
-                         </tr>
-                     </thead>
+                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Shift Type</th>
+                                <th>Shift Start</th>
+                                <th>Break Start</th>
+                                <th>Break End</th>
+                                <th>Shift End</th>
+                            </tr>
+                        </thead>
 
-                     <tbody id="table-body">
+                        <tbody id="table-body">
 
-                         @foreach ($data as $rec)
-                             <tr>
-                                 <td>{{$rec->shift_type}}</td>
-                                 <td>{{$rec->shift_start}}</td>
-                                 <td>{{$rec->break_start}}</td>
-                                 <td>{{$rec->break_end}}</td>
-                                 <td>{{$rec->shift_end}}</td>
-                             </tr>
-                         @endforeach
-                     </tbody>
-                </table>
+                            @foreach ($data as $rec)
+                                <tr>
+                                    <td>{{ $rec->shift_type }}</td>
+                                    <td>{{ $rec->shift_start }}</td>
+                                    <td>{{ $rec->break_start }}</td>
+                                    <td>{{ $rec->break_end }}</td>
+                                    <td>{{ $rec->shift_end }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
 
             </div>
@@ -269,6 +271,7 @@
                 var divElement = document.getElementById('close-now');
                 divElement.style.display = 'none';
             }
+
             function saveOfficeTime() {
                 var office_start = document.getElementById('office_start').value;
                 var office_end = document.getElementById('office_end').value;
@@ -294,21 +297,21 @@
 
                 // return;
 
-                if(office_start == "") {
+                if (office_start == "") {
                     message_start.style.display = "block";
                     return;
                 } else {
                     message_start.style.display = "none";
                 }
 
-                if(office_end == "") {
+                if (office_end == "") {
                     message_end.style.display = "block";
                     return;
                 } else {
                     message_end.style.display = "none";
                 }
 
-                if(shift_time == "") {
+                if (shift_time == "") {
                     message_shift.style.display = "block";
                     return;
                 } else {
@@ -371,6 +374,29 @@
                 // Concatenate hours, minutes, and period
                 return hours + ':' + minutes + ' ' + period;
             }
+            $(document).ready(function() {
+    $('#datatable-buttons').DataTable({
+        dom: "<'container-fluid'" +
+            "<'row'" +
+            "<'col-md-8'lB>" +
+            "<'col-md-4 text-right'f>" +
+            ">" +
+            "<'row dt-table'" +
+            "<'col-md-12'tr>" +
+            ">" +
+            "<'row'" +
+            "<'col-md-7'i>" +
+            "<'col-md-5 text-right'p>" +
+            ">" +
+            ">",
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        buttons: [
+            'excel', 'print'
+        ],
+
+    });
+});
+
         </script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

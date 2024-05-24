@@ -179,11 +179,13 @@ Salary Slip
                             <tr>
                                 <th>Absents</th>
                                 <td>{{ $emp_absent }}</td>
+                                <th>Leaves</th>
+                                <td>{{ $emp_leave }}</td>
                             </tr>
                             <!------5 row---->
                             <tr>
-                                <th>Leaves</th>
-                                <td>{{ $emp_leave }}</td>
+                                <th>Present </th>
+                                <td>{{ $emp_present_days }}</td>
                             </tr>
                         </table>
                         <table style="color: #000" >

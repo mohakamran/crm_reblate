@@ -317,7 +317,7 @@
                                                                                             @else
                                                                                             <input
                                                                                             type="text"
-                                                                                            value=""
+                                                                                            value="0"
                                                                                             id="communicationPoint"
                                                                                             name="communication_point"
                                                                                             onchange="calculateSalary()"
@@ -855,6 +855,15 @@
                                                                                 min="0" name="emp_leave"
                                                                                 type="number"
                                                                                 value="{{ $total_leaves > 0 ? $total_leaves : '0' }}">
+                                                                        </div>
+                                                                        <div class="col-md-3 col-sm-12">
+                                                                            <label required class=" col-form-label">Present
+                                                                                Days</label>
+                                                                            <input class="form-control inputboxcolor"
+                                                                                style="background-color: #e3e3e3; border:none;"
+                                                                                min="0" name="emp_presents"
+                                                                                type="number"
+                                                                                value="{{ $getTotalPresent > 0 ? $getTotalPresent : '0' }}">
                                                                         </div>
 
 

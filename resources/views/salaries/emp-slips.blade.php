@@ -53,7 +53,7 @@
                                 <tr>
                                     <th> Emp ID</th>
                                     <th> Emp Name</th>
-                                    <th> Status</th>
+                                    <th> Amount</th>
                                     <th> Date</th>
                                     <th> View</th>
                                     {{-- <th> Month</th> --}}
@@ -68,7 +68,8 @@
                                         <td>{{ $emp->emp_name }}</td>
 
                                         <td>
-                                            {{ $emp->status }}
+
+                                            Rs. {{ number_format((float)$emp->amount, 2) }}
                                             {{-- {{file_exists($pdf)}} --}}
                                         </td>
                                         <td>
@@ -79,6 +80,9 @@
                                             <a href="/preview-slip-employee-page/{{$emp->id}}">
                                                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 32 32"><path fill="currentColor" d="M30.94 15.66A16.69 16.69 0 0 0 16 5A16.69 16.69 0 0 0 1.06 15.66a1 1 0 0 0 0 .68A16.69 16.69 0 0 0 16 27a16.69 16.69 0 0 0 14.94-10.66a1 1 0 0 0 0-.68ZM16 25c-5.3 0-10.9-3.93-12.93-9C5.1 10.93 10.7 7 16 7s10.9 3.93 12.93 9C26.9 21.07 21.3 25 16 25Z"/><path fill="currentColor" d="M16 10a6 6 0 1 0 6 6a6 6 0 0 0-6-6Zm0 10a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"/></svg>
                                             </a>
+                                            @if (file_exists($emp->file_name) && $emp->file_name!=null && isset($emp->file_name))
+                                                <a href="{{$emp->file_name}}" download><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"  viewBox="0 0 24 24"><path fill="currentColor" d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"/></svg></a>
+                                            @endif
                                         </td>
                                         </td>
 
@@ -98,6 +102,28 @@
                 var divElement = document.getElementById('close-now');
                 divElement.style.display = 'none';
             }
+
+            $(document).ready(function() {
+    $('#datatable-buttons').DataTable({
+        dom: "<'container-fluid'" +
+            "<'row'" +
+            "<'col-md-8'l>" +
+            "<'col-md-4 text-right'f>" +
+            ">" +
+            "<'row dt-table'" +
+            "<'col-md-12'tr>" +
+            ">" +
+            "<'row'" +
+            "<'col-md-7'i>" +
+            "<'col-md-5 text-right'p>" +
+            ">" +
+            ">",
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+
+
+    });
+});
+
         </script>
     @endsection
     @section('scripts')
@@ -122,7 +148,7 @@
         <script src="{{ URL::asset('build/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
 
         <!-- Datatable init js -->
-        <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
+        {{-- <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script> --}}
         <!-- App js -->
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
     @endsection

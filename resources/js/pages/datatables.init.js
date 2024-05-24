@@ -1,9 +1,4 @@
-/*
-Template Name: Tocly -  Admin & Dashboard Template
-Author: Themesdesign
-Contact: themesdesign.in@gmail.com
-File: Datatables Js File
-*/
+
 
 $(document).ready(function() {
     $('#datatable').DataTable({
@@ -16,7 +11,7 @@ $(document).ready(function() {
         "drawCallback": function () {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
         }
-        
+
     });
 
     //Buttons examples
@@ -31,7 +26,8 @@ $(document).ready(function() {
         "drawCallback": function () {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
         },
-        buttons: ['copy', 'excel', 'pdf', 'colvis']
+
+
     });
 
     table.buttons().container()
@@ -53,6 +49,7 @@ $(document).ready(function() {
         "drawCallback": function () {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
         }
+
     });
 
     // Key Datatable
@@ -130,7 +127,7 @@ $(document).ready(function() {
         },
         "drawCallback": function () {
             $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-            $(".dataTables_length select").addClass('form-select form-select-sm'); 
+            $(".dataTables_length select").addClass('form-select form-select-sm');
         }
     });
 } );

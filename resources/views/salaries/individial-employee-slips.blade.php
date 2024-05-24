@@ -45,7 +45,9 @@
                                     <th> SR</th>
                                     <th> Emp ID</th>
                                     <th> Emp Name</th>
+                                    <th> Amount </th>
                                     <th> Slip Generated Date</th>
+
                                     <th> View</th>
                                     {{-- <th> Month</th> --}}
                                     {{-- <th> Status</th> --}}
@@ -60,8 +62,9 @@
                                             <td>{{ $count }}</td>
                                             <td>{{ $data->emp_id }}</td>
                                             <td>{{ $data->emp_name }}</td>
+                                            <td>{{ $data->amount }}</td>
                                             <td>
-                                                <!--{{ $data->date }} -->
+                                                {{-- {{ $data->date }} --}}
                                                {{ \Carbon\Carbon::createFromFormat('d/m/Y', $data->date)->format('d F Y') }}
                                             </td>
                                             <td>
@@ -71,6 +74,7 @@
                                                 <a href="/update-salary/{{$data->id}}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1.25em" height="1.25em" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
                                                 </a>
+
                                             </td>
                                         </tr>
                                         @php $count++; @endphp
@@ -89,6 +93,7 @@
                 var divElement = document.getElementById('close-now');
                 divElement.style.display = 'none';
             }
+
         </script>
     @endsection
     @section('scripts')
