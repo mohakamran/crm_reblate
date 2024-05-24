@@ -184,8 +184,12 @@
                                         @if ($inProgressTasksCount == 0)
                                             <div class="text-center d-flex align-items-center justify-content-center"
                                                 style="height: 100px">
-                                                <a class="mb-0 empTitle font-size-18" style="color: gray"
+                                                @if (Auth()->user()->user_type == 'employee')
+                                                    <p  class="mb-0 empTitle font-size-18" style="color: gray">No Task Available</p>
+                                                @else
+                                                <a class="mb-0 empTitle font-size-18" style="color: gray; cursor: pointer;"
                                                     id="popupButton">Add a New Task</a>
+                                                @endif
 
                                             </div>
                                         @else
@@ -258,9 +262,12 @@
                                         @if ($pendingTasksCount == 0)
                                             <div class="text-center d-flex align-items-center justify-content-center"
                                                 style="height: 100px">
-                                                <a class="mb-0 empTitle font-size-18" style="color: gray"
-                                                    href="#">Add
-                                                    a New Task</a>
+                                                @if (Auth()->user()->user_type == 'employee')
+                                                <p  class="mb-0 empTitle font-size-18" style="color: gray">No Task Available</p>
+                                            @else
+                                            <a class="mb-0 empTitle font-size-18" style="color: gray;cursor: pointer;"
+                                                id="popupButton">Add a New Task</a>
+                                            @endif
                                             </div>
                                         @else
                                             @foreach ($tasks as $task)
@@ -270,18 +277,19 @@
                                                             <h5 class="empTitle mb-0" style="text-transform: capitalize">
                                                                     {{ $task->task_title }}
                                                             </h5>
+                                                            @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager' || Auth()->user()->user_type == 'admin')
+
                                                             <div class="btn-group">
                                                                 <button class="dropdown-toggle" style="border:none; background-color:transparent" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16"><path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/></svg>
                                                                 </button>
                                                                 <ul class="dropdown-menu">
-                                                                  <li>
-                                                                    @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager' || Auth()->user()->user_type == 'admin')
-                                                                    <a class="dropdown-item" href="/task-update/{{ $task->id }}">Update</a></li>
+                                                                  <li><a class="dropdown-item"  id="popupButton_{{$task->id}}" onclick="taskPopup({{$task->id}})">Update</a></li>
+                                                                  <li><a class="dropdown-item" href="/task-update/{{ $task->id }}">Update</a></li>
                                                                     <li><a class="dropdown-item" href="/task-update/{{ $task->id }}">Delete</a></li>
-                                                                    @endif
                                                                 </ul>
-                                                              </div>
+                                                            </div>
+                                                            @endif
                                                         </div>
                                                         <p class="empSubTitle mb-0">
                                                             {{ $task->task_description }}</p>
@@ -344,9 +352,23 @@
                                                         font-size: 11px;">
                                                             <p class="mb-0 text-danger">High</p>
                                                         </div>
-
-
                                                     </div>
+                                                    <div class="popup" id="popup_{{$task->id}}">
+                                                        <div class="popup-content flex-column">
+                                                            <div class="d-flex mb-3 align-items-center justify-content-between">
+                                                                <h2 class="mb-0"
+                                                                    style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom:1px solid #c7c7c7">
+                                                                    Assign a New Task</h2>
+                                                                <span class="closeBtn_{{$task->id}} p-2" style="border-radius: 50%; background-color:#14213d26"><svg
+                                                                        xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                                        fill="#14213d50" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                                                    </svg></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 @endif
                                             @endforeach
                                         @endif
@@ -606,6 +628,7 @@
                             </form>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="container-fluid tab-pane fade" style="border-bottom: none" id="reports">
@@ -730,7 +753,8 @@
             }
         </script>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function(id) {
+
                 const popupButton = document.getElementById('popupButton');
                 const popup = document.getElementById('popup');
                 const closeBtn = document.querySelector('.closeBtn');
@@ -749,6 +773,36 @@
                     }
                 });
             });
+            function taskPopup(id){
+                var id_popup = 'popupButton_'+id;
+                var main_popup = 'popup_'+id;
+                var close_popup = '.closeBtn_'+id;
+
+                const popupButton = document.getElementById(id_popup);
+                const popup = document.getElementById(main_popup);
+                const closeBtn = document.querySelector(close_popup);
+                alert(popup);
+
+            }
+            // document.addEventListener('DOMContentLoaded', function() {
+            //     const popupButton = document.getElementById('popupButton');
+            //     const popup = document.getElementById('popup2');
+            //     const closeBtn = document.querySelector('.closeBtn2');
+
+            //     popupButton.addEventListener('click', function() {
+            //         popup.style.display = 'block';
+            //     });
+
+            //     closeBtn.addEventListener('click', function() {
+            //         popup.style.display = 'none';
+            //     });
+
+            //     window.addEventListener('click', function(e) {
+            //         if (e.target === popup) {
+            //             popup.style.display = 'none';
+            //         }
+            //     });
+            // });
         </script>
         <script>
             $(document).ready(function() {

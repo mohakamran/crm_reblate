@@ -10,10 +10,11 @@ class TaskController extends Controller
 {
        // to update task open form for task update
        public function taskUpdateForm($id) {
-        //  dd($id);
+
         $task = DB::table('tasks')->where('id',$id)->first();
         // dd($task);
-        $emp_id = auth()->user()->user_code;
+        $emp_id = $task->emp_id;
+        // dd($emp_id);
         $emp = DB::table('employees')->where('Emp_Code',$emp_id)->first();
         $emp_name = $emp->Emp_Full_Name;
         $Emp_Designation = $emp->Emp_Designation;
