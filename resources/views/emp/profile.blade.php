@@ -1669,7 +1669,7 @@
     inputContainer.appendChild(row);
 });
 
-             document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function() {
                 const popupButton = document.getElementById('popupButton');
                 const popup = document.getElementById('popup');
                 const closeBtn = document.querySelector('.closeBtn');

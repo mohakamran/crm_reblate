@@ -15,12 +15,19 @@
     @endsection
     @section('content')
         <style>
-            .welcome-box {
-                background-color: #ffffff;
-                border-bottom: 1px solid #ededed;
-                position: relative;
-                margin: -30px -30px 30px;
-                padding: 20px;
+             @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+            .EmpNameStyle{
+                font-size: 30px;
+                color:#fff;
+                font-weight: 600;
+                font-family: 'Poppins';
+            }
+            .EmpStyle{
+                font-size: 18px;
+                color:#fca311;
+                font-family: 'Poppins';
+                font-weight: 300
+
             }
 
 
@@ -209,43 +216,77 @@
                 width: 100%;
                 height: 400px;
             }
+            .popup {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: rgba(0, 0, 0, 0.5);
+                width: 100%;
+                height: 100%;
+                z-index: 1000;
+                backdrop-filter: blur(5px);
+            }
+
+            .popup-content {
+                /* overflow-y: scroll;
+                            scroll-behavior: smooth scroll; */
+                display: flex;
+                max-width: 700px;
+                margin: auto auto;
+                position: relative;
+                top: 100px;
+                justify-content: center;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                text-align: center;
+            }
+
+            .closeBtn {
+                position: absolute;
+                top: 25px;
+                right: 15px;
+                cursor: pointer;
+            }
         </style>
 
         <div class="row mt-2">
-            <div class="card">
-                <div class="card-body d-flex justify-content-lg-between align-items-center flex-wrap gap-3">
-                    <div class="col-md-3 d-flex align-items-center flex-wrap">
+            <div class="card px-0">
+                <div class="card-body flex-wrap" style="background-color: #14213d;min-height:270px">
+                    <div class="col-md-6 col-lg-6 col-xl-6 gap-3 d-flex align-items-center flex-wrap p-2">
 
                         @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image) )
                             <img src="{{ $emp_det->Emp_Image }}"
-                                style="width:120px;height:120px;border-radius:100%; object-fit:cover;" alt="">
+                                style="width:150px;height:150px;border-radius:100%; object-fit:cover;" alt="">
                         @else
-                        <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
+                        <img class="img-fluid rounded-circle" style="width:150px;height:150px;border-radius:100%; object-fit:cover;"
                         src="{{ url('user.png') }}">
                         @endif
                         <div class="welcome-det ms-3 text-dark fw-bolder">
-                            <h3 style="font-size: 20px; color:#14213d">Welcome, </h3>
-                            <span class="fw-bolder"
-                                style="font-size: 20px; color:#fca311;">{{ isset($emp_det->Emp_Full_Name) && $emp_det->Emp_Full_Name ? $emp_det->Emp_Full_Name : 'Guest' }}</span>
-                        </div>
+                            <h2 class="EmpNameStyle">{{ isset($emp_det->Emp_Full_Name) && $emp_det->Emp_Full_Name ? $emp_det->Emp_Full_Name : 'Guest' }}</h2>
+                                <div class="d-flex justify-content-between align-items-center gap-5">
+                                    <h3 class="mb-0 EmpStyle" style="">Designation:</h3>
+                                    <span class="EmpStyle"
+                                        style="color:#fff;">{{ isset($emp_det->Emp_Designation) && $emp_det->Emp_Designation ? $emp_det->Emp_Designation : '' }}</span>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center gap-5">
+                                    <h3 class="mb-0 EmpStyle" style="width:110px">Shift:</h3>
+                                    <span class="EmpStyle" style="color:#fff;">
+                                        {{ isset($emp_det->Emp_Shift_Time) && $emp_det->Emp_Shift_Time ? $emp_det->Emp_Shift_Time : '' }}
+                                    </span>
+
+                                </div>
+                            </div>
 
                     </div>
 
-                    <div class="">
-                        <h3 style="font-size: 20px; color:#14213d">Designation:</h3>
-                        <span class="fw-semibold "
-                            style="color:#fca311; font-size: 20px;">{{ isset($emp_det->Emp_Designation) && $emp_det->Emp_Designation ? $emp_det->Emp_Designation : '' }}</span>
-                    </div>
-                    <div class="">
-                        <h3 style="font-size: 20px; color:#14213d">Shift:</h3>
-                        <span class="fw-semibold" style="color:#fca311; font-size: 20px;">
-                            {{ isset($emp_det->Emp_Shift_Time) && $emp_det->Emp_Shift_Time ? $emp_det->Emp_Shift_Time : '' }}
-                        </span>
 
-                    </div>
-                    <div>
-                        <h3 style="font-size: 20px; color:#14213d">Today's Date</h3>
-                        <span class="fw-bold" style="color:#fca311; font-size: 15px;">
+
+                    <div class="position-absolute p-2" style="top:20px;right: 20px; border:1px solid #fca311; border-radius:10px">
+                        <span style="color:#fff; font-size: 15px;font-weight: 300; font-family: 'Poppins';">
                             {{ isset($t_date) ? $t_date : '' }}
                         </span>
 
@@ -254,8 +295,168 @@
             </div>
 
         </div>
+        <div class="row flex-wrap" style="position: relative; top:-90px;">
+            <div id="popupButton">
+                <button type="button" class="position-absolute reblateBtn px-3 py-1 text-white" style="background-color: #fca311; right: 35px; top:-45px;"> Apply for Leave</button>
+                <div class="popup" id="popup">
+                    <div class="popup-content flex-column">
+                        <div class="d-flex mb-3 align-items-center justify-content-between">
+                            <h2 class="mb-0" style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom:1px solid #c7c7c7">Apply For Leaves</h2>
+                            <span class="closeBtn p-2" style="border-radius: 50%; background-color:#14213d26"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="20" height="20" fill="#14213d50"
+                                    class="bi bi-x-lg" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                </svg></span>
+                        </div>
+                        <form id="leaveForm" action="" class="text-start">
+                            <div id="messageBox"></div>
+                            <div class="form-group mt-3">
+                                <label for="date">Date</label>
+                                <input type="date" class="form-control inputboxcolor"
+                                    style="border: 1px solid #ced4da;" id="date" name="date">
+                                <span class="text-danger" id="dateBox" style="display: none">Please Select
+                                    a date!</span>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="reason">Reason:</label>
+                                <textarea class="form-control inputboxcolor" style="border: 1px solid #ced4da; resize: none; height: 100px;"
+                                    id="reason" name="reason" placeholder="Reason:" rows="5"></textarea>
+                                <span class="text-danger" id="reasonBox" style="display: none">Please Write a
+                                    reason!</span>
+                            </div>
+
+                        </form>
+                        <div class="mt-2 text-start">
+                            <button class="px-4 py-2 reblateBtn" type="button" onclick="submitForm(event)">Apply</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-2 col-lg-2 col-xl-2">
+                <div class="card" style="border-radius:10px;">
+                    <div class="card-body" style="background-color: #fca311">
+                        <div class="d-flex align-items-start flex-column">
+                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                <img src="{{ url('Group1.svg') }}" style="width:23px; height:23px; object-fit:contain;margin-left:2px" alt="User Icon Reblate Solutions">
+                            </div>
+                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Presents</p>
+                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                @if (isset($total_present_day) && $total_present_day != '')
+                                {{ $total_present_day }}
+                                @else
+                                0
+                                @endif
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-xl-2">
+                <div class="card" style="border-radius:10px;">
+                    <div class="card-body" style="background-color: #fca311">
+                        <div class="d-flex align-items-start flex-column">
+                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                <img src="{{ url('Group2.svg') }}" style="width:23px; height:23px; object-fit:contain;margin-left:2px" alt="User Icon Reblate Solutions">
+                            </div>
+                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Absents</p>
+                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                @if (isset($absent_days) && $absent_days != '')
+                                    {{ $absent_days }}
+                                @else
+                                    0
+                                @endif
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-xl-2">
+                <div class="card" style="border-radius:10px;">
+                    <div class="card-body" style="background-color: #fca311">
+                        <div class="d-flex align-items-start flex-column">
+                            <div class="rounded-pill mb-3"  style="padding: 10px;background-color: #14213d">
+                                <img src="{{ url('Group1.svg') }}" style="width:23px; height:23px; object-fit:contain;margin-left:2px" alt="User Icon Reblate Solutions">
+                            </div>
+                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Leaves</p>
+                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                @if (isset($total_pending) && $total_pending != '')
+                                    {{ $total_pending }}
+                                @else
+                                    0
+                                @endif
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-xl-2">
+                <div class="card" style="border-radius:10px;">
+                    <div class="card-body" style="background-color: #fca311">
+                        <div class="d-flex align-items-start flex-column">
+                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                <img src="{{ url('Group3.svg') }}" style="width:23px; height:23px; object-fit:contain;margin-left:2px" alt="User Icon Reblate Solutions">
+                            </div>
+                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Pending Approvel</p>
+                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                @if (isset($total_pending) && $total_pending != '')
+                                    {{ $total_pending }}
+                                @else
+                                    0
+                                @endif
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-xl-2">
+                <div class="card" style="border-radius:10px;">
+                    <div class="card-body" style="background-color: #fca311">
+                        <div class="d-flex align-items-start flex-column">
+                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                <img src="{{ url('Group4.svg') }}" style="width:23px; height:23px; object-fit:contain;margin-left:2px" alt="User Icon Reblate Solutions">
+                            </div>
+                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Working Days</p>
+                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                {{ $total_work_days_in_month }}
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-xl-2">
+                <div class="card" style="border-radius:10px;">
+                    <div class="card-body" style="background-color: #fca311">
+                        <div class="d-flex align-items-start flex-column">
+                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                <img src="{{ url('Group5.svg') }}" style="width:23px; height:23px; object-fit:contain;margin-left:2px" alt="User Icon Reblate Solutions">
+                            </div>
+                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Loss of Pay</p>
+                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                @if (isset($salary_deduct) && $salary_deduct != '')
+                                    {{ $salary_deduct }}
+                                @else
+                                    0
+                                @endif
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         <div class="row">
-            <div class="col-md-4 col-xl-4 col-sm-12">
+            <div class="col-md-7 col-xl-7 col-lg-7">
+                <div class="card">
+                    <div class="card-body">
+
+                    </div>
+                </div>
+
+            </div>
+            {{-- <div class="col-md-4 col-xl-4 col-sm-12">
                 <div class="card overflow-hidden">
 
                     <div class="card-body overflow-hidden" style='padding-bottom:12px;'>
@@ -371,8 +572,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 col-xl-4 col-sm-12">
+            </div> --}}
+            {{-- <div class="col-md-4 col-xl-4 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-title">Today Activity</h6>
@@ -435,12 +636,42 @@
                     </div>
                 </div>
 
-            </div>
-            <div class="col-md-4 col-xl-4 col-sm-12">
+            </div> --}}
+            <div class="col-md-5 col-xl-5 col-sm-12">
                 <div class="card">
                     <div class="card-body" >
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h3 class=" font-size-header mb-0">Timesheet </h3>
+                            <h3 class="EmpNameStyle mb-0" style="color: #14213d; font-weight: 800">Clock In / Out </h3>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <svg width="20px" height="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#14213d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#000000" d="M512 832a320 320 0 1 0 0-640 320 320 0 0 0 0 640zm0 64a384 384 0 1 1 0-768 384 384 0 0 1 0 768z"></path><path fill="#000000" d="m292.288 824.576 55.424 32-48 83.136a32 32 0 1 1-55.424-32l48-83.136zm439.424 0-55.424 32 48 83.136a32 32 0 1 0 55.424-32l-48-83.136zM512 512h160a32 32 0 1 1 0 64H480a32 32 0 0 1-32-32V320a32 32 0 0 1 64 0v192zM90.496 312.256A160 160 0 0 1 312.32 90.496l-46.848 46.848a96 96 0 0 0-128 128L90.56 312.256zm835.264 0A160 160 0 0 0 704 90.496l46.848 46.848a96 96 0 0 1 128 128l46.912 46.912z"></path></g></svg>
+                            <span class="ms-2" style="color: #14213d; font-family:'poppins';">Clock</span>
+                            <span class="ms-2" style="color: #14213d; font-family:'poppins';"> <script>document.write(new Date().toUTCString().slice(5, 16))</script></span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center gap-4 mt-2">
+                            <div class="p-3 w-50" style="background-color: #14213d26;border-radius:10px; border: 1px solid #14213d30">
+                                <p class="mb-0" style="color: #14213d; font-family:'poppins';">Clock In</p>
+                                <h3 class="mb-0" style="color: #14213d; font-family:'poppins';font-weight:700">
+                                    @if (session()->has('check_in_time') && session('check_in_time') != '')
+                                        {{ session('check_in_time') }}
+                                    @else
+                                        _
+                                    @endif
+                                </h3>
+
+
+                            </div>
+                            <div class="p-3 w-50" style="background-color: #14213d26;border-radius:10px; border: 1px solid #14213d30">
+                                <p class="mb-0" style="color: #14213d; font-family:'poppins';">Clock Out</p>
+                                <h3 class="mb-0" style="color: #14213d; font-family:'poppins';font-weight:700">
+                                    @if (session()->has('check_out_time') && session('check_out_time') != '')
+                                        {{ session('check_out_time') }}
+                                    @else
+
+                                        _
+                                    @endif
+                                </h3>
+                            </div>
 
                         </div>
                         <div class="punch-info">
@@ -1225,6 +1456,28 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js" type="text/javascript"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const popupButton = document.getElementById('popupButton');
+                const popup = document.getElementById('popup');
+                const closeBtn = document.querySelector('.closeBtn');
+
+                popupButton.addEventListener('click', function() {
+                    popup.style.display = 'block';
+                });
+
+                closeBtn.addEventListener('click', function() {
+                    popup.style.display = 'none';
+                });
+
+                window.addEventListener('click', function(e) {
+                    if (e.target === popup) {
+                        popup.style.display = 'none';
+                    }
+                });
+            });
+
+        </script>
         <script type="text/javascript">
             const chartDiv = document.getElementById('chartDiv');
 

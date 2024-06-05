@@ -306,7 +306,13 @@
 
 
         <div class="card">
-            <div class="card-body">
+            <div class="card-body bg-white">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="col-md-3 col-lg-3 col-xl-3" style="border: 1px solid #14213d; border-radius:50px;padding:10px; background-color: white;">
+                        <input type="text" id="searchInput" class="form-control"
+                            placeholder="Search Employee Name">
+                    </div>
+                </div>
                 <div class="row">
 
                     <div class="col-md-3">
@@ -332,10 +338,7 @@
                     <div class="col-md-3">
                         {{-- <input type="month" class="form-control" id="start" name="start" min="2018-03" value="{{ $currentyear }}-{{ $currentMonth }}" /> --}}
                     </div>
-                    <div class="col-md-3">
-                        <input type="text" style="background: #e3e3e3;" id="searchInput" class="form-control"
-                            placeholder="Search Employee Name">
-                    </div>
+
                 </div>
 
 
