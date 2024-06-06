@@ -60,7 +60,7 @@
 
                                         <div class="progress mb-2" style="height: 20px;">
                                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 90%;"
-                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{{$task->task_percentage}}% Complete</div>
+                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Complete</div>
                                         </div>
                                         <p>Task Statue: {{$task->task_status}}</p>
                                         <p class="mb-0"  style="font-size:15px;margin-top:10px; color:gray;">deadline: {{$task->task_date}}</p>
@@ -99,8 +99,8 @@
                                 @enderror
                             </div>
                             <div class="form-floating mb-3">
-                                <input id="slider" type="range" style="width:100%;" min="0" max="100" value="{{$task->task_percentage}}" class="custom-range">
-                                <p id="sliderValue">Task Progress (%): {{$task->task_percentage}}</p>
+                                <input id="slider" type="range" style="width:100%;" min="0" max="100" value=" " class="custom-range">
+                                {{-- <p id="sliderValue">Task Progress (%): {{$task->task_percentage}}</p> --}}
                                 {{-- <label for="">Task Update (%) <span class="text-danger">*</span></label> --}}
                                 @error('shift_start_morning')
                                     <span style="color:red">{{$message}}</span>

@@ -9,10 +9,14 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\URL;
+
 use Illuminate\Support\Facades\Mail;
 use App\Models\Employee;
 use App\Models\Client;
 use DB;
+
+
 
 use App\Models\Task;
 
@@ -383,6 +387,18 @@ public function searchDateManagerHomePage(Request $req) {
 
     }
 
+    public function showResetForm(Request $request)
+{
+    // Logic to verify the token
+    if (!$request->hasValidSignature()) {
+        // If the request does not have a valid signature, return a response indicating an invalid token
+        return response()->view('errors.page-expire');
+    }
+
+    // If the request has a valid signature, proceed to show the reset password form with the token
+    return view('auth.passwords.reset');
+}
+
 
     // send OTP to admin
     public function generateIndexView($id) {
@@ -391,8 +407,57 @@ public function searchDateManagerHomePage(Request $req) {
        return view('auth.otp-page',compact('id'));
     }
 
+
+    // show reset form if signed link is clicked on email
+    public function updatePassword(Request $req) {
+        $validatedData = $req->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirm_password' => 'required|same:password',
+            'user_type' => 'required',
+        ], [
+            'confirm_password.same' => 'The password and confirm password must match.',
+        ]);
+
+        $user = DB::table('users')->where('user_type',$req->user_type)->where('user_email', $req->email)->first();
+        if(!$user) {
+            session()->flash('user_not_found', 'User Not Found!');
+            return back()->withInput();
+        }
+
+
+
+        DB::table('users')
+        ->where('user_type',$req->user_type)->where('user_email', $req->email)
+        ->update([
+            'password' => Hash::make($req->password),
+            'updated_at' => now()
+         ]);
+
+         session()->flash('password_update', 'Password Updated Successfully!');
+         return back();
+
+    }
+
+    // creae temp link
+    public function createLink() {
+        $token="204sols";
+        $url = URL::temporarySignedRoute('temp.link', now()->addSeconds(30), ['token' => $token]);
+        echo "<a href='".$url."' >Link</a>";
+    }
+
+    public function seeLink(Request $req) {
+        if ($req->hasValidSignature()) {
+            dd("Accepted");
+        } else {
+            return view('errors.401');
+        }
+    }
+
     //forget password check
     public function forgetPasswordView(Request $request) {
+
+
         $validate = $request->validate([
             'client_email' => 'required',
         ]);
@@ -455,6 +520,12 @@ public function searchDateManagerHomePage(Request $req) {
             }
         }
 
+
+        $url = URL::temporarySignedRoute(
+            'password.reset.link', now()->addMinutes(10)
+        );
+
+
         $mail_subject = "Request for Reset Password";
         // $check = DB::table('users')
         //     ->where('user_email', $client_email)
@@ -462,29 +533,31 @@ public function searchDateManagerHomePage(Request $req) {
         //     ->first();
         $user_code = $check->user_code;
         $user_name = $check->user_name;
-         // Define the set of characters to use in the password
-        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=';
-        $randomPassword = Str::random(12, $characters);
-        $data = compact('client_email', 'randomPassword','user_name');
+
+        $data = compact('url','client_email','user_name');
 
         Mail::send('emails.email-reset-template',$data , function ($message) use ($mail_subject, $client_email) {
             $message->to($client_email)
                 ->subject($mail_subject);
         });
 
-        DB::table('users')
-        ->where('user_code', $user_code)
-        ->update([
-            'password' => Hash::make($randomPassword)
-         ]);
+        // DB::table('users')
+        // ->where('user_code', $user_code)
+        // ->update([
+        //     'password' => Hash::make($randomPassword)
+        //  ]);
 
-        session()->flash('message', 'We have sent you a new password! Please check inbox.');
+        session()->flash('message', 'We have sent you password reset link! Please check your email inbox or see in spam.');
         return back();
 
     }
     // forget password
     public function forgetPassword(){
-       return view('auth.forget');
+        // Generate a signed URL valid for 10 minutes
+
+
+
+        return view('auth.forget');
     }
     // client login
     public function loginClient(Request $request){

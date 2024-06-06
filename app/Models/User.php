@@ -14,6 +14,8 @@ class User extends Model implements Authenticatable
     use HasFactory;
     use AuthenticableTrait;
     protected $fillable = [
-        'name', // Add any other attributes you want to be mass assignable here
+        'name', // Add 'name' to the fillable attributes
+        'username', // Add 'username' to the fillable attributes
+        // Add any other attributes you want to be mass assignable here
     ];
 }

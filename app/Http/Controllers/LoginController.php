@@ -81,14 +81,177 @@ class LoginController extends Controller
         // return $id;
     }
 
+    // send credentials to new employee without adding employee data to database
+    public function registerNewEmployeeLogin(Request $req) {
+
+        $req->validate([
+            'emp_login_name' => 'required',
+            'emp_login_email' => 'required',
+            'emp_code' => 'required',
+            'emp_login_user_type_hidden' => 'required',
+            'employee_department' => 'required',
+            'employee_designation' => 'required',
+            'employee_shift_time' => 'required',
+            'employee_joining_date' => 'required'
+        ]);
+
+        $user_access = DB::table('users')
+        ->where('user_code', $req->emp_code)
+        ->where('user_type', $req->emp_login_user_type_hidden)
+        ->first();
+
+        $user_email = DB::table('users')
+        ->orWhere('user_email', $req->emp_login_email)
+        ->first();
+
+        if($user_access) {
+            return redirect()->back()->withInput()->with('error', 'Employee Code Already Exists! Use another one.');
+        }
+
+        if($user_email) {
+            return redirect()->back()->withInput()->with('error', 'Email Already Exists! Use another one.');
+        }
+
+        $emp_data = $req->emp_data;
+        $expenses_data = $req->expenses_data;
+        $clients_data = $req->clients_data;
+        $invoices_data = $req->invoices_data;
+        $salary_slip_data = $req->salary_slip_data;
+        $reports_data = $req->reports_data;
+        $tasks_data = $req->tasks_data;
+        $attendance_data = $req->attendance_data;
+
+        $login_user_name = $req->emp_login_name;
+        $login_user_email = $req->emp_login_email;
+        $login_user_type = $req->emp_login_user_type_hidden;
+        $login_user_code = $req->emp_code;
+        $employee_designation = $req->employee_designation;
+        $employee_shift_time = $req->employee_shift_time;
+        $employee_joining_date = $req->employee_joining_date;
+        $employee_department = $req->employee_department;
+        // emp access
+        $emp_access = $req->input('emp_access', []);
+        // expenses access
+        $expenses_access = $req->input('expenses_access', []);
+        // clients_access
+        $clients_access = $req->input('clients_access', []);
+        // invoices_access
+        $invoices_access = $req->input('invoices_access', []);
+        // salary_slip_access
+        $salary_slip_access = $req->input('salary_slip_access', []);
+        // reports_access
+        $reports_access = $req->input('reports_access', []);
+        // tasks_access
+        $tasks_access = $req->input('tasks_access', []);
+        // attendance_access
+        $attendance_access = $req->input('attendance_access', []);
+
+        // send email to relevant user
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=';
+        $randomPassword = Str::random(12, $characters);
+
+        // $data = compact('login_user_code', 'employee_designation' ,'employee_shift_time' ,'employee_joining_date', 'employee_department', 'login_user_email','login_user_name', 'randomPassword' );
+        // $mail_subject = "Reblate Solutions Invited You For A New Role";
+
+        // Mail::send('login.email-template-two', $data, function ($message) use ($mail_subject, $login_user_email) {
+        //     $message->to($login_user_email)
+        //             ->subject($mail_subject);
+        // });
+
+        $login = DB::table('table_login_details')
+        ->where('emp_code', $login_user_code)
+        ->where('employee_type', $login_user_type)
+        ->first();
+        if($login) {
+                 DB::table('table_login_details')->where('id',$login->id)->update([
+                'emp_code' => $login_user_code,
+                'employee_type' => $login_user_type,
+                'username' => $login_user_name,
+                'email' => $login_user_email,
+                'employees_access' => implode(',', $emp_access),
+                'expenses_access' => implode(',', $expenses_access),
+                'clients_access' => implode(',', $clients_access),
+                'invoices_access' => implode(',', $invoices_access),
+                'salary_slips_access' => implode(',', $salary_slip_access),
+                'reports_access' => implode(',', $reports_access),
+                'tasks_access' => implode(',', $tasks_access),
+                'attendance_access' => implode(',', $attendance_access),
+                'emp_data' =>  $emp_data,
+                'expenses_data' =>  $expenses_data,
+                'clients_data' =>  $clients_data,
+                'salary_slip_data' =>  $salary_slip_data,
+                'invoices_data' =>  $invoices_data,
+                'reports_data' =>  $reports_data,
+                'tasks_data' =>  $tasks_data,
+                'attendance_data' =>  $attendance_data,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        } else {
+            DB::table('table_login_details')->insert([
+                'emp_code' => $login_user_code,
+                'employee_type' => $login_user_type,
+                'username' => $login_user_name,
+                'email' => $login_user_email,
+                'employees_access' => implode(',', $emp_access),
+                'expenses_access' => implode(',', $expenses_access),
+                'clients_access' => implode(',', $clients_access),
+                'invoices_access' => implode(',', $invoices_access),
+                'salary_slips_access' => implode(',', $salary_slip_access),
+                'reports_access' => implode(',', $reports_access),
+                'tasks_access' => implode(',', $tasks_access),
+                'attendance_access' => implode(',', $attendance_access),
+                'emp_data' =>  $emp_data,
+                'expenses_data' =>  $expenses_data,
+                'clients_data' =>  $clients_data,
+                'salary_slip_data' =>  $salary_slip_data,
+                'invoices_data' =>  $invoices_data,
+                'reports_data' =>  $reports_data,
+                'tasks_data' =>  $tasks_data,
+                'attendance_data' =>  $attendance_data,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        }
+
+        DB::table('users')->insert([
+            'user_name' => $login_user_name,
+            'user_email' => $login_user_email,
+            'user_type' => $login_user_type,
+            'remember_token' => '',
+            'user_code' => $login_user_code,
+            'password' => Hash::make($randomPassword),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Login Invitation Sent successfully!');
+
+    }
+
 
 
     // create login and save data in databse
     public function registerLoginEmp($id, Request $req) {
+
         $employee = Employee::where('Emp_Code', $id)->first();
 
 
         if($employee) {
+            $user_access = DB::table('users')->where('user_code',$req->emp_login_code_hidden)->where('user_type',$req->emp_login_user_type_hidden)->first();
+            if($user_access) {
+                return redirect()->back()->with('error', 'Employee have already account! You can not create another one.');
+            }
+
+            $emp_data = $req->emp_data;
+            $expenses_data = $req->expenses_data;
+            $clients_data = $req->clients_data;
+            $invoices_data = $req->invoices_data;
+            $salary_slip_data = $req->salary_slip_data;
+            $reports_data = $req->reports_data;
+            $tasks_data = $req->tasks_data;
+            $attendance_data = $req->attendance_data;
+
             $login_user_name = $req->emp_login_name_hidden;
             $login_user_email = $req->emp_login_email_hidden;
             $login_user_type = $req->emp_login_user_type_hidden;
@@ -114,41 +277,71 @@ class LoginController extends Controller
             // attendance_access
             $attendance_access = $req->input('attendance_access', []);
 
-
             // send email to relevant user
             $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=';
             $randomPassword = Str::random(12, $characters);
 
             $data = compact('login_user_code', 'employee_designation' ,'employee_shift_time' ,'employee_joining_date', 'employee_department', 'login_user_email','login_user_name', 'randomPassword' );
             $mail_subject = "Reblate Solutions Invited You For A New Role";
-            // Mail::send('login.email-template', [], function ($message) use ($mail_subject, $login_user_email) {
-            //     $message->to($login_user_email)
-            //             ->subject($mail_subject);
-            // });
-            // exit;
+
             Mail::send('login.email-template-two', $data, function ($message) use ($mail_subject, $login_user_email) {
                 $message->to($login_user_email)
                         ->subject($mail_subject);
             });
 
-            $login = new Login();
-            $login->username = $login_user_name;
-            $login->email = $login_user_email;
-            $login->employee_type = $login_user_type;
-            $login->emp_code = $login_user_code;
-
-            // Save the access data in the database
-            $login->employees_access = implode(',', $emp_access);
-            $login->expenses_access = implode(',', $expenses_access);
-            $login->clients_access = implode(',', $clients_access);
-            $login->invoices_access = implode(',', $invoices_access);
-            $login->salary_slips_access = implode(',', $salary_slip_access);
-            $login->reports_access = implode(',', $reports_access);
-            $login->tasks_access = implode(',', $tasks_access);
-            $login->attendance_access = implode(',', $attendance_access);
-
-            $login->save();
-
+            $login = DB::table('table_login_details')
+            ->where('emp_code', $login_user_code)
+            ->where('employee_type', $login_user_type)
+            ->first();
+            if($login) {
+                     DB::table('table_login_details')->where('id',$login->id)->update([
+                    'emp_code' => $login_user_code,
+                    'employee_type' => $login_user_type,
+                    'username' => $login_user_name,
+                    'email' => $login_user_email,
+                    'employees_access' => implode(',', $emp_access),
+                    'expenses_access' => implode(',', $expenses_access),
+                    'clients_access' => implode(',', $clients_access),
+                    'invoices_access' => implode(',', $invoices_access),
+                    'salary_slips_access' => implode(',', $salary_slip_access),
+                    'reports_access' => implode(',', $reports_access),
+                    'tasks_access' => implode(',', $tasks_access),
+                    'emp_data' =>  $emp_data,
+                    'expenses_data' =>  $expenses_data,
+                    'clients_data' =>  $clients_data,
+                    'salary_slip_data' =>  $salary_slip_data,
+                    'invoices_data' =>  $invoices_data,
+                    'reports_data' =>  $reports_data,
+                    'tasks_data' =>  $tasks_data,
+                    'attendance_data' =>  $attendance_data,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            } else {
+                DB::table('table_login_details')->insert([
+                    'emp_code' => $login_user_code,
+                    'employee_type' => $login_user_type,
+                    'username' => $login_user_name,
+                    'email' => $login_user_email,
+                    'employees_access' => implode(',', $emp_access),
+                    'expenses_access' => implode(',', $expenses_access),
+                    'clients_access' => implode(',', $clients_access),
+                    'invoices_access' => implode(',', $invoices_access),
+                    'salary_slips_access' => implode(',', $salary_slip_access),
+                    'reports_access' => implode(',', $reports_access),
+                    'tasks_access' => implode(',', $tasks_access),
+                    'emp_data' =>  $emp_data,
+                    'expenses_data' =>  $expenses_data,
+                    'clients_data' =>  $clients_data,
+                    'salary_slip_data' =>  $salary_slip_data,
+                    'invoices_data' =>  $invoices_data,
+                    'reports_data' =>  $reports_data,
+                    'tasks_data' =>  $tasks_data,
+                    'attendance_data' =>  $attendance_data,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
 
             DB::table('users')->insert([
                 'user_name' => $login_user_name,
@@ -161,11 +354,9 @@ class LoginController extends Controller
                 'updated_at' => now(),
             ]);
 
-            session()->flash('success', 'Login Invitation Sent successfully!');
-            return redirect('/create-new-login');
-
+            return redirect()->back()->with('success', 'Login Invitation Sent successfully!');
         } else {
-            return redirect('/create-new-login');
+            return redirect()->back()->with('error', 'Employee Not Found! First Add Employee Data and then send invitation or you can send invitation directly!');
         }
 
     }
@@ -224,7 +415,19 @@ class LoginController extends Controller
             $tasks_access = $emp_data->tasks_access;
             $attendance_access = $emp_data->attendance_access;
 
-            $data = compact('attendance_access','tasks_access','reports_access','salary_slips_access','invoices_access','clients_access','expenses_access','employees_access','emp_data','emp_email','full_name','emp_code','employee_type');
+
+            $emp_access = $emp_data->emp_data;
+            $expenses_data = $emp_data->expenses_data;
+            $clients_data = $emp_data->clients_data;
+            $invoices_data = $emp_data->invoices_data;
+            $salary_slip_data = $emp_data->salary_slip_data;
+            $reports_data = $emp_data->reports_data;
+            $tasks_data = $emp_data->tasks_data;
+            $attendance_data = $emp_data->attendance_data;
+
+
+
+            $data = compact('emp_access','expenses_data','clients_data','invoices_data','salary_slip_data','reports_data','tasks_data','attendance_data','attendance_access','tasks_access','reports_access','salary_slips_access','invoices_access','clients_access','expenses_access','employees_access','emp_data','emp_email','full_name','emp_code','employee_type');
             return view('login.update-new-login')->with($data);
         }
         else {
@@ -235,9 +438,12 @@ class LoginController extends Controller
     public function updateLoginAccess($id, Request $req) {
         $employee = Login::where('emp_code', $id)->first();
         if($employee) {
+            $emp_id = $employee->id;
+            // dd($emp_id);
             $login_user_type = $req->emp_login_user_type_hidden;
              // emp access
              $emp_access = $req->input('emp_access', []);
+            //  dd($emp_access);
              // expenses access
              $expenses_access = $req->input('expenses_access', []);
              // clients_access
@@ -254,21 +460,41 @@ class LoginController extends Controller
              $attendance_access = $req->input('attendance_access', []);
 
 
-             $employee->employees_access = implode(',', $emp_access);
-             $employee->expenses_access = implode(',', $expenses_access);
-             $employee->clients_access = implode(',', $clients_access);
-             $employee->invoices_access = implode(',', $invoices_access);
-             $employee->salary_slips_access = implode(',', $salary_slip_access);
-             $employee->reports_access = implode(',', $reports_access);
-             $employee->tasks_access = implode(',', $tasks_access);
-             $employee->attendance_access = implode(',', $attendance_access);
-             $employee->employee_type = $login_user_type;
-             $employee->save();
-             session()->flash('success', 'Login Access Updated successfully!');
-             return redirect('/view-login');
+            $emp_access = $req->emp_data;
+            $expenses_data = $req->expenses_data;
+            $clients_data = $req->clients_data;
+            $invoices_data = $req->invoices_data;
+            $salary_slip_data = $req->salary_slip_data;
+            $reports_data = $req->reports_data;
+            $tasks_data = $req->tasks_data;
+            $attendance_data = $req->attendance_data;
+
+            DB::table('table_login_details')->where('id',$emp_id)->update([
+                'employee_type' => $login_user_type,
+                'employees_access' => implode(',', $emp_access),
+                'expenses_access' => implode(',', $expenses_access),
+                'clients_access' => implode(',', $clients_access),
+                'invoices_access' => implode(',', $invoices_access),
+                'salary_slips_access' => implode(',', $salary_slip_access),
+                'reports_access' => implode(',', $reports_access),
+                'tasks_access' => implode(',', $tasks_access),
+                'emp_data' =>  $emp_access,
+                'expenses_data' =>  $expenses_data,
+                'clients_data' =>  $clients_data,
+                'salary_slip_data' =>  $salary_slip_data,
+                'invoices_data' =>  $invoices_data,
+                'reports_data' =>  $reports_data,
+                'tasks_data' =>  $tasks_data,
+                'attendance_data' =>  $attendance_data,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+
+
+             return redirect()->back()->with('success','Access Updated Successfully!');
         }
         else {
-            return redirect('/create-new-login');
+            return redirect()->back()->with('error','User Not Found!');
         }
     }
 }

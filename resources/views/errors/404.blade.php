@@ -2,6 +2,23 @@
 @section('title')
     404 Error
 @endsection
+<style>
+    .card-box {
+    font-size: 18px;
+    font-weight: 700;
+    background-color: #14213d;
+    padding: 5px 50px;
+    color: #fca311;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    flex-wrap: wrap;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+</style>
 @section('content')
     <div class="auth-error d-flex align-items-center min-vh-100">
         <div class="bg-overlay bg-light"></div>
@@ -9,12 +26,14 @@
             <div class="row justify-content-center">
                 <div class="col-8">
                     <div>
+
                         <div class="text-center mb-4">
                             <div class="mt-5">
-                                <h1 class="error-title mt-5"><span>404!</span></h1>
+                                <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+
+    <dotlottie-player src="https://lottie.host/c6812568-1bd4-4214-851c-7451b2e9c03a/ReCK2FKyyH.json" background="transparent" speed="1" style="width: 300px; height: 300px;margin:0 auto;display:block;" loop autoplay></dotlottie-player>
                                 <h4 class="mt-2 text-uppercase mt-4">Sorry, page not found</h4>
-                                <p class="mt-4 text-muted w-50 mx-auto">It will be as simple as Occidental in fact, it will
-                                    Occidental to an English person</p>
+
                             </div>
 
                             <div class="mt-5 text-center">

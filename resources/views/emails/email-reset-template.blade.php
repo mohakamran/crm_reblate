@@ -11,15 +11,10 @@
 <body>
     <p> Dear <b>{{$user_name}}</b>,</p>
     <p>
-        Your password has been reset. You can access your portal using below credentials:
+        We have recieved your password change request.  Click the link below to reset your password:
+        <a href="{{ $url }}">{{ $url }}</a>
+        <p>This link will expire in 10 minutes.</p>
     </p>
-    <p>
-        Email: {{$client_email}} <br>
-        Password: {{$randomPassword}} <br>
-        Portal Link: https://crm.reblatesols.com/login <br>
-    </p>
-
-
 
    <p>If you face any issue while logging in then please contact us. Thank you so much!</p>
     <p>Best regards,<br>

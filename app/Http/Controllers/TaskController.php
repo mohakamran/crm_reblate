@@ -13,8 +13,7 @@ class TaskController extends Controller
 
         $task = DB::table('tasks')->where('id',$id)->first();
         // dd($task);
-        $emp_id = $task->emp_id;
-        // dd($emp_id);
+        $emp_id = auth()->user()->user_code;
         $emp = DB::table('employees')->where('Emp_Code',$emp_id)->first();
         $emp_name = $emp->Emp_Full_Name;
         $Emp_Designation = $emp->Emp_Designation;

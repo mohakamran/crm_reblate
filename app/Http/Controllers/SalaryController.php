@@ -492,8 +492,10 @@ class SalaryController extends Controller
         $emp_travel_allowence = $req->emp_travel_allowence;
         $emp_month_salary_hidden = $req->emp_month_salary_hidden;
         //total salary
-        $emp_total_salary = $emp_basic_salary + $emp_kpi_bonus + $emp_project_bonus + $emp_travel_allowence + $emp_designation_bonus;
+        $emp_total_salary = $emp_basic_salary + $emp_kpi_bonus + $emp_project_bonus + $emp_travel_allowence + $emp_designation_bonus + $quarterly_bonus;
         $emp_net_salary =  $emp_total_salary - $emp_deduction;
+
+
 
 
 
@@ -541,6 +543,7 @@ class SalaryController extends Controller
 
         // attributes
         $quarterly_bonus = $req->quarterly_bonus;
+        // dd($quarterly_bonus);
         $communication_point = $req->communication_point;
         $problem_solving_point = $req->problem_solving_point;
         $team_work_point = $req->team_work_point;

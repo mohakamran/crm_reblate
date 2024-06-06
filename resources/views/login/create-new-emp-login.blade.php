@@ -15,17 +15,29 @@
                 <div class="card">
                     <div class="card-body">
                         <p class="card-title">Fill below form to create new employee login.</p>
+
                         <br>
                         <h3>Login Details </h3>
-                        @if (session('fail'))
+                        @if (session('error'))
                             <div class="alert alert-danger alert-dismissible fade show" id="close-now">
-                                {{ session('fail') }}
+                                {{ session('error') }}
                                 <a type="button" onclick="hideNow()" class="close" data-dismiss="alert" aria-label="Close"
                                     style="float: right;">
                                     <span aria-hidden="true">&times;</span>
                                 </a>
                             </div>
                         @endif
+
+                        @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" id="close-now">
+                            {{ session('success') }}
+                            <a type="button" onclick="hideNow()" class="close" data-dismiss="alert"
+                                aria-label="Close" style="float: right;">
+                                <span aria-hidden="true">&times;</span>
+                            </a>
+                        </div>
+                    @endif
+
                         <hr>
                         <form method="POST" action="/create-login-new-employee-access">
                             @csrf
@@ -87,8 +99,12 @@
                                     <div class="form-floating mb-3">
                                         <select name="emp_login_user_type_hidden" class="form-control" id="">
                                             <option value="" disabled selected>Select Employee type </option>
-                                            <option value="employee" {{ old('emp_login_user_type_hidden') === 'employee' ? 'selected' : '' }}>Employee</option>
-                                            <option value="manager" {{ old('emp_login_user_type_hidden') === 'manager' ? 'selected' : '' }}>Manager</option>
+                                            <option value="employee"
+                                                {{ old('emp_login_user_type_hidden') === 'employee' ? 'selected' : '' }}>
+                                                Employee</option>
+                                            <option value="manager"
+                                                {{ old('emp_login_user_type_hidden') === 'manager' ? 'selected' : '' }}>
+                                                Manager</option>
                                         </select>
                                         <label for="">Employee Type <span class="text-danger">*</span></label>
                                         @error('emp_login_user_type_hidden')
@@ -111,18 +127,7 @@
                             </h4>
 
                             <div class="row">
-                                {{-- <div class="col-md-6">
-                                                                <div class="form-floating mb-3">
-                                                                    <input class="form-control " placeholder="Employee code: 200sols"
-                                                                        value="{{ isset($emp_data->Emp_Code) ? $emp_data->Emp_Code : old('employee_code') }}"
-                                                                        type="text" name="employee_code">
 
-                                                                    <label for="">Emp Code <span class="text-danger">*</span></label>
-                                                                    @error('employee_code')
-                                                                        <span class="text-danger">{{ $message }}</span>
-                                                                    @enderror
-                                                                </div>
-                                                            </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <input class="form-control " placeholder="department"
@@ -175,8 +180,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control"
-                                            value="{{ old('employee_joining_date') }}"
+                                        <input class="form-control" value="{{ old('employee_joining_date') }}"
                                             placeholder="Employee Joining Date" name="employee_joining_date" type="date">
                                         @error('employee_joining_date')
                                             <span class="text-danger">{{ $message }}</span>
@@ -199,6 +203,7 @@
                                     <th>Update</th>
                                     <th>Delete</th>
                                     <th>None</th>
+                                    <th>Shift Data</th>
                                 </tr>
                                 <tr>
                                     <td>Employees</td>
@@ -214,6 +219,11 @@
                                     </td>
                                     <td><input type="checkbox" id="emp_check_none" name="emp_access[]" value="none"
                                             checked></td>
+                                    <td>
+                                        <input type="radio" name="emp_data" value="both" checked> Both
+                                        <input type="radio" name="emp_data" value="night"> Night
+                                        <input type="radio" name="emp_data" value="day"> Day
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Expenses</td>
@@ -229,6 +239,11 @@
                                             value="delete"></td>
                                     <td><input type="checkbox" id="expenses_check_none" name="expenses_access[]"
                                             value="none" checked></td>
+                                    <td>
+                                        <input type="radio" name="expenses_data" value="both" checked> Both
+                                        <input type="radio" name="expenses_data" value="night"> Night
+                                        <input type="radio" name="expenses_data" value="day"> Day
+                                    </td>
                                 </tr>
 
                                 <tr>
@@ -245,6 +260,11 @@
                                             value="delete"></td>
                                     <td><input type="checkbox" id="clients_check_none" name="clients_access[]"
                                             value="none" checked></td>
+                                    <td>
+                                        <input type="radio" name="clients_data" value="both" checked> Both
+                                        <input type="radio" name="clients_data" value="night"> Night
+                                        <input type="radio" name="clients_data" value="day"> Day
+                                    </td>
                                 </tr>
 
                                 <tr>
@@ -261,6 +281,11 @@
                                             value="delete"></td>
                                     <td><input type="checkbox" id="invoices_check_none" name="invoices_access[]"
                                             value="none" checked></td>
+                                    <td>
+                                        <input type="radio" name="invoices_data" value="both" checked> Both
+                                        <input type="radio" name="invoices_data" value="night"> Night
+                                        <input type="radio" name="invoices_data" value="day"> Day
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Salary Slips</td>
@@ -276,6 +301,11 @@
                                             value="delete"></td>
                                     <td><input type="checkbox" id="salary_slip_check_none" name="salary_slip_access[]"
                                             value="none" checked></td>
+                                    <td>
+                                        <input type="radio" name="salary_slip_data" value="both" checked> Both
+                                        <input type="radio" name="salary_slip_data" value="night"> Night
+                                        <input type="radio" name="salary_slip_data" value="day"> Day
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Reports</td>
@@ -291,6 +321,11 @@
                                             value="delete"></td>
                                     <td><input type="checkbox" id="reports_check_none" name="reports_access[]"
                                             value="none" checked></td>
+                                    <td>
+                                        <input type="radio" name="reports_data" value="both" checked> Both
+                                        <input type="radio" name="reports_data" value="night"> Night
+                                        <input type="radio" name="reports_data" value="day"> Day
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Tasks</td>
@@ -306,6 +341,12 @@
                                             value="delete"></td>
                                     <td><input type="checkbox" id="tasks_check_none" name="tasks_access[]"
                                             value="none" checked></td>
+                                    <td>
+
+                                        <input type="radio" name="tasks_data" value="both" checked> Both
+                                        <input type="radio" name="tasks_data" value="night" > Night
+                                        <input type="radio" name="tasks_data" value="day"  > Day
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Attendance</td>
@@ -321,8 +362,13 @@
                                             value="delete"></td>
                                     <td><input type="checkbox" id="attendance_check_none" name="attendance_access[]"
                                             value="none" checked></td>
+                                    <td>
+                                        <input type="radio" name="attendance_data" value="both" checked> Both
+                                        <input type="radio" name="attendance_data" value="night" > Night
+                                        <input type="radio" name="attendance_data" value="day" > Day
+                                    </td>
                                 </tr>
-                                
+
                             </table>
 
 
@@ -336,6 +382,8 @@
 
                             </div>
                         </form>
+
+
 
                     </div>
                     <!-- end card body -->

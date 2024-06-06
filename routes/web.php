@@ -18,6 +18,9 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ReportingController;
 use App\Http\Controllers\VacationController;
+use App\Http\Controllers\AssetController;
+
+use App\Http\Controllers\ApiController;
 
 
 
@@ -52,6 +55,16 @@ Route::get('/forget-password',[AuthController::class,'forgetPassword']);
 Route::post('/forget-password',[AuthController::class,'forgetPasswordView']);
 Route::get('/login',[AuthController::class,'index'])->name('login');
 
+Route::get('/password-reset', [AuthController::class, 'showResetForm'])
+    ->name('password.reset.link')
+    ->middleware('signed');
+
+Route::get('/create-temp-link', [AuthController::class,'createLink']);
+
+Route::get('/temp-pass/{token}', [AuthController::class, 'seeLink'])->name('temp.link')->middleware('signed');
+
+Route::post('/password-update', [AuthController::class, 'updatePassword'])->name('password.update');
+
 
 
 Route::middleware(['auth'])->group(function () {
@@ -79,17 +92,6 @@ Route::get('/clear', function() {
 });
 
 Route::group(['middleware' => 'admin'], function () {
-//     // users maangement for super admin
-//     Route::get('/view-users/{user_id}', [AuthController::class,'viewUsersData']);
-//     Route::get('/delete-user/{user_id}', [AuthController::class,'deleteUser']);
-//     Route::get('/user-register',[AuthController::class,'registerUser'])->name('auth.register');
-//     Route::post('/user-register',[AuthController::class,'registerUserData']);
-//     Route::get('/user-details/{user_id}',[AuthController::class,'changeUserDetails'])->name('user.change-details');
-//     Route::post('/user-details/{user_id}',[AuthController::class,'changeUserDetailsData']);
-//     Route::get('/send-reset/{user_id}',[AuthController::class,'sendUserResetPassword']);
-
-    // home page
-
 
     // Route::view('/demo','pages.demo');
 
@@ -115,7 +117,28 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/update-employee-data/{emp_id}', [EmployeesController::class, 'updateEmployeeData']);
     Route::get('/view_emp_details/{emp_id}', [EmployeesController::class, 'viewEmployeeData'])->middleware('checkUserRole');
     Route::get('/view_info', [EmployeesController::class, 'viewInfo']);
-    Route::get('/view_profile/{id}', [EmployeesController::class, 'viewProfile'])->middleware('checkUserRole');
+
+    Route::get('/view_profile/{id}', [EmployeesController::class, 'viewProfile']);
+
+    Route::post('/update-info-emp', [EmployeesController::class, 'updateInfoEmp']);
+    Route::post('/update-info-salary', [EmployeesController::class, 'updateInfoSalary']);
+    Route::post('/update-info-bank', [EmployeesController::class, 'updateInfoBank']);
+    Route::post('/update-info-contact', [EmployeesController::class, 'updateInfoContact']);
+    Route::match(['get', 'post'],'/add-emp-edu', [EmployeesController::class, 'addEducationEmp']);
+    Route::match(['get', 'post'],'/update-info-company', [EmployeesController::class, 'updateInfoCom']);
+    Route::match(['get', 'post'],'/add-emp-work', [EmployeesController::class, 'addWorkEmp']);
+
+    Route::match(['get', 'post'],'/del-emp-edu/{id}', [EmployeesController::class, 'removeEduEmp']);
+    Route::match(['get', 'post'],'/update-emp-edu', [EmployeesController::class, 'updateEduEmp']);
+
+    Route::match(['get', 'post'],'/del-emp-work/{id}', [EmployeesController::class, 'removeWorkEmp']);
+    Route::match(['get', 'post'],'/update-emp-work', [EmployeesController::class, 'updateWorkEmp']);
+
+    Route::match(['get', 'post'],'/update-photo-emp', [EmployeesController::class, 'updatePhotoEmp']);
+
+    Route::get('/page-expire',function(){
+        return view('errors.page-expire');
+    });
 
     // users
 
@@ -151,8 +174,8 @@ Route::group(['middleware' => 'admin'], function () {
     // Route::get('/testpdf', [SalaryController::class,'testPdf']);
 
     // salaries by month
-    Route::get('/salary-by-month', [SalaryController::class,'showMonthWiseSalaries'])->middleware('AdminUser');
-    Route::post('/search-salary-by-month', [SalaryController::class,'showMonthWiseSalariesByMonth'])->middleware('AdminUser');
+    // Route::get('/salary-by-month', [SalaryController::class,'showMonthWiseSalaries'])->middleware('AdminUser');
+    // Route::post('/search-salary-by-month', [SalaryController::class,'showMonthWiseSalariesByMonth'])->middleware('AdminUser');
 
     // invoices
     Route::get('/create-new-invoice',[InvoiceController::class,'createNewInvoice'])->middleware('ClienteCheck');
@@ -162,6 +185,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/view-invoices',[InvoiceController::class,'viewInvoices'])->middleware('ClienteCheck');
     Route::get('/preview-invoices/{id}',[InvoiceController::class,'viewIndividualInvoices'])->middleware('ClienteCheck');
     Route::get('/preview/{id}',[InvoiceController::class,'previewOnBrowser'])->middleware('ClienteCheck');
+
+    Route::get('/employees',[ApiController::class,'index']);
 
 
     // vacations
@@ -206,7 +231,7 @@ Route::group(['middleware' => 'admin'], function () {
     // attendenceleave-requests
     Route::get('/view-attendence',[AttendenceController::class,'viewAttendenceEmp']);
     Route::get('/view-attendence-emp/{id}',[AttendenceController::class,'viewEachAttendenceEmp'])->middleware('AttendenceCheck');
-    Route::post('/search-emp-details',[AttendenceController::class,'searchAttendenceEmp'])->middleware('AttendenceCheck');
+    Route::post('/search-emp-details',[AttendenceController::class,'searchAttendenceEmp']);
     Route::get('/view-emp-attendence',[AttendenceController::class,'viewEmpAttendence'])->middleware('AttendenceCheck');
     // Route::get('/view-attendence-emp', [AttendenceController::class, 'viewAttendanceEmployee']);
 
@@ -274,6 +299,10 @@ Route::group(['middleware' => 'admin'], function () {
     // projectController
 
     Route::get('/projects',[ProjectController::class,'index']);
+
+
+    // Assets Controller
+    Route::get('/view-assets',[AssetController::class,'index']);
 
 
 });

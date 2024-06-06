@@ -21,7 +21,7 @@
                         <form method="post" action="/update-login-access/{{ $emp_code }}">
                             @csrf
 
-                            {{-- @if (session('success'))
+                            @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show" id="close-now">
                                     {{ session('success') }}
                                     <a type="button" onclick="hideNow()" class="close" data-dismiss="alert"
@@ -29,7 +29,17 @@
                                         <span aria-hidden="true">&times;</span>
                                     </a>
                                 </div>
-                            @endif --}}
+                            @endif
+
+                            @if (session('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" id="close-now">
+                                    {{ session('error') }}
+                                    <a type="button" onclick="hideNow()" class="close" data-dismiss="alert"
+                                        aria-label="Close" style="float: right;">
+                                        <span aria-hidden="true">&times;</span>
+                                    </a>
+                                </div>
+                            @endif
 
 
 
@@ -81,6 +91,7 @@
                                     <th>Update</th>
                                     <th>Delete</th>
                                     <th>None</th>
+                                    <th>Shift Data</th>
                                 </tr>
                                 <tr>
                                     @php
@@ -99,6 +110,11 @@
                                             type="checkbox" name="emp_access[]" value="delete"></td>
                                     <td><input {{ in_array('none', $employees_accessArray) ? 'checked' : '' }} id="emp_check_none"
                                             type="checkbox" name="emp_access[]" value="none"></td>
+                                            <td>
+                                                <input type="radio" name="emp_data" value="both" {{($emp_access == "both") ? 'checked' : ''}}> Both
+                                                <input type="radio" name="emp_data" value="night" {{($emp_access == "night") ? 'checked' : ''}}> Night
+                                                <input type="radio" name="emp_data" value="day" {{($emp_access == "day") ? 'checked' : ''}}> Day
+                                            </td>
                                 </tr>
                                 <tr>
                                     <td>Expenses</td>
@@ -123,6 +139,11 @@
                                     <td><input type="checkbox" id="expenses_check_none"
                                             {{ in_array('none', $expenses_accessArray) ? 'checked' : '' }}
                                             name="expenses_access[]" value="none"></td>
+                                            <td>
+                                                <input type="radio" name="expenses_data" value="both" {{($expenses_data == "both") ? 'checked' : ''}}> Both
+                                                <input type="radio" name="expenses_data" value="night" {{($expenses_data == "night") ? 'checked' : ''}}> Night
+                                                <input type="radio" name="expenses_data" value="day" {{($expenses_data == "day") ? 'checked' : ''}}> Day
+                                            </td>
                                 </tr>
 
                                 <tr>
@@ -148,6 +169,11 @@
                                     <td><input type="checkbox" id="clients_check_none"
                                             {{ in_array('none', $clients_accessArray) ? 'checked' : '' }}
                                             name="clients_access[]" value="none"></td>
+                                            <td>
+                                                <input type="radio" name="clients_data" value="both" {{($clients_data == "both") ? 'checked' : ''}}> Both
+                                                <input type="radio" name="clients_data" value="night" {{($clients_data == "night") ? 'checked' : ''}}> Night
+                                                <input type="radio" name="clients_data" value="day" {{($clients_data == "day") ? 'checked' : ''}}> Day
+                                            </td>
                                 </tr>
 
                                 <tr>
@@ -173,6 +199,11 @@
                                     <td><input type="checkbox" id="invoices_check_none"
                                             {{ in_array('none', $invoices_accessArray) ? 'checked' : '' }}
                                             name="invoices_access[]" value="none"></td>
+                                            <td>
+                                                <input type="radio" name="invoices_data" value="both" {{($invoices_data == "both") ? 'checked' : ''}}> Both
+                                                <input type="radio" name="invoices_data" value="night" {{($invoices_data == "night") ? 'checked' : ''}}> Night
+                                                <input type="radio" name="invoices_data" value="day" {{($invoices_data == "day") ? 'checked' : ''}}> Day
+                                            </td>
                                 </tr>
                                 <tr>
                                     <td>Salary Slips</td>
@@ -197,6 +228,11 @@
                                     <td><input type="checkbox" id="salary_slip_check_none"
                                             {{ in_array('none', $salary_slips_accessArray) ? 'checked' : '' }}
                                             name="salary_slip_access[]" value="none"></td>
+                                            <td>
+                                                <input type="radio" name="salary_slip_data" value="both" {{($salary_slip_data == "both") ? 'checked' : ''}}> Both
+                                                <input type="radio" name="salary_slip_data" value="night" {{($salary_slip_data == "night") ? 'checked' : ''}} > Night
+                                                <input type="radio" name="salary_slip_data" value="day" {{($salary_slip_data == "day") ? 'checked' : ''}}> Day
+                                            </td>
                                 </tr>
                                 <tr>
                                     <td>Reports</td>
@@ -221,6 +257,11 @@
                                     <td><input type="checkbox" id="reports_check_none"
                                             {{ in_array('none', $reports_accessArray) ? 'checked' : '' }}
                                             name="reports_access[]" value="none"></td>
+                                            <td>
+                                                <input type="radio" name="reports_data" value="both" {{($reports_data == "both") ? 'checked' : ''}}> Both
+                                                <input type="radio" name="reports_data" value="night" {{($reports_data == "night") ? 'checked' : ''}}> Night
+                                                <input type="radio" name="reports_data" value="day" {{($reports_data == "day") ? 'checked' : ''}}> Day
+                                            </td>
                                 </tr>
                                 <tr>
                                     <td>Tasks</td>
@@ -245,6 +286,11 @@
                                     <td><input type="checkbox" id="tasks_check_none"
                                             {{ in_array('none', $tasks_accessArray) ? 'checked' : '' }}
                                             name="tasks_access[]" value="none"></td>
+                                            <td>
+                                                <input type="radio" name="tasks_data" value="both" {{($tasks_data == "both") ? 'checked' : ''}}> Both
+                                                <input type="radio" name="tasks_data" value="night" {{($tasks_data == "night") ? 'checked' : ''}}> Night
+                                                <input type="radio" name="tasks_data" value="day" {{($tasks_data == "day") ? 'checked' : ''}}> Day
+                                            </td>
                                 </tr>
                                 <tr>
                                     @php
@@ -269,6 +315,12 @@
                                     <td><input type="checkbox"
                                             {{ in_array('none', $attendanceAccessArray) ? 'checked' : '' }}
                                             id="attendance_check_none" name="attendance_access[]" value="none" >
+                                    </td>
+
+                                    <td>
+                                        <input type="radio" name="attendance_data" value="both" {{($attendance_data == "both") ? 'checked' : ''}}> Both
+                                        <input type="radio" name="attendance_data" value="night" {{($attendance_data == "night") ? 'checked' : ''}}> Night
+                                        <input type="radio" name="attendance_data" value="day" {{($attendance_data == "day") ? 'checked' : ''}}> Day
                                     </td>
 
                                 </tr>

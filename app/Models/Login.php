@@ -9,4 +9,7 @@ class Login extends Model
 {
     use HasFactory;
     protected $table = 'table_login_details';
+    protected $fillable = [
+        'username', // Add 'username' to the fillable attributes
+    ];
 }

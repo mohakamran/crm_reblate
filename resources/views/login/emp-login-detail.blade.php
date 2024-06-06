@@ -21,7 +21,7 @@
                         <form method="post" action="/register-login-access/{{ $emp_login_code }}">
                             @csrf
 
-                            {{-- @if (session('success'))
+                            @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show" id="close-now">
                                     {{ session('success') }}
                                     <a type="button" onclick="hideNow()" class="close" data-dismiss="alert"
@@ -29,7 +29,19 @@
                                         <span aria-hidden="true">&times;</span>
                                     </a>
                                 </div>
-                            @endif --}}
+                            @endif
+
+
+
+                            @if(session('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" id="close-now">
+                                    {{session('error')}}
+                                    <a type="button" onclick="hideNow()" class="close" data-dismiss="alert"
+                                        aria-label="Close" style="float: right;">
+                                        <span aria-hidden="true">&times;</span>
+                                    </a>
+                                </div>
+                            @endif
 
 
 
@@ -79,6 +91,7 @@
                                     <th>Update</th>
                                     <th>Delete</th>
                                     <th>None</th>
+                                    <th>Shift Data</th>
                                 </tr>
                                 <tr>
                                     <td>Employees</td>
@@ -88,6 +101,11 @@
                                     <td><input type="checkbox" id="emp_check_update" name="emp_access[]" value="update"></td>
                                     <td><input type="checkbox" id="emp_check_delete" name="emp_access[]" value="delete"></td>
                                     <td><input type="checkbox" id="emp_check_none" name="emp_access[]" value="none" checked ></td>
+                                    <td>
+                                        <input type="radio" name="emp_data" value="both" checked> Both
+                                        <input type="radio" name="emp_data" value="night"> Night
+                                        <input type="radio" name="emp_data" value="day"> Day
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Expenses</td>
@@ -97,6 +115,11 @@
                                     <td><input type="checkbox" id="expenses_check_update" name="expenses_access[]" value="update"></td>
                                     <td><input type="checkbox" id="expenses_check_delete" name="expenses_access[]" value="delete"></td>
                                     <td><input type="checkbox" id="expenses_check_none" name="expenses_access[]" value="none" checked></td>
+                                    <td>
+                                        <input type="radio" name="expenses_data" value="both" checked> Both
+                                        <input type="radio" name="expenses_data" value="night"> Night
+                                        <input type="radio" name="expenses_data" value="day"> Day
+                                    </td>
                                 </tr>
 
                                 <tr>
@@ -107,6 +130,11 @@
                                     <td><input type="checkbox" id="clients_check_update" name="clients_access[]" value="update"></td>
                                     <td><input type="checkbox" id="clients_check_delete" name="clients_access[]" value="delete"></td>
                                     <td><input type="checkbox" id="clients_check_none" name="clients_access[]" value="none" checked></td>
+                                    <td>
+                                        <input type="radio" name="clients_data" value="both" checked> Both
+                                        <input type="radio" name="clients_data" value="night"> Night
+                                        <input type="radio" name="clients_data" value="day"> Day
+                                    </td>
                                 </tr>
 
                                 <tr>
@@ -117,6 +145,11 @@
                                     <td><input type="checkbox" id="invoices_check_update" name="invoices_access[]" value="update"></td>
                                     <td><input type="checkbox" id="invoices_check_delete" name="invoices_access[]" value="delete"></td>
                                     <td><input type="checkbox" id="invoices_check_none" name="invoices_access[]" value="none" checked></td>
+                                    <td>
+                                        <input type="radio" name="invoices_data" value="both" checked> Both
+                                        <input type="radio" name="invoices_data" value="night"> Night
+                                        <input type="radio" name="invoices_data" value="day"> Day
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Salary Slips</td>
@@ -126,6 +159,11 @@
                                     <td><input type="checkbox" id="salary_slip_check_update" name="salary_slip_access[]" value="update"></td>
                                     <td><input type="checkbox" id="salary_slip_check_delete" name="salary_slip_access[]" value="delete"></td>
                                     <td><input type="checkbox" id="salary_slip_check_none" name="salary_slip_access[]" value="none" checked></td>
+                                    <td>
+                                        <input type="radio" name="salary_slip_data" value="both" checked> Both
+                                        <input type="radio" name="salary_slip_data" value="night"> Night
+                                        <input type="radio" name="salary_slip_data" value="day"> Day
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Reports</td>
@@ -141,6 +179,11 @@
                                             value="delete"></td>
                                     <td><input type="checkbox" id="reports_check_none" name="reports_access[]"
                                             value="none" checked></td>
+                                            <td>
+                                                <input type="radio" name="reports_data" value="both" checked> Both
+                                                <input type="radio" name="reports_data" value="night"> Night
+                                                <input type="radio" name="reports_data" value="day"> Day
+                                            </td>
                                 </tr>
                                 <tr>
                                     <td>Tasks</td>
@@ -156,6 +199,11 @@
                                             value="delete"></td>
                                     <td><input type="checkbox" id="tasks_check_none" name="tasks_access[]"
                                             value="none" checked></td>
+                                            <td>
+                                                <input type="radio" name="tasks_data" value="both" checked> Both
+                                                <input type="radio" name="tasks_data" value="night"> Night
+                                                <input type="radio" name="tasks_data" value="day"> Day
+                                            </td>
                                 </tr>
                                 <tr>
                                     <td>Attendance</td>
@@ -171,6 +219,11 @@
                                             value="delete"></td>
                                     <td><input type="checkbox" id="attendance_check_none" name="attendance_access[]"
                                             value="none" checked></td>
+                                            <td>
+                                                <input type="radio" name="attendance_data" value="both" checked> Both
+                                                <input type="radio" name="attendance_data" value="night"> Night
+                                                <input type="radio" name="attendance_data" value="day"> Day
+                                            </td>
                                 </tr>
                             </table>
 
