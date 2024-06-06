@@ -15,19 +15,20 @@
     @endsection
     @section('content')
         <style>
-             @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-            .EmpNameStyle{
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+            .EmpNameStyle {
                 font-size: 30px;
-                color:#fff;
+                color: #fff;
                 font-weight: 600;
                 font-family: 'Poppins';
             }
-            .EmpStyle{
+
+            .EmpStyle {
                 font-size: 18px;
-                color:#fca311;
+                color: #fca311;
                 font-family: 'Poppins';
                 font-weight: 300
-
             }
 
 
@@ -72,7 +73,7 @@
             .punch-info .punch-hours {
                 border: 3px solid #fca311;
 
-                max-width:250px;
+                max-width: 250px;
 
                 padding: 20px;
                 margin: 0 auto;
@@ -102,11 +103,11 @@
 
             .timeliner {
 
-               margin: 0 auto;
+                margin: 0 auto;
                 letter-spacing: 0.2px;
                 position: relative;
                 padding-top: 20px;
-                margin-left:10px;
+                margin-left: 10px;
                 padding-bottom: 0;
 
                 list-style: none;
@@ -216,6 +217,7 @@
                 width: 100%;
                 height: 400px;
             }
+
             .popup {
                 display: none;
                 position: fixed;
@@ -231,7 +233,7 @@
 
             .popup-content {
                 /* overflow-y: scroll;
-                            scroll-behavior: smooth scroll; */
+                                scroll-behavior: smooth scroll; */
                 display: flex;
                 max-width: 700px;
                 margin: auto auto;
@@ -251,6 +253,16 @@
                 right: 15px;
                 cursor: pointer;
             }
+
+            .active {
+                color: #14213d;
+                border-bottom: 1px solid #fca311;
+            }
+
+            .notification-hover:hover {
+                background: #fca31130;
+                transition: all 0.2s ease-in-out;
+            }
         </style>
 
         <div class="row mt-2">
@@ -258,34 +270,38 @@
                 <div class="card-body flex-wrap" style="background-color: #14213d;min-height:270px">
                     <div class="col-md-6 col-lg-6 col-xl-6 gap-3 d-flex align-items-center flex-wrap p-2">
 
-                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image) )
+                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                             <img src="{{ $emp_det->Emp_Image }}"
                                 style="width:150px;height:150px;border-radius:100%; object-fit:cover;" alt="">
                         @else
-                        <img class="img-fluid rounded-circle" style="width:150px;height:150px;border-radius:100%; object-fit:cover;"
-                        src="{{ url('user.png') }}">
+                            <img class="img-fluid rounded-circle"
+                                style="width:150px;height:150px;border-radius:100%; object-fit:cover;"
+                                src="{{ url('user.png') }}">
                         @endif
                         <div class="welcome-det ms-3 text-dark fw-bolder">
-                            <h2 class="EmpNameStyle">{{ isset($emp_det->Emp_Full_Name) && $emp_det->Emp_Full_Name ? $emp_det->Emp_Full_Name : 'Guest' }}</h2>
-                                <div class="d-flex justify-content-between align-items-center gap-5">
-                                    <h3 class="mb-0 EmpStyle" style="">Designation:</h3>
-                                    <span class="EmpStyle"
-                                        style="color:#fff;">{{ isset($emp_det->Emp_Designation) && $emp_det->Emp_Designation ? $emp_det->Emp_Designation : '' }}</span>
-                                </div>
-                                <div class="d-flex justify-content-start align-items-center gap-5">
-                                    <h3 class="mb-0 EmpStyle" style="width:110px">Shift:</h3>
-                                    <span class="EmpStyle" style="color:#fff;">
-                                        {{ isset($emp_det->Emp_Shift_Time) && $emp_det->Emp_Shift_Time ? $emp_det->Emp_Shift_Time : '' }}
-                                    </span>
-
-                                </div>
+                            <h2 class="EmpNameStyle">
+                                {{ isset($emp_det->Emp_Full_Name) && $emp_det->Emp_Full_Name ? $emp_det->Emp_Full_Name : 'Guest' }}
+                            </h2>
+                            <div class="d-flex justify-content-between align-items-center gap-5">
+                                <h3 class="mb-0 EmpStyle" style="">Designation:</h3>
+                                <span class="EmpStyle"
+                                    style="color:#fff;">{{ isset($emp_det->Emp_Designation) && $emp_det->Emp_Designation ? $emp_det->Emp_Designation : '' }}</span>
                             </div>
+                            <div class="d-flex justify-content-start align-items-center gap-5">
+                                <h3 class="mb-0 EmpStyle" style="width:110px">Shift:</h3>
+                                <span class="EmpStyle" style="color:#fff;">
+                                    {{ isset($emp_det->Emp_Shift_Time) && $emp_det->Emp_Shift_Time ? $emp_det->Emp_Shift_Time : '' }}
+                                </span>
+
+                            </div>
+                        </div>
 
                     </div>
 
 
 
-                    <div class="position-absolute p-2" style="top:20px;right: 20px; border:1px solid #fca311; border-radius:10px">
+                    <div class="position-absolute p-2"
+                        style="top:20px;right: 20px; border:1px solid #fca311; border-radius:10px">
                         <span style="color:#fff; font-size: 15px;font-weight: 300; font-family: 'Poppins';">
                             {{ isset($t_date) ? $t_date : '' }}
                         </span>
@@ -297,13 +313,16 @@
         </div>
         <div class="row flex-wrap" style="position: relative; top:-90px;">
             <div id="popupButton">
-                <button type="button" class="position-absolute reblateBtn px-3 py-1 text-white" style="background-color: #fca311; right: 35px; top:-45px;"> Apply for Leave</button>
+                <button type="button" class="position-absolute reblateBtn px-3 py-1 text-white"
+                    style="background-color: #fca311; right: 35px; top:-45px;"> Apply for Leave</button>
                 <div class="popup" id="popup">
                     <div class="popup-content flex-column">
                         <div class="d-flex mb-3 align-items-center justify-content-between">
-                            <h2 class="mb-0" style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom:1px solid #c7c7c7">Apply For Leaves</h2>
-                            <span class="closeBtn p-2" style="border-radius: 50%; background-color:#14213d26"><svg xmlns="http://www.w3.org/2000/svg"
-                                    width="20" height="20" fill="#14213d50"
+                            <h2 class="mb-0"
+                                style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom:1px solid #c7c7c7">
+                                Apply For Leaves</h2>
+                            <span class="closeBtn p-2" style="border-radius: 50%; background-color:#14213d26"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#14213d50"
                                     class="bi bi-x-lg" viewBox="0 0 16 16">
                                     <path
                                         d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
@@ -313,8 +332,8 @@
                             <div id="messageBox"></div>
                             <div class="form-group mt-3">
                                 <label for="date">Date</label>
-                                <input type="date" class="form-control inputboxcolor"
-                                    style="border: 1px solid #ced4da;" id="date" name="date">
+                                <input type="date" class="form-control inputboxcolor" style="border: 1px solid #ced4da;"
+                                    id="date" name="date">
                                 <span class="text-danger" id="dateBox" style="display: none">Please Select
                                     a date!</span>
                             </div>
@@ -340,14 +359,17 @@
                     <div class="card-body" style="background-color: #fca311">
                         <div class="d-flex align-items-start flex-column">
                             <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group1.svg') }}" style="width:23px; height:23px; object-fit:contain;margin-left:2px" alt="User Icon Reblate Solutions">
+                                <img src="{{ url('Group1.svg') }}"
+                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                    alt="User Icon Reblate Solutions">
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Presents</p>
+                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Presents
+                            </p>
                             <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
                                 @if (isset($total_present_day) && $total_present_day != '')
-                                {{ $total_present_day }}
+                                    {{ $total_present_day }}
                                 @else
-                                0
+                                    0
                                 @endif
                             </h2>
                         </div>
@@ -359,9 +381,12 @@
                     <div class="card-body" style="background-color: #fca311">
                         <div class="d-flex align-items-start flex-column">
                             <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group2.svg') }}" style="width:23px; height:23px; object-fit:contain;margin-left:2px" alt="User Icon Reblate Solutions">
+                                <img src="{{ url('Group2.svg') }}"
+                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                    alt="User Icon Reblate Solutions">
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Absents</p>
+                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total
+                                Absents</p>
                             <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
                                 @if (isset($absent_days) && $absent_days != '')
                                     {{ $absent_days }}
@@ -377,10 +402,13 @@
                 <div class="card" style="border-radius:10px;">
                     <div class="card-body" style="background-color: #fca311">
                         <div class="d-flex align-items-start flex-column">
-                            <div class="rounded-pill mb-3"  style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group1.svg') }}" style="width:23px; height:23px; object-fit:contain;margin-left:2px" alt="User Icon Reblate Solutions">
+                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                <img src="{{ url('Group1.svg') }}"
+                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                    alt="User Icon Reblate Solutions">
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Leaves</p>
+                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Leaves
+                            </p>
                             <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
                                 @if (isset($total_pending) && $total_pending != '')
                                     {{ $total_pending }}
@@ -397,9 +425,12 @@
                     <div class="card-body" style="background-color: #fca311">
                         <div class="d-flex align-items-start flex-column">
                             <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group3.svg') }}" style="width:23px; height:23px; object-fit:contain;margin-left:2px" alt="User Icon Reblate Solutions">
+                                <img src="{{ url('Group3.svg') }}"
+                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                    alt="User Icon Reblate Solutions">
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Pending Approvel</p>
+                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Pending
+                                Approvel</p>
                             <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
                                 @if (isset($total_pending) && $total_pending != '')
                                     {{ $total_pending }}
@@ -416,9 +447,12 @@
                     <div class="card-body" style="background-color: #fca311">
                         <div class="d-flex align-items-start flex-column">
                             <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group4.svg') }}" style="width:23px; height:23px; object-fit:contain;margin-left:2px" alt="User Icon Reblate Solutions">
+                                <img src="{{ url('Group4.svg') }}"
+                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                    alt="User Icon Reblate Solutions">
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Working Days</p>
+                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Working Days
+                            </p>
                             <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
                                 {{ $total_work_days_in_month }}
                             </h2>
@@ -431,9 +465,12 @@
                     <div class="card-body" style="background-color: #fca311">
                         <div class="d-flex align-items-start flex-column">
                             <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group5.svg') }}" style="width:23px; height:23px; object-fit:contain;margin-left:2px" alt="User Icon Reblate Solutions">
+                                <img src="{{ url('Group5.svg') }}"
+                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                    alt="User Icon Reblate Solutions">
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Loss of Pay</p>
+                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Loss of Pay
+                            </p>
                             <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
                                 @if (isset($salary_deduct) && $salary_deduct != '')
                                     {{ $salary_deduct }}
@@ -447,11 +484,394 @@
             </div>
 
         </div>
-        <div class="row">
+        <div class="row" style="position: relative; top: -70px;">
             <div class="col-md-7 col-xl-7 col-lg-7">
-                <div class="card">
-                    <div class="card-body">
+                <div class="card" style="box-shadow: none">
+                    <div class="card-body" style="background-color: #fff; backdrop-filter: none; border:1px solid #c7c7c7" >
+                        <h3 class="EmpNameStyle mb-1" style="color: #14213d; font-weight: 800">Notfications</h3>
+                        <div class="mt-3">
+                            <ul
+                                class="d-flex gap-4 align-items-center list-group list-group-flush account-settings-links flex-row">
+                                <li style="list-style: none"><a href="#all"
+                                        style="font-size:15px;font-family:'Poppins'; font-weight:500; color:#14213d"
+                                        data-toggle="list" class="empMenu active">All</a> </li>
+                                <li style="list-style: none"><a href="#tasks"
+                                        style="font-size:15px;font-family:'Poppins'; font-weight:500; color:#14213d"
+                                        data-toggle="list" class="empMenu">Tasks</a> </li>
+                                <li style="list-style: none"><a href="#to-do"
+                                        style="font-size:15px;font-family:'Poppins'; font-weight:500; color:#14213d"
+                                        data-toggle="list" class="empMenu">To Do</a> </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="container-fluid tab-pane fade active show px-0" style="border-bottom: none"
+                                id="all">
+                                <div class="notification-hover mt-2 p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
+                                </div>
+                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="container-fluid tab-pane fade show px-0" style="border-bottom: none" id="tasks">
+                                <div class="notification-hover mt-2 p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="container-fluid tab-pane fade px-0 show" style="border-bottom: none" id="to-do">
+                                <div class="notification-hover mt-2 p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -637,19 +1057,36 @@
                 </div>
 
             </div> --}}
-            <div class="col-md-5 col-xl-5 col-sm-12">
-                <div class="card">
-                    <div class="card-body" >
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="col-md-5 col-xl-5 col-lg-5">
+                <div class="card" style="box-shadow: none;">
+                    <div class="card-body" style="background-color: #fff; backdrop-filter: none;border:1px solid #c7c7c7">
+                        <div class="mb-2">
                             <h3 class="EmpNameStyle mb-0" style="color: #14213d; font-weight: 800">Clock In / Out </h3>
                         </div>
                         <div class="d-flex align-items-center">
-                            <svg width="20px" height="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#14213d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#000000" d="M512 832a320 320 0 1 0 0-640 320 320 0 0 0 0 640zm0 64a384 384 0 1 1 0-768 384 384 0 0 1 0 768z"></path><path fill="#000000" d="m292.288 824.576 55.424 32-48 83.136a32 32 0 1 1-55.424-32l48-83.136zm439.424 0-55.424 32 48 83.136a32 32 0 1 0 55.424-32l-48-83.136zM512 512h160a32 32 0 1 1 0 64H480a32 32 0 0 1-32-32V320a32 32 0 0 1 64 0v192zM90.496 312.256A160 160 0 0 1 312.32 90.496l-46.848 46.848a96 96 0 0 0-128 128L90.56 312.256zm835.264 0A160 160 0 0 0 704 90.496l46.848 46.848a96 96 0 0 1 128 128l46.912 46.912z"></path></g></svg>
+                            <svg width="20px" height="20px" viewBox="0 0 1024 1024"
+                                xmlns="http://www.w3.org/2000/svg" fill="#14213d">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path fill="#000000"
+                                        d="M512 832a320 320 0 1 0 0-640 320 320 0 0 0 0 640zm0 64a384 384 0 1 1 0-768 384 384 0 0 1 0 768z">
+                                    </path>
+                                    <path fill="#000000"
+                                        d="m292.288 824.576 55.424 32-48 83.136a32 32 0 1 1-55.424-32l48-83.136zm439.424 0-55.424 32 48 83.136a32 32 0 1 0 55.424-32l-48-83.136zM512 512h160a32 32 0 1 1 0 64H480a32 32 0 0 1-32-32V320a32 32 0 0 1 64 0v192zM90.496 312.256A160 160 0 0 1 312.32 90.496l-46.848 46.848a96 96 0 0 0-128 128L90.56 312.256zm835.264 0A160 160 0 0 0 704 90.496l46.848 46.848a96 96 0 0 1 128 128l46.912 46.912z">
+                                    </path>
+                                </g>
+                            </svg>
                             <span class="ms-2" style="color: #14213d; font-family:'poppins';">Clock</span>
-                            <span class="ms-2" style="color: #14213d; font-family:'poppins';"> <script>document.write(new Date().toUTCString().slice(5, 16))</script></span>
+                            <span class="ms-2" style="color: #14213d; font-family:'poppins';">
+                                <script>
+                                    document.write(new Date().toUTCString().slice(5, 16))
+                                </script>
+                            </span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center gap-4 mt-2">
-                            <div class="p-3 w-50" style="background-color: #14213d26;border-radius:10px; border: 1px solid #14213d30">
+                            <div class="p-2 w-50"
+                                style="background-color: #14213d26;border-radius:10px; border: 1px solid #14213d30">
                                 <p class="mb-0" style="color: #14213d; font-family:'poppins';">Clock In</p>
                                 <h3 class="mb-0" style="color: #14213d; font-family:'poppins';font-weight:700">
                                     @if (session()->has('check_in_time') && session('check_in_time') != '')
@@ -658,36 +1095,59 @@
                                         _
                                     @endif
                                 </h3>
-
-
                             </div>
-                            <div class="p-3 w-50" style="background-color: #14213d26;border-radius:10px; border: 1px solid #14213d30">
+                            <div class="p-2 w-50"
+                                style="background-color: #14213d26;border-radius:10px; border: 1px solid #14213d30">
                                 <p class="mb-0" style="color: #14213d; font-family:'poppins';">Clock Out</p>
                                 <h3 class="mb-0" style="color: #14213d; font-family:'poppins';font-weight:700">
                                     @if (session()->has('check_out_time') && session('check_out_time') != '')
                                         {{ session('check_out_time') }}
                                     @else
-
                                         _
                                     @endif
                                 </h3>
                             </div>
-
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center flex-column mt-3">
+                            <img src="{{ url('Group6.svg') }}" alt="clock" style=" object-fit:contain; width: 50px;">
+                            <h5 class="mb-0" style="color: #14213d; font-family:'Poppins'; font-weight:600">Lunch Break
+                            </h5>
+                            <p class="mb-0" style="color: #14213d; font-family:'Poppins'; font-weight:300">1:15 pm -
+                                2:00 pm</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center gap-4 mt-2">
+                            <div class="p-3 w-50 d-flex justify-content-center align-items-center flex-column">
+                                <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700">
+                                    @if (session()->has('total_over_time') && session('total_over_time') != '')
+                                        <span>{{ session('total_over_time') }}</span>
+                                    @elseif(session()->has('total_hours') && session('total_hours') != '')
+                                        <span>{{ session('total_hours') }}</span>
+                                    @else
+                                        <span id="timer" class="text-center timer">00:00:00</span>
+                                    @endif
+                                </h3>
+                                <p class="mb-0" style="color: #14213d; font-family:'poppins';">Current Time</p>
+                            </div>
+                            <div class="p-3 w-50 d-flex justify-content-center align-items-center flex-column"
+                                style="">
+                                <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700">
+                                    _
+                                </h3>
+                                <p class="mb-0" style="color: #14213d; font-family:'poppins';">Break Time</p>
+                            </div>
                         </div>
                         <div class="punch-info">
-                            <div class="punch-hours">
-                                @if(session()->has('total_over_time') && session('total_over_time')!='')
+                            {{-- <div class="punch-hours">
+                                @if (session()->has('total_over_time') && session('total_over_time') != '')
                                    <span>{{session('total_over_time')}}</span>
                                 @elseif(session()->has('total_hours') && session('total_hours') != '')
                                     <span>{{ session('total_hours') }}</span>
                                 @else
-                                    {{-- <span>0 hrs</span> --}}
 
                                     <span id="timer" class="text-center timer">00:00:00</span>
 
-                                    {{-- <div id="timer" class="text-center timer">00:00:00</div> --}}
                                 @endif
-                            </div>
+                            </div> --}}
 
 
 
@@ -702,82 +1162,27 @@
                             @endif
 
 
-                            <div class="break-time d-flex align-items-center justify-content-between my-3">
+                            {{-- <div class="break-time d-flex align-items-center justify-content-between my-3">
                                 <p class="mb-0 font-size-15" >Target Working Hours</p>
                                 <p class="mb-0 font-size-15" >7:00 / Day</p>
-                            </div>
+                            </div> --}}
                             @if (session()->has('attendence_status') && session('attendence_status') === true)
+                                <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="1em" height="1em" viewBox="0 0 24 24">
+                                        <path fill="#3e7213"
+                                            d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
+                                    </svg> Attendence Marked Successfully!</span>
 
-                                        <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
-                                            width="1em" height="1em" viewBox="0 0 24 24">
-                                            <path fill="#3e7213"
-                                                d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
-                                        </svg> Attendence Marked Successfully!</span>
-
-                                    @if ( session()->has('overtime_status') && session('overtime_status') === true)
-
-                                        <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
+                                @if (session()->has('overtime_status') && session('overtime_status') === true)
+                                    <span style="color:#3e7213;font-size:16px;"> <svg xmlns="http://www.w3.org/2000/svg"
                                             width="1em" height="1em" viewBox="0 0 24 24">
                                             <path fill="#3e7213"
                                                 d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
                                         </svg> Over time marked!</span>
-
-
-                                        @elseif( session()->has('show_over_time_end') && session('show_over_time_end') === false)
-                                        <div class="row">
-                                            <div class="col-md-12 d-flex justify-content-center">
-                                                <a class="reblateBtn px-4 py-2 w-md" href="/overtime-start" >Overtime Start
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                        viewBox="0 0 21 21">
-                                                        <g fill="none" fill-rule="evenodd" stroke="currentColor"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
-                                                            <path
-                                                                d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
-                                                        </g>
-                                                    </svg>
-                                                </a>
-                                            </div>
-
-                                        </div>
-                                        @elseif( session()->has('show_over_time_end') && session('show_over_time_end') === true)
-                                        <div class="row" style="margin-top:20px;">
-                                            <div class="col-md-12 d-flex justify-content-center">
-                                                <a class="reblateBtn px-4 py-2 w-md" href="/overtime-end" >Overtime End
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                        viewBox="0 0 21 21">
-                                                        <g fill="none" fill-rule="evenodd" stroke="currentColor"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
-                                                            <path
-                                                                d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
-                                                        </g>
-                                                    </svg>
-                                                </a>
-                                            </div>
-
-                                    @endif
-
-
-
-
-                            @else
-                                <div class="d-flex flex-wrap justify-content-between gap-4 align-items-center">
-
-                                        @if (session()->has('show_check_out') && session('show_check_out') === true)
-                                            <a class="reblateBtn px-4 py-2 w-md" href="javascript:void()" onclick="checkOut()">Checking Out
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                    viewBox="0 0 16 16">
-                                                    <g fill="currentColor" fill-rule="evenodd">
-                                                        <path
-                                                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                                        <path
-                                                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
-                                                    </g>
-                                                </svg>
-                                            </a>
-                                        @else
-                                            <a class="reblateBtn px-4 py-2" href="/check-in">Checking In
+                                @elseif(session()->has('show_over_time_end') && session('show_over_time_end') === false)
+                                    <div class="row">
+                                        <div class="col-md-12 d-flex justify-content-center">
+                                            <a class="reblateBtn px-4 py-2 w-md" href="/overtime-start">Overtime Start
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                     viewBox="0 0 21 21">
                                                     <g fill="none" fill-rule="evenodd" stroke="currentColor"
@@ -788,7 +1193,55 @@
                                                     </g>
                                                 </svg>
                                             </a>
-                                        @endif
+                                        </div>
+
+                                    </div>
+                                @elseif(session()->has('show_over_time_end') && session('show_over_time_end') === true)
+                                    <div class="row" style="margin-top:20px;">
+                                        <div class="col-md-12 d-flex justify-content-center">
+                                            <a class="reblateBtn px-4 py-2 w-md" href="/overtime-end">Overtime End
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                    viewBox="0 0 21 21">
+                                                    <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
+                                                        <path
+                                                            d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                @endif
+                            @else
+                                <div class="d-flex flex-wrap justify-content-between gap-4 align-items-center">
+
+                                    @if (session()->has('show_check_out') && session('show_check_out') === true)
+                                        <a class="reblateBtn px-4 py-2 w-md" style="border-radius: 10px;"
+                                            href="javascript:void()" onclick="checkOut()">Checking Out
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                viewBox="0 0 16 16">
+                                                <g fill="currentColor" fill-rule="evenodd">
+                                                    <path
+                                                        d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                                    <path
+                                                        d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                                </g>
+                                            </svg>
+                                        </a>
+                                    @else
+                                        <a class="reblateBtn px-4 py-2" style="border-radius: 10px;"
+                                            href="/check-in">Checking In
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                                viewBox="0 0 21 21">
+                                                <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
+                                                    <path
+                                                        d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
+                                                </g>
+                                            </svg>
+                                        </a>
+                                    @endif
 
 
 
@@ -805,14 +1258,29 @@
                                             </svg>
                                         </a>
                                     @else
-                                        <a class="reblateBtn px-4 py-2" href="/break-start" >Break Start
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                viewBox="0 0 16 16">
-                                                <g fill="currentColor" fill-rule="evenodd">
-                                                    <path
-                                                        d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
-                                                    <path
-                                                        d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                        <a class="reblateBtn px-4 py-2" style="border-radius: 10px;"
+                                            href="/break-start">Break Start
+                                            <svg height="20px" width="20px" version="1.1" id="Capa_1"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 472.053 472.053"
+                                                xml:space="preserve" fill="#000000">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                    stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <g>
+                                                        <g>
+                                                            <path style="fill:#fff;"
+                                                                d="M181.423,12.772l-1.805,85.74c0,3.381-2.292,7.755-6.6,7.755l0,0h-2.309l0,0l0,0 c-4.308,0-6.6-4.804-6.6-8.275l-6.893-85.895c-1.764,0.008-3.568,0.008-5.454,0.008c-3.292,0-6.373-0.016-9.291-0.016 l-6.893,87.081c0.024,3.146-2.276,7.096-6.584,7.096l0,0h-2.309l0,0l0,0c-4.308,0-6.6-4.804-6.6-8.275l-1.788-84.879 c-22.866,3.601-22.858,19.647-22.858,89.935c0,23.711,9.421,44.358,26.247,55.453c2.3,1.52,4.731,2.861,7.308,4.007 c2.552,1.13,5.251,2.04,8.064,2.764l-7.73,295.571c0,6.17,13.136,11.209,19.305,11.209h10.161c6.17,0,19.305-5.023,19.305-11.193 l-7.755-296.677c2.837-0.967,5.495-2.211,8.039-3.609c3.13-1.715,6.023-3.739,8.689-6.04 c13.526-11.681,21.021-30.36,21.021-51.478C208.093,30.151,206.686,15.609,181.423,12.772z">
+                                                            </path>
+                                                            <path style="fill:#fff;"
+                                                                d="M314.642,193.194v45.764c0,4.845,1.39,9.332,3.682,13.176c3.869-3.503,9.34-3.552,12.063-3.552 c1.967,0,4.113,0.122,6.381,0.244c2.398,0.13,4.934,0.268,7.584,0.268h2.552c2.642,0,5.186-0.146,7.584-0.268 c2.268-0.13,4.414-0.244,6.381-0.244c2.731,0,8.194,0.049,12.063,3.552c2.292-3.845,3.682-8.324,3.682-13.176V0.002 C323.787-0.713,314.642,179.278,314.642,193.194z">
+                                                            </path>
+                                                            <path style="fill:#fff;"
+                                                                d="M360.869,256.711c-1.837,0-3.829,0.114-5.934,0.228c-2.536,0.146-5.235,0.285-8.023,0.285h-2.561 c-2.796,0-5.495-0.146-8.023-0.285c-2.113-0.122-4.105-0.228-5.934-0.228c-3.471,0-5.576,0.325-6.804,1.609 c-1.032,1.081-1.447,2.829-1.447,5.739v180.836c0,12.729,9.966,23.093,22.207,23.093h2.552c12.25,0,22.207-10.356,22.207-23.093 V264.059c0-2.91-0.423-4.658-1.447-5.739C366.445,257.036,364.348,256.711,360.869,256.711z">
+                                                            </path>
+                                                        </g>
+                                                    </g>
                                                 </g>
                                             </svg>
                                         </a>
@@ -831,9 +1299,273 @@
 
             </div>
         </div>
+        <div class="row" style="position: relative; top: -70px;">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <div class="card" style="box-shadow: none;">
+                    <div class="card-body bg-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h1 class="EmpNameStyle" style="color: #14213d; font-weight:800">On Going Projects</h1>
+                            <div class="d-flex gap-3">
+                                <div class="p-2 rounded-pill" style="background-color: #14213d">
+                                    <svg width="20px" height="20px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#fff" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z" fill="#fff"></path></g></svg>
+                                </div>
+                                <div class="p-2 rounded-pill" style="background-color: #14213d;">
+                                    <svg width="20px" height="20px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z" fill="#fff"></path></g></svg>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-xl-6">
+                <div class="card" style="box-shadow: none;">
+                    <div class="card-body" style="background-color: #fca311">
+                        <h1 class="EmpNameStyle" style="color: #14213d; font-weight:800">UpComing Holidays</h1>
+                        <div class="d-flex align-items-start gap-2 my-5">
+                            <svg fill="#fff" width="65px" height="65px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M960 95.888l-256.224.001V32.113c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76h-256v-63.76c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76H64c-35.344 0-64 28.656-64 64v800c0 35.343 28.656 64 64 64h896c35.344 0 64-28.657 64-64v-800c0-35.329-28.656-63.985-64-63.985zm0 863.985H64v-800h255.776v32.24c0 17.679 14.32 32 32 32s32-14.321 32-32v-32.224h256v32.24c0 17.68 14.32 32 32 32s32-14.32 32-32v-32.24H960v799.984zM736 511.888h64c17.664 0 32-14.336 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32zm0 255.984h64c17.664 0 32-14.32 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.696 14.336 32 32 32zm-192-128h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32zm0-255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32zm-256 0h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32zm0 255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32z"></path></g></svg>
+                            <div class="d-flex flex-column">
+                                <h1 class="EmpNameStyle mb-0" style="font-weight: 800">Ramadan</h1>
+                                <h3 class="mb-0 EmpStyle text-white font-size-25">Mon 20 May 2024</h3>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-end">
+                            <button class="reblateBtn px-4 py-2 rounded" style="background-color: #14213d; color: #fff" type="button">
+                                View All
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-6">
+                <div class="card" style="box-shadow: none;">
+                    <div class="card-body bg-white">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h1 class="EmpNameStyle" style="color: #14213d; font-weight:800">Company Policy</h1>
+                            <div class="d-flex gap-3">
+                                    <a class="p-2 rounded-pill" style="background-color: #14213d" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                                        <svg width="20px" height="20px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#fff" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z" fill="#fff"></path></g></svg>
+                                    </a>
+                                    <a class="p-2 rounded-pill" style="background-color: #14213d;"  href="#carouselExampleIndicators2" role="button" data-slide="next">
+                                    <svg width="20px" height="20px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z" fill="#fff"></path></g></svg>
+                                    </a>
+                            </div>
+                        </div>
+                        <div class="w-100 mb-2">
+                            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="card" style="box-shadow: none">
+                                                    <div class="card-body" style="background-color: #AA336A30">
+                                                        <div class="d-flex align-items-center text-start gap-2">
+                                                            <span class="p-2 rounded-pill mb-0 font-size-15" style="background-color: #AA336A40; color:#AA336A;font-weight: 600" >HR</span>
+                                                            <h5 class="mb-0 EmpStyle" style="color: #14213d; font-weight: 600">HR Policy</h5>
+                                                        </div>
+                                                        <div class="mt-2">
+                                                            <div class="d-flex align-items-center text-start gap-2">
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy Name:</span>
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR Policy</span>
+                                                            </div>
+                                                            <div>
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated On:</span>
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#14213d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card" style="box-shadow: none">
+                                                    <div class="card-body" style="background-color: #00800030">
+                                                        <div class="d-flex align-items-center text-start gap-2">
+                                                            <span class="p-2 rounded-pill mb-0 font-size-15" style="background-color: #00800040; color:#008000;font-weight: 600" >HR</span>
+                                                            <h5 class="mb-0 EmpStyle" style="color: #14213d; font-weight: 600">HR Policy</h5>
+                                                        </div>
+                                                        <div class="mt-2">
+                                                            <div class="d-flex align-items-center text-start gap-2">
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy Name:</span>
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR Policy</span>
+                                                            </div>
+                                                            <div>
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated On:</span>
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#14213d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="card" style="box-shadow: none">
+                                                    <div class="card-body" style="background-color: #Fca31130">
+                                                        <div class="d-flex align-items-center text-start gap-2">
+                                                            <span class="p-2 rounded-pill mb-0 font-size-15" style="background-color: #fca31140; color:#fca311;font-weight: 600" >HR</span>
+                                                            <h5 class="mb-0 EmpStyle" style="color: #14213d; font-weight: 600">HR Policy</h5>
+                                                        </div>
+                                                        <div class="mt-2">
+                                                            <div class="d-flex align-items-center text-start gap-2">
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy Name:</span>
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR Policy</span>
+                                                            </div>
+                                                            <div>
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated On:</span>
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#14213d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card" style="box-shadow: none">
+                                                    <div class="card-body" style="background-color: #Fca31130">
+                                                        <div class="d-flex align-items-center text-start gap-2">
+                                                            <span class="p-2 rounded-pill mb-0 font-size-15" style="background-color: #fca31140; color:#fca311;font-weight: 600" >HR</span>
+                                                            <h5 class="mb-0 EmpStyle" style="color: #14213d; font-weight: 600">HR Policy</h5>
+                                                        </div>
+                                                        <div class="mt-2">
+                                                            <div class="d-flex align-items-center text-start gap-2">
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy Name:</span>
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR Policy</span>
+                                                            </div>
+                                                            <div>
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated On:</span>
+                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#14213d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <div class="card" style="box-shadow: none">
+                    <div class="card-body bg-white">
+                        <h1 class="EmpNameStyle" style="color: #14213d; font-weight:800">Performance Indicators</h1>
+                        <div class="row mt-4 justify-content-center">
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                <div class="card" style="box-shadow: none">
+                                    <div class="card-body" style="background-color: #fca311">
+                                        <div class="d-flex flex-column">
+                                            <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Attendence <br> Rate</h4>
+                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label" style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar" style="width: 50%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">50%</div>
+                                              </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                <div class="card" style="box-shadow: none">
+                                    <div class="card-body" style="background-color: #fca311">
+                                        <div class="d-flex flex-column">
+                                            <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Work <br>Progress</h4>
+                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label" style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar" style="width: 50%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">50%</div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                <div class="card" style="box-shadow: none">
+                                    <div class="card-body" style="background-color: #fca311">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Overtime</h4>
+                                            <div class="w-100 d-flex justify-content-center" style="margin:20px 0">
+                                                <div class="w-75 text-center" style="background-color: #14213d;">
+                                                    <span class="text-white font-size-18">03:50:00</span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                <div class="card" style="box-shadow: none">
+                                    <div class="card-body" style="background-color: #fca311">
+                                        <div class="d-flex flex-column">
+                                            <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Professional <br>Growth</h4>
+                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label" style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar" style="width: 50%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">50%</div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                <div class="card" style="box-shadow: none">
+                                    <div class="card-body" style="background-color: #fca311">
+                                        <div class="d-flex flex-column">
+                                            <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Overall <br> Assesment</h4>
+                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label" style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar" style="width: 50%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">50%</div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
         <!-- END ROW -->
-        <div class="row mb-3">
+        {{-- <div class="row mb-3">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
@@ -848,10 +1580,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- END ROW -->
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
@@ -866,7 +1598,6 @@
 
                                         <th>Task Title</th>
                                         <th>Task Date</th>
-                                        {{-- <th>Tasks</th> --}}
                                         <th>Task Status</th>
                                         <th>Assigned By</th>
 
@@ -874,7 +1605,6 @@
                                 </thead>
                                 <tbody>
                                     <tr class="row-hover" style="border-bottom: 1px solid #e3e3e3;">
-                                        {{-- {{count($latest_tasks)}} --}}
                                         @if (count($latest_tasks) >= 1)
                                             @foreach ($latest_tasks as $task)
                                     <tr>
@@ -883,18 +1613,17 @@
                                         <td>
                                             @if ($task->task_status == 'completed')
                                                 <span
-                                                class="badge badge-soft-success font-size-12">{{ $task->task_status }}</span>
+                                                    class="badge badge-soft-success font-size-12">{{ $task->task_status }}</span>
                                             @elseif ($task->task_status == 'in-progress')
                                                 <span
-                                                class="badge badge-soft-warning font-size-12">{{ $task->task_status }}</span>
+                                                    class="badge badge-soft-warning font-size-12">{{ $task->task_status }}</span>
                                             @else
                                                 <span
-                                                class="badge badge-soft-danger font-size-12">{{ $task->task_status }}</span>
-
+                                                    class="badge badge-soft-danger font-size-12">{{ $task->task_status }}</span>
                                             @endif
-                                            </td>
+                                        </td>
                                         <td>{{ $task->assigned_by }}</td>
-                                        {{-- <td>{{$task->task_title}}</td> --}}
+
                                     </tr>
                                     @endforeach
                                 @else
@@ -912,7 +1641,7 @@
                         <div class="text-center pt-3">
                             <a href="/view-emp-tasks-each" class="w-md">View All</a>
                         </div>
-                        <!-- end table-responsive -->
+
                     </div>
                 </div>
             </div>
@@ -1090,12 +1819,12 @@
                         </div>
                         <div class="text-center pt-3">
                             <a href="#" class=" w-md">View All</a>
-                        </div> <!-- enbd table-responsive-->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
+        </div> --}}
+{{--
         <div class="row">
             <div class="col-xl-6">
                 <div class="card">
@@ -1266,7 +1995,7 @@
                         </div>
                         <div class="text-center pt-3">
                             <a href="#" class=" w-md">View All</a>
-                        </div> <!-- enbd table-responsive-->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1448,7 +2177,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- END ROW -->
 
@@ -1476,7 +2205,6 @@
                     }
                 });
             });
-
         </script>
         <script type="text/javascript">
             const chartDiv = document.getElementById('chartDiv');
@@ -1636,11 +2364,9 @@
                     }
                 });
             }
-
         </script>
     @endsection
     @section('scripts')
-
         {{-- <script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script> --}}
 
         {{-- <script src="{{ URL::asset('build/libs/jsvectormap/js/jsvectormap.min.js') }}"></script> --}}
@@ -1654,4 +2380,5 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="{{ URL::asset('build/js/pages/form-element.init.js') }}"></script>
     @endsection
