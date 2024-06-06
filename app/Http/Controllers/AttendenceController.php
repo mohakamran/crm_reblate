@@ -14,6 +14,78 @@ use Carbon\Carbon;
 
 class AttendenceController extends Controller
 {
+    // add attendence of employeee
+    public function addAttendence(Request $request) {
+        $emp_code = $request->emp_code;
+
+        $emp_check_in = $request->emp_check_in;
+        $emp_check_out = $request->emp_check_out;
+
+        $emp_break_start = $request->emp_break_start;
+        $emp_break_end = $request->emp_break_end;
+
+        $emp_overtime_start = $request->emp_overtime_start;
+        $emp_overtime_end = $request->emp_overtime_end;
+
+        $emp_date = $request->emp_date;
+
+        $emp_check_in = Carbon::createFromFormat('h:i A', $request->emp_check_in);
+        $emp_check_out = Carbon::createFromFormat('h:i A', $request->emp_check_out);
+
+        // Check if Carbon instances were successfully created
+        if ($emp_check_in && $emp_check_out) {
+                // Calculate total work hours
+                $totalWorkHours = $emp_check_out->diffInMinutes($emp_check_in) / 60;
+
+                // Handle break time subtraction if break times are provided
+                if ($request->emp_break_start && $request->emp_break_end) {
+                    $breakStart = Carbon::createFromFormat('h:i A', $request->emp_break_start);
+                    $breakEnd = Carbon::createFromFormat('h:i A', $request->emp_break_end);
+
+                    // Verify if break times are valid
+                    if ($breakStart && $breakEnd) {
+                        if ($breakStart >= $emp_check_in && $breakEnd <= $emp_check_out) {
+                            $totalWorkHours -= $breakEnd->diffInMinutes($breakStart) / 60;
+                        }
+                    }
+                }
+
+                // Format total worked hours into HH:MM format
+                $hours = floor($totalWorkHours);
+                $minutes = ($totalWorkHours - $hours) * 60;
+                $total_daily_work_hours = sprintf('%02d:%02d', $hours, $minutes);
+        }
+
+        $total_overtime = "";
+
+        if ($request->emp_overtime_start && $request->emp_overtime_end) {
+            $checkIn = Carbon::createFromFormat('h:i A', $request->emp_overtime_start);
+            $checkOut = Carbon::createFromFormat('h:i A', $request->emp_overtime_end);
+            $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to hours
+
+            $hours = floor($totalWorkHours);
+            $minutes = ($totalWorkHours - $hours) * 60;
+            $total_overtime = sprintf('%02d:%02d', $hours, $minutes);
+        }
+
+        DB::table('attendence')->insert([
+            'emp_id' => $emp_code,
+            'check_in_time' => $request->emp_check_in,
+            'check_out_time' => $request->emp_check_out,
+            'break_start' => $request->emp_break_start,
+            'break_end' => $request->emp_break_end,
+            'overtime_start' => $request->emp_overtime_start,
+            'overtime_end' => $request->emp_overtime_end,
+            'check_in_status' => "done",
+            'check_out_status' => "done",
+            'total_time' => $total_daily_work_hours,
+            'total_over_time' => $total_overtime,
+            'date' => $emp_date,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        return response()->json(['success' =>true,'message'=>'saved']);
+    }
     // overtime start
    public function overTimeStart() {
         $id = Auth()->user()->user_code;
@@ -148,14 +220,6 @@ class AttendenceController extends Controller
             $overtime_end = null;
             $formattedTotalWorkHoursTime = null;
         }
-
-
-
-
-
-
-
-
 
 
 
@@ -302,7 +366,7 @@ class AttendenceController extends Controller
     $checkOut = $checkOut ?? "";
 
    // Parse and format times to 'h:i A' format using Carbon
-$checkIn_format = $check_in_time ? Carbon::parse($check_in_time)->format('h:i A') : '';
+    $checkIn_format = $check_in_time ? Carbon::parse($check_in_time)->format('h:i A') : '';
 $checkOut_format = $checkout_time ? Carbon::parse($checkout_time)->format('h:i A') : '';
 $break_start_format = $break_start_time ? Carbon::parse($break_start_time)->format('h:i A') : '';
 $break_end_format = $break_end_time ? Carbon::parse($break_end_time)->format('h:i A') : '';

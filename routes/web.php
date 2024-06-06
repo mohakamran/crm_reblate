@@ -243,6 +243,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/update-emp-attendence-details', [AttendenceController::class, 'updateEmpAttendenceDetails'])->name('update-emp-attendence-details');
     Route::post('/filter_emp_date',[AttendenceController::class,'filterEmpDateWise']);
     Route::post('/save-attendance',[AttendenceController::class,'saveAttendence']);
+    Route::match(['get', 'post'], '/add-attendance', [AttendenceController::class, 'addAttendence']);
+
     // Route::post('/save-attendance', [AttendanceController::class, 'saveAttendence'])->name('save.attendance');
 
 
