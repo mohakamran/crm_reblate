@@ -332,15 +332,7 @@
 
         <div class="card">
             <div class="card-body bg-white">
-                <div class="position-absolute" style="top: 10px; right: 10px; padding:5px 10px;">
-                    <span style="color: #14213d; font-family:'poppins'; font-weight: 700;">
-                        <svg fill="#14213d" width="17px" height="17px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" stroke="#14213d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M2,19c0,1.7,1.3,3,3,3h14c1.7,0,3-1.3,3-3v-8H2V19z M19,4h-2V3c0-0.6-0.4-1-1-1s-1,0.4-1,1v1H9V3c0-0.6-0.4-1-1-1S7,2.4,7,3v1H5C3.3,4,2,5.3,2,7v2h20V7C22,5.3,20.7,4,19,4z"></path></g></svg>
-                        Today
-                        <script>
-                            document.write(new Date().toUTCString().slice(5, 16))
-                        </script>
-                    </span>
-                </div>
+
                 <div class="d-flex justify-content-between align-items-center mt-4">
                     <div class="d-flex align-items-center gap-2 w-100">
 
@@ -409,6 +401,15 @@
                 <div class="tab-content">
                     <div class="container-fluid tab-pane fade active show px-0" style="border-bottom: none; background-color: white"
                         id="GridView">
+                        <div class="position-absolute" style="top: 10px; right: 10px; padding:5px 10px;">
+                            <span style="color: #14213d; font-family:'poppins'; font-weight: 700;">
+                                <svg fill="#14213d" width="17px" height="17px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" stroke="#14213d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M2,19c0,1.7,1.3,3,3,3h14c1.7,0,3-1.3,3-3v-8H2V19z M19,4h-2V3c0-0.6-0.4-1-1-1s-1,0.4-1,1v1H9V3c0-0.6-0.4-1-1-1S7,2.4,7,3v1H5C3.3,4,2,5.3,2,7v2h20V7C22,5.3,20.7,4,19,4z"></path></g></svg>
+                                Today
+                                <script>
+                                    document.write(new Date().toUTCString().slice(5, 16))
+                                </script>
+                            </span>
+                        </div>
                         <div class="row my-3 flex-wrap gap-3 gap-md-0 gap-lg-0">
                             <div class="col-md-3 col-lg-3 col-xl-3">
                                 <div class="rounded-4 d-flex flex-column justify-content-center align-items-center p-3" style="border: 1px solid #c7c7c7">
@@ -470,6 +471,23 @@
                         </div>
                     </div>
                     <div class="container-fluid tab-pane fade show px-0" style="border-bottom: none; background-color: white" id="ListView">
+                        <div class="position-absolute d-flex gap-1" style="top: 10px; right: 10px; padding:5px 10px;">
+                            <div>
+                                <form action="/filter_emp_date" method="post">
+                                    @csrf
+                                    <input type="month" class="form-control p-0" style="border: none; color: #14213d; font-family:'poppins'; font-weight: 700;" id="start" name="date_controller"
+                                        min="2018-03" value="{{ $currentyear }}-{{ $currentMonth }}" />
+                            </div>
+                            <div  >
+                                <button style="border: none;background-color:transparent;"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#14213d"
+                                        class="bi bi-search" viewBox="0 0 16 16">
+                                        <path
+                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                    </svg></button>
+                            </div>
+                            </form>
+                        </div>
 
                 <div class="row" style="margin-top:30px;">
                     <div class="col-lg-12">
@@ -959,34 +977,6 @@
                 </div>
 
 
-                {{-- <div class="row">
-
-                    <div class="col-md-3">
-                        <form action="/filter_emp_date" method="post">
-
-
-                            @csrf
-                            <input type="month" class="form-control" id="start" name="date_controller"
-                                min="2018-03" value="{{ $currentyear }}-{{ $currentMonth }}" />
-
-
-
-                    </div>
-                    <div class="col-md-3">
-                        <button class="reblateBtn mt-1" style="padding: 7px 14px;"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-search" viewBox="0 0 16 16">
-                                <path
-                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                            </svg></button>
-                    </div>
-                    </form>
-
-                    <div class="col-md-3">
-                        <input type="month" class="form-control" id="start" name="start" min="2018-03" value="{{ $currentyear }}-{{ $currentMonth }}" />
-                    </div>
-
-                </div> --}}
 
 {{--
                 <p>
