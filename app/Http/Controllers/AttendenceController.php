@@ -745,11 +745,94 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
                 $attendances = array_merge($attendances, $employeeAttendances->toArray());
             }
 
+            $date = Carbon::now();
+            $month = $date->format('m');
+            $year = $date->format('Y');
 
 
+            $total_present = $this->getHightestPresent($month,$year);
+            $total_absent = $this->getLowestPresent($month,$year);
+            // dd($total_absent);
 
-        return view('attendence.emp-cards-attendence', compact('total_days','numberOfHolidays','datesForMonth','currentyear','currentMonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
+            return view('attendence.emp-cards-attendence', compact('total_absent','total_present','total_days','numberOfHolidays','datesForMonth','currentyear','currentMonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
 
+   }
+
+public function getLowestPresent($month, $year)
+{
+    // Construct the start and end dates for the given month and year
+    $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth();
+    $endDate = $startDate->copy()->endOfMonth();
+
+    // Fetch the top 3 attendance records for the given month and year, along with employee IDs and their attendance counts
+    $attendanceCounts = DB::table('attendence')
+        ->select('emp_id', DB::raw('COUNT(*) as present_count'))
+        ->whereBetween('date', [$startDate, $endDate])
+        ->groupBy('emp_id')
+        ->orderBy('present_count')
+        ->limit(3)
+        ->get();
+
+    if ($attendanceCounts->isNotEmpty()) {
+        // Iterate over each attendance record to retrieve employee details
+        foreach ($attendanceCounts as $key => $attendance) {
+            // Get the employee details based on the emp_id
+            $employee = DB::table('employees')
+                ->select('Emp_Full_Name')
+                ->where('Emp_Code', $attendance->emp_id)
+                ->first();
+
+            // If employee is not found, remove the attendance record from the array
+            if (!$employee) {
+                $attendanceCounts->forget($key);
+            } else {
+                // Add the employee's full name to the attendance record
+                $attendance->Emp_Full_Name = $employee->Emp_Full_Name;
+            }
+        }
+    }
+
+    return $attendanceCounts;
+}
+
+
+   public function getHightestPresent($month, $year)
+   {
+       // Construct the start and end dates for the given month and year
+       $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth();
+       $endDate = $startDate->copy()->endOfMonth();
+
+       // Fetch the top 3 attendance records for the given month and year, along with employee IDs and their attendance counts
+       $attendanceCounts = DB::table('attendence')
+           ->select('emp_id', DB::raw('COUNT(*) as present_count'))
+           ->whereBetween('date', [$startDate, $endDate])
+           ->groupBy('emp_id')
+           ->orderByDesc('present_count')
+           ->limit(3)
+           ->get();
+        if($attendanceCounts->isNotEmpty()) {
+
+                   // Iterate over each attendance record to retrieve employee details
+                   foreach ($attendanceCounts as $key => $attendance) {
+                    // Get the employee details based on the emp_id
+                    $employee = DB::table('employees')
+                        ->select('Emp_Full_Name')
+                        ->where('Emp_Code', $attendance->emp_id)
+                        ->first();
+
+                    // If employee is not found, remove the attendance record from the array
+                    if (!$employee) {
+                        $attendanceCounts->forget($key);
+                    } else {
+                        // Add the employee's full name to the attendance record
+                        $attendance->Emp_Full_Name = $employee->Emp_Full_Name;
+                    }
+                }
+
+
+        }
+
+       return $attendanceCounts;
    }
 
 
@@ -812,14 +895,9 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
     $emp_attendence_month = $date_parts[1];
     $emp_attendance_year = $date_parts[0];
 
-
-
     // dd($emp_attendence_month,$emp_attendance_year );
 
-
     // dd($emp_attendance_year);
-
-
 
     $currentmonth = Carbon::now()->format('F');
     $currentyear = Carbon::now()->format('Y');
@@ -903,19 +981,58 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
         $total_days = $this->getNumberOfDays($emp_attendence_month,$emp_attendance_year);
         // dd($total_days);
 
-
         // dd($attendances);
 
         // Assuming you have retrieved the latest employees elsewhere in your code
         // $latestEmployees = DB::table('employees')->get();
+        $total_present = $this->getHightestPresent($emp_attendence_month,$emp_attendance_year);
+        $total_absent = $this->getLowestPresent($emp_attendence_month,$emp_attendance_year);
+        // dd($total_absent);
+        $total_leaves = $this->getHightLeaves($emp_attendence_month,$emp_attendance_year);
 
 
-    return view('attendence.emp-cards-attendence-search', compact('total_days','numberOfHolidays','datesForMonth','currentyear','currentMonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
+    return view('attendence.emp-cards-attendence-search', compact('total_leaves','total_absent','total_present','total_days','numberOfHolidays','datesForMonth','currentyear','currentMonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
 
 
 
 
 
+   }
+   // get highest leaves
+   public function getHightLeaves($month, $year) {
+         // Construct the start and end dates for the given month and year
+    $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth();
+    $endDate = $startDate->copy()->endOfMonth();
+
+    // Fetch the top 3 employees with the highest approved leaves for the given month and year
+    $highestLeaves = DB::table('leaves')
+        ->select('emp_code', DB::raw('COUNT(*) as leaves_count'))
+        ->where('status', 'approved')
+        ->whereBetween('date', [$startDate, $endDate])
+        ->groupBy('emp_code')
+        ->orderByDesc('leaves_count')
+        ->limit(3)
+        ->get();
+
+    if($highestLeaves->isNotEmpty()) {
+        // Iterate over each attendance record to retrieve employee details
+        foreach ($highestLeaves as $key => $attendance) {
+            // Get the employee details based on the emp_id
+            $employee = DB::table('employees')
+                ->select('Emp_Full_Name')
+                ->where('Emp_Code', $attendance->emp_code)
+                ->first();
+            // If employee is not found, remove the attendance record from the array
+            if (!$employee) {
+                $highestLeaves->forget($key);
+            } else {
+                // Add the employee's full name to the attendance record
+                $attendance->Emp_Full_Name = $employee->Emp_Full_Name;
+            }
+
+        }
+    }
+     return $highestLeaves;
    }
    // searcj details
    public function searchAttendenceEmp(Request $req) {

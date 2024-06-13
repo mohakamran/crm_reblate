@@ -355,92 +355,100 @@
 
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2">
-                <div class="card" style="border-radius:10px;">
-                    <div class="card-body" style="background-color: #fca311">
-                        <div class="d-flex align-items-start flex-column">
-                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group1.svg') }}"
-                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
-                                    alt="User Icon Reblate Solutions">
+                <a href="/view-attendence">
+                    <div class="card" style="border-radius:10px;">
+                        <div class="card-body" style="background-color: #fca311">
+                            <div class="d-flex align-items-start flex-column">
+                                <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                    <img src="{{ url('Group1.svg') }}"
+                                        style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                        alt="User Icon Reblate Solutions">
+                                </div>
+                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Presents
+                                </p>
+                                <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                    @if (isset($total_present_day) && $total_present_day != '')
+                                        {{ $total_present_day }}
+                                    @else
+                                        0
+                                    @endif
+                                </h2>
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Presents
-                            </p>
-                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
-                                @if (isset($total_present_day) && $total_present_day != '')
-                                    {{ $total_present_day }}
-                                @else
-                                    0
-                                @endif
-                            </h2>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2">
-                <div class="card" style="border-radius:10px;">
-                    <div class="card-body" style="background-color: #fca311">
-                        <div class="d-flex align-items-start flex-column">
-                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group2.svg') }}"
-                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
-                                    alt="User Icon Reblate Solutions">
+                <a href="/view-attendence">
+                    <div class="card" style="border-radius:10px;">
+                        <div class="card-body" style="background-color: #fca311">
+                            <div class="d-flex align-items-start flex-column">
+                                <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                    <img src="{{ url('Group2.svg') }}"
+                                        style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                        alt="User Icon Reblate Solutions">
+                                </div>
+                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total
+                                    Absents</p>
+                                <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                    @if (isset($absent_days) && $absent_days != '')
+                                        {{ $absent_days }}
+                                    @else
+                                        0
+                                    @endif
+                                </h2>
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total
-                                Absents</p>
-                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
-                                @if (isset($absent_days) && $absent_days != '')
-                                    {{ $absent_days }}
-                                @else
-                                    0
-                                @endif
-                            </h2>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2">
-                <div class="card" style="border-radius:10px;">
-                    <div class="card-body" style="background-color: #fca311">
-                        <div class="d-flex align-items-start flex-column">
-                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group1.svg') }}"
-                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
-                                    alt="User Icon Reblate Solutions">
+                <a href="{{route('leaves.record')}}">
+                    <div class="card" style="border-radius:10px;">
+                        <div class="card-body" style="background-color: #fca311">
+                            <div class="d-flex align-items-start flex-column">
+                                <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                    <img src="{{ url('Group1.svg') }}"
+                                        style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                        alt="User Icon Reblate Solutions">
+                                </div>
+                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Leaves
+                                </p>
+                                <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                    @if (isset($total_pending) && $total_pending != '')
+                                        {{ $total_pending }}
+                                    @else
+                                        0
+                                    @endif
+                                </h2>
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Leaves
-                            </p>
-                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
-                                @if (isset($total_pending) && $total_pending != '')
-                                    {{ $total_pending }}
-                                @else
-                                    0
-                                @endif
-                            </h2>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2">
-                <div class="card" style="border-radius:10px;">
-                    <div class="card-body" style="background-color: #fca311">
-                        <div class="d-flex align-items-start flex-column">
-                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group3.svg') }}"
-                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
-                                    alt="User Icon Reblate Solutions">
+                <a href="{{route('leaves.record')}}">
+                    <div class="card" style="border-radius:10px;">
+                        <div class="card-body" style="background-color: #fca311">
+                            <div class="d-flex align-items-start flex-column">
+                                <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                    <img src="{{ url('Group3.svg') }}"
+                                        style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                        alt="User Icon Reblate Solutions">
+                                </div>
+                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Pending
+                                    Approvel</p>
+                                <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                    @if (isset($total_pending) && $total_pending != '')
+                                        {{ $total_pending }}
+                                    @else
+                                        0
+                                    @endif
+                                </h2>
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Pending
-                                Approvel</p>
-                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
-                                @if (isset($total_pending) && $total_pending != '')
-                                    {{ $total_pending }}
-                                @else
-                                    0
-                                @endif
-                            </h2>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2">
                 <div class="card" style="border-radius:10px;">
@@ -511,10 +519,34 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover; width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                    src="{{ url('user.png') }}">
+                                            @endif
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 class="mb-1 EmpNameStyle"
+                                                style="color: #14213d;font-weight: 500; font-size:20px;">Your order is
+                                                placed</h4>
+                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
+                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
+                                    <div class="d-flex">
+                                        <div class="avatar-sm me-3">
+                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                <img src="{{ $emp_det->Emp_Image }}"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
+                                            @else
+                                                <img class="img-fluid rounded-circle"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -535,10 +567,10 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -559,10 +591,10 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -583,34 +615,10 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -633,10 +641,10 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -657,10 +665,10 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -681,10 +689,10 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -705,10 +713,10 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -729,10 +737,10 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -755,10 +763,10 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -779,10 +787,10 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -803,10 +811,10 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -827,10 +835,10 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -851,10 +859,10 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;" alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -1112,28 +1120,48 @@
                             <img src="{{ url('Group6.svg') }}" alt="clock" style=" object-fit:contain; width: 50px;">
                             <h5 class="mb-0" style="color: #14213d; font-family:'Poppins'; font-weight:600">Lunch Break
                             </h5>
-                            <p class="mb-0" style="color: #14213d; font-family:'Poppins'; font-weight:300">1:15 pm -
-                                2:00 pm</p>
+
+                            @if ($shift_emp_time == "Morning")
+                                <p class="mb-0" style="color: #14213d; font-family:'Poppins'; font-weight:300">1:15 pm -
+                                    2:00 pm</p>
+                                @else
+                                <p class="mb-0" style="color: #14213d; font-family:'Poppins'; font-weight:300">9:30 pm -
+                                    10:00 pm</p>
+                            @endif
+
                         </div>
                         <div class="d-flex justify-content-between align-items-center gap-4 mt-2">
                             <div class="p-3 w-50 d-flex justify-content-center align-items-center flex-column">
-                                <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700">
+
                                     @if (session()->has('total_over_time') && session('total_over_time') != '')
-                                        <span>{{ session('total_over_time') }}</span>
+                                    <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700"> <span>{{ session('total_over_time') }}</span> </h3>
+                                    <p class="mb-0" style="color: #14213d; font-family:'poppins';">Total Over Time</p>
+
                                     @elseif(session()->has('total_hours') && session('total_hours') != '')
-                                        <span>{{ session('total_hours') }}</span>
+                                    <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700"> <span>{{ session('total_hours') }}</span> </h3>
+                                        <p class="mb-0" style="color: #14213d; font-family:'poppins';">Total Hours</p>
                                     @else
-                                        <span id="timer" class="text-center timer">00:00:00</span>
+                                    <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700">  <span id="timer" class="text-center timer">00:00:00</span> </h3>
+                                    <p class="mb-0" style="color: #14213d; font-family:'poppins';">Current Time</p>
                                     @endif
-                                </h3>
-                                <p class="mb-0" style="color: #14213d; font-family:'poppins';">Current Time</p>
+
+
                             </div>
                             <div class="p-3 w-50 d-flex justify-content-center align-items-center flex-column"
                                 style="">
-                                <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700">
+
+
+                                  @if (session()->has('break_end_time') && session('break_end_time') != '' )
+                                  <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700"> {{ session('break_end_time') }} </h3>
+                                      <p class="mb-0" style="color: #14213d; font-family:'poppins';">Break End Time</p>
+                                    @elseif(session()->has('break_start_time') && session('break_start_time') != '')
+                                    <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700"> {{ session('break_start_time') }} </h3>
+                                       <p class="mb-0" style="color: #14213d; font-family:'poppins';">Break Start Time</p>
+                                    @else
                                     _
-                                </h3>
-                                <p class="mb-0" style="color: #14213d; font-family:'poppins';">Break Time</p>
+                                  @endif
+
+
                             </div>
                         </div>
                         <div class="punch-info">
@@ -1217,7 +1245,7 @@
 
                                     @if (session()->has('show_check_out') && session('show_check_out') === true)
                                         <a class="reblateBtn px-4 py-2 w-md" style="border-radius: 10px;"
-                                            href="javascript:void()" onclick="checkOut()">Checking Out
+                                            href="javascript:void()" onclick="checkOut()">Clock Out
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                 viewBox="0 0 16 16">
                                                 <g fill="currentColor" fill-rule="evenodd">
@@ -1230,7 +1258,7 @@
                                         </a>
                                     @else
                                         <a class="reblateBtn px-4 py-2" style="border-radius: 10px;"
-                                            href="/check-in">Checking In
+                                            href="/check-in">Clock In
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                 viewBox="0 0 21 21">
                                                 <g fill="none" fill-rule="evenodd" stroke="currentColor"
@@ -1331,15 +1359,27 @@
                         <h1 class="EmpNameStyle" style="color: #14213d; font-weight:800">UpComing Holidays</h1>
                         <div class="d-flex align-items-start gap-2 my-5">
                             <svg fill="#fff" width="65px" height="65px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M960 95.888l-256.224.001V32.113c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76h-256v-63.76c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76H64c-35.344 0-64 28.656-64 64v800c0 35.343 28.656 64 64 64h896c35.344 0 64-28.657 64-64v-800c0-35.329-28.656-63.985-64-63.985zm0 863.985H64v-800h255.776v32.24c0 17.679 14.32 32 32 32s32-14.321 32-32v-32.224h256v32.24c0 17.68 14.32 32 32 32s32-14.32 32-32v-32.24H960v799.984zM736 511.888h64c17.664 0 32-14.336 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32zm0 255.984h64c17.664 0 32-14.32 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.696 14.336 32 32 32zm-192-128h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32zm0-255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32zm-256 0h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32zm0 255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32z"></path></g></svg>
-                            <div class="d-flex flex-column">
-                                <h1 class="EmpNameStyle mb-0" style="font-weight: 800">Ramadan</h1>
-                                <h3 class="mb-0 EmpStyle text-white font-size-25">Mon 20 May 2024</h3>
-                            </div>
+                            @if (isset($holidays) && $holidays !=null)
+                                <div class="d-flex flex-column">
+
+                                        <h1 class="EmpNameStyle mb-0" style="font-weight: 800">{{ $holidays->holiday_type }}</h1>
+                                        <h3 class="mb-0 EmpStyle text-white font-size-25">{{ \Carbon\Carbon::parse($holidays->startDate)->format('d F Y') }} - {{ \Carbon\Carbon::parse($holidays->endDate)->format('d F Y') }} ({{ $holidays->total_days }} days) </h3>
+
+
+                                </div>
+                                @else
+                                <div class="d-flex flex-column">
+                                    <h1 class="EmpNameStyle mb-0" style="font-weight: 800">No Upcoming Holidays</h1>
+                                    <h3 class="mb-0 EmpStyle text-white font-size-25"> </h3>
+                                </div>
+                            @endif
+
                         </div>
                         <div class="mt-3 text-end">
-                            <button class="reblateBtn px-4 py-2 rounded" style="background-color: #14213d; color: #fff" type="button">
+
+                            <a href="{{route('vacations.index')}}" class="reblateBtn px-4 py-2 rounded" style="background-color: #14213d; color: #fff">
                                 View All
-                            </button>
+                            </a>
                         </div>
                     </div>
 
@@ -1482,19 +1522,25 @@
             </div>
 
         </div>
+
+
+
+
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12">
                 <div class="card" style="box-shadow: none">
                     <div class="card-body bg-white">
-                        <h1 class="EmpNameStyle" style="color: #14213d; font-weight:800">Performance Indicators</h1>
+                        <h1 class="EmpNameStyle" style="color: #14213d; font-weight:800">Last Month Performance Indicators</h1>
                         <div class="row mt-4 justify-content-center">
                             <div class="col-md-2 col-lg-2 col-xl-2">
                                 <div class="card" style="box-shadow: none">
                                     <div class="card-body" style="background-color: #fca311">
                                         <div class="d-flex flex-column">
                                             <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Attendence <br> Rate</h4>
-                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label" style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                <div class="progress-bar" style="width: 50%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">50%</div>
+                                            <div class="progress mt-3 text-center" role="progressbar" aria-label="Example with label" style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <span style="position: absolute;width: 80%;text-align: center;background-color: transparent;
+                                               color:#000; font-weight:700;font-size:15px; font-family:'Poppins';bottom: 18px;"> {{$total_attendence_rate}}%</span>
+                                                <div class="progress-bar" style="width: {{$total_attendence_rate}}%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'"></div>
                                               </div>
                                         </div>
 
@@ -1507,6 +1553,7 @@
                                         <div class="d-flex flex-column">
                                             <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Work <br>Progress</h4>
                                             <div class="progress mt-3" role="progressbar" aria-label="Example with label" style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+
                                                 <div class="progress-bar" style="width: 50%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">50%</div>
                                               </div>
                                         </div>
@@ -1534,7 +1581,9 @@
                                         <div class="d-flex flex-column">
                                             <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Professional <br>Growth</h4>
                                             <div class="progress mt-3" role="progressbar" aria-label="Example with label" style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                <div class="progress-bar" style="width: 50%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">50%</div>
+                                                <span style="position: absolute;width: 80%;text-align: center;background-color: transparent;
+                                               color:#000; font-weight:700;font-size:15px; font-family:'Poppins';bottom: 18px;"> {{$professional_growth}}%</span>
+                                                <div class="progress-bar" style="width: {{$professional_growth}}%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'"></div>
                                               </div>
                                         </div>
                                     </div>
@@ -1546,7 +1595,9 @@
                                         <div class="d-flex flex-column">
                                             <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Overall <br> Assesment</h4>
                                             <div class="progress mt-3" role="progressbar" aria-label="Example with label" style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                <div class="progress-bar" style="width: 50%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">50%</div>
+                                                <span style="position: absolute;width: 80%;text-align: center;background-color: transparent;
+                                               color:#000; font-weight:700;font-size:15px; font-family:'Poppins';bottom: 18px;"> {{$over_all_performance}}%</span>
+                                                <div class="progress-bar" style="width: {{$over_all_performance}}%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'"></div>
                                               </div>
                                         </div>
                                     </div>

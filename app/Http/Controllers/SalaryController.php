@@ -100,11 +100,20 @@ class SalaryController extends Controller
                 ->orderByDesc('date')
                 ->get();
 
-                $sum_total_salaries = DB::table('salaries')
-                ->select(DB::raw('SUM(amount) as total_amount'))
+            $salaries_amount = DB::table('salaries')->select('amount')
                 ->whereRaw("STR_TO_DATE(date, '%d/%m/%Y') BETWEEN '$previousYear-$previousMonth-01' AND LAST_DAY(STR_TO_DATE(date, '%d/%m/%Y'))")
                 ->orderByDesc('date')
                 ->get();
+            $sum_total_salaries = 0;
+
+
+
+            foreach($salaries_amount as $sum) {
+                $sum_total_salaries = $sum_total_salaries + $sum->amount;
+            }
+
+            // dd($sum_total_salaries);
+
 
 
         }
@@ -221,12 +230,6 @@ class SalaryController extends Controller
              $total_days = $this->getNumberOfDays($salary_month);
 
              $getTotalPresent = $this->getTotalPresent($emp_code,$salary_month);
-
-
-
-
-
-            //  dd($total_leaves, $total_absents , $total_days);
 
 
 
@@ -607,6 +610,9 @@ class SalaryController extends Controller
         $previous_month = date('F, Y', $last_day_previous_month);
         // dd($previous_month);
 
+        // Delay sending email for 1 hour (7200 seconds) / 2 hours
+        $delayInSeconds = 7200;
+
 
         $pdf_name = 'generated-salaries/'.$emp_code."_".$previous_month.".pdf";
         $pdf = PDF::loadView('salaries.preview-slip', $data)->setOptions(['defaultFont' => 'sans-serif']);
@@ -614,7 +620,9 @@ class SalaryController extends Controller
         // $date = date('F  Y');
         $mail_subject = "Salary Slip for Month of ".$previous_month;
         $pdfContent = $pdf->output();
-        Mail::send('salaries.email-template', $data, function ($message) use ( $mail_subject, $emp_email, $pdfContent) {
+
+        // Use the later method to delay sending the email
+        Mail::send('salaries.email-template', $data, function ($message) use ($mail_subject, $emp_email, $pdfContent) {
             $message->to($emp_email)
                     ->subject($mail_subject)
                     ->attachData($pdfContent, 'salary-slip.pdf', [

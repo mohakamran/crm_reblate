@@ -938,10 +938,6 @@ public function searchDateManagerHomePage(Request $req) {
                 $office_time = DB::table('office_times')->where('shift_type','night')->first();
             }
 
-
-
-
-
             // dd($shift->Emp_Shift_Time);
             if($check_shift_time->Emp_Shift_Time == "Morning") {
                 // show attendence time
@@ -1159,6 +1155,7 @@ public function searchDateManagerHomePage(Request $req) {
             // dd($dat);
             $absent_days = $this->getAbsent();
             // dd($absent_days);
+
             $total_work_days_in_month = $this->getTotalDaysWork();
             // dd($total_work_days_in_month);
             // $absent_days = $total_work_days_in_month - $total_present_day;
@@ -1199,7 +1196,59 @@ public function searchDateManagerHomePage(Request $req) {
             $total_pending = $this->totalPending();
             // dd($total_pending);
 
+            $shift_emp_time = $check_shift_time->Emp_Shift_Time;
+
+            $holidays = $this->getHolidaysUpcoming();
+            // dd($holidays);
+
+
+            $salary_month = date('d/m/y');
+
+
+             $total_leaves = $this->getTotalLeaves($user_code,$salary_month);
+            //  dd("end here");
+
+             $total_absents = $this->getTotalAbsents($user_code,$salary_month);
+             $total_days = $this->getNumberOfDays($salary_month);
+
+             $getTotalPresent = $this->getTotalPresent($user_code,$salary_month);
+
+             $total_attendence_rate = 0;
+
+            if($total_days ==null) {
+                $total_days = 0;
+            }
+
+            $total_leaves_last_month = $this->getTotalLeaves($user_code,$salary_month);
+            if($total_leaves_last_month <=2) {
+                $getTotalPresent = $getTotalPresent + $total_leaves_last_month;
+            }
+
+            if($getTotalPresent == null) {
+                $getTotalPresent = 0;
+            }
+
+            $total_attendence_rate = ($getTotalPresent / $total_days) * 100;
+            $total_attendence_rate = number_format($total_attendence_rate,2);
+
+            $total_points = $this->getPointsPerformance($user_code);
+
+            $professional_growth = ($total_points / 50) * 100;
+            $professional_growth = number_format($professional_growth,2);
+
+            // dd($professional_growth);
+            $over_all_performance = ($professional_growth + $total_attendence_rate) / 2;
+            $over_all_performance = number_format($over_all_performance,2);
+
+
+
+
             $data = [
+                'over_all_performance' => $over_all_performance,
+                'professional_growth' => $professional_growth,
+                'total_attendence_rate' => $total_attendence_rate,
+                'holidays' => $holidays,
+                'shift_emp_time' => $shift_emp_time,
                 'total_pending' => $total_pending,
                 'total_work_days_in_month'=>$total_work_days_in_month,
                 'absent_days' => $absent_days,
@@ -1671,6 +1720,177 @@ public function searchDateManagerHomePage(Request $req) {
     }
 
 
+    // get upcoming holidays
+    public function getHolidaysUpcoming()
+    {
+        // Get current date and current month
+        $currentDate = Carbon::now();
+        $currentMonth = $currentDate->format('m'); // Format: MM
+
+        // Retrieve holidays for the current month
+        $holidays = DB::table('holidays')
+                    ->whereRaw("MONTH(STR_TO_DATE(startDate, '%m/%d/%Y')) = ?", [$currentMonth])
+                    ->first();
+
+
+        return $holidays;
+    }
+
+    // get leaves for last month
+
+
+    // get total points performance indicators last month
+    public function getPointsPerformance($code) {
+        $points = DB::table('salaries')->where('emp_id', $code)->orderBy('id', 'desc')->value('all_total') ?? 0;
+        return $points;
+    }
+
+    // get total number of days in last month
+    public function getNumberOfDays($month) {
+        // dd($month);
+            // Get the last month
+            $date = Carbon::createFromFormat('d/m/Y', $month);
+            $lastMonth = $date->subMonth();
+            $month = $date->month;
+            $currentMonth = sprintf('%02d', $date->month);
+
+            $year = $date->year;
+            $currentYear = strlen($year) === 2 ? '20' . $year : $year;
+            $holidays = $this->get_Holidays($currentMonth,$currentYear);
+            $holidays = count($holidays);
+
+
+            // Get the total number of days in the last month
+            $totalDays = $lastMonth->daysInMonth;
+
+            // Initialize counters
+            $numWeekdays = 0;
+
+
+
+            // Loop through each day in the last month
+            for ($day = 1; $day <= $totalDays; $day++) {
+                $date = Carbon::createFromDate($lastMonth->year, $lastMonth->month, $day);
+
+
+                // Check if the day is a weekday (Monday to Friday)
+                if (!$date->isWeekend()) {
+                    $numWeekdays++;
+                }
+            }
+
+
+            // Calculate the number of weekend days
+            // $numWeekendDays = $totalDays - $numWeekdays;
+
+
+
+
+
+
+            return $numWeekdays-$holidays;
+
+
+    }
+
+    public function getTotalLeaves($emp_code, $month) {
+        // Parse the month string into a Carbon instance
+        $date = Carbon::createFromFormat('d/m/Y', $month);
+        $date = $date->subMonth();
+
+
+
+        // Get the year and month from the parsed date
+        $year = $date->year;
+
+        $year = $date->year;
+        $currentYear = strlen($year) === 2 ? '20' . $year : $year;
+        $month = $date->month;
+
+        // Get the first and last day of the month
+        $firstDayLastMonth = Carbon::createFromDate($currentYear, $month, 1)->startOfMonth()->toDateString();
+        $lastDayLastMonth = Carbon::createFromDate($currentYear, $month, 1)->endOfMonth()->toDateString();
+        //  dd($currentYear);
+
+
+        $total = 0;
+
+        // Get all attendance records for the last month
+        $getNumberOfDays = DB::table('leaves')
+            ->where('emp_code', $emp_code)
+            ->whereBetween('date', [$firstDayLastMonth, $lastDayLastMonth])
+            ->where('status','approved')
+            ->count();
+        if($getNumberOfDays != null) {
+            $total = $getNumberOfDays;
+        }
+        return $total;
+    }
+
+    public function getTotalPresent($emp_code,$month) {
+        $date = Carbon::createFromFormat('d/m/Y', $month);
+        $date = $date->subMonth();
+        $year = $date->year;
+        $month = $date->month;
+
+        $currentyear = date('Y');
+        $currentmonth = sprintf('%02d', $month);
+
+        // Get the first and last day of the month
+        $firstDayLastMonth = Carbon::createFromDate($currentyear, $month, 1)->startOfMonth()->toDateString();
+        $lastDayLastMonth = Carbon::createFromDate($currentyear, $month, 1)->endOfMonth()->toDateString();
+         // Get all attendance records for the last month
+         $getNumberOfDays = DB::table('attendence')
+         ->where('emp_id', $emp_code)
+         ->whereBetween('date', [$firstDayLastMonth, $lastDayLastMonth])->count();
+         return $getNumberOfDays;
+    }
+
+    public function getTotalAbsents($emp_code,$month) {
+        $get_total = $this->getNumberOfDays($month);
+        $getTotalLeaves = $this->getTotalLeaves($emp_code,$month);
+
+
+
+
+        $date = Carbon::createFromFormat('d/m/Y', $month);
+        $date = $date->subMonth();
+        // Get the year and month from the parsed date
+        $year = $date->year;
+        $month = $date->month;
+
+        $currentyear = date('Y');
+        $currentmonth = sprintf('%02d', $month);
+
+        $get_Holidays = $this->get_Holidays( $currentmonth, $currentyear);
+        $holidays_count = count($get_Holidays);
+
+
+
+
+        // Get the first and last day of the month
+        $firstDayLastMonth = Carbon::createFromDate($currentyear, $month, 1)->startOfMonth()->toDateString();
+        $lastDayLastMonth = Carbon::createFromDate($currentyear, $month, 1)->endOfMonth()->toDateString();
+
+
+
+        // Get all attendance records for the last month
+        $getNumberOfDays = DB::table('attendence')
+        ->where('emp_id', $emp_code)
+        ->whereBetween('date', [$firstDayLastMonth, $lastDayLastMonth])->count();
+
+
+        $getNumberOfDays = $getNumberOfDays + $getTotalLeaves;
+
+        $total = $get_total - $getNumberOfDays;
+        // dd($total);
+
+        // dd($total);
+        // return $attendanceRecords;
+        return $total;
+
+    }
+
     // get public holidays
    public function getHolidays($month, $year) {
     // Get the first day of the month
@@ -1808,10 +2028,12 @@ public function searchDateManagerHomePage(Request $req) {
             ->whereYear('date', $currentYear)
             ->count();
 
-
-            $total_absents = $count + $leaves;
-
-
+            if($leaves > 2) {
+                $leaves = $leaves - 2;
+                $total_absents = $count + $leaves;
+            } else {
+                $total_absents = $count;
+            }
 
             // Initialize absent count
             $absentCount = 0;

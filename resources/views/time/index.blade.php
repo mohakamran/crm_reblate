@@ -10,22 +10,29 @@
     <body data-sidebar="colored">
     @endsection
     @section('content')
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-          .borderingLeftTable {
+            .borderingLeftTable {
                 border-top-left-radius: 10px !important;
             }
 
             .borderingRightTable {
                 border-top-right-radius: 10px !important;
             }
-            .table-lines{
+
+            .table-lines {
                 font-family: 'Poppins';
-                color:#000;
+                color: #000;
                 font-weight: 700;
             }
-              .popup {
+
+            .modal-backdrop.show {
+                opacity: var(--bs-backdrop-opacity);
+                display: none;
+            }
+
+            .popup {
                 display: none;
                 position: fixed;
                 top: 50%;
@@ -40,7 +47,7 @@
 
             .popup-content {
                 /* overflow-y: scroll;
-                                                        scroll-behavior: smooth scroll; */
+                                                            scroll-behavior: smooth scroll; */
                 display: flex;
                 max-width: 700px;
                 margin: auto auto;
@@ -60,79 +67,73 @@
                 right: 15px;
                 cursor: pointer;
             }
-
-    </style>
+        </style>
 
         <div class="row">
             <div class="card p-0" style="box-shadow: none; ">
                 <div class="card-body bg-white" style="border: 1px solid #c7c7c7">
                     <div class="d-flex justify-content-end mb-2">
-                        <button type="button"class="reblateBtn p-2" data-toggle="modal" data-target="#exampleModal">
+                        {{-- <button type="button"class="reblateBtn p-2" data-toggle="modal" data-target="#popupButton">
+                            Add Office Time
+                        </button> --}}
+                        <button id="popupButton" class="reblateBtn p-2">
                             Add Office Time
                         </button>
-                        <button id="popupButton">
-                            edit
-                        </button>
 
-
-
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-
-                                    <div class="modal-header">
-
-                                        <h5 class="modal-title" id="exampleModalLabel">Change Shift Time</h5>
-                                        {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button> --}}
+                        <div class="popup" id="popup">
+                            <div class="popup-content flex-column">
+                                <div class="d-flex mb-3 align-items-center justify-content-between">
+                                    <h2 class="mb-0"
+                                        style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom:1px solid #c7c7c7">
+                                        Change Shift Time</h2>
+                                    <span class="closeBtn p-2" id="closeClass"
+                                        style="border-radius: 50%; background-color:#14213d26"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#14213d50"
+                                            class="bi bi-x-lg" viewBox="0 0 16 16">
+                                            <path
+                                                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                        </svg></span>
+                                </div>
+                                <div class="modal-body text-start">
+                                    <p class="text-success" style="display: none;" id="success_message_id">
+                                        Time Added Succcessfully!</p>
+                                    <div class="container">
+                                        <label for="">Office Start (<span style="color:red">*</span>)</label>
+                                        <input type="time" id="office_start" class="form-control">
+                                        <span style="color:red; display: none;" id="message_start">Office Start Time
+                                            Required!</span>
                                     </div>
-                                    <div class="modal-body">
-                                        <p class="text-success" style="display: none;" id="success_message_id">
-                                            Time Added Succcessfully!</p>
-                                        <div class="container">
-                                            <label for="">Office Start (<span style="color:red">*</span>)</label>
-                                            <input type="time" id="office_start" class="form-control">
-                                            <span style="color:red; display: none;" id="message_start">Office Start Time
-                                                Required!</span>
-                                        </div>
-                                        <div class="container mt-2">
-                                            <label for="">Office End (<span style="color:red">*</span>)</label>
-                                            <input type="time" id="office_end" class="form-control">
-                                            <span style="color:red; display: none;" id="message_end">Office End Time
-                                                Required!</span>
-                                        </div>
+                                    <div class="container mt-2">
+                                        <label for="">Office End (<span style="color:red">*</span>)</label>
+                                        <input type="time" id="office_end" class="form-control">
+                                        <span style="color:red; display: none;" id="message_end">Office End Time
+                                            Required!</span>
+                                    </div>
 
-                                        <div class="container mt-2">
-                                            <label for="">Break Start</label>
-                                            <input type="time" id="break_start" class="form-control">
-                                        </div>
-                                        <div class="container mt-2">
-                                            <label for="">Break End</label>
-                                            <input type="time" id="break_end" class="form-control">
-
-                                        </div>
-                                        <div class="container mt-2">
-                                            <label for="">Select Shift (<span style="color:red">*</span>)</label>
-                                            <select id="shift_time" id="" class="form-control">
-                                                <option value="" selected>select shift</option>
-                                                <option value="morning">Morning</option>
-                                                <option value="night">Night</option>
-                                            </select>
-                                            <span style="color:red; display: none;" id="message_shift">Select Shift!</span>
-                                        </div>
+                                    <div class="container mt-2">
+                                        <label for="">Break Start</label>
+                                        <input type="time" id="break_start" class="form-control">
+                                    </div>
+                                    <div class="container mt-2">
+                                        <label for="">Break End</label>
+                                        <input type="time" id="break_end" class="form-control">
 
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                            onclick="location.reload()">Close</button>
-                                        <button type="button" onclick="saveOfficeTime()" class="btn btn-primary">Save
-                                            changes</button>
+                                    <div class="container mt-2">
+                                        <label for="">Select Shift (<span style="color:red">*</span>)</label>
+                                        <select id="shift_time" id="" class="form-control">
+                                            <option value="" selected>select shift</option>
+                                            <option value="morning">Morning</option>
+                                            <option value="night">Night</option>
+                                        </select>
+                                        <span style="color:red; display: none;" id="message_shift">Select Shift!</span>
                                     </div>
+
+                                </div>
+                                <div class="text-end mt-3">
+
+                                    <button type="button" onclick="saveOfficeTime()" class="reblateBtn px-3 py-1">Save
+                                        changes</button>
                                 </div>
                             </div>
                         </div>
@@ -156,85 +157,91 @@
 
                             @foreach ($data as $rec)
                                 <tr style="border-bottom: 1px solid #c7c7c7">
-                                    <td class="table-lines" >{{ $rec->shift_type }}</td>
-                                    <td class="table-lines" >{{ $rec->shift_start }}</td>
-                                    <td class="table-lines" >{{ $rec->break_start }}</td>
-                                    <td class="table-lines" >{{ $rec->break_end }}</td>
-                                    <td class="table-lines" >{{ $rec->shift_end }}</td>
-                                    <td class="table-lines" >
+                                    <td class="table-lines">{{ $rec->shift_type }}</td>
+                                    <td class="table-lines">{{ $rec->shift_start }}</td>
+                                    <td class="table-lines">{{ $rec->break_start }}</td>
+                                    <td class="table-lines">{{ $rec->break_end }}</td>
+                                    <td class="table-lines">{{ $rec->shift_end }}</td>
+                                    <td class="table-lines">
                                         <div>
-                                            <button type="button" style="width: 30px; height:30px;border:none; background-color:#14213d26; border-radius:50%; " data-toggle="modal"
-                                                data-target="#exampleModal" onclick="editShift({{ $rec->id }})">
-                                                <svg style="position: relative;"
-                                                xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                fill="#14213d50" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z" />
-                                            </svg>
+                                            <button type="button"
+                                                style="width: 30px; height:30px;border:none; background-color:#14213d26; border-radius:50%; "
+                                                data-toggle="modal" data-target="#update_popup_{{ $rec->id }}"
+                                                 >
+                                                <svg style="position: relative;" xmlns="http://www.w3.org/2000/svg"
+                                                    width="16" height="16" fill="#14213d50" class="bi bi-pencil-fill"
+                                                    viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z" />
+                                                </svg>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
+
+                                <div class="popup" id="update_popup_{{ $rec->id }}">
+                                    <div class="popup-content flex-column">
+                                        <div class="d-flex mb-3 align-items-center justify-content-between">
+                                            <h2 class="mb-0"
+                                                style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom:1px solid #c7c7c7">
+                                                Update Shift Time</h2>
+                                            <span class="closeBtn p-2" id="closeClass_{{ $rec->id }}"
+                                                style="border-radius: 50%; background-color:#14213d26"><svg
+                                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#14213d50"
+                                                    class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                                </svg></span>
+                                        </div>
+                                        <div class="modal-body text-start">
+                                            <p class="text-success" style="display: none;" id="success_message_id">
+                                                Time update succcessfully!</p>
+                                            <div class="container">
+                                                <label for="">Office Start   (<span style="color:red">*</span>)</label>
+                                                <input type="time" id="office_start" value="{{ date('H:i', strtotime($rec->shift_start)) }}"  class="form-control">
+                                                <span style="color:red; display: none;" id="message_start">Office Start Time
+                                                    Required!</span>
+                                            </div>
+                                            <div class="container mt-2">
+                                                <label for="">Office End (<span style="color:red">*</span>)</label>
+                                                <input type="time" id="office_end" value="{{ date('H:i', strtotime($rec->shift_end)) }}" class="form-control">
+                                                <span style="color:red; display: none;" id="message_end">Office End Time
+                                                    Required!</span>
+                                            </div>
+
+                                            <div class="container mt-2">
+                                                <label for="">Break Start</label>
+                                                <input type="time" id="break_start" value="{{ $rec->break_start !== '00:00' ? date('H:i', strtotime($rec->break_start)) : '' }}" class="form-control">
+                                            </div>
+                                            <div class="container mt-2">
+                                                <label for="">Break End</label>
+                                                <input type="time" id="break_end" value="{{ $rec->break_end !== '00:00' ? date('H:i', strtotime($rec->break_end)) : '' }}" class="form-control">
+
+                                            </div>
+                                            <div class="container mt-2">
+                                                <label for="">Select Shift (<span style="color:red">*</span>)</label>
+                                                <select id="shift_time" id="" class="form-control">
+                                                    <option value=""  >select shift</option>
+                                                    <option value="morning" {{($rec->break_start == "morning") ? 'selected' : ''}}>Morning</option>
+                                                    <option value="night" {{($rec->break_start == "night") ? 'selected' : ''}}>Night</option>
+                                                </select>
+                                                <span style="color:red; display: none;" id="message_shift">Select Shift!</span>
+                                            </div>
+
+                                        </div>
+                                        <div class="text-end mt-3">
+
+                                            <button type="button" onclick="UpdateOfficeTime({{$rec->id}})" class="reblateBtn px-3 py-1">Save
+                                                changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-                <div class="popup" id="popup">
-                    <div class="popup-content flex-column">
-                        <div class="d-flex mb-3 align-items-center justify-content-between">
-                            <h2 class="mb-0"
-                                style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom:1px solid #c7c7c7">
-                                Change Shift Time</h2>
-                            <span class="closeBtn p-2" id="closeClass" style="border-radius: 50%; background-color:#14213d26"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    fill="#14213d50" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                    <path
-                                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                                </svg></span>
-                        </div>
-                        <div class="modal-body text-start">
-                            <p class="text-success" style="display: none;" id="success_message_id">
-                                Time Added Succcessfully!</p>
-                            <div class="container">
-                                <label for="">Office Start (<span style="color:red">*</span>)</label>
-                                <input type="time" id="office_start" class="form-control">
-                                <span style="color:red; display: none;" id="message_start">Office Start Time
-                                    Required!</span>
-                            </div>
-                            <div class="container mt-2">
-                                <label for="">Office End (<span style="color:red">*</span>)</label>
-                                <input type="time" id="office_end" class="form-control">
-                                <span style="color:red; display: none;" id="message_end">Office End Time
-                                    Required!</span>
-                            </div>
 
-                            <div class="container mt-2">
-                                <label for="">Break Start</label>
-                                <input type="time" id="break_start" class="form-control">
-                            </div>
-                            <div class="container mt-2">
-                                <label for="">Break End</label>
-                                <input type="time" id="break_end" class="form-control">
-
-                            </div>
-                            <div class="container mt-2">
-                                <label for="">Select Shift (<span style="color:red">*</span>)</label>
-                                <select id="shift_time" id="" class="form-control">
-                                    <option value="" selected>select shift</option>
-                                    <option value="morning">Morning</option>
-                                    <option value="night">Night</option>
-                                </select>
-                                <span style="color:red; display: none;" id="message_shift">Select Shift!</span>
-                            </div>
-
-                        </div>
-                        <div class="text-end mt-3">
-
-                            <button type="button" onclick="saveOfficeTime()" class="reblateBtn px-3 py-1">Save
-                                changes</button>
-                        </div>
-                    </div>
-                </div>
 
 
             </div>
@@ -242,26 +249,51 @@
         </div>
         <!-- end row -->
         <script>
-                 document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function() {
 
-const popupButton = document.getElementById('popupButton');
-const popup = document.getElementById('popup');
-const closeBtn = document.querySelector('.closeBtn');
+                const popupButton = document.getElementById('popupButton');
+                const popup = document.getElementById('popup');
+                const closeBtn = document.querySelector('.closeBtn');
 
-popupButton.addEventListener('click', function() {
-    popup.style.display = 'block';
-});
+                popupButton.addEventListener('click', function() {
+                    popup.style.display = 'block';
+                });
 
-closeBtn.addEventListener('click', function() {
-    popup.style.display = 'none';
-});
+                closeBtn.addEventListener('click', function() {
+                    popup.style.display = 'none';
+                });
 
-window.addEventListener('click', function(e) {
-    if (e.target === popup) {
-        popup.style.display = 'none';
-    }
-});
-});
+                window.addEventListener('click', function(e) {
+                    if (e.target === popup) {
+                        popup.style.display = 'none';
+                    }
+                });
+            });
+
+            //update
+
+            // document.addEventListener('DOMContentLoaded', function(id) {
+            //     var poup_button = 'update_popup_'+id;
+            //     var closeBtn = '#closeClass_'+id;
+            //     const popupButton = document.getElementById(poup_button);
+            //     const popup = document.getElementById(poup_button);
+            //     const closeBtn = document.querySelector(closeBtn);
+
+            //     popupButton.addEventListener('click', function() {
+            //         popup.style.display = 'block';
+            //     });
+
+            //     closeBtn.addEventListener('click', function() {
+            //         popup.style.display = 'none';
+            //     });
+
+            //     window.addEventListener('click', function(e) {
+            //         if (e.target === popup) {
+            //             popup.style.display = 'none';
+            //         }
+            //     });
+            // });
+
             function hideNow() {
                 var divElement = document.getElementById('close-now');
                 divElement.style.display = 'none';
@@ -269,7 +301,7 @@ window.addEventListener('click', function(e) {
 
             function saveOfficeTime() {
                 var office_start = document.getElementById('office_start').value;
-                console.log(office_start);
+
                 var office_end = document.getElementById('office_end').value;
                 var break_start = document.getElementById('break_start').value;
                 var break_end = document.getElementById('break_end').value;
@@ -279,19 +311,6 @@ window.addEventListener('click', function(e) {
                 var message_start = document.getElementById('message_start');
                 var message_end = document.getElementById('message_end');
 
-                // Convert 24-hour format to 12-hour format with AM/PM
-                office_start = formatTime(office_start);
-                office_end = formatTime(office_end);
-                break_start = break_start ? formatTime(break_start) : "00:00"; // Set default value if empty
-                break_end = break_end ? formatTime(break_end) : "00:00 "; // Set default value if empty
-
-                // alert(office_start);
-                // alert(break_start);
-                // alert(break_end);
-                // alert(break_end);
-                // alert(shift_time);
-
-                // return;
 
                 if (office_start == "") {
                     message_start.style.display = "block";
@@ -314,10 +333,19 @@ window.addEventListener('click', function(e) {
                     message_shift.style.display = "none";
                 }
 
+                // Convert 24-hour format to 12-hour format with AM/PM
+                office_start = formatTime(office_start);
+                office_end = formatTime(office_end);
+                break_start = break_start ? formatTime(break_start) : "00:00"; // Set default value if empty
+                break_end = break_end ? formatTime(break_end) : "00:00 "; // Set default value if empty
 
+                // alert(message_start);
+                // alert(break_start);
+                // alert(break_end);
+                // alert(break_end);
+                // alert(shift_time);
 
-
-
+                // return;
 
                 var message_error = document.getElementById('message_error');
                 // alert(DailyReport);
@@ -371,28 +399,30 @@ window.addEventListener('click', function(e) {
                 return hours + ':' + minutes + ' ' + period;
             }
             $(document).ready(function() {
-    $('#datatable-buttons').DataTable({
-        dom: "<'container-fluid'" +
-            "<'row'" +
-            "<'col-md-8'lB>" +
-            "<'col-md-4 text-right'f>" +
-            ">" +
-            "<'row dt-table'" +
-            "<'col-md-12'tr>" +
-            ">" +
-            "<'row'" +
-            "<'col-md-7'i>" +
-            "<'col-md-5 text-right'p>" +
-            ">" +
-            ">",
-        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        buttons: [
-            'excel', 'print'
-        ],
+                $('#datatable-buttons').DataTable({
+                    dom: "<'container-fluid'" +
+                        "<'row'" +
+                        "<'col-md-8'lB>" +
+                        "<'col-md-4 text-right'f>" +
+                        ">" +
+                        "<'row dt-table'" +
+                        "<'col-md-12'tr>" +
+                        ">" +
+                        "<'row'" +
+                        "<'col-md-7'i>" +
+                        "<'col-md-5 text-right'p>" +
+                        ">" +
+                        ">",
+                    lengthMenu: [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, "All"]
+                    ],
+                    buttons: [
+                        'excel', 'print'
+                    ],
 
-    });
-});
-
+                });
+            });
         </script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

@@ -91,6 +91,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-end mb-5">
 
+                            @if(Auth()->user()->user_type == "admin" || Auth()->user()->user_type == "manager")
                             <button id="popupButton" class="reblateBtn p-2"> Create Holidays</button>
                             <div class="popup" id="popup">
                                 <div class="popup-content flex-column">
@@ -150,9 +151,7 @@
                                 </div>
 
                             </div>
-
-
-
+                            @endif
                         </div>
                         <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -172,8 +171,15 @@
 
                                 @foreach ($holidays as $holiday)
                                     <tr>
-                                        <td><a href="#" data-toggle="modal"
-                                                data-target="#popup_{{ $holiday->id }}">{{ $holiday->holiday_type }}</a>
+                                        <td>
+                                            @if(Auth()->user()->user_type == "admin" || Auth()->user()->user_type == "manager")
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#popup_{{ $holiday->id }}">{{ $holiday->holiday_type }}
+                                                </a>
+                                                @else
+                                                {{$holiday->holiday_type}}
+                                            @endif
+
                                         </td>
                                         <td>{{ $holiday->startDate }}</td>
                                         <td>{{ $holiday->endDate }}</td>

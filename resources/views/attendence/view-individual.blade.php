@@ -38,6 +38,10 @@
                 font-size: 12px;
                 margin: 0 0 5px;
             }
+            .modal-backdrop.show {
+                z-index: -1;
+
+            }
         </style>
 
         <div class="row mt-2">
@@ -87,17 +91,201 @@
                     <div class="card-body">
 
                         <h4 class="card-title">View Attendence Details</h4>
-                        {{-- <p class="card-title-desc">The Buttons extension for DataTables
-                                provides a common set of options, API methods and styling to display
-                                buttons on a page that will interact with a DataTable. The core library
-                                provides the based framework upon which plug-ins can built.
-                            </p> --}}
+
+
+                        <div class="d-flex justify-content-end mb-5">
+                            @if (auth()->user()->user_type == "admin")
+                            <button type="button" class="reblateBtn px-3 py-2" data-toggle="modal" data-target="#exampleModal">
+                                Add Attendence
+                              </button>
+
+                            @endif
+                        </div>
+
+                        <input type="hidden" value="{{ $emp->Emp_Code }}" id="emp_code">
+
+                        <!-- Modal -->
+                    <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Attendence</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p style="color:green;font-size:15px;display:none;" id="emp_success"></p>
+                                <p style="color:#ce3b3b;font-size:15px;display:none;" id="emp_error"></p>
+                                <form action="" id="reset-form-add">
+
+                                    <div class="form-group">
+                                        <label for="">Date</label>
+                                        <input type="date" id="emp_date" class="form-control">
+                                    </div>
+
+                                    <div class="form-group mt-2">
+                                        <label for="">Check In</label>
+                                        <input type="time" id="emp_check_in" class="form-control">
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label for="">Check Out</label>
+                                        <input type="time" id="emp_check_out" class="form-control">
+                                    </div>
+
+                                    <div class="form-group mt-2">
+                                        <label for="">Break Start</label>
+                                        <input type="time" id="emp_break_start" class="form-control">
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label for="">Break End</label>
+                                        <input type="time" id="emp_break_end" class="form-control">
+                                    </div>
+
+                                    <div class="form-group mt-2">
+                                        <label for="">Overtime Start</label>
+                                        <input type="time" id="emp_overtime_start" class="form-control">
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label for="">Overtime End</label>
+                                        <input type="time" id="emp_overtime_end" class="form-control">
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                             <button type="button" onclick="addAttendence()" class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        function addAttendence() {
+                            var emp_date = document.getElementById('emp_date').value;
+                            var emp_code = document.getElementById('emp_code').value;
+
+                            var emp_check_out = document.getElementById('emp_check_out').value;
+                            var emp_check_in = document.getElementById('emp_check_in').value;
+
+                            var emp_break_start = document.getElementById('emp_break_start').value;
+                            var emp_break_end = document.getElementById('emp_break_end').value;
+
+                            var emp_overtime_start = document.getElementById('emp_overtime_start').value;
+                            var emp_overtime_end = document.getElementById('emp_overtime_end').value;
+
+
+                            var emp_error = document.getElementById('emp_error');
+
+
+
+                            if(emp_date == "") {
+                                emp_error.innerHTML = "Please Select A Date!";
+                                emp_error.style.display = "block";
+                                return;
+                            } else {
+                                emp_error.style.display = "none";
+                            }
+
+                            if(emp_check_in == "") {
+                                emp_error.innerHTML = "Please Select Check In Time!";
+                                emp_error.style.display = "block";
+                                return;
+                            } else {
+                                emp_error.style.display = "none";
+                            }
+
+
+                            if(emp_check_out == "") {
+                                emp_error.innerHTML = "Please Select Check Out Time!";
+                                emp_error.style.display = "block";
+                                return;
+                            } else {
+                                emp_error.style.display = "none";
+                            }
+
+                            if(emp_break_start !="" && emp_break_end == "") {
+                                emp_error.innerHTML = "Please Select Break End !";
+                                emp_error.style.display = "block";
+                                return;
+                            } else {
+                                emp_error.style.display = "none";
+                            }
+
+                            if(emp_overtime_start !="" && emp_overtime_end == "") {
+                                emp_error.innerHTML = "Please Select Overtime End";
+                                emp_error.style.display = "block";
+                                return;
+                            } else {
+                                emp_error.style.display = "none";
+                            }
+
+                            var emp_check_in = convertTo12Hour(emp_check_in);
+                            var emp_check_out = convertTo12Hour(emp_check_out);
+
+                            var emp_break_start = convertTo12Hour(emp_break_start);
+                            var emp_break_end = convertTo12Hour(emp_break_end);
+
+                            var emp_overtime_start = convertTo12Hour(emp_overtime_start);
+                            var emp_overtime_end = convertTo12Hour(emp_overtime_end);
+
+                            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+                            console.log('emp_check_out '+emp_check_out);
+                            console.log('emp_break_start '+emp_break_start);
+                            console.log('emp_break_end '+emp_break_end);
+                            console.log('emp_overtime_start '+emp_overtime_start);
+                            console.log('emp_overtime_end '+emp_overtime_end);
+
+
+                            var formData = {
+                                _token: csrfToken,
+                                emp_check_in: emp_check_in,
+                                emp_check_out: emp_check_out,
+                                emp_break_start: emp_break_start,
+                                emp_break_end: emp_break_end,
+                                emp_overtime_start: emp_overtime_start,
+                                emp_overtime_end: emp_overtime_end,
+                                emp_code: emp_code,
+                                emp_date: emp_date
+                            };
+
+                            var emp_success = document.getElementById('emp_success');
+                            var emp_error = document.getElementById('emp_error');
+                            // AJAX call to send data to the Laravel controller
+                            $.ajax({
+                                url: '/add-attendance', // The Laravel route
+                                type: 'POST', // POST request
+                                data: formData,
+                                success: function(response) {
+                                    // Show success message
+                                    console.log('Response:', response);
+                                    emp_error.style.display = "none";
+                                    document.getElementById('reset-form-add').reset();
+                                    emp_success.innerHTML = "Saved Successfully";
+                                    emp_success.style.display = "block";
+                                },
+                                error: function(xhr, status, error) {
+                                    emp_success.style.display = "none";
+                                    emp_error.innerHTML = error;
+                                    emp_error.style.display = "block";
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': csrfToken // Add CSRF token to request headers
+                                }
+                            });
+
+                            return false; // Prevent form submission if within a form
+
+                        }
+                    </script>
+
+
 
 
                         <form action="/search-emp-details" method="post">
                             @csrf
                             <div class="row mt-3 mb-3">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     {{-- <input placeholder="Select date" type="date" name="date_controller"
                                         class="form-control" value="{{ old('date_controller') }}">
 
@@ -119,95 +307,30 @@
 
 
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <button class="reblateBtn px-3 py-2">Search</button>
                                 </div>
                         </form>
 
+                        @if (Session::has('attendance_access'))
+                            @php
+                                $attendance_access = Session::get('attendance_access');
+                                // Convert to an array if it's a single value
+                                if (!is_array($attendance_access)) {
+                                    $attendance_access = explode(',', $attendance_access);
+                                    // Remove any empty elements resulting from the explode function
+                                    $attendance_access = array_filter($attendance_access);
+                                }
+                            @endphp
+                        @endif
+                        <div class="col-md-4">
 
-
-                        <!-- Bootstrap modal -->
-                        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
-                            aria-labelledby="updateModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="updateModalLabel">Update Attendance</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- Form fields for updating attendance -->
-                                        <form id="updateForm">
-                                            <div class="form-group">
-                                                <label for="date">Date</label>
-                                                <input type="text" class="form-control" id="date" name="date"
-                                                    readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="checkIn">Check In Time</label>
-                                                <input type="text" class="form-control" id="checkIn" name="checkIn">
-                                            </div>
-                                            <!-- Add more form fields for other attendance data -->
-                                            <button type="submit" class="btn btn-primary">Update</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-
-
-
-
-
-
-                        {{-- <div class="col-md-3">
-                                    <div class="card att-statistics">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Statistics</h5>
-                                            <div class="stats-list">
-                                                <div class="stats-info">
-                                                    <p>Today <strong>3.45 <small>/ 8 hrs</small></strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-primary w-31" role="progressbar"
-                                                            aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="stats-info">
-                                                    <p>This Week <strong>28 <small>/ 40 hrs</small></strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-warning w-31" role="progressbar"
-                                                            aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="stats-info">
-                                                    <p>This Month <strong>90 <small>/ 160 hrs</small></strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-success w-62" role="progressbar"
-                                                            aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="stats-info">
-                                                    <p>Remaining <strong>90 <small>/ 160 hrs</small></strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-danger w-62" role="progressbar"
-                                                            aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="stats-info">
-                                                    <p>Overtime <strong>4</strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-info w-62" role="progressbar"
-                                                            aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-
                     </div>
+
+
+
+
 
                     <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -219,8 +342,8 @@
                                 <th> Day</th>
                                 {{-- <th> Month</th> --}}
                                 <th> Year</th>
-                                <th> Check In</th>
-                                <th> Check Out</th>
+                                <th> Clock In</th>
+                                <th> Clock Out</th>
                                 <th> Break Start</th>
                                 <th> Break End</th>
                                 <th> Total Time Worked</th>
@@ -350,48 +473,56 @@
                                                     <span class="label label-success" style="display: none;"
                                                         id="text-success"></span>
                                                     <p class="text-danger" id="show_error_{{ $emp->id }}"></p>
-                                                    <p class="text-primary" id="show_success_message_{{ $emp->id }}"></p>
+                                                    <p class="text-primary"
+                                                        id="show_success_message_{{ $emp->id }}"></p>
 
                                                     <div class="form-group mt-2">
                                                         <label for="editCheckIn_{{ $emp->id }}">Check In Time
-                                                             </label>
-                                                        <input type="time" class="form-control" id="editCheckIn_{{ $emp->id }}"
-                                                            name="checkInTime_{{ $emp->id }}" value="{{ $check_in_time_24 ?? '' }}">
+                                                        </label>
+                                                        <input type="time" class="form-control"
+                                                            id="editCheckIn_{{ $emp->id }}"
+                                                            name="checkInTime_{{ $emp->id }}"
+                                                            value="{{ $check_in_time_24 ?? '' }}">
                                                         <span style="color:red;display:none;"
-                                                            id="show_error_check_in__{{ $emp->id }}">Check in time required!</span>
+                                                            id="show_error_check_in__{{ $emp->id }}">Check in time
+                                                            required!</span>
                                                         <!-- Corrected -->
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editCheckOut_{{ $emp->id }}">Check Out Time
                                                             {{ $emp->check_out_time ?? '' }}</label>
-                                                        <input type="time" value="{{ $check_out_time_24 ?? '' }}" class="form-control"
-                                                            id="editCheckOut_{{ $emp->id }}" name="checkOutTime">
+                                                        <input type="time" value="{{ $check_out_time_24 ?? '' }}"
+                                                            class="form-control" id="editCheckOut_{{ $emp->id }}"
+                                                            name="checkOutTime">
                                                         <span style="color:red;display:none; "
-                                                            id="show_error_check_out_{{ $emp->id }}">Check out time required!</span>
+                                                            id="show_error_check_out_{{ $emp->id }}">Check out time
+                                                            required!</span>
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editBreakStart">Break Start
-                                                             </label>
-                                                        <input type="time" value="{{$break_start_24 ?? '' }}" class="form-control"
-                                                            id="editBreakStart_{{ $emp->id }}" name="breakStart">
+                                                        </label>
+                                                        <input type="time" value="{{ $break_start_24 ?? '' }}"
+                                                            class="form-control" id="editBreakStart_{{ $emp->id }}"
+                                                            name="breakStart">
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editBreakEnd">Break End
-                                                             </label>
-                                                        <input type="time" value="{{$break_end_24 ?? '' }}" class="form-control"
-                                                            id="editBreakEnd_{{ $emp->id }}" name="breakEnd">
+                                                        </label>
+                                                        <input type="time" value="{{ $break_end_24 ?? '' }}"
+                                                            class="form-control" id="editBreakEnd_{{ $emp->id }}"
+                                                            name="breakEnd">
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editOverStart">Over Time Start
-                                                             </label>
-                                                        <input type="time" value="{{$overtime_start_24 ?? '' }}" class="form-control"
-                                                            id="overTimeStart_{{ $emp->id }}"  >
+                                                        </label>
+                                                        <input type="time" value="{{ $overtime_start_24 ?? '' }}"
+                                                            class="form-control" id="overTimeStart_{{ $emp->id }}">
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editOverEnd">Over Time End
-                                                             </label>
-                                                        <input type="time" value="{{$overtime_end_24 ?? '' }}" class="form-control"
-                                                            id="overTimeEnd_{{ $emp->id }}"  >
+                                                        </label>
+                                                        <input type="time" value="{{ $overtime_end_24 ?? '' }}"
+                                                            class="form-control" id="overTimeEnd_{{ $emp->id }}">
                                                     </div>
                                                     <!-- Add more fields as needed -->
                                                     <button type="submit" class="btn btn-primary mt-2"
@@ -419,26 +550,29 @@
 
 
         <script>
-                        $(document).ready(function() {
-    $('#datatable-buttons').DataTable({
-        dom: "<'container-fluid'" +
-            "<'row'" +
-            "<'col-md-8'l>" +
-            "<'col-md-4 text-right'f>" +
-            ">" +
-            "<'row dt-table'" +
-            "<'col-md-12'tr>" +
-            ">" +
-            "<'row'" +
-            "<'col-md-7'i>" +
-            "<'col-md-5 text-right'p>" +
-            ">" +
-            ">",
-        lengthMenu: [[10, 20, 30, 40, 50, -1], [10, 20, 30, 40, 50, "All"]],
+            $(document).ready(function() {
+                $('#datatable-buttons').DataTable({
+                    dom: "<'container-fluid'" +
+                        "<'row'" +
+                        "<'col-md-8'l>" +
+                        "<'col-md-4 text-right'f>" +
+                        ">" +
+                        "<'row dt-table'" +
+                        "<'col-md-12'tr>" +
+                        ">" +
+                        "<'row'" +
+                        "<'col-md-7'i>" +
+                        "<'col-md-5 text-right'p>" +
+                        ">" +
+                        ">",
+                    lengthMenu: [
+                        [10, 20, 30, 40, 50, -1],
+                        [10, 20, 30, 40, 50, "All"]
+                    ],
 
 
-    });
-});
+                });
+            });
 
             function convertTo12Hour(time24) {
                 if (!time24 || time24 === "") {
@@ -465,18 +599,18 @@
                 // var editBreakStart = document.getElementById('editBreakStart_'+id).value;
                 // var editBreakEnd = document.getElementById('editBreakEnd_'+id).value;
                 // var attendence_id = document.getElementById('attendence_id_'+id).value;
-                var show_error = document.getElementById('show_error_'+id);
-                var show_success_message = document.getElementById('show_success_message_'+id);
+                var show_error = document.getElementById('show_error_' + id);
+                var show_success_message = document.getElementById('show_success_message_' + id);
 
-                var editCheckIn = document.getElementById('editCheckIn_'+id).value;
-                var editCheckOut = document.getElementById('editCheckOut_'+id).value;
+                var editCheckIn = document.getElementById('editCheckIn_' + id).value;
+                var editCheckOut = document.getElementById('editCheckOut_' + id).value;
                 // var editCheckOut = document.getElementById('editCheckOut_' +id).value;
-                var editBreakStart = document.getElementById('editBreakStart_' +id).value;
-                var editBreakEnd = document.getElementById('editBreakEnd_' +id).value;
-                var attendence_id = document.getElementById('attendence_id__' +id).value;
+                var editBreakStart = document.getElementById('editBreakStart_' + id).value;
+                var editBreakEnd = document.getElementById('editBreakEnd_' + id).value;
+                var attendence_id = document.getElementById('attendence_id__' + id).value;
 
-                var editOverStart = document.getElementById('overTimeStart_' +id).value;
-                var editOverEnd = document.getElementById('overTimeEnd_' +id).value;
+                var editOverStart = document.getElementById('overTimeStart_' + id).value;
+                var editOverEnd = document.getElementById('overTimeEnd_' + id).value;
 
 
 
@@ -502,19 +636,19 @@
                 editCheckIn = convertTo12Hour(editCheckIn);
                 editCheckOut = convertTo12Hour(editCheckOut);
 
-                if(editBreakStart != "") {
+                if (editBreakStart != "") {
                     editBreakStart = convertTo12Hour(editBreakStart);
                 }
 
-                if(editBreakEnd != "") {
+                if (editBreakEnd != "") {
                     editBreakEnd = convertTo12Hour(editBreakEnd);
                 }
 
-                if(editOverStart != "") {
+                if (editOverStart != "") {
                     editOverStart = convertTo12Hour(editOverStart);
                 }
 
-                if(editOverEnd != "") {
+                if (editOverEnd != "") {
                     editOverEnd = convertTo12Hour(editOverEnd);
                 }
 
@@ -546,7 +680,8 @@
                         console.log('Response:', response);
 
                         // Original innerHTML with updated href to trigger window reload
-show_success_message.innerHTML = "Attendance Saved Successfully! <a style='text-decoration:underline !important;' href='#' onclick='window.location.reload()'>Close Window</a>";
+                        show_success_message.innerHTML =
+                            "Attendance Saved Successfully! <a style='text-decoration:underline !important;' href='#' onclick='window.location.reload()'>Close Window</a>";
 
 
                     },

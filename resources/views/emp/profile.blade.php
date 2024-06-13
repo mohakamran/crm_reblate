@@ -3581,7 +3581,7 @@ if (!is_array($employees_access)) {
                                                                     </g>
                                                                 </g>
                                                             </svg>
-                                                            <input type="number"
+                                                            <input type="text"
                                                                 value="{{ $emp_data->Emp_Bank_IBAN }}"
                                                                 style="border: none; margin-left: 10px; background-color:transparent; outline: none;width:100%;padding:0;"
                                                                 placeholder="Enter Your IBAN No" id="bank_iban">
@@ -3791,7 +3791,7 @@ if (!is_array($employees_access)) {
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="card">
                                 <div class="card-body bg-light" style="border: 1px solid #c7c7c7; min-height: 242px">
-                                    @if (Auth()->user()->user_type == "admin" || Auth()->user()->user_type == "manager")
+                                    @if (Auth()->user()->user_type == "admin")
                                         <div id="popupButton7"
                                         style="width: 30px; height:30px; background-color:#14213d26; border-radius:50%; position: absolute;right:10px; cursor:pointer">
                                         <svg style="position: relative;right:-6px;top:4px;"
