@@ -10,166 +10,70 @@
     <body data-sidebar="colored">
     @endsection
     @section('content')
-        {{-- <div class="row">
-            <div class="col-xl-6">
-                <div class="card">
-                    <div class="card-body">
-                        <form method="post" action="/office-times-morning" enctype="multipart/form-data">
-                            @csrf
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-                            @if (session('success'))
-                                <div class="alert alert-success alert-dismissible fade show" id="close-now">
-                                    {{ session('success') }}
-                                    <a type="button" onclick="hideNow()" class="close" data-dismiss="alert"
-                                        aria-label="Close" style="float: right;">
-                                        <span aria-hidden="true">&times;</span>
-                                    </a>
-                                </div>
-                            @endif
+          .borderingLeftTable {
+                border-top-left-radius: 10px !important;
+            }
 
+            .borderingRightTable {
+                border-top-right-radius: 10px !important;
+            }
+            .table-lines{
+                font-family: 'Poppins';
+                color:#000;
+                font-weight: 700;
+            }
+              .popup {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: rgba(0, 0, 0, 0.5);
+                width: 100%;
+                height: 100%;
+                z-index: 1000;
 
-                            <h4 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Morning Shift </h4>
+            }
 
-                            <div class="row mt-4">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" name="shift_start_morning" type="time"
-                                            value=""  >
-                                        <label for="">Shift Start <span class="text-danger">*</span></label>
-                                        @error('shift_start_morning')
-                                            <span style="color:red">{{$message}}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" name="break_start_morning" type="time"
-                                            value=""  >
-                                        <label for="">Break Start <span class="text-danger">*</span></label>
-                                        @error('break_start_morning')
-                                        <span style="color:red">{{$message}}</span>
-                                    @enderror
-                                    </div>
-                                </div>
+            .popup-content {
+                /* overflow-y: scroll;
+                                                        scroll-behavior: smooth scroll; */
+                display: flex;
+                max-width: 700px;
+                margin: auto auto;
+                position: relative;
+                top: 100px;
+                justify-content: center;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                text-align: center;
+            }
 
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" name="break_end_morning" type="time"
-                                            value=""  >
-                                        <label for="">Break End <span class="text-danger">*</span></label>
-                                        @error('break_end_morning')
-                                        <span style="color:red">{{$message}}</span>
-                                    @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" name="shift_end_morning" type="time"
-                                            value=""  >
-                                        <label for="">Shift Start <span class="text-danger">*</span></label>
-                                        @error('shift_end_morning')
-                                        <span style="color:red">{{$message}}</span>
-                                        @enderror
-                                    </div>
-                                </div>
+            .closeBtn {
+                position: absolute;
+                top: 25px;
+                right: 15px;
+                cursor: pointer;
+            }
 
-                            </div>
-                            <div>
-                                <button type="submit" class="reblateBtn w-md py-2 px-4">Update</button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- end card body -->
-                </div>
-                <!-- end card -->
-            </div>
-            <div class="col-xl-6">
-                <div class="card">
-                    <div class="card-body">
-
-                        <form method="post" action="/office-times-night" enctype="multipart/form-data">
-                            @csrf
-
-                            @if (session('success'))
-                                <div class="alert alert-success alert-dismissible fade show" id="close-now">
-                                    {{ session('success') }}
-                                    <a type="button" onclick="hideNow()" class="close" data-dismiss="alert"
-                                        aria-label="Close" style="float: right;">
-                                        <span aria-hidden="true">&times;</span>
-                                    </a>
-                                </div>
-                            @endif
-
-
-                            <h4 style="font-size: 30px; padding-bottom: 10px; border-bottom: 1px solid #e3e3e3;">Evening Shift</h4>
-                                <div class="row mt-4">
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" name="shift_start_night" type="time"
-                                                value=""  >
-                                            <label for="">Shift Start <span class="text-danger">*</span></label>
-                                            @error('shift_start_night')
-                                            <span style="color:red">{{$message}}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" type="time" name="break_start_night"
-                                                value=""  >
-                                            <label for="">Break Start <span class="text-danger">*</span></label>
-                                            @error('break_start_night')
-                                            <span style="color:red">{{$message}}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" type="time" name="break_end_night"
-                                                value=""  >
-                                            <label for="">Break End <span class="text-danger">*</span></label>
-                                            @error('break_end_night')
-                                            <span style="color:red">{{$message}}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control inputboxcolor" style="border: 1px solid #c7c7c7;" type="time" name="shift_end_night"
-                                                value=""  >
-                                            <label for="">Shift End <span class="text-danger">*</span></label>
-                                            @error('shift_end_night')
-                                            <span style="color:red">{{$message}}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                </div>
-                            <div>
-                                <button type="submit" class="reblateBtn w-md py-2 px-4">Update</button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- end card body -->
-                </div>
-                <!-- end card -->
-            </div>
-            <!-- end col -->
-        </div> --}}
-
+    </style>
 
         <div class="row">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-end mb-5">
+            <div class="card p-0" style="box-shadow: none; ">
+                <div class="card-body bg-white" style="border: 1px solid #c7c7c7">
+                    <div class="d-flex justify-content-end mb-2">
                         <button type="button"class="reblateBtn p-2" data-toggle="modal" data-target="#exampleModal">
                             Add Office Time
                         </button>
+                        <button id="popupButton">
+                            edit
+                        </button>
+
 
 
 
@@ -235,38 +139,129 @@
 
 
                     </div>
-                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                    <table id="datatable-buttons" class="table dt-responsive nowrap"
                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
-                            <tr>
-                                <th>Shift Type</th>
-                                <th>Shift Start</th>
-                                <th>Break Start</th>
-                                <th>Break End</th>
-                                <th>Shift End</th>
+                            <tr style="background-color: #14213d">
+                                <th class="borderingLeftTable font-size-20" style="color: white">Shift Type</th>
+                                <th class="font-size-20" style="color: white">Shift Start</th>
+                                <th class="font-size-20" style="color: white">Break Start</th>
+                                <th class="font-size-20" style="color: white">Break End</th>
+                                <th class="font-size-20" style="color: white">Shift End</th>
+                                <th class="borderingRightTable font-size-20" style="color: white">Edit</th>
                             </tr>
                         </thead>
 
                         <tbody id="table-body">
 
                             @foreach ($data as $rec)
-                                <tr>
-                                    <td>{{ $rec->shift_type }}</td>
-                                    <td>{{ $rec->shift_start }}</td>
-                                    <td>{{ $rec->break_start }}</td>
-                                    <td>{{ $rec->break_end }}</td>
-                                    <td>{{ $rec->shift_end }}</td>
+                                <tr style="border-bottom: 1px solid #c7c7c7">
+                                    <td class="table-lines" >{{ $rec->shift_type }}</td>
+                                    <td class="table-lines" >{{ $rec->shift_start }}</td>
+                                    <td class="table-lines" >{{ $rec->break_start }}</td>
+                                    <td class="table-lines" >{{ $rec->break_end }}</td>
+                                    <td class="table-lines" >{{ $rec->shift_end }}</td>
+                                    <td class="table-lines" >
+                                        <div>
+                                            <button type="button" style="width: 30px; height:30px;border:none; background-color:#14213d26; border-radius:50%; " data-toggle="modal"
+                                                data-target="#exampleModal" onclick="editShift({{ $rec->id }})">
+                                                <svg style="position: relative;"
+                                                xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="#14213d50" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z" />
+                                            </svg>
+                                            </button>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
+                <div class="popup" id="popup">
+                    <div class="popup-content flex-column">
+                        <div class="d-flex mb-3 align-items-center justify-content-between">
+                            <h2 class="mb-0"
+                                style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom:1px solid #c7c7c7">
+                                Change Shift Time</h2>
+                            <span class="closeBtn p-2" id="closeClass" style="border-radius: 50%; background-color:#14213d26"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                    fill="#14213d50" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                </svg></span>
+                        </div>
+                        <div class="modal-body text-start">
+                            <p class="text-success" style="display: none;" id="success_message_id">
+                                Time Added Succcessfully!</p>
+                            <div class="container">
+                                <label for="">Office Start (<span style="color:red">*</span>)</label>
+                                <input type="time" id="office_start" class="form-control">
+                                <span style="color:red; display: none;" id="message_start">Office Start Time
+                                    Required!</span>
+                            </div>
+                            <div class="container mt-2">
+                                <label for="">Office End (<span style="color:red">*</span>)</label>
+                                <input type="time" id="office_end" class="form-control">
+                                <span style="color:red; display: none;" id="message_end">Office End Time
+                                    Required!</span>
+                            </div>
+
+                            <div class="container mt-2">
+                                <label for="">Break Start</label>
+                                <input type="time" id="break_start" class="form-control">
+                            </div>
+                            <div class="container mt-2">
+                                <label for="">Break End</label>
+                                <input type="time" id="break_end" class="form-control">
+
+                            </div>
+                            <div class="container mt-2">
+                                <label for="">Select Shift (<span style="color:red">*</span>)</label>
+                                <select id="shift_time" id="" class="form-control">
+                                    <option value="" selected>select shift</option>
+                                    <option value="morning">Morning</option>
+                                    <option value="night">Night</option>
+                                </select>
+                                <span style="color:red; display: none;" id="message_shift">Select Shift!</span>
+                            </div>
+
+                        </div>
+                        <div class="text-end mt-3">
+
+                            <button type="button" onclick="saveOfficeTime()" class="reblateBtn px-3 py-1">Save
+                                changes</button>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
 
         </div>
         <!-- end row -->
         <script>
+                 document.addEventListener('DOMContentLoaded', function() {
+
+const popupButton = document.getElementById('popupButton');
+const popup = document.getElementById('popup');
+const closeBtn = document.querySelector('.closeBtn');
+
+popupButton.addEventListener('click', function() {
+    popup.style.display = 'block';
+});
+
+closeBtn.addEventListener('click', function() {
+    popup.style.display = 'none';
+});
+
+window.addEventListener('click', function(e) {
+    if (e.target === popup) {
+        popup.style.display = 'none';
+    }
+});
+});
             function hideNow() {
                 var divElement = document.getElementById('close-now');
                 divElement.style.display = 'none';
@@ -274,6 +269,7 @@
 
             function saveOfficeTime() {
                 var office_start = document.getElementById('office_start').value;
+                console.log(office_start);
                 var office_end = document.getElementById('office_end').value;
                 var break_start = document.getElementById('break_start').value;
                 var break_end = document.getElementById('break_end').value;
