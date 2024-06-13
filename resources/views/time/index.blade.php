@@ -194,38 +194,38 @@
                                                 </svg></span>
                                         </div>
                                         <div class="modal-body text-start">
-                                            <p class="text-success" style="display: none;" id="success_message_id">
+                                            <p class="text-success" style="display: none;" id="success_message_id_{{$rec->id}}">
                                                 Time update succcessfully!</p>
                                             <div class="container">
                                                 <label for="">Office Start   (<span style="color:red">*</span>)</label>
-                                                <input type="time" id="office_start" value="{{ date('H:i', strtotime($rec->shift_start)) }}"  class="form-control">
-                                                <span style="color:red; display: none;" id="message_start">Office Start Time
+                                                <input type="time" id="office_start_{{$rec->id}}" value="{{ date('H:i', strtotime($rec->shift_start)) }}"  class="form-control">
+                                                <span style="color:red; display: none;" id="message_start_{{$rec->id}}">Office Start Time
                                                     Required!</span>
                                             </div>
                                             <div class="container mt-2">
                                                 <label for="">Office End (<span style="color:red">*</span>)</label>
-                                                <input type="time" id="office_end" value="{{ date('H:i', strtotime($rec->shift_end)) }}" class="form-control">
-                                                <span style="color:red; display: none;" id="message_end">Office End Time
+                                                <input type="time" id="office_end_{{$rec->id}}" value="{{ date('H:i', strtotime($rec->shift_end)) }}" class="form-control">
+                                                <span style="color:red; display: none;" id="message_end_{{$rec->id}}">Office End Time
                                                     Required!</span>
                                             </div>
 
                                             <div class="container mt-2">
                                                 <label for="">Break Start</label>
-                                                <input type="time" id="break_start" value="{{ $rec->break_start !== '00:00' ? date('H:i', strtotime($rec->break_start)) : '' }}" class="form-control">
+                                                <input type="time" id="break_start_{{$rec->id}}" value="{{ $rec->break_start !== '00:00' ? date('H:i', strtotime($rec->break_start)) : '' }}" class="form-control">
                                             </div>
                                             <div class="container mt-2">
                                                 <label for="">Break End</label>
-                                                <input type="time" id="break_end" value="{{ $rec->break_end !== '00:00' ? date('H:i', strtotime($rec->break_end)) : '' }}" class="form-control">
+                                                <input type="time" id="break_end_{{$rec->id}}" value="{{ $rec->break_end !== '00:00' ? date('H:i', strtotime($rec->break_end)) : '' }}" class="form-control">
 
                                             </div>
                                             <div class="container mt-2">
                                                 <label for="">Select Shift (<span style="color:red">*</span>)</label>
-                                                <select id="shift_time" id="" class="form-control">
+                                                <select id="shift_time_{{$rec->id}}" id="" class="form-control">
                                                     <option value=""  >select shift</option>
-                                                    <option value="morning" {{($rec->break_start == "morning") ? 'selected' : ''}}>Morning</option>
-                                                    <option value="night" {{($rec->break_start == "night") ? 'selected' : ''}}>Night</option>
+                                                    <option value="morning" {{($rec->shift_type == "morning") ? 'selected' : ''}}>Morning</option>
+                                                    <option value="night" {{($rec->shift_type == "night") ? 'selected' : ''}}>Night</option>
                                                 </select>
-                                                <span style="color:red; display: none;" id="message_shift">Select Shift!</span>
+                                                <span style="color:red; display: none;" id="message_shift_{{$rec->id}}">Select Shift!</span>
                                             </div>
 
                                         </div>
@@ -270,33 +270,104 @@
                 });
             });
 
-            //update
-
-            // document.addEventListener('DOMContentLoaded', function(id) {
-            //     var poup_button = 'update_popup_'+id;
-            //     var closeBtn = '#closeClass_'+id;
-            //     const popupButton = document.getElementById(poup_button);
-            //     const popup = document.getElementById(poup_button);
-            //     const closeBtn = document.querySelector(closeBtn);
-
-            //     popupButton.addEventListener('click', function() {
-            //         popup.style.display = 'block';
-            //     });
-
-            //     closeBtn.addEventListener('click', function() {
-            //         popup.style.display = 'none';
-            //     });
-
-            //     window.addEventListener('click', function(e) {
-            //         if (e.target === popup) {
-            //             popup.style.display = 'none';
-            //         }
-            //     });
-            // });
 
             function hideNow() {
                 var divElement = document.getElementById('close-now');
                 divElement.style.display = 'none';
+            }
+
+            function UpdateOfficeTime(id) {
+                var off_start = 'office_start_'+id;
+                var off_end = 'office_end_'+id;
+                var br_start = 'break_start_'+id;
+                var br_end = 'break_end_'+id;
+                var shi_time = 'shift_time_'+id;
+
+                var success_messag = 'success_message_id_'+id;
+                var message_shift_id = 'message_shift_'+id;
+                var message_start_id = 'message_start_'+id;
+                var message_end_id = 'message_end_'+id;
+
+
+                var office_start = document.getElementById(off_start).value;
+                var office_end = document.getElementById(off_end).value;
+                var break_start = document.getElementById(br_start).value;
+                var break_end = document.getElementById(br_end).value;
+                var shift_time = document.getElementById(shi_time).value;
+
+                var message_shift = document.getElementById(message_shift_id);
+                var message_start_id = document.getElementById(message_start_id);
+                var message_end_id = document.getElementById(message_end_id);
+                var success_messag = document.getElementById(success_messag);
+
+                 if (office_start == "") {
+                    message_start_id.style.display = "block";
+                    return;
+                } else {
+                    message_start_id.style.display = "none";
+                }
+
+                if (office_end == "") {
+                    message_end_id.style.display = "block";
+                    return;
+                } else {
+                    message_end_id.style.display = "none";
+                }
+
+                if (shift_time == "") {
+                    message_shift.style.display = "block";
+                    return;
+                } else {
+                    message_shift.style.display = "none";
+                }
+
+                 // Convert 24-hour format to 12-hour format with AM/PM
+                office_start = formatTime(office_start);
+                office_end = formatTime(office_end);
+                break_start = break_start ? formatTime(break_start) : "00:00"; // Set default value if empty
+                break_end = break_end ? formatTime(break_end) : "00:00 "; // Set default value if empty
+
+                // console.log(office_start);
+                // console.log(office_end);
+                // console.log(break_start);
+                // console.log(break_end);
+                // console.log(shift_time);
+                // console.log(id);
+                // return;
+
+                // return;
+
+
+                // alert(DailyReport);
+                // Data to be sent to the controller
+                var dataToSend = {
+                    office_start: office_start,
+                    office_end: office_end,
+                    break_start: break_start,
+                    break_end: break_end,
+                    shift_time: shift_time,
+                    id:id,
+                    _token: '{{ csrf_token() }}'
+                };
+
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/update-office-times',
+                    data: dataToSend,
+                    success: function(response) {
+                        // Handle success
+
+                        success_messag.style.display = "block";
+                        // window.location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        console.error("Error occurred while saving data:", error);
+                    }
+                });
+
             }
 
             function saveOfficeTime() {

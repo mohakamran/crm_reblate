@@ -15,6 +15,28 @@ class TimeController extends Controller
         $data = DB::table('office_times')->get();
         return view('time.index',compact('data'));
     }
+        public function updateTime(Request $req)
+    {
+        $office_start = $req->office_start;
+        $office_end = $req->office_end;
+        $break_start = $req->break_start;
+        $break_end = $req->break_end;
+        $shift_time = $req->shift_time;
+
+        $id = $req->input('id');
+
+
+        DB::table('office_times')->where('id', $id)->update([
+            'shift_type' => $shift_time,
+            'shift_start' => $office_start,
+            'shift_end' => $office_end,
+            'break_start' => $break_start,
+            'break_end' => $break_end
+        ]);
+
+        return redirect('/office-time');
+    }
+
     // set morning shift time
     public function setShift(Request $req) {
         // dd($req->all());
