@@ -112,6 +112,7 @@
                                     <div class="form">
                                         <input class="" type="text" name="emp_name"
                                             placeholder="Enter Employee Name...">
+                                            <input type="hidden" value="task-page" name="emp_page">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black"
                                             class="bi bi-search" viewBox="0 0 16 16">
                                             <path
@@ -128,7 +129,7 @@
                                     </div>
 
 
-                                    <div class="dropdown">
+                                    {{-- <div class="dropdown">
                                         <button class=" dropdown-toggle" style="border: none; background-color:transparent;"
                                             type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <span style="color: #fff; font-size: 15px;">Filters</span>
@@ -169,7 +170,7 @@
                                                     style="color: #14213d; font-size:15px; "
                                                     href="/terminated-employees">Terminated</a></li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </form>
@@ -262,7 +263,7 @@
                                                 </svg></a>
                                             <h3
                                                 style="color: lightgrey; font-family:'Poppins'; margin-top:5px; font-size:18px;">
-                                                Add Members</h3>
+                                                Assign New Task</h3>
                                         </div>
                                     </div>
                                 </div>

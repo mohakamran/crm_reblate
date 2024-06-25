@@ -233,7 +233,7 @@
 
             .popup-content {
                 /* overflow-y: scroll;
-                                scroll-behavior: smooth scroll; */
+                                                    scroll-behavior: smooth scroll; */
                 display: flex;
                 max-width: 700px;
                 margin: auto auto;
@@ -355,92 +355,102 @@
 
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2">
-                <div class="card" style="border-radius:10px;">
-                    <div class="card-body" style="background-color: #fca311">
-                        <div class="d-flex align-items-start flex-column">
-                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group1.svg') }}"
-                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
-                                    alt="User Icon Reblate Solutions">
+                <a href="/view-attendence">
+                    <div class="card" style="border-radius:10px;">
+                        <div class="card-body" style="background-color: #fca311">
+                            <div class="d-flex align-items-start flex-column">
+                                <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                    <img src="{{ url('Group1.svg') }}"
+                                        style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                        alt="User Icon Reblate Solutions">
+                                </div>
+                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total
+                                    Presents
+                                </p>
+                                <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                    @if (isset($total_present_day) && $total_present_day != '')
+                                        {{ $total_present_day }}
+                                    @else
+                                        0
+                                    @endif
+                                </h2>
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Presents
-                            </p>
-                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
-                                @if (isset($total_present_day) && $total_present_day != '')
-                                    {{ $total_present_day }}
-                                @else
-                                    0
-                                @endif
-                            </h2>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2">
-                <div class="card" style="border-radius:10px;">
-                    <div class="card-body" style="background-color: #fca311">
-                        <div class="d-flex align-items-start flex-column">
-                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group2.svg') }}"
-                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
-                                    alt="User Icon Reblate Solutions">
+                <a href="/view-attendence">
+                    <div class="card" style="border-radius:10px;">
+                        <div class="card-body" style="background-color: #fca311">
+                            <div class="d-flex align-items-start flex-column">
+                                <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                    <img src="{{ url('Group2.svg') }}"
+                                        style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                        alt="User Icon Reblate Solutions">
+                                </div>
+                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total
+                                    Absents</p>
+                                <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                    @if (isset($absent_days) && $absent_days != '')
+                                        {{ $absent_days }}
+                                    @else
+                                        0
+                                    @endif
+                                </h2>
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total
-                                Absents</p>
-                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
-                                @if (isset($absent_days) && $absent_days != '')
-                                    {{ $absent_days }}
-                                @else
-                                    0
-                                @endif
-                            </h2>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2">
-                <div class="card" style="border-radius:10px;">
-                    <div class="card-body" style="background-color: #fca311">
-                        <div class="d-flex align-items-start flex-column">
-                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group1.svg') }}"
-                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
-                                    alt="User Icon Reblate Solutions">
+                <a href="{{ route('leaves.record') }}">
+                    <div class="card" style="border-radius:10px;">
+                        <div class="card-body" style="background-color: #fca311">
+                            <div class="d-flex align-items-start flex-column">
+                                <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                    <img src="{{ url('Group1.svg') }}"
+                                        style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                        alt="User Icon Reblate Solutions">
+                                </div>
+                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total
+                                    Leaves
+                                </p>
+                                <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                    @if (isset($total_pending) && $total_pending != '')
+                                        {{ $total_pending }}
+                                    @else
+                                        0
+                                    @endif
+                                </h2>
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Leaves
-                            </p>
-                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
-                                @if (isset($total_pending) && $total_pending != '')
-                                    {{ $total_pending }}
-                                @else
-                                    0
-                                @endif
-                            </h2>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2">
-                <div class="card" style="border-radius:10px;">
-                    <div class="card-body" style="background-color: #fca311">
-                        <div class="d-flex align-items-start flex-column">
-                            <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
-                                <img src="{{ url('Group3.svg') }}"
-                                    style="width:23px; height:23px; object-fit:contain;margin-left:2px"
-                                    alt="User Icon Reblate Solutions">
+                <a href="{{ route('leaves.record') }}">
+                    <div class="card" style="border-radius:10px;">
+                        <div class="card-body" style="background-color: #fca311">
+                            <div class="d-flex align-items-start flex-column">
+                                <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
+                                    <img src="{{ url('Group3.svg') }}"
+                                        style="width:23px; height:23px; object-fit:contain;margin-left:2px"
+                                        alt="User Icon Reblate Solutions">
+                                </div>
+                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Pending
+                                    Approvel</p>
+                                <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
+                                    @if (isset($total_pending) && $total_pending != '')
+                                        {{ $total_pending }}
+                                    @else
+                                        0
+                                    @endif
+                                </h2>
                             </div>
-                            <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Pending
-                                Approvel</p>
-                            <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
-                                @if (isset($total_pending) && $total_pending != '')
-                                    {{ $total_pending }}
-                                @else
-                                    0
-                                @endif
-                            </h2>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-2 col-lg-2 col-xl-2">
                 <div class="card" style="border-radius:10px;">
@@ -487,7 +497,8 @@
         <div class="row" style="position: relative; top: -70px;">
             <div class="col-md-7 col-xl-7 col-lg-7">
                 <div class="card" style="box-shadow: none">
-                    <div class="card-body" style="background-color: #fff; backdrop-filter: none; border:1px solid #c7c7c7" >
+                    <div class="card-body"
+                        style="background-color: #fff; backdrop-filter: none; border:1px solid #c7c7c7">
                         <h3 class="EmpNameStyle mb-1" style="color: #14213d; font-weight: 800">Notfications</h3>
                         <div class="mt-3">
                             <ul
@@ -504,261 +515,114 @@
                             </ul>
                         </div>
                         <div class="tab-content">
+
+                            {{-- all notifications  --}}
                             <div class="container-fluid tab-pane fade active show px-0" style="border-bottom: none"
                                 id="all">
-                                <div class="notification-hover mt-2 p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                                {{-- notifications  --}}
+
+                                @if ($notifications->isNotEmpty())
+                                    @foreach ($notifications as $notify)
+                                        <div class="notification-hover mt-2 p-2"
+                                            style="border-bottom: 1px solid lightgray"
+                                            id="notifications_{{ $notify->id }}">
+                                            <div class="d-flex">
+                                                <a href="{{ $notify->link }}">
+                                                    <div class="avatar-sm me-3">
+                                                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                            <img src="{{ $emp_det->Emp_Image }}"
+                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                                alt="">
+                                                        @else
+                                                            <img class="img-fluid rounded-circle"
+                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                                src="{{ url('user.png') }}">
+                                                        @endif
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <h4 class="mb-1 EmpNameStyle"
+                                                            style="color: #14213d;font-weight: 500; font-size:20px">
+                                                            {{ $notify->title }}</h4>
+                                                        <div class="font-size-15 text-muted d-flex gap-2">
+                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                                                                {{ $notify->time }}</p>
+                                                            <p class="mb-1">{{ $notify->message }}</p>
+                                                        </div>
+                                                        <a href="javascript:void()"
+                                                            onclick="markAsRead({{ $notify->id }},'all')">mark as read</a>
+                                                    </div>
+                                                </a>
                                             </div>
                                         </div>
-                                    </div>
-
+                                    @endforeach
+                                @else
+                                <div class="flex-1">
+                                    <h4 class="mb-1 EmpNameStyle"
+                                        style="color: #14213d;font-weight: 500; font-size:20px">
+                                        No Notifications</h4>
                                 </div>
-                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                @endif
 
-                                </div>
-                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                </div>
-                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                </div>
-                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
                             </div>
-                            <div class="container-fluid tab-pane fade show px-0" style="border-bottom: none" id="tasks">
-                                <div class="notification-hover mt-2 p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
+
+                            <div class="container-fluid tab-pane fade show px-0" style="border-bottom: none"
+                                id="tasks">
+                                {{-- tasks notifications  --}}
+
+                                @if ($tasks_notifications->isNotEmpty())
+                                    @foreach ($tasks_notifications as $notify)
+                                        <div class="notification-hover mt-2 p-2"
+                                            style="border-bottom: 1px solid lightgray" id="notifications_tasks_{{ $notify->id }}">
+                                            <div class="d-flex">
+                                                <a href="{{ $notify->link }}">
+                                                    <div class="avatar-sm me-3">
+                                                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                            <img src="{{ $emp_det->Emp_Image }}"
+                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                                alt="">
+                                                        @else
+                                                            <img class="img-fluid rounded-circle"
+                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                                src="{{ url('user.png') }}">
+                                                        @endif
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <h4 class="mb-1 EmpNameStyle"
+                                                            style="color: #14213d;font-weight: 500; font-size:20px">
+                                                            {{ $notify->title }}</h4>
+                                                        <div class="font-size-15 text-muted d-flex gap-2">
+                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                                                                {{ $notify->time }}</p>
+                                                            <p class="mb-1">{{ $notify->message }}</p>
+                                                        </div>
+                                                        <a href="javascript:void()"
+                                                            onclick="markAsRead({{ $notify->id }},'tasks')">mark as read</a>
+                                                    </div>
+                                                </a>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endforeach
+                                @else
+                                    No Tasks Notifications
+                                @endif
 
-                                </div>
-                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                </div>
-                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
                             </div>
-                            <div class="container-fluid tab-pane fade px-0 show" style="border-bottom: none" id="to-do">
+
+                            <div class="container-fluid tab-pane fade px-0 show" style="border-bottom: none"
+                                id="to-do">
                                 <div class="notification-hover mt-2 p-2" style="border-bottom: 1px solid lightgray">
                                     <div class="d-flex">
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                    alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -779,10 +643,11 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                    alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -803,10 +668,11 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                    alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -827,10 +693,11 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                    alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -851,10 +718,11 @@
                                         <div class="avatar-sm me-3">
                                             @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
                                                 <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;" alt="">
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                    alt="">
                                             @else
                                                 <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;"
+                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
                                                     src="{{ url('user.png') }}">
                                             @endif
                                         </div>
@@ -1057,6 +925,51 @@
                 </div>
 
             </div> --}}
+
+            <script>
+                function markAsRead(id,str) {
+                    if(str === "all") {
+                        var not = "notifications_" + id;
+                    }
+
+                    if(str === "tasks") {
+                        var not = "notifications_tasks_" + id;
+                    }
+
+                    var dc = document.getElementById(not).style.display = "none";
+
+                    // Get CSRF token from somewhere (meta tag or inline assignment)
+                    var csrfToken = "{{ csrf_token() }}"; // Ensure this is correctly populated
+
+                    // Make an AJAX request to mark notification as read
+                    fetch('/mark-as-read', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken
+                            },
+                            body: JSON.stringify({
+                                id: id
+                            })
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Notification marked as read:', data);
+                            // Handle success
+                        })
+                        .catch(error => {
+                            console.error('Error marking notification as read:', error);
+                            // Handle error
+                        });
+                }
+            </script>
+
+
             <div class="col-md-5 col-xl-5 col-lg-5">
                 <div class="card" style="box-shadow: none;">
                     <div class="card-body" style="background-color: #fff; backdrop-filter: none;border:1px solid #c7c7c7">
@@ -1112,28 +1025,55 @@
                             <img src="{{ url('Group6.svg') }}" alt="clock" style=" object-fit:contain; width: 50px;">
                             <h5 class="mb-0" style="color: #14213d; font-family:'Poppins'; font-weight:600">Lunch Break
                             </h5>
-                            <p class="mb-0" style="color: #14213d; font-family:'Poppins'; font-weight:300">1:15 pm -
-                                2:00 pm</p>
+
+                            @if ($shift_emp_time == 'Morning')
+                                <p class="mb-0" style="color: #14213d; font-family:'Poppins'; font-weight:300">1:15 pm -
+                                    2:00 pm</p>
+                            @else
+                                <p class="mb-0" style="color: #14213d; font-family:'Poppins'; font-weight:300">9:30 pm -
+                                    10:00 pm</p>
+                            @endif
+
                         </div>
                         <div class="d-flex justify-content-between align-items-center gap-4 mt-2">
                             <div class="p-3 w-50 d-flex justify-content-center align-items-center flex-column">
-                                <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700">
-                                    @if (session()->has('total_over_time') && session('total_over_time') != '')
+
+                                @if (session()->has('total_over_time') && session('total_over_time') != '')
+                                    <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700">
                                         <span>{{ session('total_over_time') }}</span>
-                                    @elseif(session()->has('total_hours') && session('total_hours') != '')
+                                    </h3>
+                                    <p class="mb-0" style="color: #14213d; font-family:'poppins';">Total Over Time</p>
+                                @elseif(session()->has('total_hours') && session('total_hours') != '')
+                                    <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700">
                                         <span>{{ session('total_hours') }}</span>
-                                    @else
+                                    </h3>
+                                    <p class="mb-0" style="color: #14213d; font-family:'poppins';">Total Hours</p>
+                                @else
+                                    <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700">
                                         <span id="timer" class="text-center timer">00:00:00</span>
-                                    @endif
-                                </h3>
-                                <p class="mb-0" style="color: #14213d; font-family:'poppins';">Current Time</p>
+                                    </h3>
+                                    <p class="mb-0" style="color: #14213d; font-family:'poppins';">Current Time</p>
+                                @endif
+
+
                             </div>
                             <div class="p-3 w-50 d-flex justify-content-center align-items-center flex-column"
                                 style="">
-                                <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700">
+
+
+                                @if (session()->has('break_end_time') && session('break_end_time') != '')
+                                    <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700">
+                                        {{ session('break_end_time') }} </h3>
+                                    <p class="mb-0" style="color: #14213d; font-family:'poppins';">Break End Time</p>
+                                @elseif(session()->has('break_start_time') && session('break_start_time') != '')
+                                    <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700">
+                                        {{ session('break_start_time') }} </h3>
+                                    <p class="mb-0" style="color: #14213d; font-family:'poppins';">Break Start Time</p>
+                                @else
                                     _
-                                </h3>
-                                <p class="mb-0" style="color: #14213d; font-family:'poppins';">Break Time</p>
+                                @endif
+
+
                             </div>
                         </div>
                         <div class="punch-info">
@@ -1217,7 +1157,7 @@
 
                                     @if (session()->has('show_check_out') && session('show_check_out') === true)
                                         <a class="reblateBtn px-4 py-2 w-md" style="border-radius: 10px;"
-                                            href="javascript:void()" onclick="checkOut()">Checking Out
+                                            href="javascript:void()" onclick="checkOut()">Clock Out
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                 viewBox="0 0 16 16">
                                                 <g fill="currentColor" fill-rule="evenodd">
@@ -1230,7 +1170,7 @@
                                         </a>
                                     @else
                                         <a class="reblateBtn px-4 py-2" style="border-radius: 10px;"
-                                            href="/check-in">Checking In
+                                            href="/check-in">Clock In
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                 viewBox="0 0 21 21">
                                                 <g fill="none" fill-rule="evenodd" stroke="currentColor"
@@ -1307,10 +1247,27 @@
                             <h1 class="EmpNameStyle" style="color: #14213d; font-weight:800">On Going Projects</h1>
                             <div class="d-flex gap-3">
                                 <div class="p-2 rounded-pill" style="background-color: #14213d">
-                                    <svg width="20px" height="20px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#fff" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z" fill="#fff"></path></g></svg>
+                                    <svg width="20px" height="20px" viewBox="0 0 1024 1024" class="icon"
+                                        version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#fff" stroke="#fff">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path
+                                                d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z"
+                                                fill="#fff"></path>
+                                        </g>
+                                    </svg>
                                 </div>
                                 <div class="p-2 rounded-pill" style="background-color: #14213d;">
-                                    <svg width="20px" height="20px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z" fill="#fff"></path></g></svg>
+                                    <svg width="20px" height="20px" viewBox="0 0 1024 1024" class="icon"
+                                        version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path d="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z"
+                                                fill="#fff"></path>
+                                        </g>
+                                    </svg>
 
                                 </div>
                             </div>
@@ -1330,16 +1287,49 @@
                     <div class="card-body" style="background-color: #fca311">
                         <h1 class="EmpNameStyle" style="color: #14213d; font-weight:800">UpComing Holidays</h1>
                         <div class="d-flex align-items-start gap-2 my-5">
-                            <svg fill="#fff" width="65px" height="65px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M960 95.888l-256.224.001V32.113c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76h-256v-63.76c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76H64c-35.344 0-64 28.656-64 64v800c0 35.343 28.656 64 64 64h896c35.344 0 64-28.657 64-64v-800c0-35.329-28.656-63.985-64-63.985zm0 863.985H64v-800h255.776v32.24c0 17.679 14.32 32 32 32s32-14.321 32-32v-32.224h256v32.24c0 17.68 14.32 32 32 32s32-14.32 32-32v-32.24H960v799.984zM736 511.888h64c17.664 0 32-14.336 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32zm0 255.984h64c17.664 0 32-14.32 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.696 14.336 32 32 32zm-192-128h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32zm0-255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32zm-256 0h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32zm0 255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32z"></path></g></svg>
-                            <div class="d-flex flex-column">
-                                <h1 class="EmpNameStyle mb-0" style="font-weight: 800">Ramadan</h1>
-                                <h3 class="mb-0 EmpStyle text-white font-size-25">Mon 20 May 2024</h3>
-                            </div>
+                            <svg fill="#fff" width="65px" height="65px" viewBox="0 0 1024 1024"
+                                xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path
+                                        d="M960 95.888l-256.224.001V32.113c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76h-256v-63.76c0-17.68-14.32-32-32-32s-32 14.32-32 32v63.76H64c-35.344 0-64 28.656-64 64v800c0 35.343 28.656 64 64 64h896c35.344 0 64-28.657 64-64v-800c0-35.329-28.656-63.985-64-63.985zm0 863.985H64v-800h255.776v32.24c0 17.679 14.32 32 32 32s32-14.321 32-32v-32.224h256v32.24c0 17.68 14.32 32 32 32s32-14.32 32-32v-32.24H960v799.984zM736 511.888h64c17.664 0 32-14.336 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32zm0 255.984h64c17.664 0 32-14.32 32-32v-64c0-17.664-14.336-32-32-32h-64c-17.664 0-32 14.336-32 32v64c0 17.696 14.336 32 32 32zm-192-128h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32zm0-255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32zm-256 0h-64c-17.664 0-32 14.336-32 32v64c0 17.664 14.336 32 32 32h64c17.664 0 32-14.336 32-32v-64c0-17.68-14.336-32-32-32zm0 255.984h-64c-17.664 0-32 14.336-32 32v64c0 17.68 14.336 32 32 32h64c17.664 0 32-14.32 32-32v-64c0-17.648-14.336-32-32-32z">
+                                    </path>
+                                </g>
+                            </svg>
+
+                            @if (isset($holidays) && $holidays->isNotEmpty())
+                                <div class="d-flex flex-column">
+                                    @foreach ($holidays as $holiday)
+                                        <h1 class="EmpNameStyle mb-0" style="font-weight: 800">
+                                            {{ $holiday->holiday_type }}</h1>
+                                        <h3 class="mb-0 EmpStyle text-white font-size-25">
+                                            @if (\Carbon\Carbon::parse($holiday->startDate)->eq(\Carbon\Carbon::parse($holiday->endDate)))
+                                                {{ \Carbon\Carbon::parse($holiday->startDate)->format('d F Y') }}
+                                            @else
+                                                {{ \Carbon\Carbon::parse($holiday->startDate)->format('d F Y') }} -
+                                                {{ \Carbon\Carbon::parse($holiday->endDate)->format('d F Y') }}
+                                            @endif
+                                            ({{ $holiday->total_days <= 1 ? $holiday->total_days . ' day' : $holiday->total_days . ' days' }})
+                                        </h3>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="d-flex flex-column">
+                                    <h1 class="EmpNameStyle mb-0" style="font-weight: 800">No Holidays</h1>
+                                    <h3 class="mb-0 EmpStyle text-white font-size-25"></h3>
+                                </div>
+                            @endif
+
+
+
                         </div>
                         <div class="mt-3 text-end">
-                            <button class="reblateBtn px-4 py-2 rounded" style="background-color: #14213d; color: #fff" type="button">
+
+                            <a href="{{ route('vacations.index') }}" class="reblateBtn px-4 py-2 rounded"
+                                style="background-color: #14213d; color: #fff">
                                 View All
-                            </button>
+                            </a>
                         </div>
                     </div>
 
@@ -1351,12 +1341,31 @@
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h1 class="EmpNameStyle" style="color: #14213d; font-weight:800">Company Policy</h1>
                             <div class="d-flex gap-3">
-                                    <a class="p-2 rounded-pill" style="background-color: #14213d" href="#carouselExampleIndicators2" role="button" data-slide="prev">
-                                        <svg width="20px" height="20px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#fff" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z" fill="#fff"></path></g></svg>
-                                    </a>
-                                    <a class="p-2 rounded-pill" style="background-color: #14213d;"  href="#carouselExampleIndicators2" role="button" data-slide="next">
-                                    <svg width="20px" height="20px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z" fill="#fff"></path></g></svg>
-                                    </a>
+                                <a class="p-2 rounded-pill" style="background-color: #14213d"
+                                    href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                                    <svg width="20px" height="20px" viewBox="0 0 1024 1024" class="icon"
+                                        version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#fff" stroke="#fff">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path
+                                                d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z"
+                                                fill="#fff"></path>
+                                        </g>
+                                    </svg>
+                                </a>
+                                <a class="p-2 rounded-pill" style="background-color: #14213d;"
+                                    href="#carouselExampleIndicators2" role="button" data-slide="next">
+                                    <svg width="20px" height="20px" viewBox="0 0 1024 1024" class="icon"
+                                        version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path d="M256 120.768L306.432 64 768 512l-461.568 448L256 903.232 659.072 512z"
+                                                fill="#fff"></path>
+                                        </g>
+                                    </svg>
+                                </a>
                             </div>
                         </div>
                         <div class="w-100 mb-2">
@@ -1368,22 +1377,66 @@
                                                 <div class="card" style="box-shadow: none">
                                                     <div class="card-body" style="background-color: #AA336A30">
                                                         <div class="d-flex align-items-center text-start gap-2">
-                                                            <span class="p-2 rounded-pill mb-0 font-size-15" style="background-color: #AA336A40; color:#AA336A;font-weight: 600" >HR</span>
-                                                            <h5 class="mb-0 EmpStyle" style="color: #14213d; font-weight: 600">HR Policy</h5>
+                                                            <span class="p-2 rounded-pill mb-0 font-size-15"
+                                                                style="background-color: #AA336A40; color:#AA336A;font-weight: 600">HR</span>
+                                                            <h5 class="mb-0 EmpStyle"
+                                                                style="color: #14213d; font-weight: 600">HR Policy</h5>
                                                         </div>
                                                         <div class="mt-2">
                                                             <div class="d-flex align-items-center text-start gap-2">
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy Name:</span>
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR Policy</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy
+                                                                    Name:</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR
+                                                                    Policy</span>
                                                             </div>
                                                             <div>
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated On:</span>
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated
+                                                                    On:</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
                                                             </div>
                                                         </div>
                                                         <div class="text-end">
-                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#14213d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                            <svg type="button" width="20px" height="20px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15"
+                                                                        stroke="#14213d" stroke-width="1.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                    <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625"
+                                                                        stroke="#14213d" stroke-width="1.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
+                                                            <svg type="button" width="20px" height="20px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg" stroke="#14213d">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z"
+                                                                        stroke="#14213d" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                    <path
+                                                                        d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z"
+                                                                        stroke="#14213d" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
                                                         </div>
 
                                                     </div>
@@ -1393,22 +1446,66 @@
                                                 <div class="card" style="box-shadow: none">
                                                     <div class="card-body" style="background-color: #00800030">
                                                         <div class="d-flex align-items-center text-start gap-2">
-                                                            <span class="p-2 rounded-pill mb-0 font-size-15" style="background-color: #00800040; color:#008000;font-weight: 600" >HR</span>
-                                                            <h5 class="mb-0 EmpStyle" style="color: #14213d; font-weight: 600">HR Policy</h5>
+                                                            <span class="p-2 rounded-pill mb-0 font-size-15"
+                                                                style="background-color: #00800040; color:#008000;font-weight: 600">HR</span>
+                                                            <h5 class="mb-0 EmpStyle"
+                                                                style="color: #14213d; font-weight: 600">HR Policy</h5>
                                                         </div>
                                                         <div class="mt-2">
                                                             <div class="d-flex align-items-center text-start gap-2">
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy Name:</span>
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR Policy</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy
+                                                                    Name:</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR
+                                                                    Policy</span>
                                                             </div>
                                                             <div>
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated On:</span>
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated
+                                                                    On:</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
                                                             </div>
                                                         </div>
                                                         <div class="text-end">
-                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#14213d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                            <svg type="button" width="20px" height="20px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15"
+                                                                        stroke="#14213d" stroke-width="1.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                    <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625"
+                                                                        stroke="#14213d" stroke-width="1.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
+                                                            <svg type="button" width="20px" height="20px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg" stroke="#14213d">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z"
+                                                                        stroke="#14213d" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                    <path
+                                                                        d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z"
+                                                                        stroke="#14213d" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
                                                         </div>
 
                                                     </div>
@@ -1422,22 +1519,66 @@
                                                 <div class="card" style="box-shadow: none">
                                                     <div class="card-body" style="background-color: #Fca31130">
                                                         <div class="d-flex align-items-center text-start gap-2">
-                                                            <span class="p-2 rounded-pill mb-0 font-size-15" style="background-color: #fca31140; color:#fca311;font-weight: 600" >HR</span>
-                                                            <h5 class="mb-0 EmpStyle" style="color: #14213d; font-weight: 600">HR Policy</h5>
+                                                            <span class="p-2 rounded-pill mb-0 font-size-15"
+                                                                style="background-color: #fca31140; color:#fca311;font-weight: 600">HR</span>
+                                                            <h5 class="mb-0 EmpStyle"
+                                                                style="color: #14213d; font-weight: 600">HR Policy</h5>
                                                         </div>
                                                         <div class="mt-2">
                                                             <div class="d-flex align-items-center text-start gap-2">
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy Name:</span>
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR Policy</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy
+                                                                    Name:</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR
+                                                                    Policy</span>
                                                             </div>
                                                             <div>
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated On:</span>
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated
+                                                                    On:</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
                                                             </div>
                                                         </div>
                                                         <div class="text-end">
-                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#14213d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                            <svg type="button" width="20px" height="20px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15"
+                                                                        stroke="#14213d" stroke-width="1.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                    <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625"
+                                                                        stroke="#14213d" stroke-width="1.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
+                                                            <svg type="button" width="20px" height="20px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg" stroke="#14213d">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z"
+                                                                        stroke="#14213d" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                    <path
+                                                                        d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z"
+                                                                        stroke="#14213d" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
                                                         </div>
 
                                                     </div>
@@ -1447,22 +1588,66 @@
                                                 <div class="card" style="box-shadow: none">
                                                     <div class="card-body" style="background-color: #Fca31130">
                                                         <div class="d-flex align-items-center text-start gap-2">
-                                                            <span class="p-2 rounded-pill mb-0 font-size-15" style="background-color: #fca31140; color:#fca311;font-weight: 600" >HR</span>
-                                                            <h5 class="mb-0 EmpStyle" style="color: #14213d; font-weight: 600">HR Policy</h5>
+                                                            <span class="p-2 rounded-pill mb-0 font-size-15"
+                                                                style="background-color: #fca31140; color:#fca311;font-weight: 600">HR</span>
+                                                            <h5 class="mb-0 EmpStyle"
+                                                                style="color: #14213d; font-weight: 600">HR Policy</h5>
                                                         </div>
                                                         <div class="mt-2">
                                                             <div class="d-flex align-items-center text-start gap-2">
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy Name:</span>
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR Policy</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy
+                                                                    Name:</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR
+                                                                    Policy</span>
                                                             </div>
                                                             <div>
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated On:</span>
-                                                                <span style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated
+                                                                    On:</span>
+                                                                <span
+                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
                                                             </div>
                                                         </div>
                                                         <div class="text-end">
-                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#14213d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                                                            <svg type="button" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#14213d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#14213d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                            <svg type="button" width="20px" height="20px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15"
+                                                                        stroke="#14213d" stroke-width="1.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                    <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625"
+                                                                        stroke="#14213d" stroke-width="1.5"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
+                                                            <svg type="button" width="20px" height="20px"
+                                                                viewBox="0 0 24 24" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg" stroke="#14213d">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z"
+                                                                        stroke="#14213d" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                    <path
+                                                                        d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z"
+                                                                        stroke="#14213d" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
                                                         </div>
 
                                                     </div>
@@ -1482,20 +1667,35 @@
             </div>
 
         </div>
+
+
+
+
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12">
                 <div class="card" style="box-shadow: none">
                     <div class="card-body bg-white">
-                        <h1 class="EmpNameStyle" style="color: #14213d; font-weight:800">Performance Indicators</h1>
+                        <h1 class="EmpNameStyle" style="color: #14213d; font-weight:800">Last Month Performance Indicators
+                        </h1>
                         <div class="row mt-4 justify-content-center">
                             <div class="col-md-2 col-lg-2 col-xl-2">
                                 <div class="card" style="box-shadow: none">
                                     <div class="card-body" style="background-color: #fca311">
                                         <div class="d-flex flex-column">
-                                            <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Attendence <br> Rate</h4>
-                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label" style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                <div class="progress-bar" style="width: 50%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">50%</div>
-                                              </div>
+                                            <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Attendence <br>
+                                                Rate</h4>
+                                            <div class="progress mt-3 text-center" role="progressbar"
+                                                aria-label="Example with label"
+                                                style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff"
+                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <span
+                                                    style="position: absolute;width: 80%;text-align: center;background-color: transparent;
+                                               color:#000; font-weight:700;font-size:15px; font-family:'Poppins';bottom: 18px;">
+                                                    {{ $total_attendence_rate }}%</span>
+                                                <div class="progress-bar"
+                                                    style="width: {{ $total_attendence_rate }}%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -1505,15 +1705,16 @@
                                 <div class="card" style="box-shadow: none">
                                     <div class="card-body" style="background-color: #fca311">
                                         <div class="d-flex flex-column">
-                                            <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Work <br>Progress</h4>
-                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label" style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                <span style="    position: absolute;
-    width: 80%;
-    text-align: center;
-    background-color: transparent;
-   color:#000; font-weight:700;font-size:15px; font-family:'Poppins';bottom: 18px;">50%</span>
-                                                <div class="progress-bar" style="width: 30%; background-color: #fca31150; "></div>
-                                              </div>
+                                            <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Work <br>Progress
+                                            </h4>
+                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label"
+                                                style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff"
+                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+
+                                                <div class="progress-bar"
+                                                    style="width: 50%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">
+                                                    50%</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1537,10 +1738,20 @@
                                 <div class="card" style="box-shadow: none">
                                     <div class="card-body" style="background-color: #fca311">
                                         <div class="d-flex flex-column">
-                                            <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Professional <br>Growth</h4>
-                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label" style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                <div class="progress-bar" style="width: 50%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">50%</div>
-                                              </div>
+                                            <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Professional
+                                                <br>Growth
+                                            </h4>
+                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label"
+                                                style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff"
+                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <span
+                                                    style="position: absolute;width: 80%;text-align: center;background-color: transparent;
+                                               color:#000; font-weight:700;font-size:15px; font-family:'Poppins';bottom: 18px;">
+                                                    {{ $professional_growth }}%</span>
+                                                <div class="progress-bar"
+                                                    style="width: {{ $professional_growth }}%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1549,10 +1760,19 @@
                                 <div class="card" style="box-shadow: none">
                                     <div class="card-body" style="background-color: #fca311">
                                         <div class="d-flex flex-column">
-                                            <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Overall <br> Assesment</h4>
-                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label" style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                <div class="progress-bar" style="width: 50%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">50%</div>
-                                              </div>
+                                            <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Overall <br>
+                                                Assesment</h4>
+                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label"
+                                                style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff"
+                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <span
+                                                    style="position: absolute;width: 80%;text-align: center;background-color: transparent;
+                                               color:#000; font-weight:700;font-size:15px; font-family:'Poppins';bottom: 18px;">
+                                                    {{ $over_all_performance }}%</span>
+                                                <div class="progress-bar"
+                                                    style="width: {{ $over_all_performance }}%; background-color: #fca31150; color:#000; font-weight:700;font-size:15px; font-family:'Poppins'">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1829,7 +2049,7 @@
                 </div>
             </div>
         </div> --}}
-{{--
+        {{--
         <div class="row">
             <div class="col-xl-6">
                 <div class="card">
@@ -2332,7 +2552,7 @@
             function checkOut() {
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: 'You want to check out!',
+                    text: 'You want to clock out!',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Yes',
@@ -2349,7 +2569,7 @@
                                 // Provide user feedback
                                 Swal.fire({
                                     title: 'Success!',
-                                    text: 'check out marked!',
+                                    text: 'clocked out marked!',
                                     icon: 'success'
                                 }).then(() => {
                                     location.reload(); // Refresh the page
@@ -2360,7 +2580,7 @@
                                 console.error('Error:', error);
                                 Swal.fire({
                                     title: 'Error!',
-                                    text: 'An error occurred while checking out the user!',
+                                    text: 'An error occurred while clockinh out the user!',
                                     icon: 'error'
                                 });
                             }
@@ -2380,6 +2600,8 @@
         <script src="{{ URL::asset('build/js/pages/dashboard.init.js') }}"></script>
 
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
+
+
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

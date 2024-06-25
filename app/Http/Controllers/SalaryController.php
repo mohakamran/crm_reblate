@@ -676,10 +676,18 @@ class SalaryController extends Controller
 
     }
 
+    // view all employees salaries
+    public function viewAll() {
+        $rec = Employee::orderBy('id', 'desc')->get();
+        $title = "Salaries Slips Of All Employees";
+        $data = compact('rec','title');
+        return view('salaries.view-slips',$data);
+    }
+
     // view recipts
     public function viewReciepts() {
-        $rec = Employee::orderBy('id', 'desc')->get();
-        $title = "Salaries Slips Of Registered Employees";
+        $rec = Employee::orderBy('id', 'desc')->where('Emp_Status','active')->get();
+        $title = "Salaries Slips Of Regular Employees";
         $data = compact('rec','title');
         return view('salaries.view-slips',$data);
     }

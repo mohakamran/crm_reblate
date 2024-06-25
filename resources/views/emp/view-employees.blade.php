@@ -219,6 +219,7 @@
                                     <div class="form">
                                         <input class="" type="text" name="emp_name"
                                             placeholder="Enter Employee Name...">
+                                            <input type="hidden" value="emp-page" name="emp_page">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black"
                                             class="bi bi-search" viewBox="0 0 16 16">
                                             <path

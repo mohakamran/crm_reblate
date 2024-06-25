@@ -79,9 +79,9 @@
             }
 
             /* .vertical-text {
-                writing-mode: vertical-rl;
-                text-orientation: mixed;
-            } */
+                                writing-mode: vertical-rl;
+                                text-orientation: mixed;
+                            } */
 
             .table th {
                 font-size: 12px;
@@ -937,36 +937,37 @@
 
                         </div>
 
-                    </div>
-                    <div class="col-md-4 col-xl-4 col-lg-4">
-                        <div class="card" style="box-shadow: none;">
-                            <div class="card-body" style="border:1px solid #c7c7c7">
-                                <h2 class="EmpNameStyle" style="color: #fca311; font-size: 20px">Upcoming leaves</h2>
-                                <table class="table table-nowrap table-responsive">
+                        </div>
+                        <div class="col-md-4 col-xl-4 col-lg-4">
+                            <div class="card" style="box-shadow: none;">
+                                <div class="card-body" style="border:1px solid #c7c7c7">
+                                    <h2 class="EmpNameStyle" style="color: #fca311; font-size: 20px">Highest Leaves</h2>
+                                    <table class="table table-nowrap table-responsive">
                                         <tr style="background-color: #14213d20;">
                                             <td class="EmpStyle" style="padding: 10px;font-weight:600;color:#14213d">Emp Code</td>
                                             <td class="EmpStyle" style="padding: 10px;font-weight:600;color:#14213d">Emp Name</td>
                                             <td class="EmpStyle" style="padding: 10px;font-weight:600;color:#14213d">Total Days</td>
                                         </tr>
-                                        <tr style="border-bottom: 1px solid #c7c7c7">
+
+                                        <tr>
                                             <td style="padding:10px; font-weight:600;color:#14213d">201sols</td>
-                                            <td style="padding:10px; font-weight:600;color:#14213d">Ahsan</td>
-                                            <td style="padding:10px; font-weight:600;color:#14213d">21</td>
+                                            <td style="padding:10px; font-weight:600;color:#14213d">Ahsan Qureshi</td>
+                                            <td style="padding:10px; font-weight:600;color:#14213d">30</td>
                                         </tr>
-                                        <tr style="border-bottom: 1px solid #c7c7c7">
+                                        <tr>
                                             <td style="padding:10px; font-weight:600;color:#14213d">201sols</td>
-                                            <td style="padding:10px; font-weight:600;color:#14213d">Ahsan</td>
-                                            <td style="padding:10px; font-weight:600;color:#14213d">21</td>
+                                            <td style="padding:10px; font-weight:600;color:#14213d">Ahsan Qureshi</td>
+                                            <td style="padding:10px; font-weight:600;color:#14213d">30</td>
                                         </tr>
-                                        <tr style="border-bottom: 1px solid #c7c7c7">
+                                        <tr>
                                             <td style="padding:10px; font-weight:600;color:#14213d">201sols</td>
-                                            <td style="padding:10px; font-weight:600;color:#14213d">Ahsan</td>
-                                            <td style="padding:10px; font-weight:600;color:#14213d">21</td>
+                                            <td style="padding:10px; font-weight:600;color:#14213d">Ahsan Qureshi</td>
+                                            <td style="padding:10px; font-weight:600;color:#14213d">30</td>
                                         </tr>
 
-                                </table>
+                                    </table>
 
-                            </div>
+                                </div>
 
                         </div>
 

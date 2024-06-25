@@ -180,15 +180,19 @@ class TaskController extends Controller
          }
         }
         public function index() {
-            $emp = DB::table('employees')->get();
+            $emp = DB::table('employees')->where('Emp_Status','active')->get();
             return view('tasks.add-task',compact('emp'));
-            return view('tasks.tasks-cards-of-each-employee',compact('emp'));
+            // return view('tasks.tasks-cards-of-each-employee',compact('emp'));
         }
 
     // view tasks
     public function viewTasks() {
         // Fetch latest employees
-        $latestEmployees = DB::table('employees')->get();
+        $latestEmployees = DB::table('employees')->where('Emp_Status','active')->get();
+
+        $name = auth()->user()->user_name;
+        $message = $name." has assigned you a new task";
+        // dd($name, $message);
 
         if ($latestEmployees->isNotEmpty()) {
             // $latestTasks = DB::table('tasks')->get();
@@ -231,7 +235,6 @@ class TaskController extends Controller
             'task_description' => $first_task_description,
             'task_date' => $first_task_deadline,
             'task_status' => "pending",
-            'task_percentage' => "0",
             'assigned_by' => $name, // Assuming admin is the default assigned_by value
             'assigned_date' => $dateAssigned, // Save the current date as date_assigned
         ]);
@@ -259,6 +262,24 @@ class TaskController extends Controller
             }
             DB::table('tasks')->insert($tasks);
         }
+
+
+        $role = Auth()->user()->user_type;
+        $message = "The ".$role." ".$name. " has assigned you a new task.";
+        $time = date("g:i A");
+        $title = "You Have A New Task";
+        $date = date("Y-m-d");
+
+        DB::table('notifications')->insert([
+            'title' => $title,
+            'message' => $message,
+            'date' => $date,
+            'user_id' => $empId,
+            'time' => $time,
+            'status' => "unread",
+            "type" => "task",
+            "link" => "/view-emp-tasks-each"
+        ]);
 
         return back()->with('success','Task Assigned');
     }

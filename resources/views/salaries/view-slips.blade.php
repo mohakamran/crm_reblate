@@ -29,9 +29,9 @@
                     <div class="card-body">
 
 
-                        <div class="row d-flex justify-content-between mb-5">
+                        <div class="row d-flex flex-wrap justify-content-between mb-5">
                             <h4 class="card-title" style="width:50%">{{ $title }}</h4>
-                            <div style="width: 13%">
+                            <div style="width: 30%">
 
                                 <a href="/generate-new-salary-slip" class="reblateBtn w-75"
                                     style="padding:10px;text-align:center"><span
@@ -41,6 +41,8 @@
                                             <path fill-rule="evenodd"
                                                 d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
                                         </svg></span> Add New</a>
+                                <a href="/view-all" class="reblateBtn w-75" style="padding:10px;text-align:center"> View All</a>
+                                <a href="/view-slips" class="reblateBtn w-75" style="padding:10px;text-align:center"> Regular Employees</a>
                             </div>
                         </div>
                         {{-- <p class="card-title-desc">The Buttons extension for DataTables
@@ -93,8 +95,8 @@
                                                     @php
                                                         $salary_slips_access = Session::get('salary_slips_access');
                                                         // Convert to an array if it's a single value
-if (!is_array($salary_slips_access)) {
-    $salary_slips_access = explode(',', $salary_slips_access);
+                                                        if (!is_array($salary_slips_access)) {
+                                                            $salary_slips_access = explode(',', $salary_slips_access);
                                                             // Remove any empty elements resulting from the explode function
                                                             $salary_slips_access = array_filter($salary_slips_access);
                                                         }
