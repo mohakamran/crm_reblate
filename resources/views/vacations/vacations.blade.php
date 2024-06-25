@@ -25,6 +25,20 @@
     @endsection
     @section('content')
         <style>
+                @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.borderingLeftTable {
+      border-top-left-radius: 10px !important;
+  }
+
+  .borderingRightTable {
+      border-top-right-radius: 10px !important;
+  }
+  .table-lines{
+      font-family: 'Poppins';
+      color:#000;
+      font-weight: 700;
+  }
             /* Adjust layout of DataTable components */
             .dataTables_length,
             .dataTables_filter,
@@ -87,8 +101,8 @@
         </style>
         <div class="row">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
+                <div class="card" style="box-shadow: none">
+                    <div class="card-body bg-white">
                         <div class="d-flex justify-content-end mb-5">
 
                             <button id="popupButton" class="reblateBtn p-2"> Create Holidays</button>
@@ -154,15 +168,15 @@
 
 
                         </div>
-                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                        <table id="datatable-buttons" class="table dt-responsive nowrap"
                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
-                                <tr>
-                                    <th>Holiday Type</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Description</th>
-                                    <th>Total Days</th>
+                                <tr style="background-color: #14213d">
+                                    <th class="borderingLeftTable font-size-20" style="color: white">Holiday Type</th>
+                                    <th class="font-size-20" style="color: white">Start Date</th>
+                                    <th class="font-size-20" style="color: white">End Date</th>
+                                    <th class="font-size-20" style="color: white">Description</th>
+                                    <th class="borderingRightTable font-size-20" style="color: white">Total Days</th>
 
 
                                 </tr>
@@ -171,14 +185,14 @@
                             <tbody id="table-body">
 
                                 @foreach ($holidays as $holiday)
-                                    <tr>
-                                        <td><a href="#" data-toggle="modal"
+                                    <tr style="border-bottom: 1px solid #c7c7c7">
+                                        <td  ><a href="#" class="table-lines" data-toggle="modal"
                                                 data-target="#popup_{{ $holiday->id }}">{{ $holiday->holiday_type }}</a>
                                         </td>
-                                        <td>{{ $holiday->startDate }}</td>
-                                        <td>{{ $holiday->endDate }}</td>
-                                        <td>{{ $holiday->holiday_description }}</td>
-                                        <td>{{ $holiday->total_days }}</td>
+                                        <td class="table-lines" >{{ $holiday->startDate }}</td>
+                                        <td class="table-lines" >{{ $holiday->endDate }}</td>
+                                        <td class="table-lines" >{{ $holiday->holiday_description }}</td>
+                                        <td class="table-lines" >{{ $holiday->total_days }}</td>
 
 
                                     </tr>
@@ -313,7 +327,7 @@
                         [10, 25, 50, "All"]
                     ],
                     buttons: [
-                        'excel', 'print'
+                        '', ''
                     ],
 
                 });

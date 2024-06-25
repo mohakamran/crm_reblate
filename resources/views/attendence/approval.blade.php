@@ -11,6 +11,28 @@
     @endsection
     @section('content')
         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.empTitle {
+    color: #14213d;
+    font-weight: 600;
+    font-size: 25px;
+    font-family: 'Poppins';
+}
+
+.empSubTitle {
+    color: #14213d;
+    font-size: 15px;
+    font-weight: 300;
+    font-family: 'Poppins';
+}
+             .borderingLeftTable {
+                border-top-left-radius: 10px !important;
+            }
+
+            .borderingRightTable {
+                border-top-right-radius: 10px !important;
+            }
             .image-center {
                 width: 100px;
                 height: 100px;
@@ -29,11 +51,43 @@
                 text-align: center;
                 margin-top: 15px;
             }
+            .approval-process {
+    display: flex;
+    align-items: center;
+}
+
+.step {
+    padding: 5px 10px;
+    border-radius: 25px;
+    margin: 0 5px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    font-size: 13px;
+}
+.submitted {
+    background-color: #4CAF50;
+    border: 1px solid #4CAF50;
+}
+
+.pending {
+    background-color: #FF9800;
+    border: 1px solid #FF9800;
+    color: white;
+}
+
+.reject {
+    background-color: white;
+    border: 1px solid #FF0000;
+    color: #FF0000;
+}
         </style>
+
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body bg-white">
                         {{-- error message --}}
                         <div class="row container">
                             @if ($errors->any())
@@ -69,7 +123,7 @@
                         </div>
                         {{-- employee and leave records --}}
                         @if ($records->isEmpty())
-                            <div class="row mt-5" style="height: 70vh;">
+                            <div class="row pt-5 bg-white" style="height: 250px;">
                                 {{-- Displaying employee cards --}}
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div class="d-flex gap-3 align-items-center justify-content-center">
@@ -113,64 +167,71 @@
                                 </div>
                             </div>
                         @else
-                            <div class="row mt-5">
+                            <div class="row mt-2">
                                 {{-- Displaying employee cards --}}
                                 @foreach ($empLeaveRequests as $empCode => $leaveRequests)
                                     @foreach ($leaveRequests as $request)
                                         <div class="col-md-3">
-                                            <div class="card hovering"
-                                                style="box-shadow:0px 0px 10px 10px #00000021; overflow: hidden;  border-radius: 10px;">
-                                                <div
-                                                    style="width: 150px;height: 150px;position: absolute;z-index: 100;background-color: #fca311;border-radius: 100px;right: -75px;top: -70px;">
-                                                </div>
-                                                <div class="card-body">
-                                                    @if ($request['employee']->Emp_Image != null && file_exists(public_path($request['employee']->Emp_Image)))
-                                                        <img class="image-center"
-                                                            src="{{ $request['employee']->Emp_Image }}" alt="">
-                                                    @else
+                                            <div class="card mb-0"
+                                                style="box-shadow:none; overflow: hidden; border:1px solid #c7c7c7; border-radius: 10px;">
 
-                                                            <img class="image-center" src="{{ url('user.png') }}"
-                                                                alt="">
+                                                <div class="card-body p-0">
+                                                    <div class="p-3 pb-0">
+                                                        <h2 class="empTitle font-size-18 mb-1">Leave Title</h2>
+                                                        <p class="empSubTitle font-size-14">{{ $request['employee']->Emp_Full_Name }}
+                                                            <span class="bold">2 days ago</span>
+                                                        </p>
 
-                                                    @endif
-                                                    <div class="card-text-center">
-                                                        <p class="emp-name">{{ $request['employee']->Emp_Full_Name }}</p>
-                                                        {{-- Display employee details --}}
-                                                        {{-- Display leave record --}}
+                                                    </div>
+
+                                                    <div class="d-flex align-items-center px-3 flex-column py-3 text-center justify-content-center" style="background-color: #14213d">
+                                                        <h1 class="empTitle mb-0" style="font-size: 35px; color:#fca311; font-weight:900">2 Days</h1>
+                                                        <p class="empSubTitle font-size-14 text-white mb-0">{{ $request['leave_record']->date }}</p>
+                                                    </div>
+
+                                                    <div class="card-text-center p-3 pb-0">
                                                         <div class="leave-record">
-                                                            <div class="d-flex gap-1 align-items-center mb-3">
-                                                                <p class="mb-0"
-                                                                    style="font-size: 17px; color:#14213d; font-weight: 600;">
-                                                                    Date:</p>
-
-                                                                <span
-                                                                    style="border-bottom:1px solid #e3e3e3;">{{ $request['leave_record']->date }}</span>
-                                                            </div>
-                                                            <div class="d-flex gap-1 align-items-center mb-3">
-                                                                <p class="mb-0"
-                                                                    style="font-size: 17px; color:#14213d; font-weight: 600;">
+                                                            <div class="d-flex gap-1 align-items-start mb-1 flex-column">
+                                                                <p class="mb-0 empTitle font-size-18 fw-bolder ">
                                                                     Reason:</p>
-                                                                <span
-                                                                    style="border-bottom:1px solid #e3e3e3;">{{ $request['leave_record']->reason }}</span>
+                                                                <span class="font-size-14" style="color: #14213d; font-family: 'Poppins';">{{ $request['leave_record']->reason }}</span>
                                                             </div>
-                                                            <div class="d-flex gap-1 align-items-center mb-3">
-                                                                <p class="mb-0"
-                                                                    style="font-size: 17px; color:#14213d; font-weight: 600;">
-                                                                    Status:</p>
+                                                            <div class="d-flex gap-1 align-items-start mb-3 flex-column">
+                                                                <p class="mb-0 font-size-14 empSubTitle fw-bold">Approvel Process</p>
+                                                                <div class="approval-process">
+                                                                    <div class="step submitted">Submitted</div>
+                                                                    <div class="step pending">{{ $request['leave_record']->status }}</div>
+                                                                    <div class="step reject">Reject</div>
+                                                                </div>
                                                                 <span class="text-danger"
-                                                                    style="border-bottom:1px solid #e3e3e3 ;">{{ $request['leave_record']->status }}</span>
+                                                                    style="border-bottom:1px solid #e3e3e3 ;"></span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <form action="/leave-status" method="post">
+                                                    <div class="d-flex p-3 pt-0 align-items-center">
 
-                                                    </form>
-                                                    <a class="reblateBtn px-3 py-1" style="float:left;"
-                                                        href="{{ route('leave.handle', ['action' => 'approve', 'id' => $request['leave_record']->id]) }}">Approve</a>
+                                                        @if ($request['employee']->Emp_Image != null && file_exists(public_path($request['employee']->Emp_Image)))
+                                                        <img
+                                                            src="{{ $request['employee']->Emp_Image }}" style="width: 30px; height: 30px" alt="">
+                                                    @else
 
-                                                    <a class="reblateBtn px-3 py-1"
-                                                        href="{{ route('leave.handle', ['action' => 'decline', 'id' => $request['leave_record']->id]) }}"
-                                                        style="float:right; background: #fca311; border:#fca311;">Decline</a>
+                                                            <img  style="width: 30px; height: 30px" src="{{ url('user.png') }}"
+                                                                alt="">
+
+                                                    @endif
+                                                    <div class="d-flex justify-content-between align-items-center gap-4">
+                                                        <form action="/leave-status" method="post">
+
+                                                        </form>
+                                                        <a class="bg-success text-white rounded fw-bold px-3 py-1" style=""
+                                                            href="{{ route('leave.handle', ['action' => 'approve', 'id' => $request['leave_record']->id]) }}">Approve</a>
+
+                                                        <a class="bg-danger text-white rounded fw-bold px-3 py-1"
+                                                            href="{{ route('leave.handle', ['action' => 'decline', 'id' => $request['leave_record']->id]) }}"
+                                                            style="">Decline</a>
+
+                                                    </div>
+                                                    </div>
 
                                                 </div>
                                             </div>
@@ -189,6 +250,64 @@
             </div>
             <!-- end col -->
         </div>
+            <div class="col-md-12 col-lg-12 col-xl-12">
+               <div class="card">
+                <div class="card-body bg-white">
+                    <table class="table ">
+
+                        <tr style="background-color: #14213d">
+                            <td class="borderingLeftTable font-size-20" style="color: white">#</td>
+                            <td class="font-size-20" style="color: white">Shift</td>
+                            <td class="font-size-20" style="color: white">Emp Name</td>
+                            <td class="font-size-20" style="color: white">Leaves Date</td>
+                            <td class="font-size-20" style="color: white">Date</td>
+                            <td class="borderingRightTable font-size-20" style="color: white">Badge</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #c7c7c7">
+                            <td style="font-family: 'Poppins'; color:#000">1</td>
+                            <td style="font-family: 'Poppins'; color:#000">Morning</td>
+                            <td style="font-family: 'Poppins'; color:#000">Abdullah</td>
+                            <td style="font-family: 'Poppins'; color:#000">22 April,2024 - 23 April,2024</td>
+                            <td style="font-family: 'Poppins'; color:#000">1 day</td>
+                            <td style="font-family: 'Poppins'; color:#000"><button class="px-3 py-0.5 bg-success text-white" style="border: none; font-family: 'Poppins';">Approved</button></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #c7c7c7">
+                            <td style="font-family: 'Poppins'; color:#000">2</td>
+                            <td style="font-family: 'Poppins'; color:#000">Evening</td>
+                            <td style="font-family: 'Poppins'; color:#000">Abdullah</td>
+                            <td style="font-family: 'Poppins'; color:#000">22 April,2024 - 23 April,2024</td>
+                            <td style="font-family: 'Poppins'; color:#000">1 day</td>
+                            <td style="font-family: 'Poppins'; color:#000"><button class="px-4 py-0.5 bg-danger text-white"  style="border: none; font-family: 'Poppins';">Reject</button></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #c7c7c7">
+                            <td style="font-family: 'Poppins'; color:#000">3</td>
+                            <td style="font-family: 'Poppins'; color:#000">Morning</td>
+                            <td style="font-family: 'Poppins'; color:#000">Abdullah</td>
+                            <td style="font-family: 'Poppins'; color:#000">22 April,2024 - 23 April,2024</td>
+                            <td style="font-family: 'Poppins'; color:#000">1 day</td>
+                            <td style="font-family: 'Poppins'; color:#000"><button class="px-3 py-0.5 bg-success text-white" style="border: none; font-family: 'Poppins';">Approved</button></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #c7c7c7">
+                            <td style="font-family: 'Poppins'; color:#000">4</td>
+                            <td style="font-family: 'Poppins'; color:#000">Morning</td>
+                            <td style="font-family: 'Poppins'; color:#000">Abdullah</td>
+                            <td style="font-family: 'Poppins'; color:#000">22 April,2024 - 23 April,2024</td>
+                            <td style="font-family: 'Poppins'; color:#000">1 day</td>
+                            <td style="font-family: 'Poppins'; color:#000"><button class="px-4 py-0.5 bg-danger text-white" style="border: none; font-family: 'Poppins';">Reject</button></td>
+                        </tr>
+
+
+
+
+                    </table>
+
+                </div>
+
+               </div>
+
+            </div>
+
+
 
         <!-- end row -->
         <script></script>

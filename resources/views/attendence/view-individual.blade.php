@@ -25,6 +25,35 @@
     @endsection
     @section('content')
         <style>
+
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+            .EmpNameStyle {
+                font-size: 30px;
+                color: #fff;
+                font-weight: 600;
+                font-family: 'Poppins';
+            }
+
+            .EmpStyle {
+                font-size: 18px;
+                color: #fca311;
+                font-family: 'Poppins';
+                font-weight: 300
+            }
+            .borderingLeftTable {
+                border-top-left-radius: 10px !important;
+            }
+
+            .borderingRightTable {
+                border-top-right-radius: 10px !important;
+            }
+            .table-lines{
+                font-family: 'Poppins';
+                color:#000;
+                font-weight: 700;
+            }
+
             .att-statistics .stats-info {
                 background-color: #fff;
                 border: 1px solid #e5e5e5;
@@ -43,35 +72,40 @@
         <div class="row mt-2">
             <div class="col-md-12">
                 <div class="card mb-3">
-                    <div class="card-body" style="display: flex; align-items: center; justify-content: space-between;">
-                        <!-- Using a dummy CDN link for the image -->
-                        <a href="/view-tasks" class="position-absolute top-0 start-1 pt-2">
-                            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#14213d" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"></path>
-                        </svg> --}}
-                        </a>
-
-                        <div class="d-flex align-items-center gap-3" style="margin-left: 15px;">
+                    <div class="card-body" style="background-color: #14213d;">
+                        <div class="col-md-6 col-lg-6 col-xl-6 gap-3 d-flex align-items-center flex-wrap p-2">
                             @if ($emp->Emp_Image != '' && file_exists($emp->Emp_Image))
-                                <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
-                                    src="{{ url($emp->Emp_Image) }}">
-                            @else
-                                <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
-                                    src="{{ url('user.png') }}">
-                            @endif
-
-                            <div class="d-flex flex-column gap-1 ml-4">
-                                <h5 class="card-title mb-0" style="font-size: 25px;">{{ $emp_name }}</h5>
-                                <p class="card-text mb-1 ">{{ $emp->Emp_Designation }}</p>
-                                <p class="card-text">{{ $emp->Emp_Shift_Time }}</p>
-                                <p class="card-text">{{ $emp->Emp_Code }}</p>
-
+                            <img class="img-fluid rounded-circle" style="width:150px;height:150px;border-radius:100%; object-fit:cover;"
+                                src="{{ url($emp->Emp_Image) }}">
+                        @else
+                            <img class="img-fluid rounded-circle" style="width:150px;height:150px;border-radius:100%; object-fit:cover;"
+                                src="{{ url('user.png') }}">
+                        @endif
+                        <div class="welcome-det ms-3 text-dark fw-bolder">
+                            <h2 class="EmpNameStyle">{{ $emp_name }}</h2>
+                            <div class="d-flex justify-content-between align-items-center gap-5">
+                                <h3 class="mb-0 EmpStyle" style="">Designation:</h3>
+                                <span class="EmpStyle"
+                                    style="color:#fff;">{{ $emp->Emp_Designation }}</span>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center gap-5">
+                                <h3 class="mb-0 EmpStyle" style="width:110px">Shift:</h3>
+                                <span class="EmpStyle" style="color:#fff;">{{ $emp->Emp_Shift_Time }}</span>
                             </div>
                         </div>
-                        <div class="d-flex flex-column align-items-center p-3 gap-2" style="">
-
 
                         </div>
+                        <div class="position-absolute p-2"
+                        style="top:20px;right: 20px; border:1px solid #fca311; border-radius:10px">
+                        <span style="color:#fff; font-size: 15px;font-weight: 300; font-family: 'Poppins';">
+                            Today
+                            <script>
+                                document.write(new Date().toUTCString().slice(5, 16))
+                            </script>
+                        </span>
+
+                    </div>
+                        <!-- Using a dummy CDN link for the image -->
 
 
                     </div>
@@ -84,9 +118,51 @@
 
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body bg-white">
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <h4 class="EmpNameStyle" style="color: #14213d">Your Attendence Details</h4>
+                            <form action="/search-emp-details" class="d-flex" method="post">
+                                @csrf
+                                <div class="d-flex gap-1">
+                                    <div class="inputboxcolor d-flex" style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7" stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
+                                                <rect x="6" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e"></rect>
+                                                <rect x="10.5" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e"></rect>
+                                                <rect x="15" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e"></rect>
+                                            </g>
+                                        </svg>
+                                        {{-- <input placeholder="Select date" type="date" name="date_controller"
+                                            class="form-control" value="{{ old('date_controller') }}">
 
-                        <h4 class="card-title">View Attendence Details</h4>
+                                         <span>
+                                            @error('date_controller')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </span>
+                                        --}}
+                                        {{-- <input type="hidden" value=""> --}}
+                                        <input type="text" name="daterange" value="" class="form-control" style="border: none;margin-left: 10px;background-color: transparent;outline: none;width: 100%;padding: 0;" />
+                                    </div>
+
+
+
+                                    @if (isset($id) && $id != '')
+                                        <input type="hidden" name="emp_search_date" value="{{ $id }}">
+                                    @endif
+
+
+
+                                    <div class="col-md-3">
+                                        <button class="reblateBtn px-3 py-2">Search</button>
+                                    </div>
+                            </form>
+
+                        </div>
+
                         {{-- <p class="card-title-desc">The Buttons extension for DataTables
                                 provides a common set of options, API methods and styling to display
                                 buttons on a page that will interact with a DataTable. The core library
@@ -94,35 +170,6 @@
                             </p> --}}
 
 
-                        <form action="/search-emp-details" method="post">
-                            @csrf
-                            <div class="row mt-3 mb-3">
-                                <div class="col-md-3">
-                                    {{-- <input placeholder="Select date" type="date" name="date_controller"
-                                        class="form-control" value="{{ old('date_controller') }}">
-
-                                     <span>
-                                        @error('date_controller')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </span>
-                                    --}}
-                                    {{-- <input type="hidden" value=""> --}}
-                                    <input type="text" name="daterange" value="" class="form-control" />
-                                </div>
-
-
-
-                                @if (isset($id) && $id != '')
-                                    <input type="hidden" name="emp_search_date" value="{{ $id }}">
-                                @endif
-
-
-
-                                <div class="col-md-3">
-                                    <button class="reblateBtn px-3 py-2">Search</button>
-                                </div>
-                        </form>
 
 
 
@@ -209,25 +256,29 @@
 
                     </div>
 
-                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                    <table id="datatable-buttons" class="table dt-responsive nowrap"
                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
-                            <tr>
+                            <tr style="background-color: #14213d;">
                                 {{-- <th> Emp ID</th> --}}
-                                <th> Name</th>
+                                <th class="borderingLeftTable font-size-20 " style="color: #fff"> Name</th>
                                 {{-- <th> Date</th> --}}
-                                <th> Day</th>
+                                <th class="font-size-15" style="color:#fff"> Day</th>
                                 {{-- <th> Month</th> --}}
-                                <th> Year</th>
-                                <th> Check In</th>
-                                <th> Check Out</th>
-                                <th> Break Start</th>
-                                <th> Break End</th>
-                                <th> Total Time Worked</th>
-                                <th> Over Time Worked</th>
+                                <th class="font-size-15" style="color:#fff"> Year</th>
+                                <th class="font-size-15" style="color:#fff"> Clock In</th>
+                                <th class="font-size-15" style="color:#fff"> Clock Out</th>
+                                <th class="font-size-15" style="color:#fff"> Break Start</th>
+                                <th class="font-size-15" style="color:#fff"> Break End</th>
+                                <th class="font-size-15" style="color:#fff"> Total Time Worked</th>
+                                @if (auth()->user()->user_type == 'admin')
+                                <th class="font-size-15" style="color:#fff"> Over Time</th>
+                                @else
+                                <th class="borderingRightTable font-size-15" style="color:#fff"> Over Time</th>
+                                @endif
                                 {{-- <th> Over Time</th> --}}
                                 @if (auth()->user()->user_type == 'admin')
-                                    <th> Action</th>
+                                    <th class="font-size-15" style="color:#fff"> Action</th>
                                 @endif
 
                             </tr>
@@ -236,7 +287,7 @@
                         <tbody id="table-body">
 
                             @foreach ($check_attendence as $emp)
-                                <tr>
+                                <tr style="border-bottom: 1px solid #c7c7c7">
 
                                     @php
                                         // Parse the date string into a Carbon instance
@@ -287,7 +338,7 @@
                                     @endphp
 
                                     {{-- <td>{{ $emp->emp_id }}</td> --}}
-                                    <td>{{ $emp_name }}</td>
+                                    <td class="table-lines">{{ $emp_name }}</td>
                                     {{-- <td>{{ $formattedDate }}</td> --}}
                                     @php
                                         if ($day_number < 10) {
@@ -297,24 +348,24 @@
 
 
 
-                                    <td>{{ $monthName }} {{ $day_number }} </td>
+                                    <td class="table-lines">{{ $monthName }} {{ $day_number }} </td>
                                     {{-- <td>{{ $monthName }}</td> --}}
-                                    <td>{{ $year }}</td>
+                                    <td class="table-lines">{{ $year }}</td>
                                     {{-- <td>{{ ( $emp->Emp_Code < 10) ? '00'.$emp->Emp_Code : $emp->Emp_Code }}sols</td> --}}
                                     {{-- <td><a href="{{ Route('view-client-detail', $client->client_id) }}">{{ $client->client_name }} </a></td> --}}
-                                    <td>{{ $emp->check_in_time ?? '' }} </a></td>
-                                    <td>{{ $emp->check_out_time ?? '' }} </a></td>
-                                    <td>{{ $emp->break_start ?? '' }}</td>
-                                    <td>{{ $emp->break_end ?? '' }}</td>
-                                    <td>{{ $emp->total_time }}</td>
-                                    <td>{{ $emp->total_over_time }}</td>
+                                    <td class="table-lines">{{ $emp->check_in_time ?? '' }} </a></td>
+                                    <td class="table-lines">{{ $emp->check_out_time ?? '' }} </a></td>
+                                    <td class="table-lines">{{ $emp->break_start ?? '' }}</td>
+                                    <td class="table-lines">{{ $emp->break_end ?? '' }}</td>
+                                    <td class="table-lines">{{ $emp->total_time }}</td>
+                                    <td class="table-lines">{{ $emp->total_over_time }}</td>
                                     {{-- <td>0 Hrs</td> --}}
                                     @if (auth()->user()->user_type == 'admin')
                                         {{-- <td><a class="open-popup" href="#" data-emp-id="{{ $emp->emp_id }}"><svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" viewBox="0 0 24 24"><path fill="currentColor" d="m14.06 9l.94.94L5.92 19H5v-.92zm3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z"/></svg></a></td> --}}
 
 
                                         <input type="hidden" value="{{ $emp->emp_id }}" name="emp_id">
-                                        <td>
+                                        <td class="table-lines">
                                             {{-- <button>Edit</button> --}}
                                             <a href="#emp_{{ $emp->id }}" data-toggle="modal">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem"

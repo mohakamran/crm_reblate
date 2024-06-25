@@ -95,13 +95,13 @@
                             </ul>
                         </div>
 
-                        {{-- @if (Auth()->user()->user_type == 'admin')
-                            <div class="d-flex flex-column align-items-center p-3 gap-2  >
+                        @if (Auth()->user()->user_type == 'admin')
+                            <div class="d-flex flex-column align-items-center p-3 gap-2 position-absolute top-0"  >
                                 <a href="/create-new-task" class="text-dark fw-bold p-2">Assign New</a>
                                 <a href="/update-tasks/{{ $emp_id }}" class="text-dark fw-bold p-2">Update</a>
                             </div>
 
-                        @endif --}}
+                        @endif
 
                     </div>
                 </div>
