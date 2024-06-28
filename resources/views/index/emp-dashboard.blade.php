@@ -380,6 +380,7 @@ button:hover {
                             <div id="messageBox"></div>
                             <div class="row">
                                 <div class="col-md-6 col-lg-6 col-xl-6">
+
                                     <div class="form-group">
                                         <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;" for="date">Leave Title</label>
                                         <div class="d-flex" style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
