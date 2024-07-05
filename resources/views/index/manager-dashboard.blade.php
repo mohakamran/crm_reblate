@@ -517,8 +517,8 @@
                         <div class="tab-content">
 
                             {{-- all notifications  --}}
-                            <div class="container-fluid tab-pane fade active show px-0" style="border-bottom: none"
-                                id="all">
+                            <div class="container-fluid tab-pane fade active show px-0"
+                                style="border-bottom: none; min-height:350px" id="all">
                                 {{-- notifications  --}}
 
                                 @if ($notifications->isNotEmpty())
@@ -544,38 +544,40 @@
                                                             style="color: #14213d;font-weight: 500; font-size:20px">
                                                             {{ $notify->title }}</h4>
                                                         <div class="font-size-15 text-muted d-flex gap-2">
-                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                                                            <p class="mb-0 "><i class="mdi mdi-clock-outline"></i>
+                                                                {{ date('d F Y', strtotime($notify->date)) }}
                                                                 {{ $notify->time }}</p>
-                                                            <p class="mb-1">{{ $notify->message }}</p>
+
                                                         </div>
+                                                        <p class="mb-1 text-muted  ">{{ $notify->message }}</p>
                                                         <a href="javascript:void()"
-                                                            onclick="markAsRead({{ $notify->id }},'all')">mark as read</a>
+                                                            onclick="markAsRead({{ $notify->id }},'all')">mark as
+                                                            read</a>
                                                     </div>
                                                 </a>
                                             </div>
                                         </div>
                                     @endforeach
                                 @else
-                                <div class="flex-1">
-                                    <h4 class="mb-1 EmpNameStyle"
-                                        style="color: #14213d;font-weight: 500; font-size:20px">
-                                        No Notifications</h4>
-                                </div>
+                                    <div class="position-absolute" style="top: 50%; left: 30%;">
+                                        <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
+                                            No Notifications</h4>
+                                    </div>
                                 @endif
-
 
 
 
                             </div>
 
-                            <div class="container-fluid tab-pane fade show px-0" style="border-bottom: none"
-                                id="tasks">
+                            <div class="container-fluid tab-pane fade show px-0"
+                                style="border-bottom: none;min-height:350px" id="tasks">
                                 {{-- tasks notifications  --}}
 
                                 @if ($tasks_notifications->isNotEmpty())
                                     @foreach ($tasks_notifications as $notify)
                                         <div class="notification-hover mt-2 p-2"
-                                            style="border-bottom: 1px solid lightgray" id="notifications_tasks_{{ $notify->id }}">
+                                            style="border-bottom: 1px solid lightgray"
+                                            id="notifications_tasks_{{ $notify->id }}">
                                             <div class="d-flex">
                                                 <a href="{{ $notify->link }}">
                                                     <div class="avatar-sm me-3">
@@ -593,152 +595,80 @@
                                                         <h4 class="mb-1 EmpNameStyle"
                                                             style="color: #14213d;font-weight: 500; font-size:20px">
                                                             {{ $notify->title }}</h4>
-                                                        <div class="font-size-15 text-muted d-flex gap-2">
+                                                        <div class="font-size-15 text-muted  d-flex gap-2">
                                                             <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                                                                {{ date('d F Y', strtotime($notify->date)) }}
                                                                 {{ $notify->time }}</p>
-                                                            <p class="mb-1">{{ $notify->message }}</p>
+
                                                         </div>
+                                                        <p class="mb-1 text-muted">{{ $notify->message }}</p>
                                                         <a href="javascript:void()"
-                                                            onclick="markAsRead({{ $notify->id }},'tasks')">mark as read</a>
+                                                            onclick="markAsRead({{ $notify->id }},'tasks')">mark as
+                                                            read</a>
                                                     </div>
                                                 </a>
                                             </div>
                                         </div>
                                     @endforeach
                                 @else
-                                    No Tasks Notifications
+                                    <div class="position-absolute" style="top: 50%; left: 25%;">
+                                        <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
+                                            No Tasks Notifications</h4>
+                                    </div>
                                 @endif
 
 
                             </div>
 
-                            <div class="container-fluid tab-pane fade px-0 show" style="border-bottom: none"
-                                id="to-do">
-                                <div class="notification-hover mt-2 p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                    alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
+                            <div class="container-fluid tab-pane fade px-0 show"
+                                style="border-bottom: none; min-height:350px" id="to-do">
+
+
+                                @if ($to_do_tasks_notifications->isNotEmpty())
+                                    @foreach ($to_do_tasks_notifications as $notify)
+                                        <div class="notification-hover mt-2 p-2"
+                                            style="border-bottom: 1px solid lightgray"
+                                            id="notifications_tasks_{{ $notify->id }}">
+                                            <div class="d-flex">
+                                                <a href="{{ $notify->link }}">
+                                                    <div class="avatar-sm me-3">
+                                                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                            <img src="{{ $emp_det->Emp_Image }}"
+                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                                alt="">
+                                                        @else
+                                                            <img class="img-fluid rounded-circle"
+                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                                src="{{ url('user.png') }}">
+                                                        @endif
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <h4 class="mb-1 EmpNameStyle"
+                                                            style="color: #14213d;font-weight: 500; font-size:20px">
+                                                            {{ $notify->title }}</h4>
+                                                        <div class="font-size-15 text-muted  d-flex gap-2">
+                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                                                                {{ date('d F Y', strtotime($notify->date)) }}
+                                                                {{ $notify->time }}</p>
+
+                                                        </div>
+                                                        <p class="mb-1 text-muted">{{ $notify->message }}</p>
+                                                        <a href="javascript:void()"
+                                                            onclick="markAsRead({{ $notify->id }},'tasks')">mark as
+                                                            read</a>
+                                                    </div>
+                                                </a>
                                             </div>
                                         </div>
+                                    @endforeach
+                                @else
+                                    <div class="position-absolute" style="top: 50%; left: 25%;">
+                                        <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
+                                            No Tasks Notifications</h4>
                                     </div>
+                                @endif
 
-                                </div>
-                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                    alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                </div>
-                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                    alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                    alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="notification-hover p-2" style="border-bottom: 1px solid lightgray">
-                                    <div class="d-flex">
-                                        <div class="avatar-sm me-3">
-                                            @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                <img src="{{ $emp_det->Emp_Image }}"
-                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                    alt="">
-                                            @else
-                                                <img class="img-fluid rounded-circle"
-                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                    src="{{ url('user.png') }}">
-                                            @endif
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 EmpNameStyle"
-                                                style="color: #14213d;font-weight: 500; font-size:20px">Your order is
-                                                placed</h4>
-                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
-                                                <p class="mb-1">If several languages coalesce the grammar</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
                             </div>
                         </div>
                     </div>

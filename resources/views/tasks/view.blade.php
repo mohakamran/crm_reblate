@@ -102,7 +102,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-body bg-light">
+                    <div class="card-body bg-white">
                         <form action="/search-emp-attendence" method="post">
                             <div class="row justify-content-between mx-1 "
                                 style="background-color: #14213d; border-radius:10px; padding:10px;">
@@ -277,7 +277,7 @@
                                             <img style="width: 18px; height: 18px; position: absolute; z-index: 100; left: 15px; top: 15px"
                                                 src="{{ url('/tick.png') }}" alt="">
                                             <div>
-                                                <svg style="width: 20px; height:20px; position:absolute; right:15px; top:15px; cursor:pointer"
+                                                {{-- <svg style="width: 20px; height:20px; position:absolute; right:15px; top:15px; cursor:pointer"
                                                     viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#14213d"
                                                     class="bi bi-three-dots-vertical" stroke="#14213d">
                                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -288,7 +288,7 @@
                                                             d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z">
                                                         </path>
                                                     </g>
-                                                </svg>
+                                                </svg> --}}
                                             </div>
                                             <div
                                                 style="background-color: #fca311; width:100%; height:120px; border-radius:10px;">
@@ -311,8 +311,10 @@
                                                 <div class="px-3">
                                                     <div class="card-text-center">
                                                         <div class="text-center">
-                                                            <p class="emp-name mb-0" style="color: #14213d;">
-                                                                {{ $emp->Emp_Full_Name }}</p>
+                                                            <p class="emp-name mb-0" >
+
+                                                                <a style="color:#000;" href="/view-tasks-employees/{{$emp->Emp_Code}}">{{ $emp->Emp_Full_Name }}</a>
+                                                            </p>
                                                             <span style="font-size: 14px; ">{{ $emp->Emp_Designation }}
                                                             </span>
                                                         </div>
@@ -337,16 +339,12 @@
                                                             <span style="font-size: 14px; ">01-11-2004
                                                             </span>
                                                         </div>
-                                                        <form action="/view-tasks-employees" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="hidden_emp_value"
-                                                                value="{{ $emp->Emp_Code }}">
+{{--
+                                                        <div class="text-center">
+                                                            <a href="/view-tasks-employees/{{$emp->Emp_Code}}" style="text-align:center;border:none;color:#14213d; background-color:transparent">View Details</a>
+                                                        </div> --}}
 
 
-                                                            <div class="text-center mt-3 container">
-                                                                <button style="border:none;color:#14213d; background-color:transparent" >View Details</button>
-                                                            </div>
-                                                        </form>
                                                         {{-- <div class="d-flex gap-1 align-items-center mb-2">
                                                                     <p style="font-size: 17px; font-weight: 700; margin-bottom: 0px; color: #14213d; ">Task 1:</p>
                                                                     <span style="font-size: 14px; border-bottom: 1px solid #e3e3e3;">Pending </span>

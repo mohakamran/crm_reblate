@@ -25,6 +25,36 @@
     @endsection
     @section('content')
         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+            .EmpNameStyle {
+                font-size: 30px;
+                color: #fff;
+                font-weight: 600;
+                font-family: 'Poppins';
+            }
+
+            .EmpStyle {
+                font-size: 18px;
+                color: #fca311;
+                font-family: 'Poppins';
+                font-weight: 300
+            }
+
+            .borderingLeftTable {
+                border-top-left-radius: 10px !important;
+            }
+
+            .borderingRightTable {
+                border-top-right-radius: 10px !important;
+            }
+
+            .table-lines {
+                font-family: 'Poppins';
+                color: #000;
+                font-weight: 700;
+            }
+
             .att-statistics .stats-info {
                 background-color: #fff;
                 border: 1px solid #e5e5e5;
@@ -38,40 +68,51 @@
                 font-size: 12px;
                 margin: 0 0 5px;
             }
+
+            .modal-backdrop.show {
+                opacity: var(--bs-backdrop-opacity);
+                display: none;
+            }
         </style>
 
         <div class="row mt-2">
             <div class="col-md-12">
                 <div class="card mb-3">
-                    <div class="card-body" style="display: flex; align-items: center; justify-content: space-between;">
-                        <!-- Using a dummy CDN link for the image -->
-                        <a href="/view-tasks" class="position-absolute top-0 start-1 pt-2">
-                            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#14213d" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"></path>
-                        </svg> --}}
-                        </a>
-
-                        <div class="d-flex align-items-center gap-3" style="margin-left: 15px;">
+                    <div class="card-body" style="background-color: #14213d;">
+                        <div class="col-md-6 col-lg-6 col-xl-6 gap-3 d-flex align-items-center flex-wrap p-2">
                             @if ($emp->Emp_Image != '' && file_exists($emp->Emp_Image))
-                                <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
+                                <img class="img-fluid rounded-circle"
+                                    style="width:150px;height:150px;border-radius:100%; object-fit:cover;"
                                     src="{{ url($emp->Emp_Image) }}">
                             @else
-                                <img class="img-fluid rounded-circle" style="width:100px;height:100px; object-fit: cover;"
+                                <img class="img-fluid rounded-circle"
+                                    style="width:150px;height:150px;border-radius:100%; object-fit:cover;"
                                     src="{{ url('user.png') }}">
                             @endif
-
-                            <div class="d-flex flex-column gap-1 ml-4">
-                                <h5 class="card-title mb-0" style="font-size: 25px;">{{ $emp_name }}</h5>
-                                <p class="card-text mb-1 ">{{ $emp->Emp_Designation }}</p>
-                                <p class="card-text">{{ $emp->Emp_Shift_Time }}</p>
-                                <p class="card-text">{{ $emp->Emp_Code }}</p>
-
+                            <div class="welcome-det ms-3 text-dark fw-bolder">
+                                <h2 class="EmpNameStyle">{{ $emp_name }}</h2>
+                                <div class="d-flex justify-content-between align-items-center gap-5">
+                                    <h3 class="mb-0 EmpStyle" style="">Designation:</h3>
+                                    <span class="EmpStyle" style="color:#fff;">{{ $emp->Emp_Designation }}</span>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center gap-5">
+                                    <h3 class="mb-0 EmpStyle" style="width:110px">Shift:</h3>
+                                    <span class="EmpStyle" style="color:#fff;">{{ $emp->Emp_Shift_Time }}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="d-flex flex-column align-items-center p-3 gap-2" style="">
-
 
                         </div>
+                        <div class="position-absolute p-2"
+                            style="top:20px;right: 20px; border:1px solid #fca311; border-radius:10px">
+                            <span style="color:#fff; font-size: 15px;font-weight: 300; font-family: 'Poppins';">
+                                Today
+                                <script>
+                                    document.write(new Date().toUTCString().slice(5, 16))
+                                </script>
+                            </span>
+
+                        </div>
+                        <!-- Using a dummy CDN link for the image -->
 
 
                     </div>
@@ -82,49 +123,68 @@
         <div class="row">
 
 
+
+
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body bg-white">
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <h4 class="EmpNameStyle" style="color: #14213d">Your Attendence Details</h4>
 
-                        <h4 class="card-title">View Attendence Details</h4>
-                        {{-- <p class="card-title-desc">The Buttons extension for DataTables
-                                provides a common set of options, API methods and styling to display
-                                buttons on a page that will interact with a DataTable. The core library
-                                provides the based framework upon which plug-ins can built.
-                            </p> --}}
+                            <form action="/search-emp-details" class="d-flex" method="post">
+                                @csrf
+                                <div class="d-flex gap-1 mt-2">
+                                    <div class="inputboxcolor d-flex"
+                                        style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path
+                                                    d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
+                                                    stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
+                                                <rect x="6" y="12" width="3" height="3" rx="0.5"
+                                                    fill="#9e9e9e"></rect>
+                                                <rect x="10.5" y="12" width="3" height="3" rx="0.5"
+                                                    fill="#9e9e9e"></rect>
+                                                <rect x="15" y="12" width="3" height="3" rx="0.5"
+                                                    fill="#9e9e9e"></rect>
+                                            </g>
+                                        </svg>
+                                        {{-- <input placeholder="Select date" type="date" name="date_controller"
+                                            class="form-control" value="{{ old('date_controller') }}">
+
+                                         <span>
+                                            @error('date_controller')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </span>
+                                        --}}
+                                        {{-- <input type="hidden" value=""> --}}
+                                        <input type="text" name="daterange" value="" class="form-control"
+                                            style="border: none;margin-left: 10px;background-color: transparent;outline: none;width: 100%;padding: 0;" />
+                                    </div>
 
 
-                        <form action="/search-emp-details" method="post">
-                            @csrf
-                            <div class="row mt-3 mb-3">
-                                <div class="col-md-3">
-                                    {{-- <input placeholder="Select date" type="date" name="date_controller"
-                                        class="form-control" value="{{ old('date_controller') }}">
 
-                                     <span>
-                                        @error('date_controller')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </span>
-                                    --}}
-                                    {{-- <input type="hidden" value=""> --}}
-                                    <input type="text" name="daterange" value="" class="form-control" />
-                                </div>
+                                    @if (isset($id) && $id != '')
+                                        <input type="hidden" name="emp_search_date" value="{{ $id }}">
+                                    @endif
 
 
 
-                                @if (isset($id) && $id != '')
-                                    <input type="hidden" name="emp_search_date" value="{{ $id }}">
-                                @endif
+                                    <div class="col-md-3">
+                                        <button class="reblateBtn px-3 py-2">Search</button>
+                                    </div>
+                            </form>
 
-
-
-                                <div class="col-md-3">
-                                    <button class="reblateBtn px-3 py-2">Search</button>
-                                </div>
-                        </form>
-
-
+                        </div>
+                        @if (auth()->user()->user_type == 'admin')
+                            <button class="reblateBtn px-3 py-2" data-toggle="modal" data-target="#updateModal">Add
+                                Attendence</button>
+                        @endif
 
                         <!-- Bootstrap modal -->
                         <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
@@ -132,26 +192,53 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="updateModalLabel">Update Attendance</h5>
+                                        <h5 class="modal-title" id="updateModalLabel">Add Attendence</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <!-- Form fields for updating attendance -->
-                                        <form id="updateForm">
-                                            <div class="form-group">
-                                                <label for="date">Date</label>
-                                                <input type="text" class="form-control" id="date" name="date"
-                                                    readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="checkIn">Check In Time</label>
-                                                <input type="text" class="form-control" id="checkIn" name="checkIn">
-                                            </div>
-                                            <!-- Add more form fields for other attendance data -->
-                                            <button type="submit" class="btn btn-primary">Update</button>
-                                        </form>
+                                        <p class="text-danger" style="display: none;" id="text_error"></p>
+                                        <p class="text-success" style="display: none;" id="text_success"></p>
+
+                                        <div class="form-group mt-2">
+                                            <label for="date">Date</label>
+                                            <input type="date" class="form-control" id="date_add" name="date">
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <label for="checkIn">Clock In Time</label>
+                                            <input type="time" class="form-control" id="clock_in_add" name="checkIn">
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <label for="checkIn">Clock Out Time</label>
+                                            <input type="time" class="form-control" id="clock_out_add"
+                                                name="checkOut">
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <label for="checkIn">Break Start Time</label>
+                                            <input type="time" class="form-control" id="break_start_add"
+                                                name="breakStartTime">
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <label for="checkIn">Break End Time</label>
+                                            <input type="time" class="form-control" id="break_end_add"
+                                                name="breakEndTime">
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <label for="checkIn">Over Time Start</label>
+                                            <input type="time" class="form-control" id="overtime_start_add"
+                                                name="overTimeStart">
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <label for="checkIn">Over Time End</label>
+                                            <input type="time" class="form-control" id="overtime_end_add"
+                                                name="overTimeEnd">
+                                        </div>
+                                        <!-- Add more form fields for other attendance data -->
+                                        <button type="submit" class="btn btn-primary mt-4"
+                                            onclick="addAttendence('{{ $emp->Emp_Code }}')">Save Changes</button>
+
                                     </div>
                                 </div>
                             </div>
@@ -162,72 +249,33 @@
 
 
 
-                        {{-- <div class="col-md-3">
-                                    <div class="card att-statistics">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Statistics</h5>
-                                            <div class="stats-list">
-                                                <div class="stats-info">
-                                                    <p>Today <strong>3.45 <small>/ 8 hrs</small></strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-primary w-31" role="progressbar"
-                                                            aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="stats-info">
-                                                    <p>This Week <strong>28 <small>/ 40 hrs</small></strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-warning w-31" role="progressbar"
-                                                            aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="stats-info">
-                                                    <p>This Month <strong>90 <small>/ 160 hrs</small></strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-success w-62" role="progressbar"
-                                                            aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="stats-info">
-                                                    <p>Remaining <strong>90 <small>/ 160 hrs</small></strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-danger w-62" role="progressbar"
-                                                            aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="stats-info">
-                                                    <p>Overtime <strong>4</strong></p>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-info w-62" role="progressbar"
-                                                            aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
+
 
                     </div>
 
-                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                    <table id="datatable-buttons" class="table dt-responsive nowrap"
                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
-                            <tr>
+                            <tr style="background-color: #14213d;">
                                 {{-- <th> Emp ID</th> --}}
-                                <th> Name</th>
+                                <th class="borderingLeftTable font-size-20 " style="color: #fff"> Name</th>
                                 {{-- <th> Date</th> --}}
-                                <th> Day</th>
+                                <th class="font-size-15" style="color:#fff"> Day</th>
                                 {{-- <th> Month</th> --}}
-                                <th> Year</th>
-                                <th> Check In</th>
-                                <th> Check Out</th>
-                                <th> Break Start</th>
-                                <th> Break End</th>
-                                <th> Total Time Worked</th>
-                                <th> Over Time Worked</th>
+                                <th class="font-size-15" style="color:#fff"> Year</th>
+                                <th class="font-size-15" style="color:#fff"> Clock In</th>
+                                <th class="font-size-15" style="color:#fff"> Clock Out</th>
+                                <th class="font-size-15" style="color:#fff"> Break Start</th>
+                                <th class="font-size-15" style="color:#fff"> Break End</th>
+                                <th class="font-size-15" style="color:#fff"> Total Time Worked</th>
+                                @if (auth()->user()->user_type == 'admin')
+                                    <th class="font-size-15" style="color:#fff"> Over Time</th>
+                                @else
+                                    <th class="borderingRightTable font-size-15" style="color:#fff"> Over Time</th>
+                                @endif
                                 {{-- <th> Over Time</th> --}}
                                 @if (auth()->user()->user_type == 'admin')
-                                    <th> Action</th>
+                                    <th class="font-size-15" style="color:#fff"> Action</th>
                                 @endif
 
                             </tr>
@@ -236,7 +284,7 @@
                         <tbody id="table-body">
 
                             @foreach ($check_attendence as $emp)
-                                <tr>
+                                <tr style="border-bottom: 1px solid #c7c7c7">
 
                                     @php
                                         // Parse the date string into a Carbon instance
@@ -287,7 +335,7 @@
                                     @endphp
 
                                     {{-- <td>{{ $emp->emp_id }}</td> --}}
-                                    <td>{{ $emp_name }}</td>
+                                    <td class="table-lines">{{ $emp_name }}</td>
                                     {{-- <td>{{ $formattedDate }}</td> --}}
                                     @php
                                         if ($day_number < 10) {
@@ -297,24 +345,24 @@
 
 
 
-                                    <td>{{ $monthName }} {{ $day_number }} </td>
+                                    <td class="table-lines">{{ $monthName }} {{ $day_number }} </td>
                                     {{-- <td>{{ $monthName }}</td> --}}
-                                    <td>{{ $year }}</td>
+                                    <td class="table-lines">{{ $year }}</td>
                                     {{-- <td>{{ ( $emp->Emp_Code < 10) ? '00'.$emp->Emp_Code : $emp->Emp_Code }}sols</td> --}}
                                     {{-- <td><a href="{{ Route('view-client-detail', $client->client_id) }}">{{ $client->client_name }} </a></td> --}}
-                                    <td>{{ $emp->check_in_time ?? '' }} </a></td>
-                                    <td>{{ $emp->check_out_time ?? '' }} </a></td>
-                                    <td>{{ $emp->break_start ?? '' }}</td>
-                                    <td>{{ $emp->break_end ?? '' }}</td>
-                                    <td>{{ $emp->total_time }}</td>
-                                    <td>{{ $emp->total_over_time }}</td>
+                                    <td class="table-lines">{{ $emp->check_in_time ?? '' }} </a></td>
+                                    <td class="table-lines">{{ $emp->check_out_time ?? '' }} </a></td>
+                                    <td class="table-lines">{{ $emp->break_start ?? '' }}</td>
+                                    <td class="table-lines">{{ $emp->break_end ?? '' }}</td>
+                                    <td class="table-lines">{{ $emp->total_time }}</td>
+                                    <td class="table-lines">{{ $emp->total_over_time }}</td>
                                     {{-- <td>0 Hrs</td> --}}
                                     @if (auth()->user()->user_type == 'admin')
                                         {{-- <td><a class="open-popup" href="#" data-emp-id="{{ $emp->emp_id }}"><svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" viewBox="0 0 24 24"><path fill="currentColor" d="m14.06 9l.94.94L5.92 19H5v-.92zm3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z"/></svg></a></td> --}}
 
 
                                         <input type="hidden" value="{{ $emp->emp_id }}" name="emp_id">
-                                        <td>
+                                        <td class="table-lines">
                                             {{-- <button>Edit</button> --}}
                                             <a href="#emp_{{ $emp->id }}" data-toggle="modal">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem"
@@ -350,48 +398,56 @@
                                                     <span class="label label-success" style="display: none;"
                                                         id="text-success"></span>
                                                     <p class="text-danger" id="show_error_{{ $emp->id }}"></p>
-                                                    <p class="text-primary" id="show_success_message_{{ $emp->id }}"></p>
+                                                    <p class="text-primary"
+                                                        id="show_success_message_{{ $emp->id }}"></p>
 
                                                     <div class="form-group mt-2">
                                                         <label for="editCheckIn_{{ $emp->id }}">Check In Time
-                                                             </label>
-                                                        <input type="time" class="form-control" id="editCheckIn_{{ $emp->id }}"
-                                                            name="checkInTime_{{ $emp->id }}" value="{{ $check_in_time_24 ?? '' }}">
+                                                        </label>
+                                                        <input type="time" class="form-control"
+                                                            id="editCheckIn_{{ $emp->id }}"
+                                                            name="checkInTime_{{ $emp->id }}"
+                                                            value="{{ $check_in_time_24 ?? '' }}">
                                                         <span style="color:red;display:none;"
-                                                            id="show_error_check_in__{{ $emp->id }}">Check in time required!</span>
+                                                            id="show_error_check_in__{{ $emp->id }}">Check in time
+                                                            required!</span>
                                                         <!-- Corrected -->
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editCheckOut_{{ $emp->id }}">Check Out Time
                                                             {{ $emp->check_out_time ?? '' }}</label>
-                                                        <input type="time" value="{{ $check_out_time_24 ?? '' }}" class="form-control"
-                                                            id="editCheckOut_{{ $emp->id }}" name="checkOutTime">
+                                                        <input type="time" value="{{ $check_out_time_24 ?? '' }}"
+                                                            class="form-control" id="editCheckOut_{{ $emp->id }}"
+                                                            name="checkOutTime">
                                                         <span style="color:red;display:none; "
-                                                            id="show_error_check_out_{{ $emp->id }}">Check out time required!</span>
+                                                            id="show_error_check_out_{{ $emp->id }}">Check out time
+                                                            required!</span>
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editBreakStart">Break Start
-                                                             </label>
-                                                        <input type="time" value="{{$break_start_24 ?? '' }}" class="form-control"
-                                                            id="editBreakStart_{{ $emp->id }}" name="breakStart">
+                                                        </label>
+                                                        <input type="time" value="{{ $break_start_24 ?? '' }}"
+                                                            class="form-control" id="editBreakStart_{{ $emp->id }}"
+                                                            name="breakStart">
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editBreakEnd">Break End
-                                                             </label>
-                                                        <input type="time" value="{{$break_end_24 ?? '' }}" class="form-control"
-                                                            id="editBreakEnd_{{ $emp->id }}" name="breakEnd">
+                                                        </label>
+                                                        <input type="time" value="{{ $break_end_24 ?? '' }}"
+                                                            class="form-control" id="editBreakEnd_{{ $emp->id }}"
+                                                            name="breakEnd">
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editOverStart">Over Time Start
-                                                             </label>
-                                                        <input type="time" value="{{$overtime_start_24 ?? '' }}" class="form-control"
-                                                            id="overTimeStart_{{ $emp->id }}"  >
+                                                        </label>
+                                                        <input type="time" value="{{ $overtime_start_24 ?? '' }}"
+                                                            class="form-control" id="overTimeStart_{{ $emp->id }}">
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="editOverEnd">Over Time End
-                                                             </label>
-                                                        <input type="time" value="{{$overtime_end_24 ?? '' }}" class="form-control"
-                                                            id="overTimeEnd_{{ $emp->id }}"  >
+                                                        </label>
+                                                        <input type="time" value="{{ $overtime_end_24 ?? '' }}"
+                                                            class="form-control" id="overTimeEnd_{{ $emp->id }}">
                                                     </div>
                                                     <!-- Add more fields as needed -->
                                                     <button type="submit" class="btn btn-primary mt-2"
@@ -419,6 +475,30 @@
 
 
         <script>
+            $(document).ready(function() {
+                $('#datatable-buttons').DataTable({
+                    dom: "<'container-fluid'" +
+                        "<'row'" +
+                        "<'col-md-8'l>" +
+                        "<'col-md-4 text-right'f>" +
+                        ">" +
+                        "<'row dt-table'" +
+                        "<'col-md-12'tr>" +
+                        ">" +
+                        "<'row'" +
+                        "<'col-md-7'i>" +
+                        "<'col-md-5 text-right'p>" +
+                        ">" +
+                        ">",
+                    lengthMenu: [
+                        [10, 20, 30, 40, 50, -1],
+                        [10, 20, 30, 40, 50, "All"]
+                    ],
+
+
+                });
+            });
+
             function convertTo12Hour(time24) {
                 if (!time24 || time24 === "") {
                     return ''; // If the time is null or empty, return an empty string
@@ -444,18 +524,18 @@
                 // var editBreakStart = document.getElementById('editBreakStart_'+id).value;
                 // var editBreakEnd = document.getElementById('editBreakEnd_'+id).value;
                 // var attendence_id = document.getElementById('attendence_id_'+id).value;
-                var show_error = document.getElementById('show_error_'+id);
-                var show_success_message = document.getElementById('show_success_message_'+id);
+                var show_error = document.getElementById('show_error_' + id);
+                var show_success_message = document.getElementById('show_success_message_' + id);
 
-                var editCheckIn = document.getElementById('editCheckIn_'+id).value;
-                var editCheckOut = document.getElementById('editCheckOut_'+id).value;
+                var editCheckIn = document.getElementById('editCheckIn_' + id).value;
+                var editCheckOut = document.getElementById('editCheckOut_' + id).value;
                 // var editCheckOut = document.getElementById('editCheckOut_' +id).value;
-                var editBreakStart = document.getElementById('editBreakStart_' +id).value;
-                var editBreakEnd = document.getElementById('editBreakEnd_' +id).value;
-                var attendence_id = document.getElementById('attendence_id__' +id).value;
+                var editBreakStart = document.getElementById('editBreakStart_' + id).value;
+                var editBreakEnd = document.getElementById('editBreakEnd_' + id).value;
+                var attendence_id = document.getElementById('attendence_id__' + id).value;
 
-                var editOverStart = document.getElementById('overTimeStart_' +id).value;
-                var editOverEnd = document.getElementById('overTimeEnd_' +id).value;
+                var editOverStart = document.getElementById('overTimeStart_' + id).value;
+                var editOverEnd = document.getElementById('overTimeEnd_' + id).value;
 
 
 
@@ -481,19 +561,19 @@
                 editCheckIn = convertTo12Hour(editCheckIn);
                 editCheckOut = convertTo12Hour(editCheckOut);
 
-                if(editBreakStart != "") {
+                if (editBreakStart != "") {
                     editBreakStart = convertTo12Hour(editBreakStart);
                 }
 
-                if(editBreakEnd != "") {
+                if (editBreakEnd != "") {
                     editBreakEnd = convertTo12Hour(editBreakEnd);
                 }
 
-                if(editOverStart != "") {
+                if (editOverStart != "") {
                     editOverStart = convertTo12Hour(editOverStart);
                 }
 
-                if(editOverEnd != "") {
+                if (editOverEnd != "") {
                     editOverEnd = convertTo12Hour(editOverEnd);
                 }
 
@@ -522,10 +602,11 @@
                     data: formData,
                     success: function(response) {
                         // Show success message
-                        // console.log('Response:', response);
+                        console.log('Response:', response);
 
                         // Original innerHTML with updated href to trigger window reload
-show_success_message.innerHTML = "Attendance Saved Successfully! <a style='text-decoration:underline !important;' href='#' onclick='window.location.reload()'>Close Window</a>";
+                        show_success_message.innerHTML =
+                            "Attendance Saved Successfully! <a style='text-decoration:underline !important;' href='#' onclick='window.location.reload()'>Close Window</a>";
 
 
                     },
@@ -538,6 +619,134 @@ show_success_message.innerHTML = "Attendance Saved Successfully! <a style='text-
                 });
 
                 return false; // Prevent form submission if within a form
+            }
+
+            function addAttendence(id) {
+
+
+                var text_error = document.getElementById('text_error');
+                var text_success = document.getElementById('text_success');
+
+                var date_add = document.getElementById('date_add').value;
+
+
+                var clock_in_add = document.getElementById('clock_in_add').value;
+                var clock_out_add = document.getElementById('clock_out_add').value;
+
+                var break_start_add = document.getElementById('break_start_add').value;
+                var break_end_add = document.getElementById('break_end_add').value;
+
+                var overtime_start_add = document.getElementById('overtime_start_add').value;
+                var overtime_end_add = document.getElementById('overtime_end_add').value;
+
+                if (date_add == "") {
+                    text_error.innerHTML = "Please Select A Date!";
+                    text_error.style.display = "block";
+                    return;
+                } else {
+                    text_error.style.display = "none";
+                }
+
+                if (clock_in_add == "") {
+                    text_error.innerHTML = "Please Select Clock In Time!";
+                    text_error.style.display = "block";
+                    return;
+                } else {
+                    text_error.style.display = "none";
+                }
+
+                if (clock_out_add == "") {
+                    text_error.innerHTML = "Please Select Clock Out Time!";
+                    text_error.style.display = "block";
+                    return;
+                } else {
+                    text_error.style.display = "none";
+                }
+
+                editCheckIn = convertTo12Hour(clock_in_add);
+                editCheckOut = convertTo12Hour(clock_out_add);
+
+                editBreakStart = "";
+                editBreakEnd = "";
+                editOverStart = "";
+                editOverEnd = "";
+
+                if (break_start_add != "") {
+                    editBreakStart = convertTo12Hour(break_start_add);
+                }
+
+                if (break_end_add != "") {
+                    editBreakEnd = convertTo12Hour(break_end_add);
+                }
+
+                if (overtime_start_add != "") {
+                    editOverStart = convertTo12Hour(overtime_start_add);
+                }
+
+                if (overtime_end_add != "") {
+                    editOverEnd = convertTo12Hour(overtime_end_add);
+                }
+
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+                var formData = {
+                    _token: csrfToken,
+                    emp_check_in: editCheckIn,
+                    emp_check_out: editCheckOut,
+                    emp_break_start: editBreakStart,
+                    emp_break_end: editBreakEnd,
+                    emp_overtime_start: editOverStart,
+                    emp_overtime_end: editOverEnd,
+                    emp_date: date_add,
+                    emp_code: id
+                };
+
+                // AJAX call to send data to the Laravel controller
+                $.ajax({
+                    url: '/add-attendance', // The Laravel route
+                    type: 'POST', // POST request
+                    data: formData,
+                    success: function(response) {
+                        console.log(response); // Log the entire response object for debugging
+
+                        if (response.success === false) {
+                            // Server responded with success: false
+                            if (response.message === true) {
+                                // Employee was already present on the given date
+                                text_success.style.display = "none";
+                                text_error.innerHTML = "Employee was present on the given date!";
+                                text_error.style.display = "block";
+                            }
+                        } else {
+                            // Attendance added successfully
+                            document.getElementById('date_add').value = "";
+                                document.getElementById('clock_in_add').value = "";
+                                document.getElementById('clock_out_add').value = "";
+                                document.getElementById('break_start_add').value = "";
+                                document.getElementById('break_end_add').value = "";
+                                document.getElementById('overtime_start_add').value = "";
+                                document.getElementById('overtime_end_add').value = "";
+                                text_error.style.display = "none";
+                                text_success.innerHTML = "Attendance Added!";
+                                text_success.style.display = "block";
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        if (text_success.style.display == "block") {
+                            text_success.style.display = "none";
+                        }
+                        text_error.innerHTML = error;
+                        text_error.style.display = "block";
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken // Add CSRF token to request headers
+                    }
+                });
+
+                return false; // Prevent form submission if within a form
+
+
+
             }
 
 
@@ -615,33 +824,6 @@ show_success_message.innerHTML = "Attendance Saved Successfully! <a style='text-
 
 
             });
-
-            $(document).ready(function() {
-                $('#datatable-buttons').DataTable({
-                    dom: "<'container-fluid'" +
-                        "<'row'" +
-                        "<'col-md-8'l>" +
-                        "<'col-md-4 text-right'f>" +
-                        ">" +
-                        "<'row dt-table'" +
-                        "<'col-md-12'tr>" +
-                        ">" +
-                        "<'row'" +
-                        "<'col-md-7'i>" +
-                        "<'col-md-5 text-right'p>" +
-                        ">" +
-                        ">",
-                    lengthMenu: [
-                        [10, 25, 50, -1],
-                        [10, 25, 50, "All"]
-                    ],
-                    buttons: [
-                        'excel', 'print'
-                    ],
-
-                });
-            });
-
         </script>
     @endsection
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -173,7 +173,7 @@ Salary Slip
                                 <th>Number of Working Days</th>
                                 <td>{{ $emp_no_of_working_days }}</td>
                                 <th>Month Salary</th>
-                                <td>{{ $emp_month_salary_hidden }}</td>
+                                <td>{{ $month_salary }}</td>
                             </tr>
                             <!------4 row---->
                             <tr>

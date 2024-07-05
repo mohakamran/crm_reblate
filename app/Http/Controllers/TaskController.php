@@ -8,6 +8,237 @@ use Carbon\Carbon;
 
 class TaskController extends Controller
 {
+    public function updateToDoTaskEmp(Request $req) {
+        $id = $req->id;
+        $task_find = DB::table('tasks')->where('id',$id)->first();
+        if($task_find) {
+            $task_title = $req->task_title;
+            $task_desc = $req->task_desc;
+
+
+            DB::table('tasks')->where('id',$id)->update([
+                'task_title' => $task_title,
+                'task_report' => $task_desc,
+                'task_description' => $task_desc
+            ]);
+
+            return response()->json(['message'=>'success']);
+        }
+        return response()->json(['message'=>'fail']);
+    }
+
+    // employee will create task
+    public function createTaskByEmp(Request $req) {
+
+        $task_title = $req->task_title;
+        $task_description = $req->task_description;
+        $user_id = auth()->user()->user_code;
+        $user_name = auth()->user()->user_name;
+        $emp_check = auth()->user()->user_type;
+
+        DB::table('tasks')->insert([
+            'emp_id' => $user_id,
+            'task_title' => $task_title,
+            'task_description' => $task_description,
+            'task_report' => $task_description,
+            'assigned_by' => $user_name,
+            'assigned_date' =>  now(),
+            'task_status' =>  "completed",
+            'task_type' =>  "to-do-task"
+        ]);
+
+        $role = Auth()->user()->user_type;
+        $message = "You have created a New To Do Task";
+        $time = date("g:i A");
+        $title = "New To Do Task";
+        $date = date("Y-m-d");
+
+        DB::table('notifications')->insert([
+            'title' => $title,
+            'message' => $message,
+            'date' => $date,
+            'user_id' => $user_id,
+            'time' => $time,
+            'status' => "unread",
+            "type" => "to-do-task",
+            "link" => "/view-emp-tasks-each"
+        ]);
+
+        $type = "to-do-task";
+        $status = "unread";
+        $date = date('y-m-d');
+        $title = $user_name." created to do task";
+        $link = "/view-tasks-employees/".$user_id;
+        $message = $user_name." has created to do task";
+        $time = date("g:i A");
+        if($emp_check == "employee") {
+            // if user is employee then send notification to managers and admins
+            $emp = DB::table('users')->whereIn('user_type', ['admin', 'manager'])->get();
+        } else {
+            // if user is manger then send notification to admins only
+            $emp = DB::table('users')->where('user_type','admin')->get();
+        }
+
+        foreach($emp as $employee) {
+            DB::table('notifications')->insert([
+                'user_id' => $employee->user_code,
+                'title' => $title,
+                'date' => $date,
+                'message' => $message,
+                'status' => $status,
+                'type' => $type,
+                'link' => $link,
+                'time' => $time
+            ]);
+        }
+
+        return response()->json(['message',true]);
+
+    }
+    // employee will change task staus
+    public function updateTaskEmp(Request $req) {
+        $id = $req->id;
+        $task_find = DB::table('tasks')->where('id',$id)->first();
+        if($task_find) {
+            $task_status = $req->task_status;
+            $task_report = $req->task_report;
+            $old_status = $req->old_status;
+
+            DB::table('tasks')->where('id',$id)->update([
+                'task_status' => $task_status,
+                'task_report' => $task_report
+            ]);
+
+            $emp_check = auth()->user()->user_type;
+
+            $emp = DB::table('employees')->where('Emp_Code',$task_find->emp_id)->first();
+            if($emp) {
+                $name = $emp->Emp_Full_Name;
+            } else {
+                $name = "unknown";
+            }
+
+            $type = "task";
+            $status = "unread";
+            $date = date('y-m-d');
+            $title = $name." updated task";
+            $link = "/view-tasks-employees/".$task_find->emp_id;
+            $message = $name." has updated task from ".$old_status." to ".$task_status;
+            $time = date("g:i A");
+
+            if($emp_check == "employee") {
+                // if user is employee then send notification to managers and admins
+                $emp = DB::table('users')
+                ->whereIn('user_type', ['admin', 'manager'])
+                ->select('user_code')
+                ->get();
+            }
+
+            if($emp_check == "manager") {
+                // if user is manger then send notification to admins only
+                $emp = DB::table('users')->where('user_type','admin')->select('user_code')->get();
+            }
+
+            foreach($emp as $employee) {
+                DB::table('notifications')->insert([
+                    'user_id' => $employee->user_code,
+                    'title' => $title,
+                    'date' => $date,
+                    'message' => $message,
+                    'status' => $status,
+                    'type' => $type,
+                    'link' => $link,
+                    'time' => $time
+                ]);
+            }
+
+            return response()->json(['message'=>'success','emp'=>$emp]);
+        }
+        return response()->json(['message'=>'fail']);
+    }
+    // update tasks
+    public function updateTask(Request $req) {
+        $id = $req->id;
+        $task_find = DB::table('tasks')->where('id',$id)->first();
+        // Get the current date and time
+        $dateAssigned = now();
+        if($task_find) {
+            $empId = $task_find->emp_id;
+
+            $task_title = $req->task_title;
+            $task_deadline = $req->task_deadline;
+            $task_desc = $req->task_desc;
+
+
+            DB::table('tasks')->where('id',$id)->update([
+                'task_date' => $task_deadline,
+                'task_title' => $task_title,
+                'task_description' => $task_desc,
+                'assigned_date' => $dateAssigned,
+                'task_status' => "pending"
+            ]);
+
+            $role = Auth()->user()->user_type;
+            $name = Auth()->user()->user_name;
+            $message = "The ".$role." ".$name. " has updated an assigned task. task title: ".$task_title;
+            $time = date("g:i A");
+            $title = "Task Updated";
+            $date = date("Y-m-d");
+
+            DB::table('notifications')->insert([
+                'title' => $title,
+                'message' => $message,
+                'date' => $date,
+                'user_id' => $empId,
+                'time' => $time,
+                'status' => "unread",
+                "type" => "task",
+                "link" => "/view-emp-tasks-each"
+            ]);
+            return response()->json(['message'=>'success']);
+        }
+        return response()->json(['message'=>'fail']);
+    }
+    // delete tasks
+    public function deleteTask($id) {
+        $task_find = DB::table('tasks')->where('id',$id)->first();
+        if($task_find) {
+            DB::table('tasks')->where('id',$id)->delete();
+        }
+        return response()->json(['message','task deleted']);
+    }
+    // searc emp task by month
+    public function searchTaskMonth(Request $req) {
+        $emp_id =$req->emp_code;
+        $date = $req->emp_month;
+        list($year, $month) = explode('-', $date);
+        $emp = DB::table('employees')->where('Emp_Code',$emp_id)->first();
+        $emp_name = $emp->Emp_Full_Name;
+        $Emp_Designation = $emp->Emp_Designation;
+        $Emp_Image = $emp->Emp_Image;
+        $Emp_Shift_Time = $emp->Emp_Shift_Time;
+        $emp_code = $emp->Emp_Code;
+        $tasks = DB::table('tasks')
+        ->where('emp_id', $emp_id)
+        ->whereRaw('YEAR(assigned_date) = ? AND MONTH(assigned_date) = ?', [$year, $month])
+        ->orderBy('id', 'desc')
+        ->get();
+
+        $to_do_tasks =  DB::table('tasks')
+        ->where('emp_id', $emp_id)
+        ->where('task_type', "to-do-task")
+        ->whereRaw('YEAR(assigned_date) = ? AND MONTH(assigned_date) = ?', [$year, $month])
+        ->orderBy('id', 'desc')
+        ->get();
+
+
+        $to_do_task_count = $to_do_tasks->count();
+
+
+        $show = false;
+        return view('tasks.tasks-cards-of-each-employee',compact('to_do_tasks','to_do_task_count','emp_code','month','year','tasks','emp_name','emp_id','Emp_Designation','Emp_Image','Emp_Shift_Time'));
+
+    }
        // to update task open form for task update
        public function taskUpdateForm($id) {
 
@@ -25,6 +256,10 @@ class TaskController extends Controller
        // employee will see cards based tasks
        public function employeeCanSeeTask() {
             $emp_id = auth()->user()->user_code;
+            $emp_code = $emp_id;
+            $month = date('m');
+            $year = date('Y');
+            // dd($year,$month);
             $emp = DB::table('employees')->where('Emp_Code',$emp_id)->first();
             $emp_name = $emp->Emp_Full_Name;
             $Emp_Designation = $emp->Emp_Designation;
@@ -35,10 +270,30 @@ class TaskController extends Controller
 
             $tasks = DB::table('tasks')
             ->where('emp_id', $emp_id)
+            ->orderBy('id','desc')
+            ->where('task_type', "task")
             ->whereMonth('assigned_date', $currentMonth)
             // ->orderBy('id', 'desc')
             ->get();
-            return view('tasks.tasks-cards-of-each-employee',compact('tasks','emp_name','emp_id','Emp_Designation','Emp_Image','Emp_Shift_Time'));
+
+            // dd($tasks);
+
+            $to_do_task_count = DB::table('tasks')
+            ->where('emp_id', $emp_id)
+            ->where('task_type', "to-do-task")
+            ->orderBy('id','desc')
+            ->whereMonth('assigned_date', $currentMonth)
+            // ->orderBy('id', 'desc')
+            ->count();
+
+            $to_do_tasks = DB::table('tasks')
+            ->where('emp_id', $emp_id)
+            ->where('task_type', "to-do-task")
+            ->orderBy('id','desc')
+            ->whereMonth('assigned_date', $currentMonth)
+            // ->orderBy('id', 'desc')
+            ->get();
+            return view('tasks.tasks-cards-of-each-employee',compact('to_do_tasks','to_do_task_count','month','year','tasks','emp_code','emp_name','emp_id','Emp_Designation','Emp_Image','Emp_Shift_Time'));
        }
        // get task details and save in database
        public function updateEachTaskEmp(Request $request) {
@@ -98,19 +353,37 @@ class TaskController extends Controller
             return view('tasks.update-task',compact('tasks','emp_name','emp_id'));
         }
         // admin can see all tasks assigned of each employee
-        public function viewTaskEachEmployee(Request $req) {
-            $emp_id = $req->hidden_emp_value;
+        public function viewTaskEachEmployee($id) {
+            $month = date('m');
+            $year = date('Y');
+            // dd($month,$year);
+            // dd($id);
+            $emp_id = $id;
+            $currentMonth = Carbon::now()->format('m');
             $emp = DB::table('employees')->where('Emp_Code',$emp_id)->first();
             $emp_name = $emp->Emp_Full_Name;
             $Emp_Designation = $emp->Emp_Designation;
             $Emp_Image = $emp->Emp_Image;
             $Emp_Shift_Time = $emp->Emp_Shift_Time;
+            $emp_code = $emp->Emp_Code;
             $tasks = DB::table('tasks')
             ->where('emp_id', $emp_id)
+            ->whereRaw('YEAR(assigned_date) = ? AND MONTH(assigned_date) = ?', [$year, $month])
             ->orderBy('id', 'desc')
-            ->limit(10)
             ->get();
-            return view('tasks.tasks-cards-of-each-employee',compact('tasks','emp_name','emp_id','Emp_Designation','Emp_Image','Emp_Shift_Time'));
+
+
+            $to_do_tasks = DB::table('tasks')
+            ->where('emp_id', $emp_id)
+            ->where('task_type', "to-do-task")
+            ->orderBy('id','desc')
+            ->whereMonth('assigned_date', $currentMonth)
+            // ->orderBy('id', 'desc')
+            ->get();
+
+            $to_do_task_count = $to_do_tasks->count();
+
+            return view('tasks.tasks-cards-of-each-employee',compact('to_do_task_count','to_do_tasks','emp_code','month','year','tasks','emp_name','emp_id','Emp_Designation','Emp_Image','Emp_Shift_Time'));
             // dd($emp_id);
         }
         // search button admin view by name, id or designation
@@ -180,8 +453,27 @@ class TaskController extends Controller
          }
         }
         public function index() {
+            $date = date('F Y');
             $emp = DB::table('employees')->where('Emp_Status','active')->get();
-            return view('tasks.add-task',compact('emp'));
+            $month = date('m');
+            $year = date('Y');
+            // dd($year,$month);
+
+            $tasks = DB::table('tasks')
+            ->whereYear('assigned_date', $year)
+            ->whereMonth('assigned_date', $month)
+            ->where('task_type','task')
+            ->orderBy('id', 'desc')
+            ->get();
+
+            $count = DB::table('tasks')
+            ->whereYear('assigned_date', $year)
+            ->whereMonth('assigned_date', $month)
+            ->where('task_type','task')
+            ->orderBy('id', 'desc')
+            ->count();
+
+            return view('tasks.add-task',compact('emp','date','tasks','count'));
             // return view('tasks.tasks-cards-of-each-employee',compact('emp'));
         }
 
@@ -235,6 +527,7 @@ class TaskController extends Controller
             'task_description' => $first_task_description,
             'task_date' => $first_task_deadline,
             'task_status' => "pending",
+            'task_type' => "task",
             'assigned_by' => $name, // Assuming admin is the default assigned_by value
             'assigned_date' => $dateAssigned, // Save the current date as date_assigned
         ]);
@@ -256,6 +549,7 @@ class TaskController extends Controller
                     'task_date' => $deadlines[$index],
                     'task_status' => 'pending',
                     'task_percentage' => "0",
+                    'task_type' => "task",
                     'assigned_by' => 'admin', // Assuming admin is the default assigned_by value
                     'assigned_date' => $dateAssigned, // Save the current date as date_assigned
                 ];

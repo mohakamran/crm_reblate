@@ -18,6 +18,11 @@ class AttendenceController extends Controller
     public function addAttendence(Request $request) {
         $emp_code = $request->emp_code;
 
+        $emp_date = $request->emp_date;
+        $check = DB::table('attendence')->where('emp_id',$emp_code)->where('date',$emp_date)->first();
+        if($check) {
+            return response()->json(['success' =>false,'message'=>true]);
+        }
         $emp_check_in = $request->emp_check_in;
         $emp_check_out = $request->emp_check_out;
 
@@ -27,10 +32,12 @@ class AttendenceController extends Controller
         $emp_overtime_start = $request->emp_overtime_start;
         $emp_overtime_end = $request->emp_overtime_end;
 
-        $emp_date = $request->emp_date;
+
 
         $emp_check_in = Carbon::createFromFormat('h:i A', $request->emp_check_in);
         $emp_check_out = Carbon::createFromFormat('h:i A', $request->emp_check_out);
+
+
 
         // Check if Carbon instances were successfully created
         if ($emp_check_in && $emp_check_out) {
@@ -84,7 +91,7 @@ class AttendenceController extends Controller
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        return response()->json(['success' =>true,'message'=>'saved']);
+        return response()->json(['success' =>true,'message'=>false]);
     }
     // overtime start
    public function overTimeStart() {
@@ -552,10 +559,7 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
     }
     // apply for leave admin
     public function empApplyForLeave(Request $request) {
-        $validatedData = $request->validate([
-            'date' => 'required|date',
-            'reason' => 'required|string',
-        ]);
+
         // dd("fuc");
         $user_type = Auth()->user()->user_type;
 

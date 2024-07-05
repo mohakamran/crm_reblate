@@ -480,7 +480,7 @@ class SalaryController extends Controller
        $emp_present_days =  $req->emp_presents;
 
        $emp_leave = $req->emp_leave;
-    //    dd($emp_present_days);
+        //    dd($emp_present_days);
        $emp_deduction = $req->emp_deduction;
        $emp_reason_deduction = $req->emp_reason_deduction;
         //    $emp_total_salary = $req->emp_total_salary_hidden;
@@ -567,6 +567,14 @@ class SalaryController extends Controller
         $over_all_performance = $req->over_all_performance;
 
 
+        $message_notification = "";
+        $title_notification = "";
+        $user_id  = $emp_code;
+        $time = Carbon::now()->format('h:i A');
+        $status = "unread";
+        $link = "";
+        $date_notification = date('y-m-d');
+
 
         if($req->salary_id != "none") {
             // $emp = DB::table('salaries')->where('id',$req->salary_id)->first();
@@ -576,19 +584,19 @@ class SalaryController extends Controller
             } else {
                 $message = "Salary Slip Updated Successfully! ";
                 $date = $emp->date;
-
+                $title_notification = "Salary Slip Updated";
+                $message_notification = auth()->user()->user_type. " ".auth()->user()->user_name. " has updated your salary slip";
             }
 
 
         } else {
+            $title_notification = "Salary Slip Created";
+            $message_notification = auth()->user()->user_type. " ".auth()->user()->user_name. " has created your salary slip";
             $emp = new Salary();
             $message = "Salary Slip Created Successfully! ";
             $date = date('d/m/Y');
             // dd($emp);
         }
-
-
-
 
 
         $data = compact('emp_present_days','authorized_by','created_by','quarterly_bonus','emp_date_of_joining_hidden','emp_month_salary_hidden','emp_designation_bonus','emp_travel_allowence','emp_no_of_working_days','title', 'emp_code','emp_name','emp_shift_time','id','emp_email','emp_designation','emp_basic_salary','emp_kpi_bonus','emp_project_bonus','emp_absent','emp_leave','emp_deduction','emp_reason_deduction','emp_total_salary','emp_net_salary');
@@ -606,6 +614,7 @@ class SalaryController extends Controller
         // Format the result in 'F, Y' format
         $previous_month = date('F, Y', $last_day_previous_month);
         // dd($previous_month);
+
 
 
         $pdf_name = 'generated-salaries/'.$emp_code."_".$previous_month.".pdf";
@@ -670,6 +679,17 @@ class SalaryController extends Controller
 
         $emp->save();
 
+        $salary = DB::table('salaries')->where('emp_id',$user_id)->orderBy('id','desc')->select('id')->first();
+        $link  = "/preview-slip-employee-page/".$salary->id;
+        DB::table('notifications')->insert([
+            'title' => $title_notification,
+            'message' => $message_notification,
+            'user_id' => $user_id,
+            'time' => $time,
+            'status' => $status,
+            'link' => $link,
+            'date' => $date_notification
+        ]);
 
         return redirect('generate-new-salary-slip')->with('email_sent',$message);
 
@@ -722,6 +742,7 @@ class SalaryController extends Controller
             $authorized_by	 = $slip->authorized_by;
             $created_by	 = $slip->created_by;
             $emp_present_days	 = $slip->emp_present_days;
+            $month_salary	 = $slip->month_salary;
             $data = compact(
                 'emp_present_days',
                 'quarterly_bonus',
@@ -745,6 +766,7 @@ class SalaryController extends Controller
                 'emp_project_bonus',
                 'created_by',
                 'authorized_by',
+                'month_salary'
             );
             return view('salaries.slip-browser',$data);
         }

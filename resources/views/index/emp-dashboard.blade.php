@@ -231,9 +231,15 @@
 
             }
 
+            .char-count {
+                font-size: 0.8em;
+                color: #666;
+                text-align: right;
+            }
+
             .popup-content {
                 /* overflow-y: scroll;
-                                                    scroll-behavior: smooth scroll; */
+                                                            scroll-behavior: smooth scroll; */
                 display: flex;
                 max-width: 700px;
                 margin: auto auto;
@@ -263,56 +269,60 @@
                 background: #fca31130;
                 transition: all 0.2s ease-in-out;
             }
-            .to-do-form input,textarea{
+
+            .to-do-form input,
+            textarea {
                 width: 100%;
                 padding: 5px 10px;
                 border: 1px solid #ccc;
                 border-radius: 4px;
             }
-            .to-do-form textarea{
+
+            .to-do-form textarea {
                 height: 37px;
                 resize: none;
             }
 
 
-button {
-    padding: 5px 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
+            button {
+                padding: 5px 10px;
+                background-color: #28a745;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
 
-button:hover {
-    background-color: #218838;
-}
-#todoList{
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-#todoList li{
-    background-color: #14213d26;
-    padding: 10px;
-    border-radius: 10px;
-}
-#todoList li h3{
-    color: #14213d;
-    font-size: 18px;
-    font-family: 'Poppins'
-}
-#todoList li p{
-    color: #14213d;
-    font-size: 15px;
-    font-family: 'Poppins';
-    margin-bottom: 0;
-}
+            button:hover {
+                background-color: #218838;
+            }
 
+            #todoList {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
 
+            #todoList li {
+                background-color: #14213d26;
+                padding: 10px;
+                border-radius: 10px;
+            }
 
+            #todoList li h3 {
+                color: #14213d;
+                font-size: 18px;
+                font-family: 'Poppins'
+            }
+
+            #todoList li p {
+                color: #14213d;
+                font-size: 15px;
+                font-family: 'Poppins';
+                margin-bottom: 0;
+            }
         </style>
 
         <div class="row mt-2">
@@ -369,42 +379,71 @@ button:hover {
                             <h2 class="mb-0"
                                 style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom:1px solid #c7c7c7">
                                 Apply For Leaves</h2>
-                            <span class="closeBtn p-2" style="border-radius: 50%; background-color:#14213d26"><svg
+                            <span class="closeBtn p-2" style="border-radius: 50%; background-color:#14213d26">
+                                {{-- <svg
                                     xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#14213d50"
                                     class="bi bi-x-lg" viewBox="0 0 16 16">
                                     <path
                                         d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                                </svg></span>
+                                </svg> --}}
+                            </span>
                         </div>
                         <form id="leaveForm" action="" class="text-start">
-                            <div id="messageBox"></div>
+                            <div id="messageBox" style="font-size: 16px;" class="mt-2 mb-2"></div>
                             <div class="row">
-                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
 
                                     <div class="form-group">
-                                        <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;" for="date">Leave Title</label>
-                                        <div class="d-flex" style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
-                                            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7" stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path><rect x="6" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e"></rect><rect x="10.5" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e"></rect><rect x="15" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e"></rect></g></svg>
+                                        <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;"
+                                            for="date">Leave Title <span style="color:red">*</span></label>
+                                        <div class="d-flex"
+                                            style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
+                                            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                    stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path
+                                                        d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
+                                                        stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
+                                                    <rect x="6" y="12" width="3" height="3" rx="0.5"
+                                                        fill="#9e9e9e"></rect>
+                                                    <rect x="10.5" y="12" width="3" height="3" rx="0.5"
+                                                        fill="#9e9e9e"></rect>
+                                                    <rect x="15" y="12" width="3" height="3" rx="0.5"
+                                                        fill="#9e9e9e"></rect>
+                                                </g>
+                                            </svg>
                                             <input type="text" class="form-control ms-2 p-0" style="border: none;"
-                                                id="date" name="leave_title" placeholder="Enter Leave Title">
+                                                id="leave_title" name="leave_title" placeholder="Enter Leave Title">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-lg-6 col-xl-6">
-                                    <div class="form-group">
-                                        <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;" for="date">Emp Name</label>
-                                        <div class="d-flex" style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
-                                            <svg height="20px" width="20px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><style type="text/css">.st0 {fill: #9e9e9e;}</style><g><path class="st0" d="M256,265.308c73.252,0,132.644-59.391,132.644-132.654C388.644,59.412,329.252,0,256,0 c-73.262,0-132.643,59.412-132.643,132.654C123.357,205.917,182.738,265.308,256,265.308z"></path><path class="st0" d="M425.874,393.104c-5.922-35.474-36-84.509-57.552-107.465c-5.829-6.212-15.948-3.628-19.504-1.427 c-27.04,16.672-58.782,26.399-92.819,26.399c-34.036,0-65.778-9.727-92.818-26.399c-3.555-2.201-13.675-4.785-19.505,1.427 c-21.55,22.956-51.628,71.991-57.551,107.465C71.573,480.444,164.877,512,256,512C347.123,512,440.427,480.444,425.874,393.104z"></path></g></g></svg>
-                                            <input type="text" class="form-control ms-2 p-0"style="border:none;" value="{{ isset($emp_det->Emp_Full_Name) && $emp_det->Emp_Full_Name ? $emp_det->Emp_Full_Name : 'Guest' }}"
-                                                id="date" name="Emp_name">
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="col-md-6 col-lg-6 col-xl-6 mt-2">
                                     <div class="form-group">
-                                        <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;" for="date">Starting Date</label>
-                                        <div class="d-flex" style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
-                                            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7" stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path><rect x="6" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e"></rect><rect x="10.5" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e"></rect><rect x="15" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e"></rect></g></svg>
+                                        <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;"
+                                            for="date">Starting Date <span style="color:red">*</span></label>
+                                        <div class="d-flex"
+                                            style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
+                                            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                    stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path
+                                                        d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
+                                                        stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
+                                                    <rect x="6" y="12" width="3" height="3" rx="0.5"
+                                                        fill="#9e9e9e"></rect>
+                                                    <rect x="10.5" y="12" width="3" height="3" rx="0.5"
+                                                        fill="#9e9e9e"></rect>
+                                                    <rect x="15" y="12" width="3" height="3" rx="0.5"
+                                                        fill="#9e9e9e"></rect>
+                                                </g>
+                                            </svg>
                                             <input type="date" class="form-control ms-2 p-0"style="border:none;"
                                                 id="Starting_date" name="date">
                                             <span class="text-danger" id="dateBox" style="display: none">Please Select
@@ -415,13 +454,30 @@ button:hover {
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-xl-6 mt-2">
                                     <div class="form-group">
-                                        <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;" for="date">Ending Date</label>
-                                        <div class="d-flex" style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
-                                            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7" stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path><rect x="6" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e"></rect><rect x="10.5" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e"></rect><rect x="15" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e"></rect></g></svg>
+                                        <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;"
+                                            for="date">Ending Date <span style="color:red">*</span> </label>
+                                        <div class="d-flex"
+                                            style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
+                                            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                    stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path
+                                                        d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
+                                                        stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
+                                                    <rect x="6" y="12" width="3" height="3" rx="0.5"
+                                                        fill="#9e9e9e"></rect>
+                                                    <rect x="10.5" y="12" width="3" height="3" rx="0.5"
+                                                        fill="#9e9e9e"></rect>
+                                                    <rect x="15" y="12" width="3" height="3" rx="0.5"
+                                                        fill="#9e9e9e"></rect>
+                                                </g>
+                                            </svg>
                                             <input type="date" class="form-control ms-2 p-0"style="border:none;"
                                                 id="Ending_date" name="date">
-                                            <span class="text-danger" id="dateBox" style="display: none">Please Select
-                                                a date!</span>
+
 
                                         </div>
                                     </div>
@@ -430,16 +486,21 @@ button:hover {
                             </div>
 
                             <div class="form-group mt-2">
-                                <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;" for="reason">Reason:</label>
-                                <textarea class="form-control inputboxcolor p-2 bg-white" style="border: 1px solid #14213d; resize: none; height: 100px;"
-                                    id="reason" name="reason" placeholder="Please write a reason" rows="5"></textarea>
-                                <span class="text-danger" id="reasonBox" style="display: none">Please Write a
-                                    reason!</span>
+                                <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;"
+                                    for="reason">Reason <span style="color:red">*</span> </label>
+                                <textarea class="form-control inputboxcolor p-2 bg-white"
+                                    style="border: 1px solid #14213d; resize: none; height: 100px;" id="reason" name="reason"
+                                    oninput="updateCharCount()" placeholder="Write Reason within 200 characters" rows="5"></textarea>
+                                <div class="char-count">
+                                    <span id="charCount">0</span> / 200 characters
+                                </div>
+
                             </div>
 
                         </form>
                         <div class="mt-2 text-start">
-                            <button class="px-4 py-2 reblateBtn" type="button" onclick="submitForm(event)">Apply</button>
+                            <button class="px-4 py-2 reblateBtn" type="button"
+                                onclick="submitForm(event)">Apply</button>
                         </div>
 
                     </div>
@@ -609,8 +670,8 @@ button:hover {
                         <div class="tab-content">
 
                             {{-- all notifications  --}}
-                            <div class="container-fluid tab-pane fade active show px-0" style="border-bottom: none; min-height:350px"
-                                id="all">
+                            <div class="container-fluid tab-pane fade active show px-0"
+                                style="border-bottom: none; min-height:350px" id="all">
                                 {{-- notifications  --}}
 
                                 @if ($notifications->isNotEmpty())
@@ -636,37 +697,40 @@ button:hover {
                                                             style="color: #14213d;font-weight: 500; font-size:20px">
                                                             {{ $notify->title }}</h4>
                                                         <div class="font-size-15 text-muted d-flex gap-2">
-                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                                                            <p class="mb-0 "><i class="mdi mdi-clock-outline"></i>
+                                                                {{ date('d F Y', strtotime($notify->date)) }}
                                                                 {{ $notify->time }}</p>
-                                                            <p class="mb-1">{{ $notify->message }}</p>
+
                                                         </div>
+                                                        <p class="mb-1 text-muted  ">{{ $notify->message }}</p>
                                                         <a href="javascript:void()"
-                                                            onclick="markAsRead({{ $notify->id }},'all')">mark as read</a>
+                                                            onclick="markAsRead({{ $notify->id }},'all')">mark as
+                                                            read</a>
                                                     </div>
                                                 </a>
                                             </div>
                                         </div>
                                     @endforeach
                                 @else
-                                <div class="position-absolute" style="top: 50%; left: 30%;">
-                                    <h4 class="mb-1 EmpNameStyle"
-                                        style="color: #c7c7c7; font-size:35px">
-                                        No Notifications</h4>
-                                </div>
+                                    <div class="position-absolute" style="top: 50%; left: 30%;">
+                                        <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
+                                            No Notifications</h4>
+                                    </div>
                                 @endif
 
 
 
                             </div>
 
-                            <div class="container-fluid tab-pane fade show px-0" style="border-bottom: none;min-height:350px"
-                                id="tasks">
+                            <div class="container-fluid tab-pane fade show px-0"
+                                style="border-bottom: none;min-height:350px" id="tasks">
                                 {{-- tasks notifications  --}}
 
                                 @if ($tasks_notifications->isNotEmpty())
                                     @foreach ($tasks_notifications as $notify)
                                         <div class="notification-hover mt-2 p-2"
-                                            style="border-bottom: 1px solid lightgray" id="notifications_tasks_{{ $notify->id }}">
+                                            style="border-bottom: 1px solid lightgray"
+                                            id="notifications_tasks_{{ $notify->id }}">
                                             <div class="d-flex">
                                                 <a href="{{ $notify->link }}">
                                                     <div class="avatar-sm me-3">
@@ -684,42 +748,79 @@ button:hover {
                                                         <h4 class="mb-1 EmpNameStyle"
                                                             style="color: #14213d;font-weight: 500; font-size:20px">
                                                             {{ $notify->title }}</h4>
-                                                        <div class="font-size-15 text-muted d-flex gap-2">
+                                                        <div class="font-size-15 text-muted  d-flex gap-2">
                                                             <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                                                                {{ date('d F Y', strtotime($notify->date)) }}
                                                                 {{ $notify->time }}</p>
-                                                            <p class="mb-1">{{ $notify->message }}</p>
+
                                                         </div>
+                                                        <p class="mb-1 text-muted">{{ $notify->message }}</p>
                                                         <a href="javascript:void()"
-                                                            onclick="markAsRead({{ $notify->id }},'tasks')">mark as read</a>
+                                                            onclick="markAsRead({{ $notify->id }},'tasks')">mark as
+                                                            read</a>
                                                     </div>
                                                 </a>
                                             </div>
                                         </div>
                                     @endforeach
                                 @else
-                                <div class="position-absolute" style="top: 50%; left: 25%;">
-                                    <h4 class="mb-1 EmpNameStyle"
-                                        style="color: #c7c7c7; font-size:35px">
-                                        No Tasks Notifications</h4>
-                                </div>
+                                    <div class="position-absolute" style="top: 50%; left: 25%;">
+                                        <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
+                                            No Tasks Notifications</h4>
+                                    </div>
                                 @endif
 
 
                             </div>
 
-                            <div class="container-fluid tab-pane fade px-0 show" style="border-bottom: none; min-height:350px"
-                                id="to-do">
-                                <form id="todoForm" class="d-flex gap-2 align-items-center justify-content-center mt-3 to-do-form">
-                                    <div>
-                                        <input type="text" id="taskTitle" placeholder="Task Title" required>
-                                    </div>
-                                    <div>
-                                        <textarea id="taskDescription" placeholder="Task Description" required></textarea>
-                                    </div>
-                                    <button type="submit">Add Task</button>
-                                </form>
+                            <div class="container-fluid tab-pane fade px-0 show"
+                                style="border-bottom: none; min-height:350px" id="to-do">
 
-                                <ul class="ps-0 mt-2" id="todoList"></ul>
+
+                                @if ($to_do_tasks_notifications->isNotEmpty())
+                                    @foreach ($to_do_tasks_notifications as $notify)
+                                        <div class="notification-hover mt-2 p-2"
+                                            style="border-bottom: 1px solid lightgray"
+                                            id="notifications_tasks_{{ $notify->id }}">
+                                            <div class="d-flex">
+                                                <a href="{{ $notify->link }}">
+                                                    <div class="avatar-sm me-3">
+                                                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                            <img src="{{ $emp_det->Emp_Image }}"
+                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                                alt="">
+                                                        @else
+                                                            <img class="img-fluid rounded-circle"
+                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                                src="{{ url('user.png') }}">
+                                                        @endif
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <h4 class="mb-1 EmpNameStyle"
+                                                            style="color: #14213d;font-weight: 500; font-size:20px">
+                                                            {{ $notify->title }}</h4>
+                                                        <div class="font-size-15 text-muted  d-flex gap-2">
+                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                                                                {{ date('d F Y', strtotime($notify->date)) }}
+                                                                {{ $notify->time }}</p>
+
+                                                        </div>
+                                                        <p class="mb-1 text-muted">{{ $notify->message }}</p>
+                                                        <a href="javascript:void()"
+                                                            onclick="markAsRead({{ $notify->id }},'tasks')">mark as
+                                                            read</a>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="position-absolute" style="top: 50%; left: 25%;">
+                                        <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
+                                            No Tasks Notifications</h4>
+                                    </div>
+                                @endif
+
 
                             </div>
                         </div>
@@ -910,12 +1011,12 @@ button:hover {
             </div> --}}
 
             <script>
-                function markAsRead(id,str) {
-                    if(str === "all") {
+                function markAsRead(id, str) {
+                    if (str === "all") {
                         var not = "notifications_" + id;
                     }
 
-                    if(str === "tasks") {
+                    if (str === "tasks") {
                         var not = "notifications_tasks_" + id;
                     }
 
@@ -1059,7 +1160,7 @@ button:hover {
 
                             </div>
                         </div>
-                        <div class="punch-info d-flex flex-column align-items-center" >
+                        <div class="punch-info d-flex flex-column align-items-center">
                             {{-- <div class="punch-hours">
                                 @if (session()->has('total_over_time') && session('total_over_time') != '')
                                    <span>{{session('total_over_time')}}</span>
@@ -1103,33 +1204,31 @@ button:hover {
                                                 d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
                                         </svg> Over time marked!</span>
                                 @elseif(session()->has('show_over_time_end') && session('show_over_time_end') === false)
-
-                                            <a class="reblateBtn px-4 py-2 w-md" style="border-radius: 10px;" href="/overtime-start">Overtime Start
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                    viewBox="0 0 21 21">
-                                                    <g fill="none" fill-rule="evenodd" stroke="currentColor"
-                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                        <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
-                                                        <path
-                                                            d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
-                                                    </g>
-                                                </svg>
-                                            </a>
-
-                                @elseif(session()->has('show_over_time_end') && session('show_over_time_end') === true)
-
-                                    <a class="reblateBtn px-4 py-2 w-md" style="border-radius: 10px;" href="/overtime-end">Overtime End
+                                    <a class="reblateBtn px-4 py-2 w-md" style="border-radius: 10px;"
+                                        href="/overtime-start">Overtime Start
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                    viewBox="0 0 21 21">
-                                                    <g fill="none" fill-rule="evenodd" stroke="currentColor"
-                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                        <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
-                                                        <path
-                                                            d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
-                                                    </g>
-                                                </svg>
-                                            </a>
-
+                                            viewBox="0 0 21 21">
+                                            <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
+                                                <path
+                                                    d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
+                                            </g>
+                                        </svg>
+                                    </a>
+                                @elseif(session()->has('show_over_time_end') && session('show_over_time_end') === true)
+                                    <a class="reblateBtn px-4 py-2 w-md" style="border-radius: 10px;"
+                                        href="/overtime-end">Overtime End
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                            viewBox="0 0 21 21">
+                                            <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
+                                                <path
+                                                    d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
+                                            </g>
+                                        </svg>
+                                    </a>
                                 @endif
                             @else
                                 <div class="d-flex flex-wrap justify-content-between gap-4 align-items-center">
@@ -1352,147 +1451,85 @@ button:hover {
                                 <div class="carousel-inner">
                                     <div class="carousel-item active" style="border-bottom: none">
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="card" style="box-shadow: none">
-                                                    <div class="card-body" style="background-color: #AA336A30">
-                                                        <div class="d-flex align-items-center text-start gap-2">
-                                                            <span class="p-2 rounded-pill mb-0 font-size-15"
-                                                                style="background-color: #AA336A40; color:#AA336A;font-weight: 600">HR</span>
-                                                            <h5 class="mb-0 EmpStyle"
-                                                                style="color: #14213d; font-weight: 600">HR Policy</h5>
-                                                        </div>
-                                                        <div class="mt-2">
-                                                            <div class="d-flex align-items-center text-start gap-2">
-                                                                <span
-                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy
-                                                                    Name:</span>
-                                                                <span
-                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR
-                                                                    Policy</span>
-                                                            </div>
-                                                            <div>
-                                                                <span
-                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated
-                                                                    On:</span>
-                                                                <span
-                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="text-end">
-                                                            <svg type="button" width="20px" height="20px"
-                                                                viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                                    stroke-linejoin="round"></g>
-                                                                <g id="SVGRepo_iconCarrier">
-                                                                    <path
-                                                                        d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15"
-                                                                        stroke="#14213d" stroke-width="1.5"
-                                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                                    </path>
-                                                                    <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625"
-                                                                        stroke="#14213d" stroke-width="1.5"
-                                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                                    </path>
-                                                                </g>
-                                                            </svg>
-                                                            <svg type="button" width="20px" height="20px"
-                                                                viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg" stroke="#14213d">
-                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                                    stroke-linejoin="round"></g>
-                                                                <g id="SVGRepo_iconCarrier">
-                                                                    <path
-                                                                        d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z"
-                                                                        stroke="#14213d" stroke-width="2"
-                                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                                    </path>
-                                                                    <path
-                                                                        d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z"
-                                                                        stroke="#14213d" stroke-width="2"
-                                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                                    </path>
-                                                                </g>
-                                                            </svg>
-                                                        </div>
 
+                                            @foreach ($files as $file)
+                                                <div class="col-md-6">
+                                                    <div class="card" style="box-shadow: none">
+                                                        <div class="card-body" style="background-color: #AA336A30">
+                                                            <div class="d-flex align-items-center text-start gap-2">
+                                                                <span class="p-2 rounded-pill mb-0 font-size-15"
+                                                                    style="background-color: #AA336A40; color:#AA336A;font-weight: 600">HR</span>
+                                                                <h5 class="mb-0 EmpStyle"
+                                                                    style="color: #14213d; font-weight: 600">
+                                                                    {{ $file->file_name }}</h5>
+                                                            </div>
+                                                            <div class="mt-2">
+                                                                <div class="d-flex align-items-center text-start gap-2">
+                                                                    <span
+                                                                        style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy
+                                                                        Name:</span>
+                                                                    <span
+                                                                        style="font-family: 'Poppins'; font-weight:500; color:#14213d">{{ $file->file_type }}</span>
+                                                                </div>
+                                                                <div>
+                                                                    <span
+                                                                        style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated
+                                                                        On:</span>
+                                                                    <span
+                                                                        style="font-family: 'Poppins'; font-weight:500; color:#14213d">{{ $file->created_at }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-end">
+                                                                {{-- @if ($file->file_path != '' && file_exists($file->file_path))
+                                                                    <a href="{{ $file->file_path }}" download=""><svg
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            width="25" height="25"
+                                                                            viewBox="0 0 24 24">
+                                                                            <path fill="#14213d"
+                                                                                d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z">
+                                                                            </path>
+                                                                        </svg></a>
+                                                                @endif --}}
+
+                                                                @if ($file->file_path != '' && file_exists($file->file_path))
+                                                                    <a href="/view-page/{{$file->id}}">
+                                                                        <svg type="button" width="20px" height="20px"
+                                                                            viewBox="0 0 24 24" fill="none"
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            stroke="#14213d">
+                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                                                            </g>
+                                                                            <g id="SVGRepo_tracerCarrier"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"></g>
+                                                                            <g id="SVGRepo_iconCarrier">
+                                                                                <path
+                                                                                    d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z"
+                                                                                    stroke="#14213d" stroke-width="2"
+                                                                                    stroke-linecap="round"
+                                                                                    stroke-linejoin="round">
+                                                                                </path>
+                                                                                <path
+                                                                                    d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z"
+                                                                                    stroke="#14213d" stroke-width="2"
+                                                                                    stroke-linecap="round"
+                                                                                    stroke-linejoin="round">
+                                                                                </path>
+                                                                            </g>
+                                                                        </svg>
+                                                                    </a>
+                                                                @endif
+
+
+                                                            </div>
+
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="card" style="box-shadow: none">
-                                                    <div class="card-body" style="background-color: #00800030">
-                                                        <div class="d-flex align-items-center text-start gap-2">
-                                                            <span class="p-2 rounded-pill mb-0 font-size-15"
-                                                                style="background-color: #00800040; color:#008000;font-weight: 600">HR</span>
-                                                            <h5 class="mb-0 EmpStyle"
-                                                                style="color: #14213d; font-weight: 600">HR Policy</h5>
-                                                        </div>
-                                                        <div class="mt-2">
-                                                            <div class="d-flex align-items-center text-start gap-2">
-                                                                <span
-                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy
-                                                                    Name:</span>
-                                                                <span
-                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">HR
-                                                                    Policy</span>
-                                                            </div>
-                                                            <div>
-                                                                <span
-                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Updated
-                                                                    On:</span>
-                                                                <span
-                                                                    style="font-family: 'Poppins'; font-weight:500; color:#14213d">Today</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="text-end">
-                                                            <svg type="button" width="20px" height="20px"
-                                                                viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                                    stroke-linejoin="round"></g>
-                                                                <g id="SVGRepo_iconCarrier">
-                                                                    <path
-                                                                        d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15"
-                                                                        stroke="#14213d" stroke-width="1.5"
-                                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                                    </path>
-                                                                    <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625"
-                                                                        stroke="#14213d" stroke-width="1.5"
-                                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                                    </path>
-                                                                </g>
-                                                            </svg>
-                                                            <svg type="button" width="20px" height="20px"
-                                                                viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg" stroke="#14213d">
-                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                                    stroke-linejoin="round"></g>
-                                                                <g id="SVGRepo_iconCarrier">
-                                                                    <path
-                                                                        d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z"
-                                                                        stroke="#14213d" stroke-width="2"
-                                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                                    </path>
-                                                                    <path
-                                                                        d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z"
-                                                                        stroke="#14213d" stroke-width="2"
-                                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                                    </path>
-                                                                </g>
-                                                            </svg>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
-                                    <div class="carousel-item" style="border-bottom: none">
+                                    {{-- <div class="carousel-item" style="border-bottom: none">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="card" style="box-shadow: none">
@@ -1633,7 +1670,7 @@ button:hover {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                             </div>
@@ -2391,36 +2428,35 @@ button:hover {
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             document.getElementById('todoForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+                event.preventDefault();
 
-            const title = document.getElementById('taskTitle').value;
-            const description = document.getElementById('taskDescription').value;
+                const title = document.getElementById('taskTitle').value;
+                const description = document.getElementById('taskDescription').value;
 
-            if (title && description) {
-                addTask(title, description);
-                document.getElementById('taskTitle').value = '';
-                document.getElementById('taskDescription').value = '';
-            } else {
-                alert('Please fill out both fields');
+                if (title && description) {
+                    addTask(title, description);
+                    document.getElementById('taskTitle').value = '';
+                    document.getElementById('taskDescription').value = '';
+                } else {
+                    alert('Please fill out both fields');
+                }
+            });
+
+            function addTask(title, description) {
+                const li = document.createElement('li');
+                const h3 = document.createElement('h3');
+                h3.textContent = title;
+                const p = document.createElement('p');
+                p.textContent = description;
+                const small = document.createElement('small');
+                const now = new Date();
+                small.textContent = `Added on: ${now.toLocaleDateString(undefined, options)}`;
+
+                li.appendChild(h3);
+                li.appendChild(p);
+                li.appendChild(small);
+                document.getElementById('todoList').appendChild(li);
             }
-        });
-
-        function addTask(title, description) {
-            const li = document.createElement('li');
-            const h3 = document.createElement('h3');
-            h3.textContent = title;
-            const p = document.createElement('p');
-            p.textContent = description;
-            const small = document.createElement('small');
-            const now = new Date();
-            small.textContent = `Added on: ${now.toLocaleDateString(undefined, options)}`;
-
-            li.appendChild(h3);
-            li.appendChild(p);
-            li.appendChild(small);
-            document.getElementById('todoList').appendChild(li);
-        }
-
         </script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -2516,26 +2552,73 @@ button:hover {
             // Update current time every second
             setInterval(updateCurrentTime, 1000);
 
+            function updateCharCount() {
+                var textarea = document.getElementById("reason");
+                var charCountSpan = document.getElementById("charCount");
+                var maxLength = 200;
+                var currentCount = textarea.value.length;
+
+                if (currentCount > maxLength) {
+                    textarea.value = textarea.value.slice(0, maxLength); // Truncate the text
+                    currentCount = maxLength; // Update current count
+                }
+
+                charCountSpan.textContent = currentCount;
+            }
+
             function submitForm(event) {
                 event.preventDefault();
 
-                var dateValue = document.getElementById('date').value;
-                var reasonValue = document.getElementById('reason').value;
-                var dateBox = document.getElementById('dateBox');
-                var reasonBox = document.getElementById('reasonBox');
+                var leave_title = document.getElementById('leave_title');
+
+                var Starting_date = document.getElementById('Starting_date');
+                var Ending_date = document.getElementById('Ending_date');
+
+                var reason = document.getElementById('reason');
+
                 var messageBox = document.getElementById('messageBox');
 
                 dateBox.style.display = "none";
-                reasonBox.style.display = "none"; // Corrected line
 
-                if (dateValue === '') {
-                    dateBox.style.display = "block";
+
+                if (leave_title.value === '') {
+                    messageBox.style.display = "block";
+                    messageBox.style.color = "red";
+                    messageBox.innerHTML = "Please Write Leave Title!";
                     return;
+                } else {
+                    messageBox.style.display = "none";
                 }
-                if (reasonValue === '') {
-                    reasonBox.style.display = "block";
+
+                if (Starting_date.value === '') {
+                    messageBox.style.display = "block";
+                    messageBox.style.color = "red";
+                    messageBox.innerHTML = "Please Select Start Date!";
                     return;
+                } else {
+                    messageBox.style.display = "none";
                 }
+
+                if (Ending_date.value === '') {
+                    messageBox.style.display = "block";
+                    messageBox.style.color = "red";
+                    messageBox.innerHTML = "Please Select Ending Date!";
+                    return;
+                } else {
+                    messageBox.style.display = "none";
+                }
+
+                if (reason.value === '') {
+                    messageBox.style.display = "block";
+                    messageBox.style.color = "red";
+                    messageBox.innerHTML = "Please Write A Short Reason!";
+                    return;
+                } else {
+                    messageBox.style.display = "none";
+                }
+
+
+
 
                 var formData = {
                     _token: '{{ csrf_token() }}',
@@ -2544,7 +2627,7 @@ button:hover {
                 };
 
                 $.ajax({
-                    type: 'POST',
+                    type: 'get',
                     url: '/apply-for-leave',
                     data: formData,
                     success: function(response) {

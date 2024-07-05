@@ -41,7 +41,7 @@
         <div class="d-flex align-items-center">
 
 
-            @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager')
+            {{-- @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager')
                 <div class="dropdown d-inline-block">
                     <button type="button" class="btn noti-icon waves-effect"
                         style="background-color: #14213d17; border-radius: 100px;"
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                 </div>
-            @endif
+            @endif --}}
 
             <div class="btn-group align-items-center">
                 <div class="flex-grow-1 text-start" >
