@@ -1247,10 +1247,13 @@ public function searchDateManagerHomePage(Request $req) {
 
             // policies files
             if($check_shift_time->Emp_Shift_Time == "Morning") {
-                $files = DB::table('uploads')->where('shift',"Morning")->orderBy('id','desc')->limit(2)->get();
-            } else {
-                $files = DB::table('uploads')->where('shift',"Night")->orderBy('id','desc')->limit(2)->get();
+                $files = DB::table('uploads')->whereIn('shift', ['Morning', 'Both'])->orderBy('id','desc')->limit(2)->get();
+            } else if($check_shift_time->Emp_Shift_Time == "Night") {
+                $files = DB::table('uploads')->whereIn('shift', ['Night', 'Both'])->orderBy('id','desc')->limit(2)->get();
             }
+            // dd($files);
+
+            $latest_to_do = DB::table('to_do_list')->where('status', 'pending')->orderBy('id', 'desc')->get();
 
             $notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('user_id',auth()->user()->user_code)->limit(6)->get();
             $tasks_notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('type','task')->where('user_id',auth()->user()->user_code)->limit(6)->get();
@@ -1258,6 +1261,7 @@ public function searchDateManagerHomePage(Request $req) {
             // dd($notifications);
 
             $data = [
+                'latest_to_do' => $latest_to_do,
                 'files' =>$files,
                 'to_do_tasks_notifications' => $to_do_tasks_notifications,
                 'tasks_notifications' =>$tasks_notifications,

@@ -156,6 +156,36 @@
                 color: #f00;
                 display: none;
             }
+
+            .modal-fullscreen {
+      width: 100vw;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .modal-dialog-scrollable {
+      display: flex;
+      max-height: calc(100vh - 60px); /* Adjust as needed based on your modal content */
+      margin-top: 30px; /* Adjust top margin as needed */
+    }
+
+    .embed-responsive {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding-top: 100%; /* This keeps the aspect ratio (height:width) */
+      overflow: hidden;
+    }
+
+    .embed-responsive iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
         </style>
         <div class="row">
             <div class="col-12">
@@ -322,9 +352,31 @@
                                         <td>{{$file->created_at}}</td>
                                         <td>
                                             @if (file_exists($file->file_path) && $file->file_path !="")
-                                            <a href="{{$file->file_path}}" target="_blank">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 32 32"><path fill="#14213d" d="M30.94 15.66A16.69 16.69 0 0 0 16 5A16.69 16.69 0 0 0 1.06 15.66a1 1 0 0 0 0 .68A16.69 16.69 0 0 0 16 27a16.69 16.69 0 0 0 14.94-10.66a1 1 0 0 0 0-.68ZM16 25c-5.3 0-10.9-3.93-12.93-9C5.1 10.93 10.7 7 16 7s10.9 3.93 12.93 9C26.9 21.07 21.3 25 16 25Z"></path><path fill="#14213d" d="M16 10a6 6 0 1 0 6 6a6 6 0 0 0-6-6Zm0 10a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"></path></svg>
-                                            </a>
+                                            <a href="#my_pdf_file_{{$file->id}}" data-toggle="modal" >
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 32 32"><path fill="#14213d" d="M30.94 15.66A16.69 16.69 0 0 0 16 5A16.69 16.69 0 0 0 1.06 15.66a1 1 0 0 0 0 .68A16.69 16.69 0 0 0 16 27a16.69 16.69 0 0 0 14.94-10.66a1 1 0 0 0 0-.68ZM16 25c-5.3 0-10.9-3.93-12.93-9C5.1 10.93 10.7 7 16 7s10.9 3.93 12.93 9C26.9 21.07 21.3 25 16 25Z"></path><path fill="#14213d" d="M16 10a6 6 0 1 0 6 6a6 6 0 0 0-6-6Zm0 10a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"></path></svg>
+                                             </a>
+                                            <!-- Full Screen PDF Modal -->
+                                            <div class="modal fade" id="my_pdf_file_{{$file->id}}" tabindex="-1" role="dialog" aria-labelledby="pdfModalLabel" aria-hidden="true">
+                                              <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+                                                    <h5 class="modal-title" id="pdfModalLabel">{{$file->file_name}}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <div class="embed-responsive">
+                                                      <!-- Replace the src attribute with your Google Drive PDF file URL -->
+                                                      <iframe class="embed-responsive-item" src="{{$file->file_path}}"></iframe>
+                                                    </div>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
                                             @endif
                                         </td>
                                         <td>
@@ -470,310 +522,116 @@
 
 
 
-            function setOfficeHolidays() {
+          function saveFile(event) {
+    event.preventDefault();
+
+    var file_name = document.getElementById('file_name').value;
+    var file_shift = document.getElementById('file_shift').value;
+    var file_policy = document.getElementById('file_policy').value;
+    var description = document.getElementById('description').value;
+    var fileInput = document.getElementById('file-input');
+    var error = document.getElementById('select-file');
+
+    // Clear previous errors
+    error.style.display = "none";
+
+    // Validate file name
+    if (file_name.trim() === "") {
+        error.innerHTML = "File name is required!";
+        error.style.display = "block";
+        return;
+    }
+
+    // Validate file shift
+    if (file_shift.trim() === "") {
+        error.innerHTML = "Please select a shift!";
+        error.style.display = "block";
+        return;
+    }
+
+    // Validate file policy
+    if (file_policy.trim() === "") {
+        error.innerHTML = "Please select a file type!";
+        error.style.display = "block";
+        return;
+    }
+
+    // Validate file input
+    if (fileInput.files.length === 0) {
+        error.innerHTML = "Please select a file.";
+        error.style.display = "block";
+        return;
+    }
+
+    // Check file type
+    var allowedTypes = ['application/pdf'];
+    var fileType = fileInput.files[0].type;
+
+    if (!allowedTypes.includes(fileType)) {
+        error.innerHTML = "Only PDF files are allowed.";
+        error.style.display = "block";
+        return;
+    }
+
+    // Check file size
+    var maxSize = 2 * 1024 * 1024; // 2 MB in bytes
+    var fileSize = fileInput.files[0].size;
+
+    if (fileSize > maxSize) {
+        error.innerHTML = "File size exceeds the limit of 2 MB.";
+        error.style.display = "block";
+        return;
+    }
+
+    var formData = new FormData();
+    formData.append('fileInput', fileInput.files[0]); // Append file input to formData
+    formData.append('file_name', file_name);
+    formData.append('file_shift', file_shift);
+    formData.append('file_policy', file_policy);
+    formData.append('description', description);
+
+    // CSRF token (replace with your actual token handling logic)
+    var csrfToken = "{{ csrf_token() }}";
+
+    // AJAX request using fetch API
+    fetch('/save-help-file', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
+        },
+        body: formData // Send formData containing file and other fields
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            var form_reset_upload = document.getElementById('form-reset-upload');
+            form_reset_upload.reset();
+            var success_message = document.getElementById('success_message_id');
+            success_message.innerHTML = "File Uploaded Successfully!";
+            success_message.style.display = "block";
+            setTimeout(function() {
+                success_message.style.display = "none";
+                document.getElementById('file-label').textContent = "Upload file here";
+            }, 5000); // 5 seconds
+        } else {
+            var error_message = document.getElementById('error_message_file');
+            error_message.innerHTML = "Something went wrong!";
+            error_message.style.display = "block";
+            setTimeout(function() {
+                error_message.style.display = "none";
+            }, 5000); // 5 seconds
+        }
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+}
 
-
-
-                var holiday_dates = document.getElementById('holiday_dates').value;
-                var holiday_type = document.getElementById('holiday_type').value;
-
-                var holiday_description = document.getElementById('holiday_description').value;
-
-
-                var holiday_date_message = document.getElementById('holiday_date_message');
-                var holiday_type_message = document.getElementById('holiday_type_message');
-                // var holiday_desc_message = document.getElementById('holiday_desc_message');
-
-                var datesArray = holiday_dates.split(' - ');
-
-
-                if (holiday_dates == "") {
-                    holiday_date_message.style.display = "block";
-                    holiday_date_message.innerHTML = "Please Select Date!";
-                    return;
-                } else {
-                    holiday_date_message.style.display = "none";
-                }
-
-                if (holiday_type == "") {
-                    holiday_type_message.style.display = "block";
-                    holiday_type_message.innerHTML = "required!";
-                    return;
-                } else {
-                    holiday_type_message.style.display = "none";
-                }
-
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-
-                var startDate = datesArray[0];
-                var endDate = datesArray[1];
-
-                var formData = {
-                    _token: csrfToken,
-                    holiday_type: holiday_type,
-                    holiday_description: holiday_description,
-                    startDate: startDate,
-                    endDate: endDate
-                };
-
-                // console.log(formData);
-
-
-
-                var success_message_id = document.getElementById('success_message_id');
-                var error_message_id = document.getElementById('error_message_id');
-
-                error_message_id.style.display = "none";
-                success_message_id.style.display = "none";
-
-                // AJAX call to send data to the Laravel controller
-                $.ajax({
-                    url: '/create-holidays', // The Laravel route
-                    type: 'POST', // POST request
-                    data: formData,
-                    success: function(response) {
-                        // Show success message
-                        // console.log('Response');
-
-                        if (error_message_id.style.display == "block") {
-                            error_message_id.style.display == "none";
-                        }
-                        success_message_id.style.display = "block";
-
-
-                    },
-                    error: function(xhr, status, error) {
-                        if (xhr.status === 400) {
-                            if (success_message_id.style.display == "block") {
-                                success_message_id.style.display == "none";
-                            }
-                            error_message_id.style.display = "block";
-                        }
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken // Add CSRF token to request headers
-                    }
-                });
-
-                return false; // Prevent form submission if within a form
-            }
-
-            //update
-            function updateOfficeHolidays(id) {
-                var holiday_id = 'holiday_dates_' + id;
-                var holiday_type_id = 'holiday_type_' + id;
-                var holiday_des_id = 'holiday_description_' + id;
-                var holiday_date_message_id = 'holiday_date_message_' + id;
-                // console.log(holiday_date_message);
-                var holiday_type_message_id = 'holiday_type_message_' + id;
-
-
-
-                var holiday_dates = document.getElementById(holiday_id).value;
-                var holiday_type = document.getElementById(holiday_type_id).value;
-
-                var holiday_description = document.getElementById(holiday_des_id).value;
-
-
-                var holiday_date_message = document.getElementById(holiday_date_message_id);
-                var holiday_type_message = document.getElementById(holiday_type_message_id);
-
-                // var holiday_desc_message = document.getElementById('holiday_desc_message');
-
-                var datesArray = holiday_dates.split(' - ');
-
-                if (holiday_type == "") {
-                    holiday_type_message.style.display = "block";
-                    holiday_type_message.innerHTML = "required!";
-                    return;
-                } else {
-                    holiday_type_message.style.display = "none";
-                }
-
-
-
-                if (holiday_dates == "") {
-                    holiday_date_message.style.display = "block";
-                    holiday_date_message.innerHTML = "Please Select Date!";
-                    return;
-                } else {
-                    holiday_date_message.style.display = "none";
-                }
-
-
-
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-
-                var startDate = datesArray[0];
-                var endDate = datesArray[1];
-
-                var formData = {
-                    id: id,
-                    _token: csrfToken,
-                    holiday_type: holiday_type,
-                    holiday_description: holiday_description,
-                    startDate: startDate,
-                    endDate: endDate,
-                    status: 'update'
-                };
-
-
-
-
-                var success_message_id_id = 'success_message_id_' + id;
-                var error_message_id_id = 'error_message_id_' + id;
-                var success_message_id = document.getElementById(success_message_id_id);
-                var error_message_id = document.getElementById(error_message_id_id);
-
-                error_message_id.style.display = "none";
-                success_message_id.style.display = "none";
-
-                // AJAX call to send data to the Laravel controller
-                $.ajax({
-                    url: '/update-holidays', // The Laravel route
-                    type: 'POST', // POST request
-                    data: formData,
-                    success: function(response) {
-                        // Show success message
-                        // console.log('Response');
-
-                        if (error_message_id.style.display == "block") {
-                            error_message_id.style.display == "none";
-                        }
-                        success_message_id.style.display = "block";
-
-
-                    },
-                    error: function(xhr, status, error) {
-                        if (xhr.status === 400) {
-                            if (success_message_id.style.display == "block") {
-                                success_message_id.style.display == "none";
-                            }
-                            error_message_id.style.display = "block";
-                        }
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken // Add CSRF token to request headers
-                    }
-                });
-
-                return false; // Prevent form submission if within a form
-            }
-
-            function saveFile(event) {
-                event.preventDefault();
-
-                var file_name = document.getElementById('file_name').value;
-                var file_shift = document.getElementById('file_shift').value;
-                var file_policy = document.getElementById('file_policy').value;
-                var description = document.getElementById('description').value;
-                var fileInput = document.getElementById('file-input');
-                var error = document.getElementById('select-file');
-
-                // Clear previous errors
-                error.style.display = "none";
-
-                // Validate file name
-                if (file_name.trim() === "") {
-                    error.innerHTML = "File name is required!";
-                    error.style.display = "block";
-                    return;
-                }
-
-                // Validate file shift
-                if (file_shift.trim() === "") {
-                    error.innerHTML = "Please select a shift!";
-                    error.style.display = "block";
-                    return;
-                }
-
-                // Validate file policy
-                if (file_policy.trim() === "") {
-                    error.innerHTML = "Please select a file type!";
-                    error.style.display = "block";
-                    return;
-                }
-
-                // Validate file input
-                if (fileInput.files.length === 0) {
-                    error.innerHTML = "Please select a file.";
-                    error.style.display = "block";
-                    return;
-                }
-
-                // Check file type
-                var allowedTypes = ['application/pdf'];
-                var fileType = fileInput.files[0].type;
-
-                if (!allowedTypes.includes(fileType)) {
-                    error.innerHTML = "Only PDF files are allowed.";
-                    error.style.display = "block";
-                    return;
-                }
-
-                // Check file size
-                var maxSize = 2 * 1024 * 1024; // 2 MB in bytes
-                var fileSize = fileInput.files[0].size;
-
-                if (fileSize > maxSize) {
-                    error.innerHTML = "File size exceeds the limit of 2 MB.";
-                    error.style.display = "block";
-                    return;
-                }
-
-                var formData = new FormData();
-                 formData.append('fileInput', fileInput.files[0]); // Append file input to formData
-                formData.append('file_name', file_name);
-                formData.append('file_shift', file_shift);
-                formData.append('file_policy', file_policy);
-                formData.append('description', description);
-
-                console.log(fileInput.files[0]);
-                // CSRF token (replace with your actual token handling logic)
-                var csrfToken = "{{ csrf_token() }}";
-
-                // AJAX request using fetch API
-                fetch('/save-help-file', {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
-                        },
-                        body: formData // Send formData containing file and other fields
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        // console.log(data);
-                        if (data.success) {
-                            var form_reset_upload = document.getElementById('form-reset-upload');
-                            form_reset_upload.reset();
-                            var success_message = document.getElementById('success_message_id');
-                            success_message.innerHTML = "File Uploaded Successfully!";
-                            success_message.style.display = "block";
-                            setTimeout(function() {
-                                success_message.style.display = "none";
-
-                                document.getElementById('file-label').textContent = "Upload file here";
-                            }, 5000); // 5 seconds
-
-                        } else {
-                            var error_message = document.getElementById('error_message_file');
-
-                            error_message.innerHTML = "Something went wrong!";
-                            error_message.style.display = "block";
-                            setTimeout(function() {
-                                error_message.style.display = "none";
-                            }, 5000); // 5 seconds
-                        }
-                    })
-                    .catch(error => {
-                        console.error('There was a problem with the fetch operation:', error);
-                    });
-            }
         </script>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
