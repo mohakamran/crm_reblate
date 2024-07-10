@@ -558,56 +558,94 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
         return view('attendence.leaves',compact('emp_records','user_code'));
     }
     // apply for leave admin
-    public function empApplyForLeave(Request $request) {
-
-        // dd("fuc");
-        $user_type = Auth()->user()->user_type;
-
-        $date = $request->input('date');
+    public function empApplyForLeave(Request $request) 
+    {
+        $LeaveTitle = $request->input('leave_title');
+        $startingDate = $request->input('date');
+        $enddate = $request->input('Ending_date');
         $reason = $request->input('reason');
         $user_code = Auth()->user()->user_code;
         $status  =  "pending";
         $currentYear = date('Y');
-        $dayName = date('l', strtotime($date));
-        if($dayName == "Sunday" || $dayName == "Saturday") {
-            return response()->json(['message' => "You can not apply for leave on saturday or sunday!"], 200);
+        $user_type = Auth()->user()->user_type;
+
+        $startDateCarbon = Carbon::parse($startingDate);
+        $endDateCarbon = Carbon::parse($enddate);
+
+        $dates = []; // Array to store dates in "d/m/y" format
+
+        $totalDays = 0;
+        $currentDate = $startDateCarbon->copy();
+
+        while ($currentDate <= $endDateCarbon) {
+            if ($currentDate->isWeekday()) {
+                $totalDays++;
+                $dates[] = $currentDate->format('m/d/Y'); // Format date and add to array
+            }
+            $currentDate->addDay();
         }
-        // return response()->json(['message' => $dayName], 200);
-        // $check   = DB::table('leaves')->('emp_code',$user_code)->where('year',$currentYear)->first();
-        $check = DB::table('leaves')->where('emp_code',$user_code)->where('year',$currentYear)->first();
-        if($check == null) {
-            DB::table('leaves')->insert([
-                'status' => $status,
-                'date'   => $date,
-                'remaining'   => "15",
-                'reason'   => $reason,
-                'user_type'   => $user_type,
-                'year'   => $currentYear,
-                'emp_code'   => $user_code
-            ]);
-            return response()->json(['message' => 'Leave application submitted successfully.Wait for the approval'], 200);
+        foreach ($dates as $date) {
+            echo $date . "\n"; // Print each date in "d/m/y" format
         }
 
-        if($check->remaining <=0) {
-            return response()->json(['message' => 'You have no remaining leaves'], 400);
-        }
-        else {
-            $check = DB::table('leaves')->where('emp_code',$user_code)->where('date',$date)->first();
-            if($check) {
-                return response()->json(['message' => 'You have already applied for the leave on same date!'], 400);
-            } else {
-                DB::table('leaves')->insert([
-                    'status' => $status,
-                    'date'   => $date,
-                    'remaining'   => "15",
-                    'reason'   => $reason,
-                    'user_type'   => $user_type,
-                    'year'   => $currentYear,
-                    'emp_code'   => $user_code
-                ]);
-                return response()->json(['message' => 'Leave application submitted successfully.Wait for the approval'], 200);
-            }
-        }
+        DB::table('leaves')->insert([
+            'status' => $status,
+            'date'   => $startingDate,
+            'Ending_date' => $enddate,
+            'remaining'   => "15",
+            'reason'   => $reason,
+            'user_type'   => $user_type,
+            'year'   => $currentYear,
+            'emp_code'   => $user_code,
+            'totalNumber' =>  $totalDays,
+            'leave_title'   => $LeaveTitle
+        ]);
+        
+         return response()->json(['message' => 'Leave application submitted successfully.Wait for the approval'], 200);
+        
+        // $dayName = date('l', strtotime($date));
+        // if($dayName == "Sunday" || $dayName == "Saturday") {
+        //     return response()->json(['message' => "You can not apply for leave on saturday or sunday!"], 200);
+        // }
+        // return response()->json(['message' => $dayName], 200);
+        // $check   = DB::table('leaves')->('emp_code',$user_code)->where('year',$currentYear)->first();
+        // $check = DB::table('leaves')->where('emp_code',$user_code)->where('year',$currentYear)->first();
+        // if($check == null) {
+        //     DB::table('leaves')->insert([
+        //         'status' => $status,
+        //         'date'   => $date,
+        //         'enddate' => $enddate,
+        //         'remaining'   => "15",
+        //         'reason'   => $reason,
+        //         'user_type'   => $user_type,
+        //         'year'   => $currentYear,
+        //         'emp_code'   => $user_code,
+        //         'leavetitle'   => $LeaveTitle,
+        //         'totalNumber' => $totalNumber
+        //     ]);
+        //     return response()->json(['message' => 'Leave application submitted successfully.Wait for the approval'], 200);
+        // }
+
+        // if($check->remaining <=0) {
+        //     return response()->json(['message' => 'You have no remaining leaves'], 400);
+        // }
+        // else {
+        //     $check = DB::table('leaves')->where('emp_code',$user_code)->where('date',$date)->first();
+        //     if($check) {
+        //         return response()->json(['message' => 'You have already applied for the leave on same date!'], 400);
+        //     } else {
+        //         DB::table('leaves')->insert([
+        //             'status' => $status,
+        //             'date'   => $date,
+        //             'remaining'   => "15",
+        //             'reason'   => $reason,
+        //             'user_type'   => $user_type,
+        //             'year'   => $currentYear,
+        //             'emp_code'   => $user_code
+        //         ]);
+        //         return response()->json(['message' => 'Leave application submitted successfully.Wait for the approval'], 200);
+        //     }
+        // }
 
     }
     // view records of each employee

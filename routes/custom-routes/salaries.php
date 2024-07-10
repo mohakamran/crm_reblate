@@ -19,3 +19,6 @@ Route::get('view-my-slips',[SalaryController::class,'viewSlips']);
 // salaries by month
 Route::get('/salary-by-month', [SalaryController::class,'showMonthWiseSalaries'])->middleware('AdminUser');
 Route::post('/search-salary-by-month', [SalaryController::class,'showMonthWiseSalariesByMonth'])->middleware('AdminUser');
+
+// Salary Dashboard routes
+Route::get('/view-slips-dashboard', [SalaryController::class,'viewDashboard']);

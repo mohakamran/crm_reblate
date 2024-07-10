@@ -378,7 +378,7 @@
                         <div class="d-flex mb-3 align-items-center justify-content-between">
                             <h2 class="mb-0"
                                 style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom:1px solid #c7c7c7">
-                                Apply For Leaves</h2>
+                                Appy For Leaves</h2>
                             <span class="closeBtn p-2" style="border-radius: 50%; background-color:#14213d26">
                                 {{-- <svg
                                     xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#14213d50"
@@ -388,7 +388,7 @@
                                 </svg> --}}
                             </span>
                         </div>
-                        <form id="leaveForm" action="" class="text-start">
+                        <form id="myForm" action="" method = "POST" class="text-start">
                             <div id="messageBox" style="font-size: 16px;" class="mt-2 mb-2"></div>
                             <div class="row">
                                 <div class="col-md-12 col-lg-12 col-xl-12">
@@ -445,7 +445,7 @@
                                                 </g>
                                             </svg>
                                             <input type="date" class="form-control ms-2 p-0"style="border:none;"
-                                                id="Starting_date" name="date">
+                                                id="date" name="date">
                                             <span class="text-danger" id="dateBox" style="display: none">Please Select
                                                 a date!</span>
 
@@ -476,7 +476,7 @@
                                                 </g>
                                             </svg>
                                             <input type="date" class="form-control ms-2 p-0"style="border:none;"
-                                                id="Ending_date" name="date">
+                                                id="Ending_date" name="Ending_date">
 
 
                                         </div>
@@ -499,7 +499,7 @@
 
                         </form>
                         <div class="mt-2 text-start">
-                            <button class="px-4 py-2 reblateBtn" type="button"
+                            <button class="px-4 py-2 reblateBtn" type="submit"
                                 onclick="submitForm(event)">Apply</button>
                         </div>
 
@@ -2569,17 +2569,12 @@
             function submitForm(event) {
                 event.preventDefault();
 
-                var leave_title = document.getElementById('leave_title');
-
-                var Starting_date = document.getElementById('Starting_date');
-                var Ending_date = document.getElementById('Ending_date');
-
-                var reason = document.getElementById('reason');
-
+                var leave_title = document.getElementById('leave_title').value;
+                var Ending_date = document.getElementById('Ending_date').value;
+                var Starting_date = document.getElementById('date').value;
+                var reason = document.getElementById('reason').value;
                 var messageBox = document.getElementById('messageBox');
-
                 dateBox.style.display = "none";
-
 
                 if (leave_title.value === '') {
                     messageBox.style.display = "block";
@@ -2617,31 +2612,81 @@
                     messageBox.style.display = "none";
                 }
 
+                var formData = new FormData();
+                formData.append('leave_title', leave_title);
+                formData.append('Ending_date', Ending_date);
+                formData.append('date', Starting_date);
+                formData.append('reason', reason);
 
+                console.log(leave_title,Starting_date,Ending_date,reason);
+                // CSRF token (replace with your actual token handling logic)
+                var csrfToken = "{{ csrf_token() }}";
 
+                // AJAX request using fetch API
+                fetch('/apply-for-leave', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
+                        },
+                        body: formData // Send formData containing file and other fields
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // console.log(data);
+                        if (data.success) {
+                            var form_reset_upload = document.getElementById('form-reset-upload');
+                            form_reset_upload.reset();
+                            var success_message = document.getElementById('success_message_id');
+                            success_message.innerHTML = "File Uploaded Successfully!";
+                            success_message.style.display = "block";
+                            setTimeout(function() {
+                                success_message.style.display = "none";
 
-                var formData = {
-                    _token: '{{ csrf_token() }}',
-                    date: dateValue,
-                    reason: reasonValue
-                };
+                                document.getElementById('file-label').textContent = "Upload file here";
+                            }, 5000); // 5 seconds
 
-                $.ajax({
-                    type: 'get',
-                    url: '/apply-for-leave',
-                    data: formData,
-                    success: function(response) {
-                        // console.log('AJAX request successful');
+                        } else {
+                            var error_message = document.getElementById('error_message_file');
 
-                        $('#messageBox').text(response.message);
-                    },
-                    error: function(xhr, status, error) {
-                        var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message :
-                            'An error occurred';
+                            error_message.innerHTML = "Something went wrong!";
+                            error_message.style.display = "block";
+                            setTimeout(function() {
+                                error_message.style.display = "none";
+                            }, 5000); // 5 seconds
+                        }
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+                
 
-                        $('#messageBox').text(errorMessage); // Set the error message from the server response
-                    }
-                });
+                // var formData = {
+                //     _token: '{{ csrf_token() }}',
+                //     // date: dateValue,
+                //     // reason: reasonValue
+                // };
+
+                // $.ajax({
+                //     type: 'post',
+                //     url: '/apply-for-leave',
+                //     data: formData,
+                //     success: function(response) {
+                //         console.log('AJAX request successful');
+
+                //         $('#messageBox').text(response.message);
+                //     },
+                //     error: function(xhr, status, error) {
+                //         var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message :
+                //             'An error occurred';
+
+                //         $('#messageBox').text(errorMessage); // Set the error message from the server response
+                //     }
+                // });
             }
 
             function checkOut() {

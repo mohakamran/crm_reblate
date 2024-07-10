@@ -17,7 +17,8 @@
     // Route::get('/view-attendence-emp', [AttendenceController::class, 'viewAttendanceEmployee']);
 
 
-    Route::post('/apply-for-leave', [AttendenceController::class, 'empApplyForLeave']);
+    Route::post('/apply-for-leave', [AttendenceController::class, 'empApplyForLeave'])->name('apply-for-leave');
+
     Route::get('/leave-records', [AttendenceController::class, 'empLeaveRecords'])->name('leaves.record');
 
     Route::post('/search-emp-leaves', [AttendenceController::class, 'empSearchRecords']);

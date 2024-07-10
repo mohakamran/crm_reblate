@@ -2653,6 +2653,7 @@ public function getAbsent()
         return view('auth.manager-login');
     }
 
+
     //get exchange rate prices
     public function getExchangeRate($amount) {
         $client = new GuzzleClient(); // Use the alias GuzzleClient

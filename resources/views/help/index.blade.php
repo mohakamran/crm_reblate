@@ -659,7 +659,6 @@
 
                 return false; // Prevent form submission if within a form
             }
-
             function saveFile(event) {
                 event.preventDefault();
 

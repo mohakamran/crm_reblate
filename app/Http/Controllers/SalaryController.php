@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 
 use Carbon\CarbonPeriod;
-
+use GuzzleHttp\Client as GuzzleClient;
 use DB;
 
 use Storage;
@@ -221,10 +221,6 @@ class SalaryController extends Controller
              $total_days = $this->getNumberOfDays($salary_month);
 
              $getTotalPresent = $this->getTotalPresent($emp_code,$salary_month);
-
-
-
-
 
             //  dd($total_leaves, $total_absents , $total_days);
 
@@ -704,6 +700,65 @@ class SalaryController extends Controller
         return view('salaries.view-slips',$data);
     }
 
+    // View salary Dasboard Page
+    public function viewDashboard() {
+        $salaries = Salary::orderBy('id', 'desc')->get();
+
+        $totalDeductionAmount = $salaries->reduce(function ($carry, $salary) {
+        $deduction = is_numeric($salary->deduction) ? (float) $salary->deduction : 0;
+            return $carry + $deduction;
+        }, 0);
+        $ConvretCurrencyDed = $this->getExchangeRate($totalDeductionAmount);
+        $usd_pkr_salary_Ded = number_format($ConvretCurrencyDed,2);
+
+        $totalAmount = $salaries->sum(function ($salary) {
+        return (float) $salary->total_salary;
+        });
+        $ConvretCurrency = $this->getExchangeRate($totalAmount);
+        $usd_pkr_salary = number_format($ConvretCurrency,2);
+
+        $totalNetSalary = $salaries->sum(function ($salary) {
+            return (float) $salary->amount;
+            });
+        $ConvretCurrencyNet = $this->getExchangeRate($totalNetSalary);
+        $usd_pkr_salary_Net = number_format($ConvretCurrencyNet,2);
+
+        $totalBonus = $salaries->sum(function ($salary) {
+            return (float) $salary->kpi_bonus + (float) $salary->project_bonus + (float) $salary->designation_bonus;
+        });
+        $ConvretCurrencyBonus = $this->getExchangeRate($totalBonus);
+        $usd_pkr_salary_Bonus = number_format($ConvretCurrencyBonus,2);
+       
+        $startDate = Carbon::now()->subMonth()->startOfMonth(); // Start of previous month
+        $endDate = Carbon::now()->subMonth()->endOfMonth();     // End of previous month
+
+        $currentDate = Carbon::now();
+        $firstDayOfCurrentMonth = $currentDate->startOfMonth();
+        $firstDayOfPreviousMonth = $firstDayOfCurrentMonth->copy()->subMonth()->startOfMonth();
+        $lastDayOfPreviousMonth = $firstDayOfPreviousMonth->copy()->endOfMonth();
+        $formattedStartDate = $firstDayOfPreviousMonth->format('M d, Y');
+        $formattedEndDate = $lastDayOfPreviousMonth->format('M d, Y');
+        $formattedPayRoll = $lastDayOfPreviousMonth->format('M, Y');
+
+        $TotalEmployees = Employee::where('Emp_status','active')->count();
+
+        $salaryGet = Salary::join('employees','salaries.emp_id','=','employees.Emp_Code' )
+        ->select('salaries.*', 'employees.*')
+        ->whereBetween('salaries.created_at', [$startDate, $endDate])
+        ->orderBy('salaries.emp_id', 'desc')
+        ->get();
+
+        $salarysGet = Salary::join('employees', 'salaries.emp_id', '=', 'employees.Emp_Code')
+             ->select('employees.Emp_Code', 'employees.Emp_Full_Name', DB::raw('SUM(salaries.total_salary) as total_salary'))
+             ->groupBy('employees.Emp_Code', 'employees.Emp_Full_Name') // Group by employee ID and name
+             ->orderBy('employees.Emp_Code', 'desc') // Order by employee ID
+             ->get();
+
+
+        $data = compact('salarysGet','usd_pkr_salary_Net','usd_pkr_salary_Bonus','salaryGet','usd_pkr_salary','salaries','formattedStartDate','formattedEndDate','TotalEmployees','usd_pkr_salary_Ded','formattedPayRoll');
+        return view('salaries.salary-dashboard',$data);
+    }
+
     // view recipts
     public function viewReciepts() {
         $rec = Employee::orderBy('id', 'desc')->where('Emp_Status','active')->get();
@@ -864,6 +919,25 @@ class SalaryController extends Controller
         }
         return view('errors.404');
     }
+    
+    //get exchange rate prices
+    public function getExchangeRate($amount) {
+        $client = new GuzzleClient(); // Use the alias GuzzleClient
+        $response = $client->get('https://open.er-api.com/v6/latest/USD');
+        $data = json_decode($response->getBody(), true);
+
+        // Get the exchange rate for PKR
+        $usdToPkrRate = $data['rates']['PKR'];
+
+        // Convert PKR to USD using the reciprocal of the exchange rate
+        $pkrToUsdRate = 1 / $usdToPkrRate;
+
+        // Convert amount from PKR to USD
+        $amountInUSD = $amount * $pkrToUsdRate;
+
+        return $amountInUSD;
+    }
+
 
 
 
