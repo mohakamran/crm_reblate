@@ -74,7 +74,7 @@
 
             .popup-content {
                 /* overflow-y: scroll;
-                                                                                                                                scroll-behavior: smooth scroll; */
+                                                                                                                                    scroll-behavior: smooth scroll; */
                 display: flex;
                 max-width: 700px;
                 margin: auto auto;
@@ -97,7 +97,7 @@
         </style>
 
         <div class="row mt-2 align-items-center justify-content-center">
-            <div class="col-md-6 col-lg-6 col-xl-6">
+            <div class="col-md-8 col-lg-8 col-xl-8">
                 <div class="card mb-3">
                     <div class="card-body bg-white"
                         style="box-shadow:0px 0px 10px 0px rgba(0, 0, 0, 0.7); max-height: 400px;">
@@ -138,18 +138,14 @@
                                 <ul
                                     class="d-flex gap-4 align-items-center list-group list-group-flush account-settings-links flex-row">
                                     <li style="list-style: none"><a href="#tasks" data-toggle="list"
-                                            class="empMenu active">Tasks</a> </li>
-                                    <li style="list-style: none"><a href="#to_tasks" data-toggle="list" class="empMenu">To
-                                            Do Tasks</a> </li>
+                                            class="empMenu active">Assigned Tasks</a> </li>
+                                    <li style="list-style: none"><a href="#to_tasks" data-toggle="list" class="empMenu">
+                                            My Daily Tasks</a> </li>
                                     @if (auth()->user()->user_type == 'admin')
                                     @else
-
                                         <li style="list-style: none"><a href="#create_tasks" data-toggle="list"
-                                            class="empMenu">
-                                            Create Task</a> </li>
-
-
-
+                                                class="empMenu">
+                                               Today Report</a> </li>
                                     @endif
 
                                 </ul>
@@ -698,6 +694,68 @@
                 </div>
             </div>
 
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                }
+
+                /* #task-manager {
+                        width: 80%;
+                        margin: auto;
+                        padding: 20px;
+                        border: 1px solid #ccc;
+                        border-radius: 8px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    } */
+
+                .task {
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 10px;
+                }
+
+                .task input,
+                .task textarea {
+                    margin-bottom: 5px;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                }
+
+                .task textarea {
+                    resize: vertical;
+                    /* Allow vertical resizing only */
+                }
+
+                button {
+                    padding: 10px;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+
+                button#add-task,
+                button#submit-tasks {
+                    margin-top: 10px;
+                    background-color: #28a745;
+                    color: white;
+                }
+
+                button.remove-task {
+                    background-color: #dc3545;
+                    color: white;
+                    align-self: flex-end;
+                }
+
+                .task input,
+                textarea {
+                    outline: none;
+                }
+                #task-manager p {
+                    font-weight: 400;
+                }
+            </style>
+
 
             <div class="container-fluid tab-pane fade show" style="border-bottom: none" id="create_tasks">
                 <div class="card">
@@ -705,7 +763,7 @@
                         <div class="row">
                             <div class="col-md-12 mt-2">
 
-                                <p class="text-danger" style="display: none;" id="task_error"></p>
+                                {{-- <p class="text-danger" style="display: none;" id="task_error"></p>
                                 <p class="text-success" style="display: none;" id="task_green"></p>
                                 <div class="form-group mt-2">
                                     <label for="">Task Title <span style="color:red">*</span></label>
@@ -717,7 +775,23 @@
                                             style="color:red">*</span></label>
                                     <textarea class="form-control" id="task_description" style="width:100%;height:100px;" name="task_desc"></textarea>
                                 </div>
-                                <button class="reblateBtn p-2 mt-2" onclick="addTaskEmp(event)">Add Task</button>
+                                <button class="reblateBtn p-2 mt-2" onclick="addTaskEmp(event)">Add Task</button> --}}
+
+                                <div id="task-manager">
+                                    <h4>Submit All Tasks On which You Worked On Today</h4>
+                                    <p>Description will be your task report, add according to task </p>
+                                    <p>Morning Shift: Before 6 PM</p>
+                                    <p>Night Shift: Before 12 AM (If you add after 12 AM then it will be consider for next date)</p>
+                                    <p style="color:green;font-weight:600;display:none;" id="task_show_success">All Task Submitted Successfully!</p>
+                                    <form id="task-form" action="{{ route('tasks.save') }}" method="POST">
+                                        <div class="task">
+                                            <input type="text" name="task-title" placeholder="Task Title" required>
+                                            <textarea name="task-desc" placeholder="Task Description / Reporting" required></textarea>
+                                        </div>
+                                        <button type="button" id="add-task">Add Task</button>
+                                        <button type="submit" id="submit-tasks">Submit Tasks</button>
+                                    </form>
+                                </div>
 
                             </div>
                         </div>
@@ -725,6 +799,82 @@
                     </div>
                 </div>
 
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const taskForm = document.getElementById('task-form');
+                        const addTaskButton = document.getElementById('add-task');
+                        const submitTasksButton = document.getElementById('submit-tasks');
+
+                        addTaskButton.addEventListener('click', () => {
+                            const taskDiv = document.createElement('div');
+                            taskDiv.classList.add('task');
+
+                            const taskTitle = document.createElement('input');
+                            taskTitle.setAttribute('type', 'text');
+                            taskTitle.setAttribute('name', 'task-title');
+                            taskTitle.setAttribute('placeholder', 'Task Title');
+                            taskTitle.required = true;
+
+                            const taskDesc = document.createElement('textarea');
+                            taskDesc.setAttribute('name', 'task-desc');
+                            taskDesc.setAttribute('placeholder', 'Task Description');
+                            taskDesc.required = true;
+
+                            const removeTaskButton = document.createElement('button');
+                            removeTaskButton.setAttribute('type', 'button');
+                            removeTaskButton.classList.add('remove-task');
+                            removeTaskButton.textContent = 'Remove Task';
+                            removeTaskButton.addEventListener('click', () => {
+                                taskDiv.remove();
+                            });
+
+                            taskDiv.appendChild(taskTitle);
+                            taskDiv.appendChild(taskDesc);
+                            taskDiv.appendChild(removeTaskButton);
+
+                            taskForm.insertBefore(taskDiv, addTaskButton);
+                        });
+
+                        taskForm.addEventListener('submit', (event) => {
+                            event.preventDefault(); // Prevent default form submission
+
+                            const tasks = [];
+                            const taskDivs = document.querySelectorAll('.task');
+                            taskDivs.forEach(taskDiv => {
+                                const title = taskDiv.querySelector('input[name="task-title"]').value;
+                                const description = taskDiv.querySelector('textarea[name="task-desc"]').value;
+                                tasks.push({ title, description });
+                            });
+
+                            // AJAX Request
+                            fetch('{{ route("tasks.save") }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Add Laravel CSRF token
+                                },
+                                body: JSON.stringify({ tasks })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if(data.message == true) {
+                                    taskForm.reset();
+                                    document.getElementById('task_show_success').style.display = "block";
+                                }
+
+
+                            })
+                            .catch(error => {
+                                console.error('Error saving tasks:', error);
+                                alert('Error saving tasks. Please try again.');
+                            });
+                        });
+                    });
+                </script>
+
+
+
+                {{--
                 <div class="card">
                     <div class="card-body bg-white">
                         <div class="row">
@@ -850,384 +1000,385 @@
                     </div>
                 </div>
             </div>
+--}}
 
-
-        </div>
-
-
-
-
-        <!-- end row -->
-        <script>
-            //update
-            function updateTask(id) {
-
-
-                var message = 'message_id_' + id;
-                var message_success = 'message_success_' + id;
-                var task_title = 'task_title_' + id;
-
-                var task_desc = 'task_description_' + id;
-
-                task_title = document.getElementById(task_title).value;
-
-                task_desc = document.getElementById(task_desc).value;
-                message = document.getElementById(message);
-                message_success = document.getElementById(message_success);
-
-
-                if (task_title == "") {
-                    message.style.display = "block";
-                    message.innerHTML = "task title required!";
-                    return;
-                } else {
-                    message.style.display = "none";
-                }
-
-
-                if (task_desc == "") {
-                    message.style.display = "block";
-                    message.innerHTML = "task description required!";
-                    return;
-                } else {
-                    message.style.display = "none";
-                }
+            </div>
 
 
 
-                var csrfToken = "{{ csrf_token() }}";
+
+            <!-- end row -->
+            <script>
+                //update
+                function updateTask(id) {
 
 
+                    var message = 'message_id_' + id;
+                    var message_success = 'message_success_' + id;
+                    var task_title = 'task_title_' + id;
 
-                var formData = {
-                    id: id,
-                    _token: csrfToken,
-                    task_title: task_title,
-                    task_desc: task_desc
-                };
+                    var task_desc = 'task_description_' + id;
 
-                $.ajax({
-                    url: '/update-task-to-do', // The Laravel route
-                    type: 'get', // POST request
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken // Add CSRF token to request headers
-                    },
-                    data: formData,
-                    success: function(response) {
+                    task_title = document.getElementById(task_title).value;
+
+                    task_desc = document.getElementById(task_desc).value;
+                    message = document.getElementById(message);
+                    message_success = document.getElementById(message_success);
 
 
-                        if (message.style.display == "block") {
-                            message.style.display == "none";
-                        }
-                        var task_title_reset = 'task_title_' + id;
-
-                        var task_desc_reset = 'task_description_' + id;
-                        task_title_reset = document.getElementById(task_title_reset).value = "";
-
-                        task_desc_reset = document.getElementById(task_desc_reset).value = "";
-                        message_success.style.display = "block";
-                    },
-                    error: function(xhr, status, error) {
-                        if (xhr.status === 400) {
-                            if (message_success.style.display == "block") {
-                                message_success.style.display == "none";
-                            }
-                            message.innerHTML = error;
-                            message.style.display = "block";
-                        }
-                    },
-
-                });
-
-                return false; // Prevent form submission if within a form
-            }
-
-            function openModal(taskId) {
-                var modalId = "popup_task_to_do_" + taskId;
-                document.getElementById(modalId).style.display = "block";
-            }
-
-            function hideModal(taskId) {
-                var modalId = "popup_task_to_do_" + taskId;
-                document.getElementById(modalId).style.display = "none";
-
-            }
-
-            function TaskEducation(id) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'task will be deleted!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes',
-                    cancelButtonText: 'No',
-                    confirmButtonColor: '#FF5733', // Red color for "Yes"
-                    cancelButtonColor: '#4CAF50', // Green color for "No"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Send an AJAX request to delete the task
-                        $.ajax({
-                            url: '/del-task/' + id,
-                            method: 'GET', // Use the DELETE HTTP method
-                            success: function() {
-                                // Provide user feedback
-                                Swal.fire({
-                                    title: 'Success!',
-                                    text: 'deleted!',
-                                    icon: 'success'
-                                }).then(() => {
-                                    location.reload(); // Refresh the page
-                                });
-                            },
-                            error: function(xhr, status, error) {
-                                // Handle errors, you can display an error message to the user
-                                console.error('Error:', error);
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: 'An error occurred while deleting task!',
-                                    icon: 'error'
-                                });
-                            }
-                        });
-
+                    if (task_title == "") {
+                        message.style.display = "block";
+                        message.innerHTML = "task title required!";
+                        return;
+                    } else {
+                        message.style.display = "none";
                     }
-                });
-            }
 
-            $(document).ready(function() {
-                $('#datatable-buttons').DataTable({
-                    dom: "<'container-fluid'" +
-                        "<'row'" +
-                        "<'col-md-8'lB>" +
-                        "<'col-md-4 text-right'f>" +
-                        ">" +
-                        "<'row dt-table'" +
-                        "<'col-md-12'tr>" +
-                        ">" +
-                        "<'row'" +
-                        "<'col-md-7'i>" +
-                        "<'col-md-5 text-right'p>" +
-                        ">" +
-                        ">",
-                    lengthMenu: [
-                        [10, 25, 50, -1],
-                        [10, 25, 50, "All"]
-                    ],
-                    buttons: [
-                        '', ''
-                    ],
 
-                });
-            })
+                    if (task_desc == "") {
+                        message.style.display = "block";
+                        message.innerHTML = "task description required!";
+                        return;
+                    } else {
+                        message.style.display = "none";
+                    }
 
-            document.querySelectorAll('.task-description').forEach(function(element) {
-                var truncated = true;
-                var originalText = element.innerText;
-                var truncatedText = originalText.slice(0, 50) + '...';
 
-                element.innerText = truncatedText;
 
-                element.addEventListener('click', function() {
-                    truncated = !truncated;
-                    element.innerText = truncated ? truncatedText : originalText;
-                });
-            });
+                    var csrfToken = "{{ csrf_token() }}";
 
-            function addTaskEmp(event) {
-                event.preventDefault();
-                var task_title = document.getElementById('task_title');
-                var task_green = document.getElementById('task_green');
-                var task_error = document.getElementById('task_error');
-                var task_description = document.getElementById('task_description');
 
-                if (task_title.value == "") {
-                    task_error.innerHTML = "Task title required!";
-                    task_error.style.display = "block";
-                    return;
-                } else {
-                    task_error.style.display = "none";
-                }
 
-                if (task_description.value == "") {
-                    task_error.innerHTML = "Task description required!";
-                    task_error.style.display = "block";
-                    return;
-                } else {
-                    task_error.style.display = "none";
-                }
+                    var formData = {
+                        id: id,
+                        _token: csrfToken,
+                        task_title: task_title,
+                        task_desc: task_desc
+                    };
 
-                var csrfToken = "{{ csrf_token() }}";
+                    $.ajax({
+                        url: '/update-task-to-do', // The Laravel route
+                        type: 'get', // POST request
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken // Add CSRF token to request headers
+                        },
+                        data: formData,
+                        success: function(response) {
 
-                var formData = {
-                    _token: csrfToken,
-                    task_title: task_title.value,
-                    task_description: task_description.value
-                };
 
-                $.ajax({
-                    url: '/create-task-by-emp', // The Laravel route
-                    type: 'get', // POST request
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken // Add CSRF token to request headers
-                    },
-                    data: formData,
-                    success: function(response) {
-                        // Show success message
-                        console.log(response);
-
-                        if (task_error.style.display == "block") {
-                            task_error.style.display == "none";
-                        }
-
-                        task_title.value = "";
-                        task_description.value = "";
-
-                        task_green.innerHTML = "Task created!";
-                        task_green.style.display = "block";
-
-                    },
-                    error: function(xhr, status, error) {
-                        if (xhr.status === 400) {
-                            if (task_green.style.display == "block") {
-                                task_green.style.display == "none";
+                            if (message.style.display == "block") {
+                                message.style.display == "none";
                             }
-                            task_error.innerHTML = error;
-                            task_error.style.display = "block";
+                            var task_title_reset = 'task_title_' + id;
+
+                            var task_desc_reset = 'task_description_' + id;
+                            task_title_reset = document.getElementById(task_title_reset).value = "";
+
+                            task_desc_reset = document.getElementById(task_desc_reset).value = "";
+                            message_success.style.display = "block";
+                        },
+                        error: function(xhr, status, error) {
+                            if (xhr.status === 400) {
+                                if (message_success.style.display == "block") {
+                                    message_success.style.display == "none";
+                                }
+                                message.innerHTML = error;
+                                message.style.display = "block";
+                            }
+                        },
+
+                    });
+
+                    return false; // Prevent form submission if within a form
+                }
+
+                function openModal(taskId) {
+                    var modalId = "popup_task_to_do_" + taskId;
+                    document.getElementById(modalId).style.display = "block";
+                }
+
+                function hideModal(taskId) {
+                    var modalId = "popup_task_to_do_" + taskId;
+                    document.getElementById(modalId).style.display = "none";
+
+                }
+
+                function TaskEducation(id) {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'task will be deleted!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes',
+                        cancelButtonText: 'No',
+                        confirmButtonColor: '#FF5733', // Red color for "Yes"
+                        cancelButtonColor: '#4CAF50', // Green color for "No"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Send an AJAX request to delete the task
+                            $.ajax({
+                                url: '/del-task/' + id,
+                                method: 'GET', // Use the DELETE HTTP method
+                                success: function() {
+                                    // Provide user feedback
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: 'deleted!',
+                                        icon: 'success'
+                                    }).then(() => {
+                                        location.reload(); // Refresh the page
+                                    });
+                                },
+                                error: function(xhr, status, error) {
+                                    // Handle errors, you can display an error message to the user
+                                    console.error('Error:', error);
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: 'An error occurred while deleting task!',
+                                        icon: 'error'
+                                    });
+                                }
+                            });
+
                         }
-                    },
+                    });
+                }
 
+                $(document).ready(function() {
+                    $('#datatable-buttons').DataTable({
+                        dom: "<'container-fluid'" +
+                            "<'row'" +
+                            "<'col-md-8'lB>" +
+                            "<'col-md-4 text-right'f>" +
+                            ">" +
+                            "<'row dt-table'" +
+                            "<'col-md-12'tr>" +
+                            ">" +
+                            "<'row'" +
+                            "<'col-md-7'i>" +
+                            "<'col-md-5 text-right'p>" +
+                            ">" +
+                            ">",
+                        lengthMenu: [
+                            [10, 25, 50, -1],
+                            [10, 25, 50, "All"]
+                        ],
+                        buttons: [
+                            '', ''
+                        ],
+
+                    });
+                })
+
+                document.querySelectorAll('.task-description').forEach(function(element) {
+                    var truncated = true;
+                    var originalText = element.innerText;
+                    var truncatedText = originalText.slice(0, 50) + '...';
+
+                    element.innerText = truncatedText;
+
+                    element.addEventListener('click', function() {
+                        truncated = !truncated;
+                        element.innerText = truncated ? truncatedText : originalText;
+                    });
                 });
 
-                return false; // Prevent form submission if within a form
+                function addTaskEmp(event) {
+                    event.preventDefault();
+                    var task_title = document.getElementById('task_title');
+                    var task_green = document.getElementById('task_green');
+                    var task_error = document.getElementById('task_error');
+                    var task_description = document.getElementById('task_description');
+
+                    if (task_title.value == "") {
+                        task_error.innerHTML = "Task title required!";
+                        task_error.style.display = "block";
+                        return;
+                    } else {
+                        task_error.style.display = "none";
+                    }
+
+                    if (task_description.value == "") {
+                        task_error.innerHTML = "Task description required!";
+                        task_error.style.display = "block";
+                        return;
+                    } else {
+                        task_error.style.display = "none";
+                    }
+
+                    var csrfToken = "{{ csrf_token() }}";
+
+                    var formData = {
+                        _token: csrfToken,
+                        task_title: task_title.value,
+                        task_description: task_description.value
+                    };
+
+                    $.ajax({
+                        url: '/create-task-by-emp', // The Laravel route
+                        type: 'get', // POST request
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken // Add CSRF token to request headers
+                        },
+                        data: formData,
+                        success: function(response) {
+                            // Show success message
+                            console.log(response);
+
+                            if (task_error.style.display == "block") {
+                                task_error.style.display == "none";
+                            }
+
+                            task_title.value = "";
+                            task_description.value = "";
+
+                            task_green.innerHTML = "Task created!";
+                            task_green.style.display = "block";
+
+                        },
+                        error: function(xhr, status, error) {
+                            if (xhr.status === 400) {
+                                if (task_green.style.display == "block") {
+                                    task_green.style.display == "none";
+                                }
+                                task_error.innerHTML = error;
+                                task_error.style.display = "block";
+                            }
+                        },
+
+                    });
+
+                    return false; // Prevent form submission if within a form
 
 
-            }
+                }
 
-            function hideNow() {
-                var divElement = document.getElementById('close-now');
-                divElement.style.display = 'none';
-            }
+                function hideNow() {
+                    var divElement = document.getElementById('close-now');
+                    divElement.style.display = 'none';
+                }
 
-            function openModel(id) {
-                var popupButton = 'popupButton' + id;
-                var popup = 'popup_' + id;
-                var closeBtn = '.closeBtn' + id;
-
-
-                const popupButtonControl = document.getElementById(popupButton);
-                const popupControl = document.getElementById(popup);
-                const closeBtnControl = document.querySelector(closeBtn);
+                function openModel(id) {
+                    var popupButton = 'popupButton' + id;
+                    var popup = 'popup_' + id;
+                    var closeBtn = '.closeBtn' + id;
 
 
-                popupControl.style.display = 'block';
+                    const popupButtonControl = document.getElementById(popupButton);
+                    const popupControl = document.getElementById(popup);
+                    const closeBtnControl = document.querySelector(closeBtn);
 
 
-                closeBtnControl.addEventListener('click', function() {
-                    popupControl.style.display = 'none';
-                });
+                    popupControl.style.display = 'block';
 
-                window.addEventListener('click', function(e) {
-                    if (e.target === popupControl) {
+
+                    closeBtnControl.addEventListener('click', function() {
                         popupControl.style.display = 'none';
-                    }
-                });
-            }
+                    });
 
-            function taskUpdateEmp(id, status) {
-
-                var task_status = "task_status_" + id;
-                var task_report = "task_report_" + id;
-                var success_message = "success_message_" + id;
-                var error_message = "error_message_" + id;
-
-                task_status = document.getElementById(task_status);
-                task_report = document.getElementById(task_report);
-                success_message = document.getElementById(success_message);
-                error_message = document.getElementById(error_message);
-
-                if (task_status.value == "") {
-                    error_message.innerHTML = "Please select task status!";
-                    error_message.style.display = "block";
-                    return;
-                } else {
-                    error_message.style.display = "none";
+                    window.addEventListener('click', function(e) {
+                        if (e.target === popupControl) {
+                            popupControl.style.display = 'none';
+                        }
+                    });
                 }
 
-                var csrfToken = "{{ csrf_token() }}";
+                function taskUpdateEmp(id, status) {
 
-                var formData = {
-                    id: id,
-                    _token: csrfToken,
-                    task_status: task_status.value,
-                    task_report: task_report.value,
-                    old_status: status
-                };
+                    var task_status = "task_status_" + id;
+                    var task_report = "task_report_" + id;
+                    var success_message = "success_message_" + id;
+                    var error_message = "error_message_" + id;
 
-                $.ajax({
-                    url: '/update-task-status', // The Laravel route
-                    type: 'get', // POST request
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken // Add CSRF token to request headers
-                    },
-                    data: formData,
-                    success: function(response) {
-                        // Show success message
-                        console.log(response);
+                    task_status = document.getElementById(task_status);
+                    task_report = document.getElementById(task_report);
+                    success_message = document.getElementById(success_message);
+                    error_message = document.getElementById(error_message);
 
-                        if (error_message.style.display == "block") {
-                            error_message.style.display == "none";
-                        }
+                    if (task_status.value == "") {
+                        error_message.innerHTML = "Please select task status!";
+                        error_message.style.display = "block";
+                        return;
+                    } else {
+                        error_message.style.display = "none";
+                    }
 
-                        task_status.value = "";
-                        task_report.value = "";
+                    var csrfToken = "{{ csrf_token() }}";
 
-                        success_message.innerHTML = "Task Updated!";
-                        success_message.style.display = "block";
+                    var formData = {
+                        id: id,
+                        _token: csrfToken,
+                        task_status: task_status.value,
+                        task_report: task_report.value,
+                        old_status: status
+                    };
 
-                    },
-                    error: function(xhr, status, error) {
-                        if (xhr.status === 400) {
-                            if (success_message.style.display == "block") {
-                                success_message.style.display == "none";
+                    $.ajax({
+                        url: '/update-task-status', // The Laravel route
+                        type: 'get', // POST request
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken // Add CSRF token to request headers
+                        },
+                        data: formData,
+                        success: function(response) {
+                            // Show success message
+                            console.log(response);
+
+                            if (error_message.style.display == "block") {
+                                error_message.style.display == "none";
                             }
-                            error_message.innerHTML = error;
-                            error_message.style.display = "block";
-                        }
-                    },
 
-                });
+                            task_status.value = "";
+                            task_report.value = "";
 
-                return false; // Prevent form submission if within a form
+                            success_message.innerHTML = "Task Updated!";
+                            success_message.style.display = "block";
+
+                        },
+                        error: function(xhr, status, error) {
+                            if (xhr.status === 400) {
+                                if (success_message.style.display == "block") {
+                                    success_message.style.display == "none";
+                                }
+                                error_message.innerHTML = error;
+                                error_message.style.display = "block";
+                            }
+                        },
+
+                    });
+
+                    return false; // Prevent form submission if within a form
 
 
 
-            }
-        </script>
-    @endsection
-    @section('scripts')
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                }
+            </script>
+        @endsection
+        @section('scripts')
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        <!-- Required datatable js -->
-        <script src="{{ URL::asset('build/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ URL::asset('build/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+            <!-- Required datatable js -->
+            <script src="{{ URL::asset('build/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+            <script src="{{ URL::asset('build/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 
 
-        <script src="{{ URL::asset('build/libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
-        <script src="{{ URL::asset('build/libs/datatables.net-select/js/dataTables.select.min.js') }}"></script>
+            <script src="{{ URL::asset('build/libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
+            <script src="{{ URL::asset('build/libs/datatables.net-select/js/dataTables.select.min.js') }}"></script>
 
-        <!-- Responsive examples -->
-        <script src="{{ URL::asset('build/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
-        <script src="{{ URL::asset('build/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
+            <!-- Responsive examples -->
+            <script src="{{ URL::asset('build/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+            <script src="{{ URL::asset('build/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
 
-        <!-- Datatable init js -->
+            <!-- Datatable init js -->
 
-        <!-- App js -->
-        <script src="{{ URL::asset('build/js/app.js') }}"></script>
+            <!-- App js -->
+            <script src="{{ URL::asset('build/js/app.js') }}"></script>
 
-        {{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> --}}
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    @endsection
+            {{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> --}}
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+            <link rel="stylesheet" type="text/css"
+                href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+        @endsection

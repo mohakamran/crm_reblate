@@ -20,4 +20,7 @@ use App\Http\Controllers\TaskController;
     Route::any('/update-task-status', [TaskController::class, 'updateTaskEmp']);
     Route::any('/create-task-by-emp', [TaskController::class, 'createTaskByEmp']);
     Route::any('/update-task-to-do', [TaskController::class, 'updateToDoTaskEmp']);
+    Route::any('/save-to-do-task', [TaskController::class, 'saveToDoTaskByEmp']);
+    Route::post('/today-tasks-emp', [TaskController::class, 'todayTaskAdd'])->name('tasks.save');
+    Route::post('/update-task-status', [TaskController::class, 'updateStatus'])->name('update-task-status');
 

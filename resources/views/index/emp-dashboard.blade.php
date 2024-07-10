@@ -239,7 +239,7 @@
 
             .popup-content {
                 /* overflow-y: scroll;
-                                                            scroll-behavior: smooth scroll; */
+                                                                                        scroll-behavior: smooth scroll; */
                 display: flex;
                 max-width: 700px;
                 margin: auto auto;
@@ -251,6 +251,38 @@
                 border-radius: 5px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
                 text-align: center;
+            }
+
+            .modal-fullscreen {
+                width: 100vw;
+                max-width: 100%;
+                margin: 0;
+            }
+
+            .modal-dialog-scrollable {
+                display: flex;
+                max-height: calc(100vh - 60px);
+                /* Adjust as needed based on your modal content */
+                margin-top: 30px;
+                /* Adjust top margin as needed */
+            }
+
+            .embed-responsive {
+                position: relative;
+                display: block;
+                width: 100%;
+                padding-top: 100%;
+                /* This keeps the aspect ratio (height:width) */
+                overflow: hidden;
+            }
+
+            .embed-responsive iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
             }
 
             .closeBtn {
@@ -298,30 +330,57 @@
                 background-color: #218838;
             }
 
-            #todoList {
+            .container {
+                width: 400px;
+                padding: 20px;
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            form {
                 display: flex;
-                gap: 10px;
-                flex-wrap: wrap;
-                justify-content: center;
+                margin-bottom: 10px;
             }
 
-            #todoList li {
-                background-color: #14213d26;
+            input[type="text"] {
+                flex: 1;
+                padding: 8px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px 0 0 4px;
+            }
+
+            button {
+                padding: 8px 16px;
+                font-size: 16px;
+                border: none;
+                background-color: #4caf50;
+                color: white;
+                border-radius: 0 4px 4px 0;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+            .card {
+                margin-bottom: 10px;
                 padding: 10px;
-                border-radius: 10px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                cursor: pointer;
             }
 
-            #todoList li h3 {
-                color: #14213d;
-                font-size: 18px;
-                font-family: 'Poppins'
-            }
-
-            #todoList li p {
-                color: #14213d;
-                font-size: 15px;
-                font-family: 'Poppins';
-                margin-bottom: 0;
+            .card.completed {
+                text-decoration: line-through;
+                opacity: 0.7;
             }
         </style>
 
@@ -651,7 +710,7 @@
             <div class="col-md-7 col-xl-7 col-lg-7">
                 <div class="card" style="box-shadow: none">
                     <div class="card-body"
-                        style="background-color: #fff; backdrop-filter: none; border:1px solid #c7c7c7">
+                        style="background-color: #fff; backdrop-filter: none; border:1px solid #c7c7c7; height: 450px; overflow-y: auto;">
                         <h3 class="EmpNameStyle mb-1" style="color: #14213d; font-weight: 800">Notfications</h3>
                         <div class="mt-3">
                             <ul
@@ -773,53 +832,172 @@
 
                             </div>
 
-                            <div class="container-fluid tab-pane fade px-0 show"
-                                style="border-bottom: none; min-height:350px" id="to-do">
-
-
-                                @if ($to_do_tasks_notifications->isNotEmpty())
-                                    @foreach ($to_do_tasks_notifications as $notify)
-                                        <div class="notification-hover mt-2 p-2"
-                                            style="border-bottom: 1px solid lightgray"
-                                            id="notifications_tasks_{{ $notify->id }}">
-                                            <div class="d-flex">
-                                                <a href="{{ $notify->link }}">
-                                                    <div class="avatar-sm me-3">
-                                                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                            <img src="{{ $emp_det->Emp_Image }}"
-                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                                alt="">
-                                                        @else
-                                                            <img class="img-fluid rounded-circle"
-                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                                src="{{ url('user.png') }}">
-                                                        @endif
+                            <div class="tab-pane fade px-0 show" style="border-bottom: none; min-height:350px"
+                                id="to-do">
+                                <div class="mt-3">
+                                    <div>
+                                        <h1>To-Do List</h1>
+                                        <form id="todo-form">
+                                            <input type="text" id="task-title" placeholder="Enter task title"
+                                                required>
+                                            <input type="hidden" id="user_code"
+                                                value="{{ auth()->user()->user_code }}">
+                                            <input type="hidden" id="user_name"
+                                                value="{{ auth()->user()->user_name }}">
+                                            <button type="submit">Add Task</button>
+                                        </form>
+                                        <div id="task-list">
+                                            @if ($latest_to_do->isNotEmpty())
+                                                @foreach ($latest_to_do as $item)
+                                                    <div class="card" data-id="{{ $item->id }}">
+                                                        <h3>{{ $item->task_title }}</h3>
+                                                        <p>Date: {{ $item->date }}</p>
+                                                        <p>Time: {{ $item->time }}</p>
+                                                        <input type="hidden" class="task-id"
+                                                            value="{{ $item->id }}">
                                                     </div>
-                                                    <div class="flex-1">
-                                                        <h4 class="mb-1 EmpNameStyle"
-                                                            style="color: #14213d;font-weight: 500; font-size:20px">
-                                                            {{ $notify->title }}</h4>
-                                                        <div class="font-size-15 text-muted  d-flex gap-2">
-                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
-                                                                {{ date('d F Y', strtotime($notify->date)) }}
-                                                                {{ $notify->time }}</p>
-
-                                                        </div>
-                                                        <p class="mb-1 text-muted">{{ $notify->message }}</p>
-                                                        <a href="javascript:void()"
-                                                            onclick="markAsRead({{ $notify->id }},'tasks')">mark as
-                                                            read</a>
-                                                    </div>
-                                                </a>
-                                            </div>
+                                                @endforeach
+                                            @endif
                                         </div>
-                                    @endforeach
-                                @else
-                                    <div class="position-absolute" style="top: 50%; left: 25%;">
-                                        <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
-                                            No Tasks Notifications</h4>
                                     </div>
-                                @endif
+                                </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const taskList = document.getElementById('task-list');
+
+                                        taskList.addEventListener('click', function(event) {
+                                            const task = event.target.closest('.card');
+                                            if (task) {
+                                                const taskId = task.getAttribute('data-id');
+                                                const newStatus = task.classList.contains('completed') ? 'pending' : 'completed';
+
+                                                fetch('/update-task-status', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'Accept': 'application/json',
+                                                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                                    },
+                                                    body: JSON.stringify({
+                                                        id: taskId,
+                                                        status: newStatus
+                                                    })
+                                                })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    if (data.success) {
+                                                        task.classList.toggle('completed');
+                                                    }
+                                                })
+                                                .catch(error => console.error('Error:', error));
+                                            }
+                                        });
+
+                                        const form = document.getElementById('todo-form');
+                                        form.addEventListener('submit', function(event) {
+                                            event.preventDefault();
+
+                                            const taskTitleInput = document.getElementById('task-title');
+                                            const taskTitle = taskTitleInput.value.trim();
+                                            const userNameInput = document.getElementById('user_name');
+                                            const user_name = userNameInput.value.trim();
+                                            const userCodeInput = document.getElementById('user_code');
+                                            const user_code = userCodeInput.value.trim();
+
+                                            if (taskTitle) {
+                                                fetch('/save-to-do-task', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'Accept': 'application/json',
+                                                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                                    },
+                                                    body: JSON.stringify({
+                                                        title: taskTitle,
+                                                        userName: user_name,
+                                                        userCode: user_code,
+                                                        date: getCurrentDate(),
+                                                        time: getCurrentTime()
+                                                    })
+                                                })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    console.log('Response Data:', data);
+
+                                                    const task = document.createElement('div');
+                                                    task.className = 'card';
+                                                    task.setAttribute('data-id', data.id);
+                                                    task.innerHTML = `
+                                                        <h3>${taskTitle}</h3>
+                                                        <p>Date: ${getCurrentDate()}</p>
+                                                        <p>Time: ${getCurrentTime()}</p>
+                                                        <input type="hidden" class="task-id" value="${data.id}">
+                                                    `;
+
+                                                    task.addEventListener('click', function() {
+                                                        const taskId = task.getAttribute('data-id');
+                                                        const newStatus = task.classList.contains('completed') ? 'pending' : 'completed';
+
+                                                        fetch('/update-task-status', {
+                                                            method: 'POST',
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                                'Accept': 'application/json',
+                                                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                                            },
+                                                            body: JSON.stringify({
+                                                                id: taskId,
+                                                                status: newStatus
+                                                            })
+                                                        })
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            if (data.success) {
+                                                                task.classList.toggle('completed');
+                                                            }
+                                                        })
+                                                        .catch(error => console.error('Error:', error));
+                                                    });
+
+                                                    taskList.insertBefore(task, taskList.firstChild);
+
+                                                    taskTitleInput.value = '';
+                                                    userNameInput.value = '';
+                                                    userCodeInput.value = '';
+                                                })
+                                                .catch(error => console.error('Error:', error));
+                                            } else {
+                                                alert('Please enter a task title.');
+                                            }
+                                        });
+
+                                        function getCurrentDate() {
+                                            const now = new Date();
+                                            const options = {
+                                                weekday: 'long',
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            };
+                                            return now.toLocaleDateString('en-US', options);
+                                        }
+
+                                        function getCurrentTime() {
+                                            const now = new Date();
+                                            return now.toLocaleTimeString('en-US');
+                                        }
+                                    });
+                                    </script>
+
+
+
+
+                                {{-- <div class="position-absolute" style="top: 50%; left: 25%;">
+                                        <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
+                                            No Tasks </h4>
+                                    </div> --}}
+
 
 
                             </div>
@@ -1448,20 +1626,22 @@
                         </div>
                         <div class="w-100 mb-2">
                             <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+
                                 <div class="carousel-inner">
                                     <div class="carousel-item active" style="border-bottom: none">
                                         <div class="row">
 
-                                            @foreach ($files as $file)
-                                                <div class="col-md-6">
+                                            <div class="col-md-6">
+                                                @foreach ($files as $file)
                                                     <div class="card" style="box-shadow: none">
                                                         <div class="card-body" style="background-color: #AA336A30">
                                                             <div class="d-flex align-items-center text-start gap-2">
                                                                 <span class="p-2 rounded-pill mb-0 font-size-15"
-                                                                    style="background-color: #AA336A40; color:#AA336A;font-weight: 600">HR</span>
+                                                                    style="background-color: #AA336A40; color:#AA336A;font-weight: 600">Policy
+                                                                    Page</span>
                                                                 <h5 class="mb-0 EmpStyle"
-                                                                    style="color: #14213d; font-weight: 600">
-                                                                    {{ $file->file_name }}</h5>
+                                                                    style="color: #14213d; font-size:14px;font-weight: 600">
+                                                                    {{ $file->file_type }}</h5>
                                                             </div>
                                                             <div class="mt-2">
                                                                 <div class="d-flex align-items-center text-start gap-2">
@@ -1469,7 +1649,7 @@
                                                                         style="font-family: 'Poppins'; font-weight:500; color:#14213d">Policy
                                                                         Name:</span>
                                                                     <span
-                                                                        style="font-family: 'Poppins'; font-weight:500; color:#14213d">{{ $file->file_type }}</span>
+                                                                        style="font-family: 'Poppins'; font-weight:500; color:#14213d">{{ $file->file_name }}</span>
                                                                 </div>
                                                                 <div>
                                                                     <span
@@ -1481,54 +1661,86 @@
                                                             </div>
                                                             <div class="text-end">
                                                                 {{-- @if ($file->file_path != '' && file_exists($file->file_path))
-                                                                    <a href="{{ $file->file_path }}" download=""><svg
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            width="25" height="25"
-                                                                            viewBox="0 0 24 24">
-                                                                            <path fill="#14213d"
-                                                                                d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z">
-                                                                            </path>
-                                                                        </svg></a>
-                                                                @endif --}}
+                                                                        <a href="{{ $file->file_path }}" download=""><svg
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                width="25" height="25"
+                                                                                viewBox="0 0 24 24">
+                                                                                <path fill="#14213d"
+                                                                                    d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z">
+                                                                                </path>
+                                                                            </svg></a>
+                                                                    @endif --}}
 
-                                                                @if ($file->file_path != '' && file_exists($file->file_path))
-                                                                    <a href="/view-page/{{$file->id}}">
-                                                                        <svg type="button" width="20px" height="20px"
-                                                                            viewBox="0 0 24 24" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            stroke="#14213d">
-                                                                            <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                                                            </g>
-                                                                            <g id="SVGRepo_tracerCarrier"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"></g>
-                                                                            <g id="SVGRepo_iconCarrier">
-                                                                                <path
-                                                                                    d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z"
-                                                                                    stroke="#14213d" stroke-width="2"
-                                                                                    stroke-linecap="round"
-                                                                                    stroke-linejoin="round">
-                                                                                </path>
-                                                                                <path
-                                                                                    d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z"
-                                                                                    stroke="#14213d" stroke-width="2"
-                                                                                    stroke-linecap="round"
-                                                                                    stroke-linejoin="round">
-                                                                                </path>
-                                                                            </g>
+
+                                                                @if (file_exists($file->file_path) && $file->file_path != '')
+                                                                    <a href="#my_pdf_file_{{ $file->id }}"
+                                                                        data-toggle="modal">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="25" height="25"
+                                                                            viewBox="0 0 32 32">
+                                                                            <path fill="#14213d"
+                                                                                d="M30.94 15.66A16.69 16.69 0 0 0 16 5A16.69 16.69 0 0 0 1.06 15.66a1 1 0 0 0 0 .68A16.69 16.69 0 0 0 16 27a16.69 16.69 0 0 0 14.94-10.66a1 1 0 0 0 0-.68ZM16 25c-5.3 0-10.9-3.93-12.93-9C5.1 10.93 10.7 7 16 7s10.9 3.93 12.93 9C26.9 21.07 21.3 25 16 25Z">
+                                                                            </path>
+                                                                            <path fill="#14213d"
+                                                                                d="M16 10a6 6 0 1 0 6 6a6 6 0 0 0-6-6Zm0 10a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z">
+                                                                            </path>
                                                                         </svg>
                                                                     </a>
+                                                                    <!-- Full Screen PDF Modal -->
+                                                                    <div class="modal fade"
+                                                                        id="my_pdf_file_{{ $file->id }}"
+                                                                        tabindex="-1" role="dialog"
+                                                                        aria-labelledby="pdfModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div
+                                                                            class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="pdfModalLabel">
+                                                                                        {{ $file->file_name }}</h5>
+                                                                                    <button type="button" class="close"
+                                                                                        data-dismiss="modal"
+                                                                                        aria-label="Close">
+                                                                                        <span
+                                                                                            aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="embed-responsive">
+                                                                                        <!-- Replace the src attribute with your Google Drive PDF file URL -->
+                                                                                        <iframe
+                                                                                            class="embed-responsive-item"
+                                                                                            src="{{ $file->file_path }}"></iframe>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-dismiss="modal">Close</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 @endif
+
+
+
+
 
 
                                                             </div>
 
                                                         </div>
                                                     </div>
-                                                </div>
-                                            @endforeach
+                                                @endforeach
+
+                                            </div>
+
                                         </div>
                                     </div>
+
+
                                     {{-- <div class="carousel-item" style="border-bottom: none">
                                         <div class="row">
                                             <div class="col-md-6">

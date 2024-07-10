@@ -8,6 +8,65 @@ use Carbon\Carbon;
 
 class TaskController extends Controller
 {
+    public function updateStatus(Request $request)
+    {
+        $updated = DB::table('to_do_list')
+                     ->where('id', $request->id)
+                     ->update(['status' => $request->status]);
+
+        if ($updated) {
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false], 404);
+    }
+    // emmployee adds today tasks completed
+    public function todayTaskAdd(Request $request) {
+        $tasks = $request->input('tasks');
+        $emp_id = auth()->user()->user_code;
+        $date  = date('y-m-d');
+        foreach ($tasks as $task) {
+            DB::table('tasks')->insert([
+                'emp_id' => $emp_id,
+                'task_title' => $task['title'],
+                'task_description' => $task['description'],
+                'task_report' => $task['description'],
+                'task_status' => "completed",
+                'assigned_date' => $date,
+                'task_date' => $date,
+                'task_type' => "employee-task",
+                'assigned_by' => auth()->user()->user_name
+            ]);
+        }
+        return response()->json(['message' => true]);
+    }
+    // crearte task by emp
+    public function saveToDoTaskByEmp(Request $request)
+    {
+        // Validate incoming request data (optional but recommended)
+        // $validatedData = $request->validate([
+        //     'title' => 'required|string|max:255',
+        //     'userName' => 'required|string|max:255',
+        //     'userCode' => 'required|string|max:255',
+        //     'date' => 'required|date',
+        //     'time' => 'required|string',
+        // ]);
+
+        try {
+            // Insert data into database using DB facade and get the inserted ID
+            $taskId = DB::table('to_do_list')->insertGetId([
+                'task_title' => $request['title'],
+                'name' => auth()->user()->user_name,
+                'user_code' => auth()->user()->user_code,
+                'date' => $request['date'],
+                'time' => $request['time'],
+                'status' => 'pending'
+            ]);
+
+            return response()->json(['id' => $taskId, 'message' => 'Task created successfully'], 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to create task', 'error' => $e->getMessage()], 500);
+        }
+    }
     public function updateToDoTaskEmp(Request $req) {
         $id = $req->id;
         $task_find = DB::table('tasks')->where('id',$id)->first();
@@ -280,7 +339,7 @@ class TaskController extends Controller
 
             $to_do_task_count = DB::table('tasks')
             ->where('emp_id', $emp_id)
-            ->where('task_type', "to-do-task")
+            ->where('task_type', "employee-task")
             ->orderBy('id','desc')
             ->whereMonth('assigned_date', $currentMonth)
             // ->orderBy('id', 'desc')
@@ -288,7 +347,7 @@ class TaskController extends Controller
 
             $to_do_tasks = DB::table('tasks')
             ->where('emp_id', $emp_id)
-            ->where('task_type', "to-do-task")
+            ->where('task_type', "employee-task")
             ->orderBy('id','desc')
             ->whereMonth('assigned_date', $currentMonth)
             // ->orderBy('id', 'desc')
