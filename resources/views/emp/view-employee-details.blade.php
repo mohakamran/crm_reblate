@@ -27,12 +27,7 @@
                                            <img src="{{ asset($emp_data->Emp_Image) }}" style="width:150px;height:150px">
                                         </a>
                                     @endisset
-
                                 </div>
-
-
-
-
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">

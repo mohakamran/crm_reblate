@@ -741,12 +741,14 @@ class SalaryController extends Controller
         $formattedPayRoll = $lastDayOfPreviousMonth->format('M, Y');
 
         $TotalEmployees = Employee::where('Emp_status','active')->count();
+        $SelectEmployees  = Employee::where('Emp_status','active')->get();
+
 
         $salaryGet = Salary::join('employees','salaries.emp_id','=','employees.Emp_Code' )
         ->select('salaries.*', 'employees.*')
         ->whereBetween('salaries.created_at', [$startDate, $endDate])
         ->orderBy('salaries.emp_id', 'desc')
-        ->get();
+        ->get();    
 
         $salarysGet = Salary::join('employees', 'salaries.emp_id', '=', 'employees.Emp_Code')
              ->select('employees.Emp_Code', 'employees.Emp_Full_Name', DB::raw('SUM(salaries.total_salary) as total_salary'))
@@ -754,10 +756,269 @@ class SalaryController extends Controller
              ->orderBy('employees.Emp_Code', 'desc') // Order by employee ID
              ->get();
 
+             $first_day_previous_month = date('Y-m-01', strtotime('first day of last month'));
+             $last_day_previous_month = date('Y-m-t', strtotime('last day of last month'));
+             $first_day_two_months_ago = date('Y-m-01', strtotime('first day of last month - 1 month'));
+             $last_day_two_months_ago = date('Y-m-t', strtotime('last day of last month - 1 month'));
+             
+             // Query to get total salary paid in previous month and two months ago
+             $total_salary_previous_month = Salary::whereBetween('created_at', [$first_day_previous_month, $last_day_previous_month])
+                 ->sum('total_salary');
+             
+             $total_salary_two_months_ago = Salary::whereBetween('created_at', [$first_day_two_months_ago, $last_day_two_months_ago])
+                 ->sum('total_salary');
+             
+             // Calculate percentage change
+             if ($total_salary_two_months_ago != 0) {
+                 $percentage_change = (($total_salary_previous_month - $total_salary_two_months_ago) / $total_salary_two_months_ago) * 100;
+             } else {
+                 // Handle division by zero if necessary (edge case)
+                 $percentage_change = null;
+             }
 
-        $data = compact('salarysGet','usd_pkr_salary_Net','usd_pkr_salary_Bonus','salaryGet','usd_pkr_salary','salaries','formattedStartDate','formattedEndDate','TotalEmployees','usd_pkr_salary_Ded','formattedPayRoll');
+             $kpi_bonus_previous_month = Salary::whereBetween('created_at', [$first_day_previous_month, $last_day_previous_month])
+            ->sum('kpi_bonus');
+
+            $project_bonus_previous_month = Salary::whereBetween('created_at', [$first_day_previous_month, $last_day_previous_month])
+                ->sum('project_bonus');
+
+            $designation_bonus_previous_month = Salary::whereBetween('created_at', [$first_day_previous_month, $last_day_previous_month])
+                ->sum('designation_bonus');
+
+            $total_bonus_previous_month = $kpi_bonus_previous_month + $project_bonus_previous_month + $designation_bonus_previous_month;
+
+            // Calculate total bonus two months ago
+            $kpi_bonus_two_months_ago = Salary::whereBetween('created_at', [$first_day_two_months_ago, $last_day_two_months_ago])
+                ->sum('kpi_bonus');
+
+            $project_bonus_two_months_ago = Salary::whereBetween('created_at', [$first_day_two_months_ago, $last_day_two_months_ago])
+                ->sum('project_bonus');
+
+            $designation_bonus_two_months_ago = Salary::whereBetween('created_at', [$first_day_two_months_ago, $last_day_two_months_ago])
+                ->sum('designation_bonus');
+
+            $total_bonus_two_months_ago = $kpi_bonus_two_months_ago + $project_bonus_two_months_ago + $designation_bonus_two_months_ago;
+
+            // Calculate percentage change
+            if ($total_bonus_two_months_ago != 0) {
+                $percentage_change_of_Bounus = (($total_bonus_previous_month - $total_bonus_two_months_ago) / $total_bonus_two_months_ago) * 100;
+            } else {
+                // Handle division by zero if necessary (edge case)
+                $percentage_change_of_Bounus = null;
+            }
+
+        // Query to get total salary paid in previous month and two months ago
+        $total_salary_previous_month_Net = Salary::whereBetween('created_at', [$first_day_previous_month, $last_day_previous_month])
+        ->sum('amount');
+        
+        $total_salary_two_months_ago_Net = Salary::whereBetween('created_at', [$first_day_two_months_ago, $last_day_two_months_ago])
+            ->sum('amount');
+        
+        // Calculate percentage change
+        if ($total_salary_two_months_ago_Net != 0) {
+            $percentage_change_Net = (($total_salary_previous_month_Net - $total_salary_two_months_ago_Net) / $total_salary_two_months_ago_Net) * 100;
+        } else {
+            // Handle division by zero if necessary (edge case)
+            $percentage_change_Net = null;
+        }
+
+        $total_salary_previous_month_deduction = Salary::whereBetween('created_at', [$first_day_previous_month, $last_day_previous_month])
+        ->sum('deduction');
+        
+        $total_salary_two_months_ago_deduction = Salary::whereBetween('created_at', [$first_day_two_months_ago, $last_day_two_months_ago])
+            ->sum('deduction');
+        
+        // Calculate percentage change
+        if ($total_salary_two_months_ago_deduction != 0) {
+            $percentage_change_deduction = (($total_salary_previous_month_deduction - $total_salary_two_months_ago_deduction) / $total_salary_two_months_ago_deduction) * 100;
+        } else {
+            // Handle division by zero if necessary (edge case)
+            $percentage_change_deduction = null;
+        }
+        //////////////////avg Kpi////////////
+        $total_avg = Salary::whereBetween('created_at', [$first_day_previous_month, $last_day_previous_month])
+        ->sum('all_total');
+        
+        $total_avgs = Salary::whereBetween('created_at', [$first_day_two_months_ago, $last_day_two_months_ago])
+            ->sum('all_total');
+        
+        // Calculate percentage change
+        if ($total_avgs != 0) {
+            $percentage_avg = (($total_avg - $total_avgs) / $total_avgs) * 100;
+        } else {
+            // Handle division by zero if necessary (edge case)
+            $percentage_avg = null;
+        }
+
+        $total_previous_month = Employee::where('Emp_status', 'active')
+        ->whereBetween('created_at', [$first_day_previous_month, $last_day_previous_month])
+        ->count();
+        $total_two_months_ago = Employee::where('Emp_status', 'active')
+        ->whereBetween('created_at', [$first_day_two_months_ago, $last_day_two_months_ago])
+        ->count();
+        if ($total_two_months_ago != 0) {
+            $percentage_change_of_employee = (($total_previous_month - $total_two_months_ago) / $total_two_months_ago) * 100;
+        } else {
+            // Handle division by zero if necessary (edge case)
+            $percentage_change_of_employee = null;
+        }
+
+        // -------current month salary total------------
+        $startMonth = Carbon::now()->subMonth()->startOfMonth();
+        $endmonth = Carbon::now()->subMonth()->endOfMonth();
+        $countCurrentSalary = Salary::whereBetween('created_at', [$startMonth, $endmonth])
+        ->sum('amount');
+        $totalCurrentsalary = $this->getExchangeRate($countCurrentSalary);
+        $usd_pkr_salary_Current = number_format($totalCurrentsalary,2);
+
+        // -------2 months month salary total------------
+        $startmonth = Carbon::now()->subMonth(2)->startOfMonth();
+        $endMonth = Carbon::now()->subMonth(2)->endOfMonth();
+        $countcurrentsalary = Salary::whereBetween('created_at', [$startmonth, $endMonth])
+        ->sum('amount');
+        $totalurrentSalary = $this->getExchangeRate($countcurrentsalary);
+        $usd_pkr_salary_Previous = number_format($totalurrentSalary,2);
+
+        $departments = Employee::select('department', DB::raw('COUNT(*) as count'))
+        ->groupBy('department')
+        ->get();
+        $totaldepartments = $departments->count('department');  
+
+        $nightDepartments = Employee::select('Emp_Shift_Time', DB::raw('COUNT(*) as count'))
+        ->where('Emp_Status','active')
+        ->where('Emp_Shift_Time', 'night') // Filter by Emp_Shift_Time being 'night'
+        ->groupBy('Emp_Shift_Time')
+        ->get();
+        $totalNightDepartments = $nightDepartments->sum('count');
+
+        $morDepartments = Employee::select('Emp_Shift_Time', DB::raw('COUNT(*) as count'))
+        ->where('Emp_Status','active')
+        ->where('Emp_Shift_Time', 'morning') // Filter by Emp_Shift_Time being 'night'
+        ->groupBy('Emp_Shift_Time')
+        ->get();
+        $totalMorDepartments = $morDepartments->sum('count');
+        
+        $startMonthleave = Carbon::now()->subMonth()->startOfMonth();
+        $endMonthleave = Carbon::now()->subMonth()->endOfMonth();
+
+        $total_leaves_days_of_this_month = DB::table('leaves')
+        ->select('date', DB::raw('SUM(totalNumber) as total'))
+        ->whereBetween('date', [$startMonthleave, $endMonthleave])
+        ->groupBy('date')
+        ->get();
+
+        $perform = Salary::whereBetween('created_at', [$startMonthleave, $endMonthleave])->pluck('kpi_bonus');
+        $PerformanceAverage = $perform->sum();
+        
+
+        $startsmonth = Carbon::now()->subMonth(2)->startOfMonth();
+        $endsMonth = Carbon::now()->subMonth(2)->endOfMonth();
+        $performancescore = Salary::whereBetween('created_at', [$startsmonth, $endsMonth])->pluck('all_total');
+        $performancavg = $performancescore->sum();
+
+        $startsofmonth = Carbon::now()->subMonth(3)->startOfMonth();
+        $endsofMonth = Carbon::now()->subMonth(3)->endOfMonth();
+        $performancescoreof = Salary::whereBetween('created_at', [$startsofmonth, $endsofMonth])->pluck('all_total');
+        $performancavgof = $performancescoreof->sum();
+
+        $startsofmonthfour = Carbon::now()->subMonth(4)->startOfMonth();
+        $endsofMonthfour = Carbon::now()->subMonth(4)->endOfMonth();
+        $performancescoreoffour = Salary::whereBetween('created_at', [$startsofmonthfour, $endsofMonthfour])->pluck('all_total');
+        $performancavgoffour = $performancescoreoffour->sum();
+
+        $startsofmonthfive = Carbon::now()->subMonth(5)->startOfMonth();
+        $endsofMonthfive = Carbon::now()->subMonth(5)->endOfMonth();
+        $performancescoreoffive = Salary::whereBetween('created_at', [$startsofmonthfive, $endsofMonthfive])->pluck('all_total');
+        $performancavgoffive = $performancescoreoffive->sum();
+
+        $startsofmonthSex = Carbon::now()->subMonth(5)->startOfMonth();
+        $endsofMonthSex = Carbon::now()->subMonth(5)->endOfMonth();
+        $performancescoreofSix = Salary::whereBetween('created_at', [$startsofmonthSex, $endsofMonthSex])->pluck('all_total');
+        $performancavgofSix = $performancescoreofSix->sum();
+
+        $StartOfAttendence = Carbon::now()->subMonth()->startOfMonth();
+        $EndOfAttendence = Carbon::now()->subMonth()->endOfMonth();
+        $currentYear = Carbon::now()->year;
+        $lastMonth = Carbon::now()->subMonth()->month;
+        $month_days = $this->getNumberOfDaysMonth($lastMonth,$currentYear);
+        $holidays = $this->getHolidays($lastMonth,$currentYear);
+        $holidays = count($holidays);
+        $total_working_days = $month_days - $holidays;
+        $TotalAttendenceQuery = DB::table('attendence')->wherebetween('date',[$StartOfAttendence,$EndOfAttendence])->count();
+        $averagFormulaForAttendence =  $TotalAttendenceQuery / $total_working_days ;
+        $averageFormulaForAttendence = number_format($averagFormulaForAttendence,0);
+        $yvalues = [$performancavgofSix, $performancavgoffive, $performancavgoffour, $performancavgof, $performancavg, $PerformanceAverage];
+        $xyShifts = [$TotalEmployees,$totalMorDepartments,$totalNightDepartments];
+        $data = compact('averageFormulaForAttendence','xyShifts','totalNightDepartments','totalMorDepartments','yvalues','percentage_avg','performancavg','PerformanceAverage','total_leaves_days_of_this_month','totaldepartments','usd_pkr_salary_Previous','usd_pkr_salary_Current','percentage_change_of_employee','percentage_change_deduction','percentage_change_Net','percentage_change_of_Bounus','percentage_change','SelectEmployees','salarysGet','usd_pkr_salary_Net','usd_pkr_salary_Bonus','salaryGet','usd_pkr_salary','salaries','formattedStartDate','formattedEndDate','TotalEmployees','usd_pkr_salary_Ded','formattedPayRoll');
         return view('salaries.salary-dashboard',$data);
     }
+
+    public function getNumberOfDaysMonth($month,$year) {
+        // Initialize counters
+        $numWeekdays = 0;
+    
+        // Get the total number of days in the month
+        $totalDays = Carbon::createFromDate($year, $month)->daysInMonth;
+    
+        // Loop through each day in the month
+        for ($day = 1; $day <= $totalDays; $day++) {
+            $date = Carbon::createFromDate($year, $month, $day);
+    
+            // Check if the day is a weekday (Monday to Friday)
+            if (!$date->isWeekend()) {
+                $numWeekdays++;
+            }
+        }
+    
+        return $numWeekdays;
+    
+    }
+    
+       // get public holidays
+       public function getHolidays($month, $year) {
+            // Get the first day of the month
+            $startDate = Carbon::createFromDate($year, $month, 1);
+    
+            // Get the last day of the month
+            $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth();
+    
+            // Array to store the list of dates
+            $datesForMonth = [];
+    
+            // Iterate over each day from the start date to the end date
+            for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+                // Check if the current date falls within any of the holiday ranges
+                $isHoliday = DB::table('holidays')
+                    ->where('startDate', '<=', $date->format('m/d/Y'))
+                    ->where('endDate', '>=', $date->format('m/d/Y'))
+                    ->exists();
+    
+                // If the date is a holiday, add it to the array
+                if ($isHoliday) {
+                    $datesForMonth[] = $date->format('m/d/Y');
+                }
+            }
+    
+            // Return the list of dates for the month
+            return  $datesForMonth;
+    }
+
+    public function showEmployeeData(Request $request)
+    {
+        
+        $emp_id = $request->input('emp_id');
+        $input_month_salary = $request->input('month_salary');
+
+        $date = Carbon::parse($input_month_salary);
+        $month_salary = $date->englishMonth . ', ' . $date->year;
+
+        $salary = Salary::where('emp_id', $emp_id)
+        ->where('month_salary', $month_salary)
+        ->first();
+
+        return view('salaries.salary-employee-data', compact('salary'));
+    }
+    
 
     // view recipts
     public function viewReciepts() {

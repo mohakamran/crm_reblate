@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    File Uploads
+   Salary Dashboard
 @endsection
 @section('css')
     <!-- DataTables -->
@@ -18,7 +18,6 @@
 
 @section('body')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <body data-sidebar="colored">
     @endsection
     @section('content')
@@ -53,6 +52,31 @@
                 border-radius: 13px;
                 margin-left: 20px;
             }
+            .badgeEmployye{
+            background-color: #179109;
+            color: white;
+            padding: 5px 7px;
+            border-radius: 13px;
+            margin-left: 20px;
+            font-size: 10px;
+            }
+            .badgeEmployyeless{
+            background-color: red;
+            color: white;
+            padding: 5px 7px;
+            border-radius: 13px;
+            margin-left: 20px;
+            font-size: 10px;
+            }
+            .badgeColor {
+                background-color: red;
+                color: white;
+                padding: 5px 7px;
+                border-radius: 13px;
+                margin-left: 20px;
+                font-size: 10px;
+
+            }
             .badgeTotalSalary{
                 background-color: #fca311;
                 color: white;
@@ -64,11 +88,52 @@
             .Greenbadge{
                 background-color: #179109;
                 color: white;
-                padding: 4px 6px;
+                padding: 5px 7px;
                 border-radius: 13px;
                 margin-left: 190px;
+                font-size:11px;
             }
-            .badgeRed{
+            .Redbadge{
+                background-color: red;
+                color: white;
+                padding: 5px 7px;
+                border-radius: 13px;
+                margin-left: 190px;
+                font-size:11px;
+            }
+            .badgeRed {
+                background-color: red;
+                color: white;
+                padding: 5px 7px;
+                border-radius: 13px;
+                margin-left: 10px;
+                font-size: 10px;
+            }
+            .badgeRedDED{
+                background-color: green;
+                color: white;
+                padding: 5px 7px;
+                border-radius: 13px;
+                margin-left: 10px;
+                font-size: 10px;
+            }
+            .badgeRedDed{
+            background-color: red;
+            color: white;
+            padding: 5px 7px;
+            border-radius: 13px;
+            margin-left: 10px;
+            font-size: 10px;
+            }
+            .badgeRedGreen{
+            background-color: green;
+            color: white;
+            padding: 5px 7px;
+            border-radius: 13px;
+            margin-left: 10px;
+            font-size: 10px;
+            }
+            .badgeRedmetric{
                 background-color: red;
                 color: white;
                 padding: 4px 5px;
@@ -76,8 +141,8 @@
                 margin-left: 50px;
                 font-size: 13px;
             }
-            .badgeRedmetric{
-                background-color: red;
+            .badgeGreenmetric{
+                background-color: green;
                 color: white;
                 padding: 4px 5px;
                 border-radius: 13px;
@@ -382,9 +447,10 @@
                 margin: -34px -199px 0px 0px;
                 color: white;
             }
+
         </style>
 
-        <div class="row mt-2">
+        <div class="row mt-2" style="font-family: 'Poppins', sans-serif;">
             <div class="card px-0">
                 <div class="card-body flex-wrap" style="background-color: #14213d;min-height:270px">
                     <div class="col-md-6 col-lg-6 col-xl-6 gap-3 d-flex align-items-center flex-wrap p-2">
@@ -398,49 +464,46 @@
                                 <span class="badgeTotalSalary">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
                                     <path fill="currentColor" d="M198 64v104a6 6 0 0 1-12 0V78.48L68.24 196.24a6 6 0 0 1-8.48-8.48L177.52 70H88a6 6 0 0 1 0-12h104a6 6 0 0 1 6 6"/></svg> 
-                                    16 %</span>
+                                    @if ($percentage_change !== null)
+                                        {{ number_format($percentage_change, 2) }}%
+                                    @else
+                                        N/A
+                                    @endif
+                                </span>
                             </div>
                             <p class="dateSet">{{ $formattedStartDate }} - {{ $formattedEndDate }}</p>
                         </div>
                     </div>
-                    
-                    <div class="position-absolute p-2"
-                        style="top:75px;right: 20px; border:1px solid #fca311; border-radius:10px">
-                        <span style="color:#fff; font-size: 15px;font-weight: 300; font-family: 'Poppins';">
-                        <select class="custom-select custom-select-lg mb-3" style="background:transparent; color:white;border:none;margin-bottom: 0rem !important;">
-                            <option selected>Select Employee</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                        </span>
-                    </div>
-                    <div class="position-absolute p-2"
-                        style="top:75px;right: 190px; border:1px solid #fca311; border-radius:10px">
-                        <span style="color:#fff; font-size: 15px;font-weight: 300; font-family: 'Poppins';">
-                        <select class="custom-select custom-select-lg mb-3" style="background:transparent; color:white;border:none;margin-bottom: 0rem !important;">
-                            <option selected>Select Month</option>
-                            <option value="01">January</option>
-                            <option value="02">February</option>
-                            <option value="03">March</option>
-                            <option value="04">April</option>
-                            <option value="05">May</option>
-                            <option value="06">June</option>
-                            <option value="07">July</option>
-                            <option value="08">August</option>
-                            <option value="09">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                        </span>
-                    </div>
-                    
+                    <form action="{{ route('view-salary-employee') }}" method="POST">
+                        @csrf
+                        <div class="position-absolute p-2"
+                            style="top:75px;right: 7%; border:1px solid #fca311; border-radius:10px">
+                            <span style="color:#fff; font-size: 15px;font-weight: 300; font-family: 'Poppins';">
+                            <select id="emp_id" name="emp_id" class="custom-select custom-select-lg mb-3" style="background:transparent; color:white;border:none;margin-bottom: 0rem !important;">
+                                <option selected style="color:black;">Select Employee</option>
+                                @foreach($SelectEmployees as $employee)
+                                    <option value="{{ $employee->Emp_Code }}" style="color:black;">{{ $employee->Emp_Full_Name }}</option>
+                                @endforeach
+                            </select>
+                            </span>
+                        </div>
+                        <div class="position-absolute p-2"
+                            style="top:75px;right: 27%; border:1px solid #fca311; border-radius:10px">
+                            <span style="color:#fff; font-size: 15px;font-weight: 300; font-family: 'Poppins';">
+                                <input type="month" name="month_salary" style="background:transparent; color:white;border:none;margin-bottom: 0rem !important;">
+                            </span>
+                        </div>
+                        <div class="position-absolute p-2"
+                            style="top:75px;right: 0%;">
+                            <button type="submit" class="btn btn-outline-warning"  style="border:1px solid #fca311;height:40px;margin-top:-6px;color:white">Submit</button>
+                        </div>
+                        
+                    </form>
                 </div>
             </div>
 
         </div>
-        <div class="row flex-wrap" style="position: relative; top:-125px;">
+        <div class="row flex-wrap" style="position: relative; top:-125px;font-family: 'Poppins', sans-serif;">
             <div id="popupButton">
                 <!-- <button type="button" class="position-absolute reblateBtn px-3 py-1 text-white"
                     style="background-color: #fca311; right: 35px; top:-45px;"> Apply for Leave</button> -->
@@ -578,7 +641,7 @@
             </div>
             <div class="col-md-3 col-lg-3 col-xl-3">
                 <a href="/view-attendence">
-                    <div class="card" style="border-radius:10px;">
+                    <div class="card" style="border-radius:10px;height: 155px;">
                         <div class="card-body" style="background-color: #fca311">
                             <div class="d-flex align-items-start flex-column">
                                 <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
@@ -586,13 +649,25 @@
                                         style="width:23px; height:23px; object-fit:contain;margin-left:2px"
                                         alt="User Icon Reblate Solutions">
                                 </div>
-                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">TotalEmployees<span class="badge">
+                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Employees
+                                    @if($percentage_change_of_employee > 1 )
+                                    <span class="badgeEmployye">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
                                         <path fill="currentColor" d="M198 64v104a6 6 0 0 1-12 0V78.48L68.24 196.24a6 6 0 0 1-8.48-8.48L177.52 70H88a6 6 0 0 1 0-12h104a6 6 0 0 1 6 6"/></svg> 
-                                        16 %</span>
+                                        {{ number_format($percentage_change_of_employee, 1) }}%
+                                    </span>
+                                    @elseif($percentage_change_of_employee < 1 )
+                                    <span class="badgeEmployyeless">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
+                                    <path fill="currentColor" d="m204.24 148.24l-72 72a6 6 0 0 1-8.48 0l-72-72a6 6 0 0 1 8.48-8.48L122 201.51V40a6 6 0 0 1 12 0v161.51l61.76-61.75a6 6 0 0 1 8.48 8.48"/></svg>
+                                        {{ number_format($percentage_change_of_employee, 1) }}%
+                                    </span>
+                                    @else
+                                    N/A
+                                @endif
                                 </p>
                                 <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
-                                   {{$TotalEmployees}}
+                                   {{$TotalEmployees}}.00
                                 </h2>
                             </div>
                         </div>
@@ -601,7 +676,7 @@
             </div>
             <div class="col-md-3 col-lg-3 col-xl-3">
                 <a href="/view-attendence">
-                    <div class="card" style="border-radius:10px;">
+                    <div class="card" style="border-radius:10px;height: 155px;">
                         <div class="card-body" style="background-color: #fca311">
                             <div class="d-flex align-items-start flex-column">
                                 <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
@@ -609,10 +684,22 @@
                                         style="width:23px; height:23px; object-fit:contain;margin-left:2px"
                                         alt="User Icon Reblate Solutions">
                                 </div>
-                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Bonus<span class="badgeRed">
+                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Total Bonus
+                                @if ($percentage_change_of_Bounus < 1)
+                                <span class="badgeRed">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
                                 <path fill="currentColor" d="m204.24 148.24l-72 72a6 6 0 0 1-8.48 0l-72-72a6 6 0 0 1 8.48-8.48L122 201.51V40a6 6 0 0 1 12 0v161.51l61.76-61.75a6 6 0 0 1 8.48 8.48"/></svg>
-                                    0.8 %</span>
+                                {{ number_format($percentage_change_of_Bounus, 2) }}%
+                                </span>
+                                @elseif ($percentage_change_of_Bounus > 1)
+                                <span class="badgeRedGreen" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
+                                    <path fill="currentColor" d="M198 64v104a6 6 0 0 1-12 0V78.48L68.24 196.24a6 6 0 0 1-8.48-8.48L177.52 70H88a6 6 0 0 1 0-12h104a6 6 0 0 1 6 6"/></svg> 
+                                {{ number_format($percentage_change_of_Bounus, 2) }}%
+                                </span>
+                                @else
+                                N/A
+                                @endif
                                 </p>
                                 <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
                                    ${{$usd_pkr_salary_Bonus}}
@@ -624,7 +711,7 @@
             </div>
             <div class="col-md-3 col-lg-3 col-xl-3">
                 <a href="#">
-                    <div class="card" style="border-radius:10px;">
+                    <div class="card" style="border-radius:10px;height: 155px;">
                         <div class="card-body" style="background-color: #fca311">
                             <div class="d-flex align-items-start flex-column">
                                 <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
@@ -632,10 +719,21 @@
                                         style="width:23px; height:23px; object-fit:contain;margin-left:2px"
                                         alt="User Icon Reblate Solutions">
                                 </div>
-                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Net Pay<span class="badge">
+                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Net Pay
+                                @if($percentage_change_Net > 1)
+                                    <span class="badge">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
                                     <path fill="currentColor" d="M198 64v104a6 6 0 0 1-12 0V78.48L68.24 196.24a6 6 0 0 1-8.48-8.48L177.52 70H88a6 6 0 0 1 0-12h104a6 6 0 0 1 6 6"/></svg> 
-                                    11 %</span>
+                                    {{ number_format($percentage_change_Net, 2) }}%
+                                </span>
+                                @elseif($percentage_change_Net < 1)
+                                <span class="badgeColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
+                                <path fill="currentColor" d="m204.24 148.24l-72 72a6 6 0 0 1-8.48 0l-72-72a6 6 0 0 1 8.48-8.48L122 201.51V40a6 6 0 0 1 12 0v161.51l61.76-61.75a6 6 0 0 1 8.48 8.48"/></svg>
+                                    {{ number_format($percentage_change_Net, 2) }}%
+                                </span>
+                                @else
+                                    @endif
                                 </p>
                                 <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
                                   ${{$usd_pkr_salary_Net}}
@@ -646,8 +744,8 @@
                 </a>
             </div>
             <div class="col-md-3 col-lg-3 col-xl-3">
-                <a href="{{ route('leaves.record') }}">
-                    <div class="card" style="border-radius:10px;">
+                <a href="">
+                    <div class="card" style="border-radius:10px;height: 155px;">
                         <div class="card-body" style="background-color: #fca311">
                             <div class="d-flex align-items-start flex-column">
                                 <div class="rounded-pill mb-3" style="padding: 10px;background-color: #14213d">
@@ -655,10 +753,21 @@
                                         style="width:23px; height:23px; object-fit:contain;margin-left:2px"
                                         alt="User Icon Reblate Solutions">
                                 </div>
-                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Deduction Amount<span class="badgeRed">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
+                                <p class="mb-1 EmpStyle" style="color: #14213d; font-size:15px; font-weight: 600">Deduction Amount
+                                    @if($percentage_change_deduction > 1 )
+                                    <span class="badgeRedDED">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
+                                        <path fill="currentColor" d="M198 64v104a6 6 0 0 1-12 0V78.48L68.24 196.24a6 6 0 0 1-8.48-8.48L177.52 70H88a6 6 0 0 1 0-12h104a6 6 0 0 1 6 6"/></svg> 
+                                    {{ number_format($percentage_change_deduction, 2) }}%
+                                    </span>
+                                @elseif($percentage_change_deduction < 1)
+                                    <span class="badgeRedDed">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
                                     <path fill="currentColor" d="m204.24 148.24l-72 72a6 6 0 0 1-8.48 0l-72-72a6 6 0 0 1 8.48-8.48L122 201.51V40a6 6 0 0 1 12 0v161.51l61.76-61.75a6 6 0 0 1 8.48 8.48"/></svg>
-                                    0.5 %</span>
+                                    {{ number_format($percentage_change_deduction, 2) }}%
+                                    </span>
+                                    @else
+                                @endif
                                 </p>
                                 <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
                                     ${{$usd_pkr_salary_Ded}}
@@ -669,18 +778,18 @@
                 </a>
             </div>
         </div>
-        <div class="row" style="margin-top: -120px;">
+        <div class="row" style="margin-top: -120px;font-family: 'Poppins', sans-serif;">
                 <div class="col-sm-6">
                     <h1 style="color:#14213d;font-size:40px;font-weight:600">PayRoll {{$formattedPayRoll}}</h1>
-                    <p style="font-size:25px;">Employees Payroll</p>
+                    <p style="font-size:25px;color:black;">Employees Payroll</p>
                 </div>
         </div>
-        <div class="row">
+        <div class="row" style="font-family: 'Poppins', sans-serif;">
             <div class="col-12">
-                <div class="card" style="box-shadow: none">
+                <div class="card" style="box-shadow: none;color:black;">
                     <div class="card-body bg-white">
                     <table id="datatable-buttons" class="table dt-responsive nowrap"
-                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            style="border-collapse: collapse; border-spacing: 0; width: 100%;color:black;">
                             <thead>
                                 <tr style="background-color: #14213d">
                                     <th class="borderingLeftTable font-size-17" style="color: white">Name</th>
@@ -695,13 +804,13 @@
                             <tbody id="table-body">
                                 @foreach($salaryGet as $payroll)
                                     <tr>
-                                        <td>{{$payroll->emp_name}}</td>
-                                        <td>{{$payroll->emp_id}}</td>
-                                        <td>{{$payroll->Emp_Designation}}</td>
-                                        <td>{{$payroll->Emp_Joining_Date}}</td>
-                                        <td>{{$payroll->Emp_Status}}</td>
-                                        <td>{{$payroll->total_salary}}/-</td>
-                                        <td>
+                                        <td style="color:black;">{{$payroll->emp_name}}</td>
+                                        <td style="color:black;">{{$payroll->emp_id}}</td>
+                                        <td style="color:black;">{{$payroll->Emp_Designation}}</td>
+                                        <td style="color:black;">{{$payroll->Emp_Joining_Date}}</td>
+                                        <td style="color:black;">{{$payroll->Emp_Status}}</td>
+                                        <td style="color:black;">{{$payroll->total_salary}}/-</td>
+                                        <td style="color:black;">
                                             @foreach ($salarysGet as $salary)
                                                 @if ($salary->Emp_Code == $payroll->emp_id)
                                                     {{ $salary->total_salary }}
@@ -717,86 +826,103 @@
                 </div>
             </div> <!-- end col -->
         </div> <!-- end row -->
-            <div class="container">
+            <div class="container" style="font-family: 'Poppins', sans-serif;">
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="card" style="width: 25rem; background:white;border-radius:15px;height:97%">
+                        <div class="card" style="width: 25rem; background:white;border-radius:15px;height:96%">
                             <div class="card-body">
                                 <h5 class="card-title" style="color:#14213d; font-size:25px;font-weight:600;">Employees</h5>
-                                <canvas id="myChartbar" style="width:100%;max-width:600px"></canvas>
-                                <div class="row" style="margin-top:50px;">
+                                <canvas id="myChartbar" style="width:10%;max-width:260px;margin-left:50px;"></canvas>
+                                <div class="row" style="margin-top:25px;">
                                     <div class="col-sm-4">
-                                            <h5><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32" style="color:#fca311;"><circle cx="16" cy="16" r="8" fill="currentColor"/></svg>Full Time</h5>
-                                            <p style="margin-left:20px;font-weight:bold;font-size:20px;color:black;">(110)</p>
+                                            <h5 style="color:black;font-size: 17px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32" style="color:#fca311;"><circle cx="16" cy="16" r="8" fill="currentColor"/></svg>Employees</h5>
+                                            <p style="margin-left:20px;font-weight:bold;font-size:20px;color:#fca311;">({{$TotalEmployees}}.0)</p>
                                     </div>
                                     <div class="col-sm-4">
-                                            <h5><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32" style="color:#f88fff;"><circle cx="16" cy="16" r="8" fill="currentColor"/></svg>Part Time</h5>
-                                            <p style="margin-left:20px;font-weight:bold;font-size:20px;color:black;">(110)</p>
+                                            <h5 style="color:black;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32" style="color:#6ec3ff;"><circle cx="16" cy="16" r="8" fill="currentColor"/></svg>Night</h5>
+                                            <p style="margin-left:20px;font-weight:bold;font-size:20px;color:#6ec3ff;">({{$totalNightDepartments}}.0)</p>
                                     </div>
                                     <div class="col-sm-4">
-                                            <h5><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32" style="color:#6ec3ff;"><circle cx="16" cy="16" r="8" fill="currentColor"/></svg>InterShip</h5>
-                                            <p style="margin-left:20px;font-weight:bold;font-size:20px;color:black;">(110)</p>
+                                            <h5 style="color:black;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32" style="color:#f88fff;"><circle cx="16" cy="16" r="8" fill="currentColor"/></svg>Morning</h5>
+                                            <p style="margin-left:20px;font-weight:bold;font-size:20px;color:#f88fff;">({{$totalMorDepartments}}.0)</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="card" style="width: 25rem; background:white;border-radius:15px;height:97%">
+                        <div class="card" style="width: 25rem; background:white;border-radius:15px;height:96%">
                             <div class="card-body">
                                 <h5 class="card-title" style="color:#14213d; font-size:25px;font-weight:600;">Evg.KPI</h5>
                                 <div class="card" style="width: 18rem;margin-top:30px;">
                                     <div class="card-body" style="background:#14213d;">
+                                        @if($percentage_avg > 1)
                                         <span class="Greenbadge">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
                                         <path fill="currentColor" d="M198 64v104a6 6 0 0 1-12 0V78.48L68.24 196.24a6 6 0 0 1-8.48-8.48L177.52 70H88a6 6 0 0 1 0-12h104a6 6 0 0 1 6 6"/></svg> 
-                                        11 %</span>
-                                            <h1 class="card-subtitle mb-2" style="color:white;margin-top:-31px">79.98%</h1>
-                                            <p class="card-subtitle mb-2"style="color:white;">Last Month: 65.30%</p>
+                                        {{ number_format($percentage_avg, 1) }}%</span>
+                                        @elseif($percentage_avg < 1)
+                                        <span class="Redbadge">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
+                                    <path fill="currentColor" d="m204.24 148.24l-72 72a6 6 0 0 1-8.48 0l-72-72a6 6 0 0 1 8.48-8.48L122 201.51V40a6 6 0 0 1 12 0v161.51l61.76-61.75a6 6 0 0 1 8.48 8.48"/></svg>
+                                        {{ number_format($percentage_avg, 1) }}%</span>
+                                        @else
+                                        @endif
+                                            <h1 class="card-subtitle mb-2" style="color:white;margin-top:-31px">{{$PerformanceAverage}}.00</h1>
+                                            <p class="card-subtitle mb-2"style="color:white;">Last Month: {{$performancavg}}.00</p>
                                     </div>
                                 </div>
-                                <canvas id="myChart" style="width:100%;max-width:600px;height:70%"></canvas>
+                                <canvas id="myChart" ></canvas>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="card" style="width: 25rem; background:white;border-radius:15px;height:97%">
+                        <div class="card" style="width: 25rem; background:white;border-radius:15px;height:96%">
                             <div class="card-body">
                                 <h5 class="card-title" style="color:#14213d; font-size:25px;font-weight:600;">Base Metrics</h5>
                                 <!-- <h6 class="card-subtitle mb-2 text-muted">Net Pay</h6> -->
-                                <p class="card-text">Net Pay</p>
-                                <p class="card-link " style="margin-top: -27px;color:#14213d; font-size:35px;font-weight:600;">%560.70k
+                                <p class="card-text" style="color:black;">Net Pay</p>
+                                <p class="card-link " style="margin-top: -27px;color:#14213d; font-size:35px;font-weight:600;"> ${{$usd_pkr_salary_Net}}
+                                @if($percentage_change_Net > 1)
+                                <span class="badgegreenmetric">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
+                                        <path fill="currentColor" d="M198 64v104a6 6 0 0 1-12 0V78.48L68.24 196.24a6 6 0 0 1-8.48-8.48L177.52 70H88a6 6 0 0 1 0-12h104a6 6 0 0 1 6 6"/></svg> 
+                                {{ number_format($percentage_change_Net, 2) }}%</span>
+                                @elseif($percentage_change_Net < 1)
                                 <span class="badgeRedmetric">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256" style="font-size: 18px;">
                                 <path fill="currentColor" d="m204.24 148.24l-72 72a6 6 0 0 1-8.48 0l-72-72a6 6 0 0 1 8.48-8.48L122 201.51V40a6 6 0 0 1 12 0v161.51l61.76-61.75a6 6 0 0 1 8.48 8.48"/></svg>
-                                    0.8 %</span></p>
+                                {{ number_format($percentage_change_Net, 2) }}%</span>
+                                @else
+                                @endif
+                                </p>
                                 <hr style="border: 1px solid #14213d;">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h5 style="color:#14213d;font-size:28px;">$940.48k</h5>
-                                        <p style="margin-top:-12px;">Current Month</p>
+                                        <h5 style="color:#14213d;font-size:28px;">${{$usd_pkr_salary_Current}}</h5>
+                                        <p style="margin-top:-12px;color:black;">Current Month</p>
                                     </div>
                                     <div class="col-sm-6">
-                                    <h5 style="color:#14213d;font-size:28px;">$1940.48k</h5>
-                                    <p style="margin-top:-12px;">Previous Month</p>
+                                    <h5 style="color:#14213d;font-size:28px;">${{$usd_pkr_salary_Previous}}</h5>
+                                    <p style="margin-top:-12px;color:black">Previous Month</p>
                                     </div>
                                 </div>
-                                <div class="row" style="margin-left:10px;margin-top:40px;">
+                                <div class="row" style="margin-left:10px;margin-top:20px;">
                                     <div class="card" style="width: 22rem;background:#14213d;border-radius: 14px;">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item" style="background:#14213d;color:white;line-height:70px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 36 36" style="color:#fca311;font-size:25px;">
+                                            <li class="list-group-item" style="background:#14213d;color:white;line-height:40px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 36 36" style="color:#fca311;font-size:25px;">
                                                 <ellipse cx="18" cy="11.28" fill="currentColor" rx="4.76" ry="4.7"/><path fill="currentColor" d="M10.78 11.75h.48v-.43a6.7 6.7 0 0 1 3.75-6a4.62 4.62 0 1 0-4.21 6.46Zm13.98-.47v.43h.48A4.58 4.58 0 1 0 21 5.29a6.7 6.7 0 0 1 3.76 5.99m-2.47 5.17a21.5 21.5 0 0 1 5.71 2a2.7 2.7 0 0 1 .68.53H34v-3.42a.72.72 0 0 0-.38-.64a18 18 0 0 0-8.4-2.05h-.66a6.66 6.66 0 0 1-2.27 3.58M6.53 20.92A2.76 2.76 0 0 1 8 18.47a21.5 21.5 0 0 1 5.71-2a6.66 6.66 0 0 1-2.27-3.55h-.66a18 18 0 0 0-8.4 2.05a.72.72 0 0 0-.38.64V22h4.53Zm14.93 5.77h5.96v1.4h-5.96z"/>
                                             <path fill="currentColor" d="M32.81 21.26h-6.87v-1a1 1 0 0 0-2 0v1H22v-2.83a20 20 0 0 0-4-.43a19.3 19.3 0 0 0-9.06 2.22a.76.76 0 0 0-.41.68v5.61h7.11v6.09a1 1 0 0 0 1 1h16.17a1 1 0 0 0 1-1V22.26a1 1 0 0 0-1-1m-1 10.36H17.64v-8.36h6.3v.91a1 1 0 0 0 2 0v-.91h5.87Z"/></svg>
-                                               <span style="font-size:19px;font-weight:600;">&nbsp;&nbsp;15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Departments</span></li>
-                                               <li class="list-group-item" style="background:#14213d;color:white;line-height:70px;">
+                                               <span style="font-size:19px;font-weight:600;">&nbsp;&nbsp;{{$totaldepartments}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Departments</span></li>
+                                               <li class="list-group-item" style="background:#14213d;color:white;line-height:40px;">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1024 1024" style="color:#fca311;font-size:25px;"><path fill="currentColor" d="M839.2 278.1a32 32 0 0 0-30.4-22.1H736V144c0-17.7-14.3-32-32-32H320c-17.7 0-32 14.3-32 32v112h-72.8a31.9 31.9 0 0 0-30.4 22.1L112 502v378c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V502zM660 628c0 4.4-3.6 8-8 8H544v108c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V636H372c-4.4 0-8-3.6-8-8v-48c0-4.4 3.6-8 8-8h108V464c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v108h108c4.4 0 8 3.6 8 8zm4-372H360v-72h304z"/></svg>
                                                <!-- <span style="font-size:30px;font-weight:600;">19</span><p></p> -->
-                                               <span style="font-size:20px;font-weight:600;">&nbsp;&nbsp;19&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Avg. Sick Day</span></li>
+                                               <span style="font-size:20px;font-weight:600;">&nbsp;&nbsp;{{ $total_leaves_days_of_this_month->sum('total') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Leaves</span></li>
                                             
                                             </li>
-                                               <li class="list-group-item" style="background:#14213d;color:white;line-height:70px;">
+                                               <li class="list-group-item" style="background:#14213d;color:white;line-height:40px;">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" style="color:#fca311;font-size:25px;"><path fill="none" stroke="currentColor" stroke-width="2" d="M4.998 9V1H19.5L23 4.5V23H4M18 1v5h5M3 19l5-5l4 4l6.5-6.5M19 17v-6h-6"/></svg>
-                                               <span style="font-size:20px;font-weight:600;">&nbsp;&nbsp;19&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Performance Score</span></li>
+                                               <span style="font-size:20px;font-weight:600;">&nbsp;&nbsp;{{$averageFormulaForAttendence}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evg.Attendence</span></li>
                                             
                                             </li>
                                         </ul>
@@ -817,28 +943,6 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         
         <script>
-            const xValues = [50,60,70,80,90,100,110,120,130,140,150];
-            const yValues = [7,8,8,9,9,9,10,11,14,14,15];
-
-                    new Chart("myChart", {
-                    type: "line",
-                    data: {
-                        labels: xValues,
-                        datasets: [{
-                        fill: false,
-                        lineTension: 0,
-                        backgroundColor: "rgba(0,0,255,1.0)",
-                        borderColor: "rgba(0,0,255,0.1)",
-                        data: yValues
-                        }]
-                    },
-                    options: {
-                        legend: {display: false},
-                        scales: {
-                        yAxes: [{ticks: {min: 6, max:16}}],
-                        }
-                    }
-                    });
             $(document).ready(function() {
 
                 // Open modal
@@ -1261,30 +1365,85 @@
                     });
             }
         </script>
+        <script>
+            const canvas1 = document.getElementById('myChart');
+            console.log(canvas1);
+            canvas1.style.width = '100%';
+            canvas1.style.height = '270px';
+        </script>
         <script type="text/javascript">
-            const xProgressBar = ["Full Time", "Half Time", "InterShip"];
-            const yProgressBar = [55, 49, 44];
-            const ProgressBarColors = [
-            "#fca311",
-            "#f88fff",
-            "#6ec3ff"
-            ];
+                const xProgressBar = ["Full Time", "Half Time", "InterShip"];
+                const yProgressBar = <?php echo json_encode($xyShifts); ?>;
+                const ProgressBarColors = [
+                "#fca311",
+                "#f88fff",
+                "#6ec3ff"
+                ];
 
-            new Chart("myChartbar", {
-            type: "doughnut",
-            data: {
-                // labels: xProgressBar,
-                datasets: [{
-                backgroundColor: ProgressBarColors,
-                data: yProgressBar
-                }]
-            },
-            options: {
-                title: {
-                display: true,
-                text: "World Wide Wine Production 2018"
+                new Chart("myChartbar", {
+                type: "doughnut",
+                data: {
+                    // labels: xProgressBar,
+                    datasets: [{
+                    backgroundColor: ProgressBarColors,
+                    data: yProgressBar
+                    }]
+                },
+                options: {
+                    title: {
+                    display: true,
+                    text: "World Wide Wine Production 2018"
+                    }
+                }
+                });
+        </script>
+        <script>
+           var today = new Date();
+            var currentMonth = today.getMonth(); // Get current month (0-11)
+            var months = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+            var yValues = <?php echo json_encode($yvalues); ?>;
+            var barColors = ["#0ddcff", "#008000", "#0000FF", "#FFA500", "#A52A2A", "#800080"];
+
+            // Determine the months to display (previous 5 months excluding current month)
+            var displayMonths = [];
+            var displayValues = [];
+            var displayColors = [];
+
+            for (var i = 1; i <= 6; i++) {
+                var index = currentMonth - i;
+                if (index < 0) {
+                    index += 12; // Wrap around to previous year
+                }
+                if (index >= 0 && index < yValues.length) {
+                    displayMonths.unshift(months[index]);
+                    displayValues.unshift(yValues[index]);
+                    displayColors.unshift(barColors[index]);
+                } else {
+                    // Handle case where index is out of bounds (if needed)
+                    console.error("Index out of bounds:", index);
                 }
             }
+
+            new Chart("myChart", {
+                type: "bar",
+                data: {
+                    labels: displayMonths,
+                    datasets: [{
+                        backgroundColor: displayColors,
+                        data: displayValues
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false // Correctly hides the legend
+                        }
+                    },
+                    title: {
+                        display: false,
+                        text: "World Wine Production 2018"
+                    }
+                }
             });
         </script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

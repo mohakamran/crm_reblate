@@ -22,3 +22,5 @@ Route::post('/search-salary-by-month', [SalaryController::class,'showMonthWiseSa
 
 // Salary Dashboard routes
 Route::get('/view-slips-dashboard', [SalaryController::class,'viewDashboard']);
+Route::post('/view-salary-employee',[SalaryController::class, 'showEmployeeData'])->name('view-salary-employee');
+// Route::post('/salary', [SalaryController::class, 'showEmployeeData'])->name('salary.show');

@@ -20,8 +20,8 @@
         <style>
             .btn-apply {
                 border: 0px;
-                background: rgba(255, 255, 255, 0.5);;
-                color: #fff;
+                background: rgb(2 2 2 / 80%);
+                color: white;
                 padding: 5px 10px;
                 font-size: 10px;
                 text-transform: uppercase;
@@ -39,7 +39,7 @@
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:30px; color:#fff"
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:30px; color:white;"
                                         viewBox="0 0 512 512">
                                         <path fill="currentColor"
                                             d="M256 256a112 112 0 1 0-112-112a112 112 0 0 0 112 112m0 32c-69.42 0-208 42.88-208 128v64h416v-64c0-85.12-138.58-128-208-128" />
@@ -50,12 +50,12 @@
 
                                 <div
                                     class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
-                                    <p class="text-light font-size-18 mb-0 fw-bold">Employees</p>
-                                    <h5 class="mb-0 text-light">{{ $emp_count }}
+                                    <p class="text-black font-size-18 mb-0 fw-bold">Employees</p>
+                                    <h5 class="mb-0 text-black">{{ $emp_count }}
                                     </h5>
                                 </div>
-                                <p class=" mb-0 text-truncate" style="color: lightgray" ><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class=" mb-0 text-truncate text-black" style="color: lightgray" ><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p>
                             </div>
 
@@ -80,13 +80,13 @@
                             <div class="d-flex flex-column ms-2">
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5 ">
-                                    <p class="text-light font-size-18 mb-0 fw-bold"> Clients</p>
-                                    <h5 class="mb-0 text-light">{{ $client_count }}
+                                    <p class="text-black font-size-18 mb-0 fw-bold"> Clients</p>
+                                    <h5 class="mb-0 text-black">{{ $client_count }}
                                     </h5>
                                 </div>
 
-                                <p class="mb-0 text-truncate" style="color: lightgray"><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class="mb-0 text-truncate " style="color:black"><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p>
                             </div>
 
@@ -113,11 +113,11 @@
 
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5">
-                                    <p class="text-light text-truncate font-size-18 mb-0 fw-bold">Projects</p>
-                                    <h5 class="mb-0 text-light">15 </h5>
+                                    <p class="text-black text-truncate font-size-18 mb-0 fw-bold">Projects</p>
+                                    <h5 class="mb-0 text-black">15 </h5>
                                 </div>
-                                <p class="mb-0 text-truncate" style="color: lightgray"><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class="mb-0 text-truncate" style="color: black"><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
                             </div>
 
@@ -145,7 +145,7 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
                                     <input type="text" id="date_range_picker" name="date_range_picker"
-                                        style="width:135px;padding: 5px; background-color:transparent; border:none; color:#fff" />
+                                        style="width:135px;padding: 5px; background-color:transparent; border:none; color:black" />
 
                                 </div>
 
@@ -176,12 +176,12 @@
 
                                 <div
                                     class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
-                                    <p class="text-light font-size-18 mb-0 fw-bold">Revenue</p>
-                                    <h5 class="mb-0 text-light">${{ $total_revenue }}
+                                    <p class="text-black font-size-18 mb-0 fw-bold">Revenue</p>
+                                    <h5 class="mb-0 text-black">${{ $total_revenue }}
                                     </h5>
                                 </div>
-                                <p class="mb-0 text-truncate" style="color: lightgray"><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class="mb-0 text-truncate" style="color: black"><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p>
                             </div>
 
@@ -206,13 +206,13 @@
                             <div class="d-flex flex-column ms-2">
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5 ">
-                                    <p class="text-light font-size-18 mb-0 fw-bold"> Salaries</p>
-                                    <h5 class="mb-0 text-light">${{ $usd_pkr_salary }}
+                                    <p class="text-black font-size-18 mb-0 fw-bold"> Salaries</p>
+                                    <h5 class="mb-0 text-black">${{ $usd_pkr_salary }}
                                     </h5>
                                 </div>
 
-                                <p class="mb-0 text-truncate" style="color: lightgray"><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class="mb-0 text-truncate" style="color: black"><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p>
                             </div>
 
@@ -235,11 +235,11 @@
 
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5">
-                                    <p class="text-light text-truncate font-size-18 mb-0 fw-bold">Expenses</p>
-                                    <h5 class="mb-0 text-light">${{ $usd_pkr_expenses }} </h5>
+                                    <p class="text-black text-truncate font-size-18 mb-0 fw-bold">Expenses</p>
+                                    <h5 class="mb-0 text-black">${{ $usd_pkr_expenses }} </h5>
                                 </div>
-                                <p class="mb-0 text-truncate" style="color: lightgray"><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class="mb-0 text-truncate" style="color: black"><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
                             </div>
 
@@ -260,12 +260,12 @@
                             <div class="d-flex flex-column ms-2">
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
-                                    <p class="text-light text-truncate font-size-18 mb-0 fw-bold">Profit</p>
-                                    <h5 class="mb-0 text-light"> ${{ $total_profit }}
+                                    <p class="text-black text-truncate font-size-18 mb-0 fw-bold">Profit</p>
+                                    <h5 class="mb-0 text-black"> ${{ $total_profit }}
                                     </h5>
                                 </div>
-                                <p class="mb-0 text-truncate" style="color: lightgray"><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class="mb-0 text-truncate" style="color: black"><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
                             </div>
                         </div>
@@ -380,7 +380,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Total Statistics</h4>
+                        <h4 class="card-title text-black mb-0 flex-grow-1">Total Statistics</h4>
                     </div>
                     <div class="card-body pt-2">
                         <div class="row mt-3">
@@ -500,7 +500,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Tasks</h4>
+                        <h4 class="card-title text-dark mb-0 flex-grow-1">Tasks</h4>
 
                     </div>
                     <div class="card-body pt-2">
@@ -570,7 +570,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Task Report</h4>
+                        <h4 class="card-title text-black mb-0 flex-grow-1">Task Report</h4>
                     </div>
                     <div class="card-body pt-2">
                         <div class="table-responsive simplebar-scrollable-y simplebar-scrollable-x" data-simplebar="init"
@@ -735,7 +735,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Projects</h4>
+                        <h4 class="card-title text-black mb-0 flex-grow-1">Projects</h4>
                     </div>
                     <div class="card-body pt-2">
                         <div class="table-responsive simplebar-scrollable-y simplebar-scrollable-x" data-simplebar="init"
@@ -895,7 +895,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Project Report</h4>
+                        <h4 class="card-title text-black mb-0 flex-grow-1">Project Report</h4>
                     </div>
                     <div class="card-body pt-2">
                         <div class="table-responsive simplebar-scrollable-y simplebar-scrollable-x" data-simplebar="init"

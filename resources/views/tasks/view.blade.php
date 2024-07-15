@@ -313,7 +313,7 @@
                                                         <div class="text-center">
                                                             <p class="emp-name mb-0" >
 
-                                                                <a style="color:#000;" href="/view-tasks-employees/{{$emp->Emp_Code}}">{{ $emp->Emp_Full_Name }}</a>
+                                                                <a style="color:#000;font-size:17px;" href="/view-tasks-employees/{{$emp->Emp_Code}}">{{ $emp->Emp_Full_Name }}</a>
                                                             </p>
                                                             <span style="font-size: 14px; ">{{ $emp->Emp_Designation }}
                                                             </span>

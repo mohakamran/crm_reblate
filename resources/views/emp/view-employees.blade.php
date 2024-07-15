@@ -468,7 +468,7 @@
 
                                                                 <p class="emp-name mb-0">
                                                                     <a href="/view_profile/{{ $emp->Emp_Code }}"
-                                                                        style="color: #14213d;">{{ $emp->Emp_Full_Name }}</a>
+                                                                        style="color: #14213d;font-size:17px;">{{ $emp->Emp_Full_Name }}</a>
                                                                 </p>
                                                                 <span
                                                                     style="font-size: 14px; ">{{ $emp->Emp_Designation }}

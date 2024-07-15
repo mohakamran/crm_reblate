@@ -173,7 +173,7 @@
                                     @foreach ($leaveRequests as $request)
                                         <div class="col-md-3">
                                             <div class="card mb-0"
-                                                style="box-shadow:none; overflow: hidden; border:1px solid #c7c7c7; border-radius: 10px;">
+                                                style="box-shadow:none; overflow: hidden; border:1px solid #c7c7c7; border-radius: 10px;margin-top:19px;">
 
                                                 <div class="card-body p-0">
                                                     <div class="p-3 pb-0">
