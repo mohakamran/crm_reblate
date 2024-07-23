@@ -14,8 +14,11 @@ class QuotationController extends Controller
 {
     // view browser based quotation
     public function viewQuotation($id) {
-        $services = DB::table('services')->where('service_id',$id)->get();
-        $quotes = DB::table('quotation')->where('service_id',$id)->first();
+        $services = DB::table('services')->where('service_id',$id)->get() ??  null;
+        $quotes = DB::table('quotation')->where('service_id',$id)->first() ?? null;
+        if($services == null || $quotes == null) {
+            return view('NotFound.index');
+        }
         // dd($services, $quotes);
         return view('Quotation.view-page',compact('services','quotes'));
     }
