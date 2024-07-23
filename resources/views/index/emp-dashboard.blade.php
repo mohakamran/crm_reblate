@@ -239,7 +239,7 @@
 
             .popup-content {
                 /* overflow-y: scroll;
-                                                                                        scroll-behavior: smooth scroll; */
+                                                                                                    scroll-behavior: smooth scroll; */
                 display: flex;
                 max-width: 700px;
                 margin: auto auto;
@@ -432,140 +432,147 @@
             <div id="popupButton">
                 <button type="button" class="position-absolute reblateBtn px-3 py-1 text-white"
                     style="background-color: #fca311; right: 35px; top:-45px;"> Apply for Leave</button>
-                <div class="popup" id="popup">
-                    <div class="popup-content flex-column">
-                        <div class="d-flex mb-3 align-items-center justify-content-between">
-                            <h2 class="mb-0"
-                                style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom:1px solid #c7c7c7">
-                                Appy For Leaves</h2>
-                            <span class="closeBtn p-2" style="border-radius: 50%; background-color:#14213d26">
-                                {{-- <svg
+            </div>
+            <div class="popup" id="popup">
+                <div class="popup-content flex-column">
+                    <div class="d-flex mb-3 align-items-center justify-content-between">
+                        <h2 class="mb-0"
+                            style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom:1px solid #c7c7c7">
+                            Appy For Leaves</h2>
+                        <span class="closeBtn p-2" style="border-radius: 50%; background-color:#14213d26">
+                            <svg
                                     xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#14213d50"
                                     class="bi bi-x-lg" viewBox="0 0 16 16">
                                     <path
                                         d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                                </svg> --}}
-                            </span>
-                        </div>
-                        <form id="myForm" action="" method = "POST" class="text-start">
-                            <div id="messageBox" style="font-size: 16px;" class="mt-2 mb-2"></div>
-                            <div class="row">
-                                <div class="col-md-12 col-lg-12 col-xl-12">
-
-                                    <div class="form-group">
-                                        <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;"
-                                            for="date">Leave Title <span style="color:red">*</span></label>
-                                        <div class="d-flex"
-                                            style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
-                                            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                    stroke-linejoin="round"></g>
-                                                <g id="SVGRepo_iconCarrier">
-                                                    <path
-                                                        d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
-                                                        stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
-                                                    <rect x="6" y="12" width="3" height="3" rx="0.5"
-                                                        fill="#9e9e9e"></rect>
-                                                    <rect x="10.5" y="12" width="3" height="3" rx="0.5"
-                                                        fill="#9e9e9e"></rect>
-                                                    <rect x="15" y="12" width="3" height="3" rx="0.5"
-                                                        fill="#9e9e9e"></rect>
-                                                </g>
-                                            </svg>
-                                            <input type="text" class="form-control ms-2 p-0" style="border: none;"
-                                                id="leave_title" name="leave_title" placeholder="Enter Leave Title">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-lg-6 col-xl-6 mt-2">
-                                    <div class="form-group">
-                                        <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;"
-                                            for="date">Starting Date <span style="color:red">*</span></label>
-                                        <div class="d-flex"
-                                            style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
-                                            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                    stroke-linejoin="round"></g>
-                                                <g id="SVGRepo_iconCarrier">
-                                                    <path
-                                                        d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
-                                                        stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
-                                                    <rect x="6" y="12" width="3" height="3" rx="0.5"
-                                                        fill="#9e9e9e"></rect>
-                                                    <rect x="10.5" y="12" width="3" height="3" rx="0.5"
-                                                        fill="#9e9e9e"></rect>
-                                                    <rect x="15" y="12" width="3" height="3" rx="0.5"
-                                                        fill="#9e9e9e"></rect>
-                                                </g>
-                                            </svg>
-                                            <input type="date" class="form-control ms-2 p-0"style="border:none;"
-                                                id="date" name="date">
-                                            <span class="text-danger" id="dateBox" style="display: none">Please Select
-                                                a date!</span>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-xl-6 mt-2">
-                                    <div class="form-group">
-                                        <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;"
-                                            for="date">Ending Date <span style="color:red">*</span> </label>
-                                        <div class="d-flex"
-                                            style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
-                                            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                    stroke-linejoin="round"></g>
-                                                <g id="SVGRepo_iconCarrier">
-                                                    <path
-                                                        d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
-                                                        stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
-                                                    <rect x="6" y="12" width="3" height="3" rx="0.5"
-                                                        fill="#9e9e9e"></rect>
-                                                    <rect x="10.5" y="12" width="3" height="3" rx="0.5"
-                                                        fill="#9e9e9e"></rect>
-                                                    <rect x="15" y="12" width="3" height="3" rx="0.5"
-                                                        fill="#9e9e9e"></rect>
-                                                </g>
-                                            </svg>
-                                            <input type="date" class="form-control ms-2 p-0"style="border:none;"
-                                                id="Ending_date" name="Ending_date">
-
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="form-group mt-2">
-                                <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;"
-                                    for="reason">Reason <span style="color:red">*</span> </label>
-                                <textarea class="form-control inputboxcolor p-2 bg-white"
-                                    style="border: 1px solid #14213d; resize: none; height: 100px;" id="reason" name="reason"
-                                    oninput="updateCharCount()" placeholder="Write Reason within 200 characters" rows="5"></textarea>
-                                <div class="char-count">
-                                    <span id="charCount">0</span> / 200 characters
-                                </div>
-
-                            </div>
-
-                        </form>
-                        <div class="mt-2 text-start">
-                            <button class="px-4 py-2 reblateBtn" type="submit"
-                                onclick="submitForm(event)">Apply</button>
-                        </div>
-
+                                </svg>
+                        </span>
                     </div>
+                    <form id="myForm" action="" method="POST" class="text-start">
+                        <div id="messageBox" style="font-size: 16px;" class="mt-2 mb-2"></div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <div class="form-group">
+                                    <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;"
+                                        for="date">Leave Title <span style="color:red">*</span></label>
+                                    <div class="d-flex"
+                                        style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path
+                                                    d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
+                                                    stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
+                                                <rect x="6" y="12" width="3" height="3" rx="0.5"
+                                                    fill="#9e9e9e"></rect>
+                                                <rect x="10.5" y="12" width="3" height="3" rx="0.5"
+                                                    fill="#9e9e9e"></rect>
+                                                <rect x="15" y="12" width="3" height="3" rx="0.5"
+                                                    fill="#9e9e9e"></rect>
+                                            </g>
+                                        </svg>
+                                        <input type="text" class="form-control ms-2 p-0" style="border: none;"
+                                            id="leave_title" name="leave_title" placeholder="Enter Leave Title">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 col-xl-6 mt-2">
+                                <div class="form-group">
+                                    <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;"
+                                        for="date">Starting Date <span style="color:red">*</span></label>
+                                    <div class="d-flex"
+                                        style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path
+                                                    d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
+                                                    stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
+                                                <rect x="6" y="12" width="3" height="3" rx="0.5"
+                                                    fill="#9e9e9e"></rect>
+                                                <rect x="10.5" y="12" width="3" height="3" rx="0.5"
+                                                    fill="#9e9e9e"></rect>
+                                                <rect x="15" y="12" width="3" height="3" rx="0.5"
+                                                    fill="#9e9e9e"></rect>
+                                            </g>
+                                        </svg>
+                                        <input type="date" class="form-control ms-2 p-0"style="border:none;"
+                                            id="date" name="date">
+                                        <span class="text-danger" id="dateBox" style="display: none">Please Select
+                                            a date!</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-6 mt-2">
+                                <div class="form-group">
+                                    <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;"
+                                        for="date">Ending Date <span style="color:red">*</span> </label>
+                                    <div class="d-flex"
+                                        style="border: 1px solid #14213d;border-radius: 50px;padding: 10px;background-color: white;">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path
+                                                    d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
+                                                    stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
+                                                <rect x="6" y="12" width="3" height="3" rx="0.5"
+                                                    fill="#9e9e9e"></rect>
+                                                <rect x="10.5" y="12" width="3" height="3" rx="0.5"
+                                                    fill="#9e9e9e"></rect>
+                                                <rect x="15" y="12" width="3" height="3" rx="0.5"
+                                                    fill="#9e9e9e"></rect>
+                                            </g>
+                                        </svg>
+                                        <input type="date" class="form-control ms-2 p-0"style="border:none;"
+                                            id="Ending_date" name="Ending_date">
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-md-12 col-lg-12 col-xl-12 mt-2">
+                                <div class="form-group ">
+                                    <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;"
+                                        for="reason">Reason
+                                        <span style="color:red">*</span> </label>
+                                    <textarea class="form-control inputboxcolor p-2 bg-white"
+                                        style="border: 1px solid #14213d; resize: none; height: 100px;" id="reason" name="reason"
+                                        oninput="updateCharCount()" placeholder="Write Reason within 200 characters" rows="5"></textarea>
+                                    <div class="char-count">
+                                        <span id="charCount">0</span> / 200 characters
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="mt-2 text-start">
+                        <button class="px-4 py-2 reblateBtn" type="submit" onclick="submitForm(event)">Apply</button>
+                    </div>
+
                 </div>
 
+
             </div>
+
+
             <div class="col-md-2 col-lg-2 col-xl-2">
                 <a href="/view-attendence">
                     <div class="card" style="border-radius:10px;">
@@ -873,24 +880,24 @@
                                                 const newStatus = task.classList.contains('completed') ? 'pending' : 'completed';
 
                                                 fetch('/update-task-status', {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'Content-Type': 'application/json',
-                                                        'Accept': 'application/json',
-                                                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                                                    },
-                                                    body: JSON.stringify({
-                                                        id: taskId,
-                                                        status: newStatus
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'Accept': 'application/json',
+                                                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                                        },
+                                                        body: JSON.stringify({
+                                                            id: taskId,
+                                                            status: newStatus
+                                                        })
                                                     })
-                                                })
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    if (data.success) {
-                                                        task.classList.toggle('completed');
-                                                    }
-                                                })
-                                                .catch(error => console.error('Error:', error));
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        if (data.success) {
+                                                            task.classList.toggle('completed');
+                                                        }
+                                                    })
+                                                    .catch(error => console.error('Error:', error));
                                             }
                                         });
 
@@ -907,66 +914,67 @@
 
                                             if (taskTitle) {
                                                 fetch('/save-to-do-task', {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'Content-Type': 'application/json',
-                                                        'Accept': 'application/json',
-                                                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                                                    },
-                                                    body: JSON.stringify({
-                                                        title: taskTitle,
-                                                        userName: user_name,
-                                                        userCode: user_code,
-                                                        date: getCurrentDate(),
-                                                        time: getCurrentTime()
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'Accept': 'application/json',
+                                                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                                        },
+                                                        body: JSON.stringify({
+                                                            title: taskTitle,
+                                                            userName: user_name,
+                                                            userCode: user_code,
+                                                            date: getCurrentDate(),
+                                                            time: getCurrentTime()
+                                                        })
                                                     })
-                                                })
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    console.log('Response Data:', data);
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        console.log('Response Data:', data);
 
-                                                    const task = document.createElement('div');
-                                                    task.className = 'card';
-                                                    task.setAttribute('data-id', data.id);
-                                                    task.innerHTML = `
+                                                        const task = document.createElement('div');
+                                                        task.className = 'card';
+                                                        task.setAttribute('data-id', data.id);
+                                                        task.innerHTML = `
                                                         <h3>${taskTitle}</h3>
                                                         <p>Date: ${getCurrentDate()}</p>
                                                         <p>Time: ${getCurrentTime()}</p>
                                                         <input type="hidden" class="task-id" value="${data.id}">
                                                     `;
 
-                                                    task.addEventListener('click', function() {
-                                                        const taskId = task.getAttribute('data-id');
-                                                        const newStatus = task.classList.contains('completed') ? 'pending' : 'completed';
+                                                        task.addEventListener('click', function() {
+                                                            const taskId = task.getAttribute('data-id');
+                                                            const newStatus = task.classList.contains('completed') ?
+                                                                'pending' : 'completed';
 
-                                                        fetch('/update-task-status', {
-                                                            method: 'POST',
-                                                            headers: {
-                                                                'Content-Type': 'application/json',
-                                                                'Accept': 'application/json',
-                                                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                                                            },
-                                                            body: JSON.stringify({
-                                                                id: taskId,
-                                                                status: newStatus
-                                                            })
-                                                        })
-                                                        .then(response => response.json())
-                                                        .then(data => {
-                                                            if (data.success) {
-                                                                task.classList.toggle('completed');
-                                                            }
-                                                        })
-                                                        .catch(error => console.error('Error:', error));
-                                                    });
+                                                            fetch('/update-task-status', {
+                                                                    method: 'POST',
+                                                                    headers: {
+                                                                        'Content-Type': 'application/json',
+                                                                        'Accept': 'application/json',
+                                                                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                                                    },
+                                                                    body: JSON.stringify({
+                                                                        id: taskId,
+                                                                        status: newStatus
+                                                                    })
+                                                                })
+                                                                .then(response => response.json())
+                                                                .then(data => {
+                                                                    if (data.success) {
+                                                                        task.classList.toggle('completed');
+                                                                    }
+                                                                })
+                                                                .catch(error => console.error('Error:', error));
+                                                        });
 
-                                                    taskList.insertBefore(task, taskList.firstChild);
+                                                        taskList.insertBefore(task, taskList.firstChild);
 
-                                                    taskTitleInput.value = '';
-                                                    userNameInput.value = '';
-                                                    userCodeInput.value = '';
-                                                })
-                                                .catch(error => console.error('Error:', error));
+                                                        taskTitleInput.value = '';
+                                                        userNameInput.value = '';
+                                                        userCodeInput.value = '';
+                                                    })
+                                                    .catch(error => console.error('Error:', error));
                                             } else {
                                                 alert('Please enter a task title.');
                                             }
@@ -988,7 +996,7 @@
                                             return now.toLocaleTimeString('en-US');
                                         }
                                     });
-                                    </script>
+                                </script>
 
 
 
@@ -2830,7 +2838,7 @@
                 formData.append('date', Starting_date);
                 formData.append('reason', reason);
 
-                console.log(leave_title,Starting_date,Ending_date,reason);
+                console.log(leave_title, Starting_date, Ending_date, reason);
                 // CSRF token (replace with your actual token handling logic)
                 var csrfToken = "{{ csrf_token() }}";
 
@@ -2875,7 +2883,7 @@
                     .catch(error => {
                         console.error('There was a problem with the fetch operation:', error);
                     });
-                
+
 
                 // var formData = {
                 //     _token: '{{ csrf_token() }}',

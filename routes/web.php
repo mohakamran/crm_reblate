@@ -69,6 +69,8 @@ Route::group(['middleware' => 'admin'], function () {
     require_once __DIR__.'/custom-routes/help.php';
     // notifications page
     require_once __DIR__.'/custom-routes/notifications.php';
+    // quotation page
+    require_once __DIR__.'/custom-routes/quotation.php';
 
     //google 2fa
     // Route::get('/google-2fa',[SecurityController::class,'google2FA']);

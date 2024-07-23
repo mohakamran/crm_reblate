@@ -11,6 +11,119 @@ use DB;
 
 class HelpController extends Controller
 {
+    // view File Page
+    public function viewFile($id) {
+        $db = DB::table('uploads')->where('id',$id)->first();
+        if($db) {
+            return view('help.page-view',compact('db'));
+        }
+        return back()->with('error','File Not Found!');
+    }
+    // delete file
+    public function delFile($id) {
+        $db = DB::table('uploads')->where('id',$id)->first();
+        if($db) {
+            // Delete the record from the database
+            DB::table('uploads')->where('id', $id)->delete();
+        }
+        return response()->json(['message' => 'File deleted successfully.'], 200);
+    }
+    // save file in database
+    public function updateFileDatabase(Request $request,$id) {
+
+        $request->validate([
+            'file_name' => 'required',
+            'file_type' => 'required',
+            'file_shift' => 'required',
+            'file_description' => 'required',
+        ]);
+        $check  = DB::table('uploads')->where('id',$id)->first();
+        if($check) {
+            $file_name = $request->input('file_name');
+            $file_type = $request->input('file_type');
+            $file_shift = $request->input('file_shift');
+            $file_description = $request->input('file_description');
+        }
+
+        DB::table('uploads')->where('id',$id)->update([
+            'file_name' => $file_name,
+            'shift' => $file_shift,
+            'file_type' => $file_type,
+            'description' => $file_description,
+            'updated_at' => now(),
+        ]);
+
+        return back()->with('success', 'file updated successfully!');
+
+    }
+    // show update file update
+    function updateFile($id) {
+        $file = DB::table('uploads')->where('id',$id)->first();
+        $route = "/update-file/".$file->id;
+        $title = "Update File";
+        $text_btn = "Save File";
+        if(!$id) {
+          return back()->with('error','File Not Found!');
+        }
+
+        return view('help.upload',compact('file','route','title','text_btn'));
+    }
+    // new form file upload blade
+    function showNewFileForm() {
+        $title = "Create New File";
+        $text_btn = "Create File";
+      $route = "/save-file";
+       return view('help.upload',compact('route','title','text_btn'));
+    }
+
+    public function upload(Request $request)
+    {
+        \Log::info('Upload Request:', $request->all()); // Log request data for debugging
+
+        // Check if there is a file in the 'upload' field
+        if ($request->hasFile('upload')) {
+            $uploadedFile = $request->file('upload');
+
+            // Validate the file
+            $validated = $request->validate([
+                'upload' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'  // Add appropriate validation rules
+            ]);
+
+            if ($validated) {
+                // Define the folder path where you want to store uploaded images
+                $folderPath = public_path('ckeditor_images');
+
+                // Create the folder if it doesn't exist
+                if (!file_exists($folderPath)) {
+                    mkdir($folderPath, 0755, true);
+                }
+
+                // Generate a unique file name
+                $fileName = uniqid() . '_' . $uploadedFile->getClientOriginalName();
+
+                // Move the uploaded file to the specified folder
+                $uploadedFile->move($folderPath, $fileName);
+
+                // CKEditor callback response
+                $url = asset('ckeditor_images/' . $fileName);
+                $response = [
+                    'uploaded' => true,
+                    'url' => $url
+                ];
+
+                \Log::info('Upload Successful:', $response);  // Log successful upload
+
+                return response()->json($response);
+            }
+        }
+
+        // Log errors and return upload failure response
+        \Log::error('Upload failed or no file found');
+        return response()->json(['uploaded' => false], 400);
+    }
+
+
+
     public function viewPage($id) {
         $file = DB::table('uploads')->where('id',$id)->first();
         $file_path = $file->file_path;
@@ -19,6 +132,7 @@ class HelpController extends Controller
     }
     public function index() {
         $files = DB::table('uploads')->orderBy('id','desc')->get();
+
         return view('help.index',compact('files'));
     }
 
@@ -56,63 +170,67 @@ class HelpController extends Controller
 
 
     public function saveFile(Request $request) {
-        $file = $request->file('fileInput');
+        $request->validate([
+            'file_name' => 'required',
+            'file_type' => 'required',
+            'file_shift' => 'required',
+            'file_description' => 'required',
+        ]);
         $file_name = $request->input('file_name');
-        $file_shift = $request->input('file_shift');
-        $file_policy = $request->input('file_policy');
-        $description = $request->input('description');
-        // Check if file was retrieved successfully
-        if (!$file) {
-            return response()->json(['success' => false, 'message' => 'No file uploaded'], 400);
-        }
 
-        $newFileName = uniqid().'.' . $file->getClientOriginalExtension();
-        $file->move(public_path('uploads'), $newFileName);
-        $relativeFilePath = 'uploads/'.$newFileName;
+        $file_type = $request->input('file_type');
+        $file_shift = $request->input('file_shift');
+        $file_description = $request->input('file_description');
+        // Check if file was retrieved successfully
+        // if (!$file) {
+        //     return response()->json(['success' => false, 'message' => 'No file uploaded'], 400);
+        // }
+
+        // dd($request->all());
+
 
         DB::table('uploads')->insert([
             'file_name' => $file_name,
             'shift' => $file_shift,
-            'file_type' => $file_policy,
-            'description' => $description,
-            'file_path' => $relativeFilePath, // You can add file_path here if you handle file uploads
+            'file_type' => $file_type,
+            'description' => $file_description,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
-        $title = "Polices File Uploaded";
-        $message = auth()->user()->user_type . " " . auth()->user()->user_name . " has uploaded a new policy file";
-        $date = date('y-m-d');
-        $status = "unread";
-        $type = "policy-file";
+        // $title = "Polices File Uploaded";
+        // $message = auth()->user()->user_type . " " . auth()->user()->user_name . " has uploaded a new policy file";
+        // $date = date('y-m-d');
+        // $status = "unread";
+        // $type = "policy-file";
 
 
         // Fetch employee codes based on shift
-        $emp_code = [];
-        if ($file_shift == "Morning") {
-            $emp_code = DB::table('employees')->where('Emp_Shift_Time', 'Morning')->pluck('Emp_Code')->toArray();
-        } elseif ($file_shift == "Night") {
-            $emp_code = DB::table('employees')->where('Emp_Shift_Time', 'Night')->pluck('Emp_Code')->toArray();
-        } elseif ($file_shift == "Both") {
-            $emp_code = DB::table('employees')->pluck('Emp_Code')->toArray();
-        }
+        // $emp_code = [];
+        // if ($file_shift == "Morning") {
+        //     $emp_code = DB::table('employees')->where('Emp_Shift_Time', 'Morning')->pluck('Emp_Code')->toArray();
+        // } elseif ($file_shift == "Night") {
+        //     $emp_code = DB::table('employees')->where('Emp_Shift_Time', 'Night')->pluck('Emp_Code')->toArray();
+        // } elseif ($file_shift == "Both") {
+        //     $emp_code = DB::table('employees')->pluck('Emp_Code')->toArray();
+        // }
 
         // Insert notifications for each employee code
-        foreach ($emp_code as $emp) {
-            DB::table('notifications')->insert([
-                'title' => $title,
-                'message' => $message,
-                'user_id' => $emp,
-                'status' => $status,
-                'link' => "#",
-                'type' => $type,
-                'date' => $date,
-                'time' => date("g:i A")
-            ]);
-        }
+        // foreach ($emp_code as $emp) {
+        //     DB::table('notifications')->insert([
+        //         'title' => $title,
+        //         'message' => $message,
+        //         'user_id' => $emp,
+        //         'status' => $status,
+        //         'link' => "#",
+        //         'type' => $type,
+        //         'date' => $date,
+        //         'time' => date("g:i A")
+        //     ]);
+        // }
 
 
-        return response()->json(['success' => true]);
+        return back()->with('success', 'file created successfully!');
 
     }
 }
