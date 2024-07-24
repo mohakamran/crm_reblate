@@ -1,10 +1,10 @@
 @extends('layouts.master')
 @section('title')
-    Create Quotation
+    View Quotation
 @endsection
 
 @section('page-title')
-    Create Quotation
+    View Quotation
 @endsection
 @section('body')
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
@@ -33,9 +33,9 @@
         }
 
         .bar {
-            width: 1583px;
+            width: 1245px;
             /* Width of the bar */
-            height: 40px;
+            height: 45px;
             /* Height of the bar */
             background-color: #14213D;
             /* Bar color */
@@ -46,7 +46,7 @@
             /* Positioning context for pseudo-element */
             width: 300px;
             /* Width of the bar */
-            height: 40px;
+            height: 45px;
             /* Height of the bar */
             background-color: #fca311;
             /* Bar color */
@@ -107,9 +107,9 @@
         }
 
         .pricestyling {
-            padding: 148px 0px 0px 0px !important;
+            /* padding: 148px 0px 0px 0px !important; */
             text-align: center;
-            font-size: 35px;
+            font-size: 30px;
             font-weight: bold;
             font-family: 'popins';
         }
@@ -158,8 +158,15 @@
 
         .Divider {
             border: 1px solid #14213D;
-            width: 60%;
+            width: 65%;
             margin-top: 30px;
+        }
+        .icons{
+            font-size: 20px;
+            color: #fca311;
+            border-radius: 3px;
+            width: 26px;
+            height: 20px;
         }
     </style>
 
@@ -242,7 +249,7 @@
                     </div>
                     <div class="container">
                         <div class="row" style="margin-top: 5%;">
-                            <div class="col-lg-12">
+                            <div class="col-lg-11">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr style="background-color:#14213D;font-family: 'Poppins', sans-serif;color: white;">
@@ -255,7 +262,7 @@
                                     <tbody>
                                         @foreach($services as $index => $service)
                                         <tr>
-                                            <th scope="row">{{ $index + 1 }}</th>
+                                            <th scope="row" class="text-center">{{ $index + 1 }}</th>
                                             <td>
                                                 <h5 class="Web" style="font-family: 'Poppins';">&nbsp;&nbsp;&nbsp;{{ $service->service_name }}</h5>
                                                 @foreach(json_decode($service->tasks) as $task)
@@ -275,15 +282,15 @@
                     <div class="container">
                         <div class="row" style="margin-top: 5%;">
                             <div class="col-md-6" style="font-family: 'Poppins', sans-serif;">
-                                <h4 class="questionportion">Questions</h4><br>
-                                <p class="email">Email Us :
+                                <!-- <h4 class="questionportion">Questions</h4><br>
+                                <p class="email"><b>Email Us :</b>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>info@reblatesols.com</span>
                                 </p>
-                                <p class="email">Call Us :
+                                <p class="email"><b>Call Us :</b>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>0544
-                                        587025</span></p>
+                                        587025</span></p> -->
                             </div>
-                            <div class="col-md-6" style="font-family: 'Poppins', sans-serif;">
+                            <div class="col-md-6 " style="font-family: 'Poppins', sans-serif;">
                                 <h4 class="AMOUNT">TOTAL AMOUNT &nbsp;&nbsp;&nbsp;&nbsp;<span class="vl"></span><span
                                         style="color: #14213D;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $quotes->currency }}
                                         {{ $quotes->total_amount }}/- </span></h4>
@@ -300,42 +307,42 @@
                     <div class="container">
                         <div class="row" style="margin-top: 5%;font-family: 'Poppins', sans-serif;">
                             <div class="col-md-6">
-                                <h4 class="questionportion">Payment Info</h4>
-                                <p class="Sequence">Bank Name :
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>CitiBank</span>
+                                <!-- <h4 class="questionportion">Payment Info</h4>
+                                <p class="Sequence"><b>Bank Name :</b>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<span>CitiBank</span>
                                 </p>
-                                <p class="Sequence">Account
-                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>100102658</span>
+                                <p class="Sequence"><b>Account</b>
+                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>100102658</span>
                                 </p>
-                                <p class="Sequence">A/C Name
-                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>ReblateSolutions
+                                <p class="Sequence"><b>A/C Name</b>
+                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>ReblateSolutions
                                         & Services Provider</span></p>
-                                <p class="Sequence">Branch Code
-                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>248024</span>
+                                <p class="Sequence"><b>Branch Code</b>
+                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>248024</span>
                                 </p>
-                                <p class="Sequence">Bank Address
-                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>2
-                                        Park Street,Sydney NSW 2000</span></p>
+                                <p class="Sequence"><b>Bank Address</b>
+                                    :&nbsp;&nbsp;&nbsp;&nbsp;<span>2
+                                        Park Street,Sydney NSW 2000</span></p> -->
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="margin-left: 56%;top: 18px;">
                                 <hr class="Divider">
                                 <h4 style="font-family: 'Poppins', sans-serif;color: #14213D;font-size: 18px;">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Authorized
-                                    Sign</h4>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    Authorized Sign</h4>
                             </div>
                         </div>
                     </div>
                     <div class="container">
                         <div class="row" style="margin-top: 5%;font-family: 'Poppins', sans-serif;color:#14213D">
                             <div class="col-md-4">
-                                <i class="fas fa-phone phone-icon"></i> +123456789</p>
+                            <svg class="icons" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m21 15.46l-5.27-.61l-2.52 2.52a15.045 15.045 0 0 1-6.59-6.59l2.53-2.53L8.54 3H3.03C2.45 13.18 10.82 21.55 21 20.97z"/></svg> 0544
+                            587025</p>
                             </div>
                             <div class="col-md-4">
-                                <i class="fas fa-phone phone-icon"></i> www.reblates.com</p>
+                            <svg class="icons" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 2048 2048"><path fill="currentColor" d="M1024 0q141 0 272 36t245 103t207 160t160 208t103 245t37 272q0 141-36 272t-103 245t-160 207t-208 160t-245 103t-272 37q-141 0-272-36t-245-103t-207-160t-160-208t-103-244t-37-273q0-141 36-272t103-245t160-207t208-160T751 37t273-37m0 1920q123 0 237-32t214-90t182-141t140-181t91-214t32-238q0-123-32-237t-90-214t-141-182t-181-140t-214-91t-238-32q-123 0-237 32t-214 90t-182 141t-140 181t-91 214t-32 238q0 123 32 237t90 214t141 182t181 140t214 91t238 32m597-880l48-144h75l-85 256h-75l-48-144l-48 144h-75l-85-256h75l48 144l48-144h74zm-464-144h75l-85 256h-75l-48-144l-48 144h-75l-85-256h75l48 144l48-144h74l48 144zm-512 0h75l-85 256h-75l-48-144l-48 144h-75l-85-256h75l48 144l48-144h74l48 144z"/></svg> www.reblates.com</p>
                             </div>
                             <div class="col-md-4">
-                                <i class="fas fa-phone phone-icon"></i> info@reblatesols.com</p>
+                            <svg class="icons" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><path fill="currentColor" d="M19 14.5v-9c0-.83-.67-1.5-1.5-1.5H3.49c-.83 0-1.5.67-1.5 1.5v9c0 .83.67 1.5 1.5 1.5H17.5c.83 0 1.5-.67 1.5-1.5m-1.31-9.11c.33.33.15.67-.03.84L13.6 9.95l3.9 4.06c.12.14.2.36.06.51c-.13.16-.43.15-.56.05l-4.37-3.73l-2.14 1.95l-2.13-1.95l-4.37 3.73c-.13.1-.43.11-.56-.05c-.14-.15-.06-.37.06-.51l3.9-4.06l-4.06-3.72c-.18-.17-.36-.51-.03-.84s.67-.17.95.07l6.24 5.04l6.25-5.04c.28-.24.62-.4.95-.07"/></svg> info@reblatesols.com</p>
                             </div>
                         </div>
                     </div>
