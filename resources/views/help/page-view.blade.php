@@ -37,9 +37,9 @@
 
         </style>
         <div class="row">
-            <div class="col-12">
-                <div class="card container mb-5" style="box-shadow: none">
-                    <div class="card-body bg-white">
+            <div class="col-12 container bg-white">
+                <div class="card  mb-5" style="box-shadow: none">
+                    <div class="card-body ">
                         <div class="">
                             {!! $db->description !!}
                         </div>

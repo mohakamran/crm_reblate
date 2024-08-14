@@ -890,6 +890,16 @@ public function searchDateManagerHomePage(Request $req) {
         $user_type = auth()->user()->user_type;
         // dd($user_type);
         $user_code = auth()->user()->user_code;
+        $todayMonthDay = now()->format('m-d');
+        // Fetch employees with birthdays today
+        $emp_birthday = DB::table('employees')
+        ->where('Emp_Status', 'active')
+        ->whereRaw('DATE_FORMAT(emp_birthday, "%m-%d") = ?', [$todayMonthDay])
+        ->select('emp_birthday', 'Emp_Full_Name','Emp_Image','id') // Adjust columns as needed
+        ->get();
+
+
+
         if($user_type == "employee") {
             $active_emp = DB::table('employees')
             ->where('Emp_Code', $user_code)
@@ -1253,16 +1263,18 @@ public function searchDateManagerHomePage(Request $req) {
             }
             // dd($files);
 
-            $latest_to_do = DB::table('to_do_list')->where('status', 'pending')->orderBy('id', 'desc')->get();
-
-            $notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('user_id',auth()->user()->user_code)->limit(6)->get();
-            $tasks_notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('type','task')->where('user_id',auth()->user()->user_code)->limit(6)->get();
-            $to_do_tasks_notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('type','to-do-task')->where('user_id',auth()->user()->user_code)->limit(6)->get();
+            $notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('user_id',auth()->user()->user_code)->get();
+            $tasks_notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('type','task')->where('user_id',auth()->user()->user_code)->get();
+            $to_do_tasks_notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('type','to-do-task')->where('user_id',auth()->user()->user_code)->get();
             // dd($notifications);
+            $latest_to_do = DB::table('to_do_list')->where('user_code',auth()->user()->user_code)->orderBy('id','desc')->where('status','pending')->get();
+
+
 
             $data = [
-                'latest_to_do' => $latest_to_do,
+                'emp_birthday'=> $emp_birthday,
                 'files' =>$files,
+                'latest_to_do' => $latest_to_do,
                 'to_do_tasks_notifications' => $to_do_tasks_notifications,
                 'tasks_notifications' =>$tasks_notifications,
                 'notifications' => $notifications,
@@ -1664,13 +1676,29 @@ public function searchDateManagerHomePage(Request $req) {
             $over_all_performance = ($professional_growth + $total_attendence_rate) / 2;
             $over_all_performance = number_format($over_all_performance,2);
 
-            $notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('user_id',auth()->user()->user_code)->limit(6)->get();
-            $tasks_notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('type','task')->where('user_id',auth()->user()->user_code)->limit(6)->get();
-            $to_do_tasks_notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('type','to-do-task')->where('user_id',auth()->user()->user_code)->limit(6)->get();
+            $notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('user_id',auth()->user()->user_code)->get();
+            $tasks_notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('type','task')->where('user_id',auth()->user()->user_code)->get();
+            $to_do_tasks_notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('type','to-do-task')->where('user_id',auth()->user()->user_code)->get();
             $holidays = $this->getHolidaysUpcoming();
 
-           $data = [
+            // dd($notifications);
+
+            $latest_to_do = DB::table('to_do_list')->where('user_code',auth()->user()->user_code)->orderBy('id','desc')->where('status','pending')->get();
+
+           // policies files
+           if($check_shift_time->Emp_Shift_Time == "Morning") {
+            $files = DB::table('uploads')->whereIn('shift', ['Morning', 'Both'])->orderBy('id','desc')->limit(2)->get();
+        } else if($check_shift_time->Emp_Shift_Time == "Night") {
+            $files = DB::table('uploads')->whereIn('shift', ['Night', 'Both'])->orderBy('id','desc')->limit(2)->get();
+        }
+
+            $data = [
+                'emp_birthday'=> $emp_birthday,
+                'files' => $files,
+                'latest_to_do' => $latest_to_do,
                 'to_do_tasks_notifications' => $to_do_tasks_notifications,
+                'tasks_notifications' =>$tasks_notifications,
+                'notifications' => $notifications,
                 'over_all_performance' => $over_all_performance,
                 'professional_growth' => $professional_growth,
                 'total_attendence_rate' => $total_attendence_rate,
@@ -1768,10 +1796,19 @@ public function searchDateManagerHomePage(Request $req) {
 
             $total_revenue = number_format($total_revenue, 2);
 
+            $notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('user_id',auth()->user()->user_code)->get();
+            $tasks_notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('type','task')->where('user_id',auth()->user()->user_code)->get();
+            $to_do_tasks_notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('type','to-do-task')->where('user_id',auth()->user()->user_code)->get();
+            $holidays = $this->getHolidaysUpcoming();
+
+            // dd($notifications);
+
+            $latest_to_do = DB::table('to_do_list')->where('user_code',auth()->user()->user_code)->orderBy('id','desc')->where('status','pending')->get();
 
 
 
-            $data = compact('emp_count','client_count','data_chart','total_revenue',
+
+            $data = compact('emp_birthday','latest_to_do','to_do_tasks_notifications','tasks_notifications','notifications','emp_count','client_count','data_chart','total_revenue',
             'usd_pkr_expenses','usd_pkr_salary','total_profit','emp_present_count',
             // 'emp_leave_count','emp_absent_count','tasks_count','total_clients', 'currentTasks','chartData');
             'emp_leave_count','emp_absent_count','tasks_count', 'chartData', 'total_clients', 'currentTasks','salesData');
@@ -2656,7 +2693,6 @@ public function getAbsent()
     public function viewLoginManager() {
         return view('auth.manager-login');
     }
-
 
     //get exchange rate prices
     public function getExchangeRate($amount) {

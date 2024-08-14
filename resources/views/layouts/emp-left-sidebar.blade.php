@@ -313,6 +313,18 @@
                     @endif
                 </li>
 
+                <li>
+                    <a href="/view-announcements" class="waves-effect">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24">
+                            <path fill="none" stroke="white" stroke-width="2"
+                                d="M11 15c3 0 8 4 8 4V3s-5 4-8 4zm-6 0l3 8h4l-3-8m10-1a3 3 0 1 0 0-6m-8 11c1 0 3-1 3-3M2 11c0-3.111 1.791-4 4-4h5v8H6c-2.209 0-4-.889-4-4Z" />
+                        </svg>
+                        <span>Announcement</span>
+                    </a>
+                </li>
+
+
+
 
 
                 {{-- users routes  --}}

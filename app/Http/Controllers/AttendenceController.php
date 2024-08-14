@@ -14,6 +14,53 @@ use Carbon\Carbon;
 
 class AttendenceController extends Controller
 {
+    public function updateLeavesSave(Request $request,$id) {
+        $request->validate([
+            'leave_title' => 'required',
+            'date' => 'required',
+            'Ending_date' => 'required',
+            'reason' => 'required'
+        ]);
+        $LeaveTitle = $request->input('leave_title');
+        $startingDate = $request->input('date');
+        $enddate = $request->input('Ending_date');
+        $reason = $request->input('reason');
+
+        $startDateCarbon = Carbon::parse($startingDate);
+        $endDateCarbon = Carbon::parse($enddate);
+
+        $dates = []; // Array to store dates in "d/m/y" format
+
+        $totalDays = 0;
+        $currentDate = $startDateCarbon->copy();
+
+        while ($currentDate <= $endDateCarbon) {
+            if ($currentDate->isWeekday()) {
+                $totalDays++;
+                $dates[] = $currentDate->format('m/d/Y'); // Format date and add to array
+            }
+            $currentDate->addDay();
+        }
+
+        DB::table('leaves')->where('id',$id)->update([
+            'date'   => $startingDate,
+            'Ending_date' => $enddate,
+            'reason'   => $reason,
+            'totalNumber' =>  $totalDays,
+            'leave_title'   => $LeaveTitle
+        ]);
+
+        return back()->with(['message' => 'Leave application updated successfully.Wait for the approval'], 200);
+
+    }
+    // update leaves
+    public function updateLeaves($id) {
+        $leave = DB::table('leaves')->where('id',$id)->first();
+        if($leave && $leave->status != "pending" ) {
+            return view('errors.401');
+        }
+        return view('attendence.update',compact('leave'));
+    }
     // add attendence of employeee
     public function addAttendence(Request $request) {
         $emp_code = $request->emp_code;
@@ -414,7 +461,7 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
             'total_time' => $formattedTotalWorkHours
         ]);
 
-    dd("worked");
+
 
     // Return a response
     return response()->json(['message' => 'Record updated successfully']);
@@ -474,27 +521,80 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
     }
     // a manager and admin can approve or decline
     public function updateLeaveStatus($action, $id) {
-        // dd("working");
         // Check if the action is either approve or decline
-        if ($action == 'approve') {
-            // Process approval logic using $id and $emp_code
-            // echo "Emp Code: ".$emp_code;
-            // echo "<br> ID : ".$id;
-            // echo "<br> Action Code: ".$action;
+
+        $find = DB::table('leaves')->where('id',$id)->first();
+
+
+
+        $link = "/leave-records";
+        $date = date('Y-m-d');
+        $type = "all";
+        $status = "unread";
+        $currentTime = Carbon::now()->format('h:i A');
+        $code = $find->emp_code;
+
+        if ($find && $action == 'approve') {
             DB::table('leaves')->where('id',$id)->update([
                 'status'=> 'approved'
             ]);
+
+            $startDate = Carbon::parse($find->date); // 2024-08-05
+            $endDate = Carbon::parse($find->Ending_date); // 2024-09-09
+
+            // Generate an array of dates between start and end dates
+            $dateRange = [];
+            while ($startDate <= $endDate) {
+                $dateRange[] = $startDate->format('Y-m-d'); // Store the date in 'Y-m-d' format
+                $startDate->addDay(); // Move to the next day
+            }
+
+            foreach($dateRange as $date) {
+                DB::table('emp_leaves_dates')->insert([
+                    'date' => $date,
+                    'emp_id' => $code,
+                ]);
+            }
+
+
+
+            $title = "Leave Request Approved";
+            $message = auth()->user()->user_type." ".auth()->user()->user_name." has approved your leave request!";
+
+            DB::table('notifications')->insert([
+                'title' => $title,
+                'message' => $message,
+                'date' => $date,
+                'user_id' => $code, // Ensure that user_id is being used correctly
+                'time' => $currentTime,
+                'status' => $status,
+                'link' => $link,
+                'type' => $type
+            ]);
+
             return back()->with('message','Leave Approved!');
-        } elseif ($action == 'decline') {
-            // Process decline logic using $id and $emp_code
-            // echo "Emp Code: ".$emp_code;
-            // echo "<br> ID : ".$id;
-            // echo "<br> Action Code: ".$action;
+        } elseif ($find && $action == 'decline') {
             DB::table('leaves')->where('id',$id)->update([
                 'status'=> 'declined'
             ]);
+
+            $title = "Leave Request Declined";
+            $message = auth()->user()->user_type." ".auth()->user()->user_name." has declined your leave request!";
+
+            DB::table('notifications')->insert([
+                'title' => $title,
+                'message' => $message,
+                'date' => $date,
+                'user_id' => $code, // Ensure that user_id is being used correctly
+                'time' => $currentTime,
+                'status' => $status,
+                'link' => $link,
+                'type' => $type
+            ]);
             return back()->with('message','Leave Declined!');
         }
+
+
 
     }
     public function leaveRequests() {
@@ -502,10 +602,14 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
 
         if ($user_type != "" && ($user_type == "manager" || $user_type == "admin")) {
             if ($user_type == "manager") {
-                $records = DB::table('leaves')->where('user_type', 'employee')->where('status','pending')->orderBy('id','desc')->get();
+                $records = DB::table('leaves')->where('user_type', 'employee')->orderBy('id','desc')->get();
+                $records_pending = DB::table('leaves')->where('user_type', 'employee')->where('status','pending')->orderBy('id','desc')->count();
             } else {
-                $records = DB::table('leaves')->where('status','pending')->get();
+                $records = DB::table('leaves')->orderBy('id','desc')->get();
+                $records_pending = DB::table('leaves')->orderBy('id','desc')->where('status','pending')->count();
             }
+
+
 
             $empLeaveRequests = [];
 
@@ -520,7 +624,8 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
                 }
             }
 
-            return view('attendence.approval', compact('empLeaveRequests', 'records'));
+
+            return view('attendence.approval', compact('empLeaveRequests', 'records','records_pending'));
         }
     }
 
@@ -558,7 +663,7 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
         return view('attendence.leaves',compact('emp_records','user_code'));
     }
     // apply for leave admin
-    public function empApplyForLeave(Request $request) 
+    public function empApplyForLeave(Request $request)
     {
         $LeaveTitle = $request->input('leave_title');
         $startingDate = $request->input('date');
@@ -572,6 +677,52 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
         $startDateCarbon = Carbon::parse($startingDate);
         $endDateCarbon = Carbon::parse($enddate);
 
+
+        $currentYear = date('Y');
+        $previousYear = $currentYear - 1;
+
+        // Now check the remaining leaves for the current year
+        $currentYearRecord = DB::table('remaining_leaves')
+        ->where('emp_id', $user_code)
+        ->where('year', $currentYear)
+        ->first();
+
+        if ($currentYearRecord && $currentYearRecord->remaining <= 0) {
+            return response()->json(['message' => 'You do not have any remaining leaves!'], 200);
+        }
+
+
+        // Check if there is a record for the previous year
+        $previousYearRecord = DB::table('remaining_leaves')
+            ->where('emp_id', $user_code)
+            ->where('year', $previousYear)
+            ->first();
+
+        // If there is a record for the previous year
+        if ($previousYearRecord) {
+            // Fetch the remaining leaves from the previous year
+            $remainingLeavesFromLastYear = $previousYearRecord->remaining;
+
+            // Insert or update the record for the current year
+            DB::table('remaining_leaves')->updateOrInsert(
+                ['emp_id' => $user_code, 'year' => $currentYear],
+                [
+                    'remaining' => $remainingLeavesFromLastYear + 15,
+                ]
+            );
+        } else {
+            // If no record for the previous year, just create a new record for the current year
+            DB::table('remaining_leaves')->updateOrInsert(
+                ['emp_id' => $user_code, 'year' => $currentYear],
+                [
+                    'remaining' => 15,
+                ]
+            );
+        }
+
+
+
+
         $dates = []; // Array to store dates in "d/m/y" format
 
         $totalDays = 0;
@@ -584,15 +735,12 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
             }
             $currentDate->addDay();
         }
-        foreach ($dates as $date) {
-            echo $date . "\n"; // Print each date in "d/m/y" format
-        }
+
 
         DB::table('leaves')->insert([
             'status' => $status,
             'date'   => $startingDate,
             'Ending_date' => $enddate,
-            'remaining'   => "15",
             'reason'   => $reason,
             'user_type'   => $user_type,
             'year'   => $currentYear,
@@ -600,52 +748,42 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
             'totalNumber' =>  $totalDays,
             'leave_title'   => $LeaveTitle
         ]);
-        
-         return response()->json(['message' => 'Leave application submitted successfully.Wait for the approval'], 200);
-        
-        // $dayName = date('l', strtotime($date));
-        // if($dayName == "Sunday" || $dayName == "Saturday") {
-        //     return response()->json(['message' => "You can not apply for leave on saturday or sunday!"], 200);
-        // }
-        // return response()->json(['message' => $dayName], 200);
-        // $check   = DB::table('leaves')->('emp_code',$user_code)->where('year',$currentYear)->first();
-        // $check = DB::table('leaves')->where('emp_code',$user_code)->where('year',$currentYear)->first();
-        // if($check == null) {
-        //     DB::table('leaves')->insert([
-        //         'status' => $status,
-        //         'date'   => $date,
-        //         'enddate' => $enddate,
-        //         'remaining'   => "15",
-        //         'reason'   => $reason,
-        //         'user_type'   => $user_type,
-        //         'year'   => $currentYear,
-        //         'emp_code'   => $user_code,
-        //         'leavetitle'   => $LeaveTitle,
-        //         'totalNumber' => $totalNumber
-        //     ]);
-        //     return response()->json(['message' => 'Leave application submitted successfully.Wait for the approval'], 200);
-        // }
 
-        // if($check->remaining <=0) {
-        //     return response()->json(['message' => 'You have no remaining leaves'], 400);
-        // }
-        // else {
-        //     $check = DB::table('leaves')->where('emp_code',$user_code)->where('date',$date)->first();
-        //     if($check) {
-        //         return response()->json(['message' => 'You have already applied for the leave on same date!'], 400);
-        //     } else {
-        //         DB::table('leaves')->insert([
-        //             'status' => $status,
-        //             'date'   => $date,
-        //             'remaining'   => "15",
-        //             'reason'   => $reason,
-        //             'user_type'   => $user_type,
-        //             'year'   => $currentYear,
-        //             'emp_code'   => $user_code
-        //         ]);
-        //         return response()->json(['message' => 'Leave application submitted successfully.Wait for the approval'], 200);
-        //     }
-        // }
+        $user_codes = []; // Initialize an empty array for user codes
+
+        if ($user_type == "employee") {
+            // Fetch user codes for admins and managers
+            $user_codes = DB::table('users')
+                            ->whereIn('user_type', ['admin', 'manager'])
+                            ->pluck('user_code'); // Use pluck to get an array of user codes
+        } elseif ($user_type == "manager") {
+            // Fetch user codes for admins only
+            $user_codes = DB::table('users')
+                            ->where('user_type', 'admin')
+                            ->pluck('user_code'); // Use pluck to get an array of user codes
+        }
+
+        $title = "A New Leave Request";
+        $message = auth()->user()->user_name . " has applied for leave for " . $totalDays . " days";
+        $link = "/leave-requests";
+        $date = date('Y-m-d');
+        $type = "all";
+        $status = "unread";
+        $currentTime = Carbon::now()->format('h:i A');
+
+        foreach ($user_codes as $code) {
+            DB::table('notifications')->insert([
+                'title' => $title,
+                'message' => $message,
+                'date' => $date,
+                'user_id' => $code, // Ensure that user_id is being used correctly
+                'time' => $currentTime,
+                'status' => $status,
+                'link' => $link,
+                'type' => $type
+            ]);
+        }
+        return response()->json(['message' => 'Leave application submitted successfully.Wait for the approval'], 200);
 
     }
     // view records of each employee
@@ -860,36 +998,48 @@ public function getLowestPresent($month, $year)
     $startDate = Carbon::createFromDate($year, $month, 1)->startOfMonth();
     $endDate = $startDate->copy()->endOfMonth();
 
-    // Fetch the top 3 attendance records for the given month and year, along with employee IDs and their attendance counts
+    // Fetch all active employees
+    $employees = DB::table('employees')
+        ->select('Emp_Code', 'Emp_Full_Name')
+        ->where('Emp_Status', 'active')
+        ->get()
+        ->keyBy('Emp_Code');  // Convert to a keyed collection for easy lookup
+
+    // Fetch attendance counts for the given month and year
     $attendanceCounts = DB::table('attendence')
         ->select('emp_id', DB::raw('COUNT(*) as present_count'))
         ->whereBetween('date', [$startDate, $endDate])
         ->groupBy('emp_id')
-        ->orderBy('present_count')
-        ->limit(3)
-        ->get();
+        ->get()
+        ->keyBy('emp_id');  // Convert to a keyed collection for easy lookup
 
-    if ($attendanceCounts->isNotEmpty()) {
-        // Iterate over each attendance record to retrieve employee details
-        foreach ($attendanceCounts as $key => $attendance) {
-            // Get the employee details based on the emp_id
-            $employee = DB::table('employees')
-                ->select('Emp_Full_Name')
-                ->where('Emp_Code', $attendance->emp_id)
-                ->first();
+    // Create a list to store employee attendance data
+    $results = [];
 
-            // If employee is not found, remove the attendance record from the array
-            if (!$employee) {
-                $attendanceCounts->forget($key);
-            } else {
-                // Add the employee's full name to the attendance record
-                $attendance->Emp_Full_Name = $employee->Emp_Full_Name;
-            }
-        }
+    foreach ($employees as $empCode => $employee) {
+        $attendanceCount = $attendanceCounts->get($empCode);
+        $presentCount = $attendanceCount ? $attendanceCount->present_count : 0;
+
+        $results[] = (object) [
+            'emp_id' => $empCode,
+            'Emp_Full_Name' => $employee->Emp_Full_Name,
+            'present_count' => $presentCount,
+        ];
     }
 
-    return $attendanceCounts;
+    // Convert results array to a collection for sorting
+    $resultsCollection = collect($results);
+
+    // Sort the results by present_count (ascending) to get the lowest first
+    $sortedResults = $resultsCollection->sortBy('present_count');
+
+    // Limit the results to the top 3 employees with the lowest attendance
+    $topResults = $sortedResults->take(3);
+
+    return $topResults->values();  // Return the results as a collection
 }
+
+
 
 
    public function getHightestPresent($month, $year)
@@ -914,6 +1064,7 @@ public function getLowestPresent($month, $year)
                     $employee = DB::table('employees')
                         ->select('Emp_Full_Name')
                         ->where('Emp_Code', $attendance->emp_id)
+                        ->where('Emp_Status', "active")
                         ->first();
 
                     // If employee is not found, remove the attendance record from the array

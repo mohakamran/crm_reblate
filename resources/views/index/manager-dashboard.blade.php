@@ -14,256 +14,375 @@
     <body data-sidebar="colored">
     @endsection
     @section('content')
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-            .EmpNameStyle {
-                font-size: 30px;
-                color: #fff;
-                font-weight: 600;
-                font-family: 'Poppins';
-            }
+        .EmpNameStyle {
+            font-size: 30px;
+            color: #fff;
+            font-weight: 600;
+            font-family: 'Poppins';
+        }
 
-            .EmpStyle {
-                font-size: 18px;
-                color: #fca311;
-                font-family: 'Poppins';
-                font-weight: 300
-            }
-
-
-
-
-            .time-list .dash-stats-list {
-                flex-flow: column wrap;
-                flex-grow: 1;
-                padding: 0 15px;
-            }
-
-            .time-list .dash-stats-list h4 {
-                color: #1f1f1f;
-                font-size: 21px;
-                font-weight: 700;
-                line-height: 1.5;
-                margin-bottom: 0;
-            }
-
-            .time-list .dash-stats-list p {
-                color: #777;
-                font-size: 13px;
-                font-weight: 600;
-                line-height: 1.5;
-                margin-bottom: 0;
-                text-transform: uppercase;
-            }
-
-            ul li {
-                list-style: none;
-            }
-
-            .timesheet-right {
-                color: #8E8E8E;
-                font-size: 13px;
-                float: right;
-                margin-top: 7px;
-
-            }
-
-
-            .punch-info .punch-hours {
-                border: 3px solid #fca311;
-
-                max-width: 250px;
-
-                padding: 20px;
-                margin: 0 auto;
-                border-radius: 12px;
-                position: relative;
-                text-align: center;
-            }
+        .EmpStyle {
+            font-size: 18px;
+            color: #fca311;
+            font-family: 'Poppins';
+            font-weight: 300
+        }
 
 
 
-            .punch-hours span {
-                font-weight: 500;
-                transform: translate(-50%, -50%);
-                font-size: 30px;
-                color: #14213d;
-            }
 
-            .view-class-more {
+        .time-list .dash-stats-list {
+            flex-flow: column wrap;
+            flex-grow: 1;
+            padding: 0 15px;
+        }
 
-                font-size: 16px;
-                text-align: center;
-                display: block;
-                /* margin: 0px; */
-                margin-top: 17px;
+        .time-list .dash-stats-list h4 {
+            color: #1f1f1f;
+            font-size: 21px;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
 
-            }
+        .time-list .dash-stats-list p {
+            color: #777;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 0;
+            text-transform: uppercase;
+        }
 
+        ul li {
+            list-style: none;
+        }
+
+        .timesheet-right {
+            color: #8E8E8E;
+            font-size: 13px;
+            float: right;
+            margin-top: 7px;
+
+        }
+
+
+        .punch-info .punch-hours {
+            border: 3px solid #fca311;
+
+            max-width: 250px;
+
+            padding: 20px;
+            margin: 0 auto;
+            border-radius: 12px;
+            position: relative;
+            text-align: center;
+        }
+
+
+
+        .punch-hours span {
+            font-weight: 500;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+            color: #14213d;
+        }
+
+        .view-class-more {
+
+            font-size: 16px;
+            text-align: center;
+            display: block;
+            /* margin: 0px; */
+            margin-top: 17px;
+
+        }
+
+        .timeliner {
+
+            margin: 0 auto;
+            letter-spacing: 0.2px;
+            position: relative;
+            padding-top: 20px;
+            margin-left: 10px;
+            padding-bottom: 0;
+
+            list-style: none;
+            text-align: left;
+
+        }
+
+        @media (max-width: 767px) {
             .timeliner {
-
-                margin: 0 auto;
-                letter-spacing: 0.2px;
-                position: relative;
-                padding-top: 20px;
-                margin-left: 10px;
-                padding-bottom: 0;
-
-                list-style: none;
-                text-align: left;
-
+                max-width: 98%;
+                padding: 25px;
             }
+        }
 
-            @media (max-width: 767px) {
-                .timeliner {
-                    max-width: 98%;
-                    padding: 25px;
-                }
-            }
+        .timeliner h1 {
+            font-weight: 300;
+            font-size: 1.4em;
+        }
 
-            .timeliner h1 {
-                font-weight: 300;
-                font-size: 1.4em;
-            }
+        .timeliner h2,
+        .timeliner h3 {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
 
-            .timeliner h2,
-            .timeliner h3 {
-                font-weight: 600;
-                font-size: 1rem;
-                margin-bottom: 10px;
-            }
+        .timeliner .event {
 
+            position: relative;
+        }
+
+        @media (max-width: 767px) {
             .timeliner .event {
-
-                position: relative;
+                padding-top: 30px;
             }
+        }
 
-            @media (max-width: 767px) {
-                .timeliner .event {
-                    padding-top: 30px;
-                }
-            }
+        .timeliner .event:last-of-type {
+            padding-bottom: 0;
+            margin-bottom: 0;
+            border: none;
+        }
 
-            .timeliner .event:last-of-type {
-                padding-bottom: 0;
-                margin-bottom: 0;
-                border: none;
-            }
+        .timeliner .event:before,
+        .timeliner .event:after {
+            position: absolute;
+            display: block;
+            top: 0;
+        }
 
-            .timeliner .event:before,
-            .timeliner .event:after {
-                position: absolute;
-                display: block;
-                top: 0;
-            }
+        .timeliner .event:before {
+            left: -207px;
+            content: attr(data-date);
+            text-align: right;
+            font-weight: 100;
+            font-size: 0.9em;
+            min-width: 120px;
+        }
 
+        @media (max-width: 767px) {
             .timeliner .event:before {
-                left: -207px;
-                content: attr(data-date);
-                text-align: right;
-                font-weight: 100;
-                font-size: 0.9em;
-                min-width: 120px;
+                left: 0px;
+                text-align: left;
             }
+        }
 
-            @media (max-width: 767px) {
-                .timeliner .event:before {
-                    left: 0px;
-                    text-align: left;
-                }
-            }
+        .timeliner .event:after {
+            -webkit-box-shadow: 0 0 0 3px #fca311;
+            box-shadow: 0 0 0 3px #fca311;
+            left: -23.6px;
+            background: #fff;
+            border-radius: 50%;
+            height: 6px;
+            width: 6px;
+            content: "";
+            top: 10px;
+        }
 
+        @media (max-width: 767px) {
             .timeliner .event:after {
-                -webkit-box-shadow: 0 0 0 3px #fca311;
-                box-shadow: 0 0 0 3px #fca311;
-                left: -23.6px;
-                background: #fff;
-                border-radius: 50%;
-                height: 6px;
-                width: 6px;
-                content: "";
-                top: 10px;
+                left: -31.8px;
             }
+        }
 
-            @media (max-width: 767px) {
-                .timeliner .event:after {
-                    left: -31.8px;
-                }
-            }
+        .rtl .timeliner {
+            text-align: right;
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+            border-bottom-left-radius: 4px;
+            border-top-left-radius: 4px;
+            border-right: 3px solid #727cf5;
+        }
 
-            .rtl .timeliner {
-                text-align: right;
-                border-bottom-right-radius: 0;
-                border-top-right-radius: 0;
-                border-bottom-left-radius: 4px;
-                border-top-left-radius: 4px;
-                border-right: 3px solid #727cf5;
-            }
+        .rtl .timeliner .event::before {
+            left: 0;
+            right: -170px;
+        }
 
-            .rtl .timeliner .event::before {
-                left: 0;
-                right: -170px;
-            }
-
-            .rtl .timeliner .event::after {
-                left: 0;
-                right: -55.8px;
-            }
+        .rtl .timeliner .event::after {
+            left: 0;
+            right: -55.8px;
+        }
 
 
-            /* CSS for styling the chart container */
-            #line_chart {
-                width: 100%;
-                height: 400px;
-            }
+        /* CSS for styling the chart container */
+        #line_chart {
+            width: 100%;
+            height: 400px;
+        }
 
-            .popup {
-                display: none;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background-color: rgba(0, 0, 0, 0.5);
-                width: 100%;
-                height: 100%;
-                z-index: 1000;
-                backdrop-filter: blur(5px);
-            }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
 
-            .popup-content {
-                /* overflow-y: scroll;
-                                                    scroll-behavior: smooth scroll; */
-                display: flex;
-                max-width: 700px;
-                margin: auto auto;
-                position: relative;
-                top: 100px;
-                justify-content: center;
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-                text-align: center;
-            }
+        }
 
-            .closeBtn {
-                position: absolute;
-                top: 25px;
-                right: 15px;
-                cursor: pointer;
-            }
+        .char-count {
+            font-size: 0.8em;
+            color: #666;
+            text-align: right;
+        }
 
-            .active {
-                color: #14213d;
-                border-bottom: 1px solid #fca311;
-            }
+        .popup-content {
+            /* overflow-y: scroll;
+                                                                                                            scroll-behavior: smooth scroll; */
+            display: flex;
+            max-width: 700px;
+            margin: auto auto;
+            position: relative;
+            top: 100px;
+            justify-content: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
 
-            .notification-hover:hover {
-                background: #fca31130;
-                transition: all 0.2s ease-in-out;
-            }
-        </style>
+        .modal-fullscreen {
+            width: 100vw;
+            max-width: 100%;
+            margin: 0;
+        }
+
+        .modal-dialog-scrollable {
+            display: flex;
+            max-height: calc(100vh - 60px);
+            /* Adjust as needed based on your modal content */
+            margin-top: 30px;
+            /* Adjust top margin as needed */
+        }
+
+        .embed-responsive {
+            position: relative;
+            display: block;
+            width: 100%;
+            padding-top: 100%;
+            /* This keeps the aspect ratio (height:width) */
+            overflow: hidden;
+        }
+
+        .embed-responsive iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .closeBtn {
+            position: absolute;
+            top: 25px;
+            right: 15px;
+            cursor: pointer;
+        }
+
+        .active {
+            color: #14213d;
+            border-bottom: 1px solid #fca311;
+        }
+
+        .notification-hover:hover {
+            background: #fca31130;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .to-do-form input,
+        textarea {
+            width: 100%;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .to-do-form textarea {
+            height: 37px;
+            resize: none;
+        }
+
+
+        button {
+            padding: 5px 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+        }
+
+        button {
+            padding: 8px 16px;
+            font-size: 16px;
+            border: none;
+            background-color: #4caf50;
+            color: white;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .card {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .card.completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+    </style>
 
         <div class="row mt-2">
             <div class="card px-0">
@@ -315,45 +434,138 @@
             <div id="popupButton">
                 <button type="button" class="position-absolute reblateBtn px-3 py-1 text-white"
                     style="background-color: #fca311; right: 35px; top:-45px;"> Apply for Leave</button>
-                <div class="popup" id="popup">
-                    <div class="popup-content flex-column">
-                        <div class="d-flex mb-3 align-items-center justify-content-between">
-                            <h2 class="mb-0"
-                                style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom:1px solid #c7c7c7">
-                                Apply For Leaves</h2>
-                            <span class="closeBtn p-2" style="border-radius: 50%; background-color:#14213d26"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#14213d50"
-                                    class="bi bi-x-lg" viewBox="0 0 16 16">
-                                    <path
-                                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                                </svg></span>
-                        </div>
-                        <form id="leaveForm" action="" class="text-start">
-                            <div id="messageBox"></div>
-                            <div class="form-group mt-3">
-                                <label for="date">Date</label>
-                                <input type="date" class="form-control inputboxcolor" style="border: 1px solid #ced4da;"
-                                    id="date" name="date">
-                                <span class="text-danger" id="dateBox" style="display: none">Please Select
-                                    a date!</span>
-                            </div>
-                            <div class="form-group mt-3">
-                                <label for="reason">Reason:</label>
-                                <textarea class="form-control inputboxcolor" style="border: 1px solid #ced4da; resize: none; height: 100px;"
-                                    id="reason" name="reason" placeholder="Reason:" rows="5"></textarea>
-                                <span class="text-danger" id="reasonBox" style="display: none">Please Write a
-                                    reason!</span>
-                            </div>
-
-                        </form>
-                        <div class="mt-2 text-start">
-                            <button class="px-4 py-2 reblateBtn" type="button" onclick="submitForm(event)">Apply</button>
-                        </div>
-
-                    </div>
-                </div>
-
             </div>
+
+            <!-- Popup Modal -->
+            <div class="popup" id="popup">
+                <div class="popup-content flex-column">
+                    <div class="d-flex mb-3 align-items-center justify-content-between">
+                        <h2 class="mb-0"
+                            style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom: 1px solid #c7c7c7;">
+                            Apply For Leaves
+                        </h2>
+                        <span class="closeBtn p-2"
+                            style="border-radius: 50%; background-color: #14213d26; cursor: pointer;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#14213d50"
+                                class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                            </svg>
+                        </span>
+                    </div>
+                    <form id="myForm" action="" method="POST" class="text-start">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="messageBox" class="mt-2 mb-2" style="font-size: 16px;display:none;"></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;" for="leave_title">
+                                        Leave Title <span style="color:red">*</span>
+                                    </label>
+                                    <div class="d-flex align-items-center"
+                                        style="border: 1px solid #14213d; border-radius: 50px; padding: 10px; background-color: white;">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
+                                                stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
+                                            <rect x="6" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e">
+                                            </rect>
+                                            <rect x="10.5" y="12" width="3" height="3" rx="0.5"
+                                                fill="#9e9e9e"></rect>
+                                            <rect x="15" y="12" width="3" height="3" rx="0.5" fill="#9e9e9e">
+                                            </rect>
+                                        </svg>
+                                        <input type="text" class="form-control ms-2 p-0" style="border: none;"
+                                            id="leave_title" name="leave_title" placeholder="Enter Leave Title">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;" for="date">
+                                        Starting Date <span style="color:red">*</span>
+                                    </label>
+                                    <div class="d-flex align-items-center"
+                                        style="border: 1px solid #14213d; border-radius: 50px; padding: 10px; background-color: white;">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
+                                                stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
+                                            <rect x="6" y="12" width="3" height="3" rx="0.5"
+                                                fill="#9e9e9e"></rect>
+                                            <rect x="10.5" y="12" width="3" height="3" rx="0.5"
+                                                fill="#9e9e9e"></rect>
+                                            <rect x="15" y="12" width="3" height="3" rx="0.5"
+                                                fill="#9e9e9e"></rect>
+                                        </svg>
+                                        <input type="date" class="form-control ms-2 p-0" style="border: none;"
+                                            id="date" name="date">
+                                        <span class="text-danger" id="dateBox_start" style="display: none;">Please Select
+                                            a date!</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;"
+                                        for="Ending_date">
+                                        Ending Date <span style="color:red">*</span>
+                                    </label>
+                                    <div class="d-flex align-items-center"
+                                        style="border: 1px solid #14213d; border-radius: 50px; padding: 10px; background-color: white;">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
+                                                stroke="#9e9e9e" stroke-width="2" stroke-linecap="round"></path>
+                                            <rect x="6" y="12" width="3" height="3" rx="0.5"
+                                                fill="#9e9e9e"></rect>
+                                            <rect x="10.5" y="12" width="3" height="3" rx="0.5"
+                                                fill="#9e9e9e"></rect>
+                                            <rect x="15" y="12" width="3" height="3" rx="0.5"
+                                                fill="#9e9e9e"></rect>
+                                        </svg>
+                                        <input type="date" class="form-control ms-2 p-0" style="border: none;"
+                                            id="Ending_date" name="Ending_date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-2">
+                                <div class="form-group">
+                                    <label class="EmpStyle font-size-14 fw-bolder" style="color:#14213d;" for="reason">
+                                        Reason <span style="color:red">*</span>
+                                    </label>
+                                    <textarea class="form-control inputboxcolor p-2 bg-white"
+                                        style="border: 1px solid #14213d; resize: none; height: 100px;" id="reason" name="reason"
+                                        oninput="updateCharCount()" placeholder="Write Reason within 200 characters" rows="5"></textarea>
+                                    <div class="char-count mt-2">
+                                        <span id="charCount">0</span> / 200 characters
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-2">
+                                <button class="px-4 py-2 reblateBtn" type="submit"
+                                    onclick="submitForm(event)">Apply</button>
+                            </div>
+
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
             <div class="col-md-2 col-lg-2 col-xl-2">
                 <a href="/view-attendence">
                     <div class="card" style="border-radius:10px;">
@@ -494,11 +706,316 @@
             </div>
 
         </div>
-        <div class="row" style="position: relative; top: -70px;">
+
+        @if ($emp_birthday)
+        <script>
+            // Function to create confetti
+            function createConfetti(id) {
+                var conf = "#confetti_"+id;
+                console.log(conf);
+                const confettiContainer = document.querySelector(conf);
+                for (let i = 0; i < 100; i++) {
+                    const confettiPiece = document.createElement('div');
+                    confettiPiece.classList.add('confetti-piece');
+                    confettiPiece.style.width = `${Math.random() * 10 + 5}px`;
+                    confettiPiece.style.height = confettiPiece.style.width;
+                    confettiPiece.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                    confettiPiece.style.top = `${Math.random() * 100}vh`;
+                    confettiPiece.style.left = `${Math.random() * 100}vw`;
+                    confettiPiece.style.opacity = Math.random();
+                    confettiPiece.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    confettiContainer.appendChild(confettiPiece);
+                }
+
+                const style = document.createElement('style');
+                style.textContent = `
+                .confetti-piece {
+                    animation: confetti-fall 5s linear infinite;
+                }
+            `;
+                document.head.appendChild(style);
+            }
+
+
+        </script>
+            @foreach ($emp_birthday as $emp)
+                <section class="birthday-section">
+                    <div class="confetti" id="confetti_{{$emp->id}}"></div>
+                    <div class="title-container">
+                        <div class="typing-container">
+                            <h1 class="typing-text">Happy Birthday!</h1>
+                        </div>
+                        <p>Wishing you a day filled with love, joy, and cake!</p>
+                    </div>
+                    <div class="content-wrapper">
+                        <div class="left-section">
+                            @if ($emp->Emp_Image && file_exists($emp->Emp_Image))
+                            <img src="{{$emp->Emp_Image}}" alt="Employee" class="employee-img">
+                            @else
+                            <img src="{{url('user.png')}}" alt="Employee" class="employee-img">
+                            @endif
+
+                            <div class="employee-name">{{$emp->Emp_Full_Name}}</div>
+                        </div>
+                        <div style="color: #d32f2f;font-size:22px;">{{ \Carbon\Carbon::parse($emp->emp_birthday)->format('d F Y') }}</div>
+                        <div class="right-section">
+                            <div class="cake-icon"></div>
+                        </div>
+                    </div>
+                    <script>
+                        // Initialize animations
+                        createConfetti({{$emp->id}});
+                    </script>
+                </section>
+            @endforeach
+
+            <style>
+                .birthday-section {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    background: linear-gradient(to bottom, #ffeb3b, #fbc02d);
+                    position: relative;
+                    border-radius: 10px;
+                    height: 300px;
+                    /* Set fixed height */
+                    width: 100%;
+                    overflow: hidden;
+                    /* Ensure particles stay within the section */
+                    padding: 80px;
+                    /* Add some padding */
+                    margin-bottom: 20px;
+                }
+
+                .title-container {
+                    margin-bottom: 10px;
+                    /* Space between title and content */
+                }
+
+                .typing-container {
+                    display: inline-block;
+                    position: relative;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    /* Prevents text wrapping */
+                }
+
+                h1 {
+                    color: #d32f2f;
+                    font-size: 2em;
+                    /* Adjusted size for better fit */
+                    margin: 0;
+                    font-weight: bold;
+                    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+                    border-right: 2px solid #d32f2f;
+                    /* Cursor effect */
+
+                }
+
+
+
+                p {
+                    font-size: 1.5em;
+                    /* Adjusted size for better fit */
+                    color: #555;
+                    margin: 0.5em 0;
+                    font-weight: 300;
+                }
+
+                .content-wrapper {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 100%;
+                    height: 100%;
+                    margin-bottom:30px;
+                }
+
+                .left-section,
+                .right-section {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .left-section {
+                    flex: 1;
+                    text-align: center;
+                }
+
+                .right-section {
+                    flex: 1;
+                    text-align: center;
+                }
+
+                .employee-img {
+                    width: 150px;
+                    /* Adjusted size */
+                    height: 150px;
+                    /* Adjusted size */
+                    border-radius: 50%;
+                    margin: 10px auto;
+                    object-fit: cover;
+                    /* border: 3px solid #fff;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); */
+                }
+
+                .employee-name {
+                    font-size: 1em;
+                    /* Adjusted size for better fit */
+                    color: #333;
+                    font-weight: 500;
+                    margin-top: 5px;
+                }
+
+                .cake-icon {
+                    width: 80px;
+                    /* Adjusted size */
+                    height: 80px;
+                    /* Adjusted size */
+                    background: #f44336;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: white;
+                    font-size: 1.5em;
+                    /* Adjusted size */
+                    line-height: 80px;
+                    /* Adjusted line height */
+                    margin: 10px auto;
+                    position: relative;
+                    animation: bounce 1.5s infinite, pulse 1s infinite;
+                }
+
+                .cake-icon::before {
+                    content: "🎂";
+                    font-size: 1.5em;
+                    /* Adjusted size */
+                }
+
+                .confetti {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    overflow: hidden;
+                }
+
+                .balloon {
+                    position: absolute;
+                    width: 40px;
+                    /* Adjusted size */
+                    height: 60px;
+                    /* Adjusted size */
+                    background-color: #ff5722;
+                    border-radius: 50% 50% 45% 45%;
+                    animation: float 10s ease-in-out infinite, sway 4s ease-in-out infinite, spin 10s linear infinite;
+                }
+
+                .balloon::after {
+                    content: "";
+                    position: absolute;
+                    width: 2px;
+                    height: 30px;
+                    /* Adjusted length */
+                    background-color: #333;
+                    bottom: -30px;
+                    /* Adjusted position */
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+
+                .confetti-piece {
+                    position: absolute;
+                    border-radius: 50%;
+                    background: radial-gradient(circle, rgba(255, 223, 51, 0.7), transparent);
+                    pointer-events: none;
+                }
+
+                @keyframes float {
+                    0% {
+                        transform: translateY(0);
+                    }
+
+                    100% {
+                        transform: translateY(-100vh);
+                    }
+                }
+
+                @keyframes bounce {
+
+                    0%,
+                    100% {
+                        transform: translateY(0);
+                    }
+
+                    50% {
+                        transform: translateY(-10px);
+                        /* Adjusted bounce height */
+                    }
+                }
+
+                @keyframes pulse {
+
+                    0%,
+                    100% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+
+                    50% {
+                        transform: scale(1.1);
+                        opacity: 0.8;
+                    }
+                }
+
+                @keyframes sway {
+
+                    0%,
+                    100% {
+                        transform: translateX(0);
+                    }
+
+                    50% {
+                        transform: translateX(10px);
+                        /* Adjusted sway distance */
+                    }
+                }
+
+                @keyframes spin {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+
+                @keyframes confetti-fall {
+                    0% {
+                        transform: translateY(-100vh) rotate(0);
+                    }
+
+                    100% {
+                        transform: translateY(100vh) rotate(360deg);
+                    }
+                }
+            </style>
+
+        @endif
+
+        <div class="row" style="position: relative; top: 40px;">
             <div class="col-md-7 col-xl-7 col-lg-7">
                 <div class="card" style="box-shadow: none">
                     <div class="card-body"
-                        style="background-color: #fff; backdrop-filter: none; border:1px solid #c7c7c7">
+                        style="background-color: #fff; backdrop-filter: none; border:1px solid #c7c7c7; height: 450px; overflow-y: auto;">
                         <h3 class="EmpNameStyle mb-1" style="color: #14213d; font-weight: 800">Notfications</h3>
                         <div class="mt-3">
                             <ul
@@ -521,7 +1038,7 @@
                                 style="border-bottom: none; min-height:350px" id="all">
                                 {{-- notifications  --}}
 
-                                @if ($notifications->isNotEmpty())
+                                @if ($notifications != null && $notifications->isNotEmpty())
                                     @foreach ($notifications as $notify)
                                         <div class="notification-hover mt-2 p-2"
                                             style="border-bottom: 1px solid lightgray"
@@ -573,7 +1090,7 @@
                                 style="border-bottom: none;min-height:350px" id="tasks">
                                 {{-- tasks notifications  --}}
 
-                                @if ($tasks_notifications->isNotEmpty())
+                                @if ($tasks_notifications != null && $tasks_notifications->isNotEmpty())
                                     @foreach ($tasks_notifications as $notify)
                                         <div class="notification-hover mt-2 p-2"
                                             style="border-bottom: 1px solid lightgray"
@@ -620,53 +1137,184 @@
 
                             </div>
 
-                            <div class="container-fluid tab-pane fade px-0 show"
-                                style="border-bottom: none; min-height:350px" id="to-do">
-
-
-                                @if ($to_do_tasks_notifications->isNotEmpty())
-                                    @foreach ($to_do_tasks_notifications as $notify)
-                                        <div class="notification-hover mt-2 p-2"
-                                            style="border-bottom: 1px solid lightgray"
-                                            id="notifications_tasks_{{ $notify->id }}">
-                                            <div class="d-flex">
-                                                <a href="{{ $notify->link }}">
-                                                    <div class="avatar-sm me-3">
-                                                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
-                                                            <img src="{{ $emp_det->Emp_Image }}"
-                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                                alt="">
-                                                        @else
-                                                            <img class="img-fluid rounded-circle"
-                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
-                                                                src="{{ url('user.png') }}">
-                                                        @endif
+                            <div class="tab-pane fade px-0 show" style="border-bottom: none; min-height:350px"
+                                id="to-do">
+                                <div class="mt-3">
+                                    <div>
+                                        <h1>To-Do List</h1>
+                                        <form id="todo-form">
+                                            <input type="text" id="task-title" placeholder="Enter task title"
+                                                required>
+                                            <input type="hidden" id="user_code"
+                                                value="{{ auth()->user()->user_code }}">
+                                            <input type="hidden" id="user_name"
+                                                value="{{ auth()->user()->user_name }}">
+                                            <button type="submit">Add Task</button>
+                                        </form>
+                                        <div id="task-list">
+                                            @if ($latest_to_do != null)
+                                                @foreach ($latest_to_do as $item)
+                                                    <div class="card" data-id="{{ $item->id }}">
+                                                        <h3>{{ $item->task_title }}</h3>
+                                                        <p>Date: {{ $item->date }}</p>
+                                                        <p>Time: {{ $item->time }}</p>
+                                                        <input type="hidden" class="task-id"
+                                                            value="{{ $item->id }}">
                                                     </div>
-                                                    <div class="flex-1">
-                                                        <h4 class="mb-1 EmpNameStyle"
-                                                            style="color: #14213d;font-weight: 500; font-size:20px">
-                                                            {{ $notify->title }}</h4>
-                                                        <div class="font-size-15 text-muted  d-flex gap-2">
-                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
-                                                                {{ date('d F Y', strtotime($notify->date)) }}
-                                                                {{ $notify->time }}</p>
-
-                                                        </div>
-                                                        <p class="mb-1 text-muted">{{ $notify->message }}</p>
-                                                        <a href="javascript:void()"
-                                                            onclick="markAsRead({{ $notify->id }},'tasks')">mark as
-                                                            read</a>
-                                                    </div>
-                                                </a>
-                                            </div>
+                                                @endforeach
+                                            @endif
                                         </div>
-                                    @endforeach
-                                @else
-                                    <div class="position-absolute" style="top: 50%; left: 25%;">
-                                        <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
-                                            No Tasks Notifications</h4>
                                     </div>
-                                @endif
+                                </div>
+
+                                <script>
+                                   document.addEventListener('DOMContentLoaded', function() {
+                                            const taskList = document.getElementById('task-list');
+
+                                            // Handle click on task cards to update status
+                                            taskList.addEventListener('click', function(event) {
+                                                const task = event.target.closest('.card');
+                                                if (task) {
+                                                    const taskId = task.getAttribute('data-id');
+                                                    const isCompleted = task.classList.contains('completed');
+                                                    const newStatus = isCompleted ? 'pending' : 'completed';
+
+                                                    // Log the current task ID and new status
+                                                    console.log('Updating Task ID:', taskId, 'New Status:', newStatus);
+
+                                                    // Send a request to update the task status
+                                                    fetch('/update-task-status', {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'Accept': 'application/json',
+                                                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                                        },
+                                                        body: JSON.stringify({
+                                                            id: taskId,
+                                                            status: newStatus
+                                                        })
+                                                    })
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        console.log('Response Data:', data);
+                                                        if (data.success) {
+                                                            // Toggle completed class and update styling
+                                                            task.classList.toggle('completed');
+                                                            updateTaskStyle(task, !isCompleted); // Update style based on new status
+                                                        } else {
+                                                            console.error('Failed to update status:', data);
+                                                        }
+                                                    })
+                                                    .catch(error => console.error('Error:', error));
+                                                }
+                                            });
+
+                                            // Handle task submission
+                                            const form = document.getElementById('todo-form');
+                                            form.addEventListener('submit', function(event) {
+                                                event.preventDefault();
+
+                                                const taskTitleInput = document.getElementById('task-title');
+                                                const taskTitle = taskTitleInput.value.trim();
+                                                const userNameInput = document.getElementById('user_name');
+                                                const user_name = userNameInput.value.trim();
+                                                const userCodeInput = document.getElementById('user_code');
+                                                const user_code = userCodeInput.value.trim();
+
+                                                if (taskTitle) {
+                                                    fetch('/save-to-do-task', {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'Accept': 'application/json',
+                                                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                                        },
+                                                        body: JSON.stringify({
+                                                            title: taskTitle,
+                                                            userName: user_name,
+                                                            userCode: user_code,
+                                                            date: getCurrentDate(),
+                                                            time: getCurrentTime()
+                                                        })
+                                                    })
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        console.log('Response Data:', data);
+                                                        if (data.id) {
+                                                            const task = document.createElement('div');
+                                                            task.className = 'card';
+                                                            task.setAttribute('data-id', data.id);
+                                                            task.innerHTML = `
+                                                                <h3>${taskTitle}</h3>
+                                                                <p class="task-date">Date: ${getCurrentDate()}</p>
+                                                                <p class="task-time">Time: ${getCurrentTime()}</p>
+                                                                <input type="hidden" class="task-id" value="${data.id}">
+                                                            `;
+
+                                                            // Append new task to the task list
+                                                            taskList.insertBefore(task, taskList.firstChild);
+                                                            taskTitleInput.value = ''; // Reset the input field
+                                                        }
+                                                    })
+                                                    .catch(error => console.error('Error:', error));
+                                                } else {
+                                                    alert('Please enter a task title.');
+                                                }
+                                            });
+
+                                            // Function to get the current date
+                                            function getCurrentDate() {
+                                                const now = new Date();
+                                                const options = {
+                                                    weekday: 'long',
+                                                    year: 'numeric',
+                                                    month: 'long',
+                                                    day: 'numeric'
+                                                };
+                                                return now.toLocaleDateString('en-US', options);
+                                            }
+
+                                            // Function to get the current time
+                                            function getCurrentTime() {
+                                                const now = new Date();
+                                                return now.toLocaleTimeString('en-US');
+                                            }
+
+                                            // Function to update task style based on status
+                                            function updateTaskStyle(task, isCompleted) {
+                                                const title = task.querySelector('h3');
+                                                const date = task.querySelector('.task-date');
+                                                const time = task.querySelector('.task-time');
+
+                                                if (isCompleted) {
+                                                    title.style.textDecoration = 'line-through';
+                                                    date.style.textDecoration = 'line-through';
+                                                    time.style.textDecoration = 'line-through';
+                                                    title.style.color = '#aaa'; // Optional: Change color for completed tasks
+                                                    date.style.color = '#aaa';
+                                                    time.style.color = '#aaa';
+                                                } else {
+                                                    title.style.textDecoration = 'none';
+                                                    date.style.textDecoration = 'none';
+                                                    time.style.textDecoration = 'none';
+                                                    title.style.color = 'black'; // Reset color for pending tasks
+                                                    date.style.color = 'black';
+                                                    time.style.color = 'black';
+                                                }
+                                            }
+                                        });
+
+                                </script>
+
+
+
+
+                                {{-- <div class="position-absolute" style="top: 50%; left: 25%;">
+                                        <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
+                                            No Tasks </h4>
+                                    </div> --}}
+
 
 
                             </div>
@@ -675,195 +1323,14 @@
                 </div>
 
             </div>
-            {{-- <div class="col-md-4 col-xl-4 col-sm-12">
-                <div class="card overflow-hidden">
-
-                    <div class="card-body overflow-hidden" style='padding-bottom:12px;'>
-                        <div class="position-relative" style="z-index: 10">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h3 class=" font-size-header mb-0" style='color:#000;'>Attendance </h3>
-
-                            </div>
-                            <div class="row px-2">
-                                <div class="col-md-4" style='width:33%'>
-                                    <h3 style="color: #14213d;">
-                                        @if (isset($total_present_day) && $total_present_day != '')
-                                            {{ $total_present_day }}
-                                        @else
-                                            0
-                                        @endif
-                                    </h3>
-                                    <p style="color:#14213d;font-size: 16px;">Total <br> Present</p>
-                                </div>
-                                <div class="col-md-4" style='width:33%'>
-                                    <h3 style='color:red;'>
-                                        @if (isset($absent_days) && $absent_days != '')
-                                            {{ $absent_days }}
-                                        @else
-                                            0
-                                        @endif
-                                    </h3>
-                                    <p style="color:#14213d; font-size: 16px;">Total <br> Absent </p>
-                                </div>
-                                <div class="col-md-4" style='width:33%'>
-                                    <h3 style='color:orange;'>
-
-                                        @if (isset($total_leaves) && $total_leaves != '')
-                                            {{ $total_leaves }}
-                                        @else
-                                            0
-                                        @endif
-                                    </h3>
-                                    <p style="color:#14213d; font-size: 16px;">Total <br> Leaves</p>
-                                </div>
-                                <div class="col-md-4" style='width:33%'>
-                                    <h3 style='color:red;'>
-                                        @if (isset($total_pending) && $total_pending != '')
-                                            {{ $total_pending }}
-                                        @else
-                                            0
-                                        @endif
-                                    </h3>
-                                    <p style="color:#14213d; font-size: 16px;">Pending <br> Approval</p>
-                                </div>
-                                <div class="col-md-4" style='width:33%'>
-                                    <h3 style='color:#14213d;'>{{ $total_work_days_in_month }}</h3>
-                                    <p style="color:#14213d; font-size: 16px;">Working <br> Days</p>
-                                </div>
-                                <div class="col-md-4" style='width:33%'>
-                                    <h3 style='color:red;'>
-                                        @if (isset($salary_deduct) && $salary_deduct != '')
-                                            {{ $salary_deduct }}
-                                        @else
-                                            0
-                                        @endif
-                                    </h3>
-                                    <p style="color:#14213d; font-size: 16px;">Loss of <br> Pay</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-
-                        <div class="d-flex flex-wrap gap-4 justify-content-between">
-                            <div class="w-100 d-flex justify-content-between">
-                                <button type="button" class="reblateBtn px-3 py-2" data-toggle="modal"
-                                    data-target="#exampleModal">Apply for Leave</button>
-                                <a href="/leave-records" class="reblateBtn px-3 py-2">Leave Records</a>
-                            </div>
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header pb-0">
-                                            <h5 class="modal-title" id="exampleModalLabel">Leave Application form</h5>
-                                            <button type="button" class="close"
-                                                style="border: none; background-color: transparent;" data-dismiss="modal"
-                                                aria-label="Close">
-                                                <span class="fs-3" aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form id="leaveForm" action="">
-                                                <div id="messageBox"></div>
-                                                <div class="form-group mt-3">
-                                                    <label for="date">Date</label>
-                                                    <input type="date" class="form-control inputboxcolor"
-                                                        style="border: 1px solid #ced4da;" id="date" name="date">
-                                                    <span class="text-danger" id="dateBox" style="display: none">Please Select
-                                                        a date!</span>
-                                                </div>
-                                                <div class="form-group mt-3">
-                                                    <label for="reason">Reason:</label>
-                                                    <textarea class="form-control inputboxcolor" style="border: 1px solid #ced4da; resize: none; height: 100px;"
-                                                        id="reason" name="reason" placeholder="Reason:" rows="5"></textarea>
-                                                    <span class="text-danger" id="reasonBox" style="display: none">Please Write a
-                                                        reason!</span>
-                                                </div>
-
-                                            </form>
-                                            <button type="submit" class="reblateBtn px-3 py-2 mt-3"
-                                                onclick="submitForm(event)">Apply</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-            {{-- <div class="col-md-4 col-xl-4 col-sm-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title">Today Activity</h6>
-                        <div id="content">
-
-                            <ul class="timeliner d-grid gap-3" style="grid-template-columns: 1fr 1fr;" >
-
-                                <li class="event mb-1">
-                                    <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Check In</h3>
-                                    @if (session()->has('check_in_time') && session('check_in_time') != '')
-                                        <p>{{ session('check_in_time') }}</p>
-                                    @else
-                                        <p>No Check In</p>
-                                    @endif
-                                </li>
-                                <li class="event mb-1">
-                                    <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Break Start Time</h3>
-                                    @if (session()->has('break_start_time') && session('break_start_time') != '')
-                                        <p>{{ session('break_start_time') }}</p>
-                                    @else
-                                        <p>No Break Start</p>
-                                    @endif
-                                </li>
-                                <li class="event mb-1">
-                                    <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Break End Time</h3>
-                                    @if (session()->has('break_end_time') && session('break_end_time') != '')
-                                        <p>{{ session('break_end_time') }}</p>
-                                    @else
-                                        <p>No Break End Time</p>
-                                    @endif
-                                </li>
-                                <li class="event mb-1">
-                                    <h3 class="fs-4 font-size-18 mb-0" style="color: #14213d">Check Out</h3>
-                                    @if (session()->has('check_out_time') && session('check_out_time') != '')
-                                        <p>{{ session('check_out_time') }}</p>
-                                    @else
-
-                                        <p class="mb-1">No Checkout</p>
-                                    @endif
-                                </li>
-                                <li class="event mb-1">
-                                    <h4 class="mb-1" style="color: #14213d">Overtime <br/> Start</h4>
-                                    @if (session()->has('overtime_start') && session('overtime_start') != '')
-                                        <p class="mb-1">{{ session('overtime_start') }}</p>
-                                    @else
-                                        <p class="mb-1">No Overtime Start</p>
-                                    @endif
-                                </li>
-                                <li class="event mb-1">
-                                    <h4 class="mb-1" style="color: #14213d">Overtime <br/> End</h4>
-                                    @if (session()->has('overtime_end') && session('overtime_end') != '')
-                                        <p class="mb-1">{{ session('overtime_end') }}</p>
-                                    @else
-                                        <p class="mb-1">No Overtime End</p>
-
-                                    @endif
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-            </div> --}}
 
             <script>
-                function markAsRead(id,str) {
-                    if(str === "all") {
+                function markAsRead(id, str) {
+                    if (str === "all") {
                         var not = "notifications_" + id;
                     }
 
-                    if(str === "tasks") {
+                    if (str === "tasks") {
                         var not = "notifications_tasks_" + id;
                     }
 
@@ -899,6 +1366,7 @@
                         });
                 }
             </script>
+
 
             <div class="col-md-5 col-xl-5 col-lg-5">
                 <div class="card" style="box-shadow: none;">
@@ -1006,7 +1474,7 @@
 
                             </div>
                         </div>
-                        <div class="punch-info">
+                        <div class="punch-info d-flex flex-column align-items-center">
                             {{-- <div class="punch-hours">
                                 @if (session()->has('total_over_time') && session('total_over_time') != '')
                                    <span>{{session('total_over_time')}}</span>
@@ -1050,37 +1518,31 @@
                                                 d="M.41 13.41L6 19l1.41-1.42L1.83 12m20.41-6.42L11.66 16.17L7.5 12l-1.43 1.41L11.66 19l12-12M18 7l-1.41-1.42l-6.35 6.35l1.42 1.41z" />
                                         </svg> Over time marked!</span>
                                 @elseif(session()->has('show_over_time_end') && session('show_over_time_end') === false)
-                                    <div class="row">
-                                        <div class="col-md-12 d-flex justify-content-center">
-                                            <a class="reblateBtn px-4 py-2 w-md" href="/overtime-start">Overtime Start
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                    viewBox="0 0 21 21">
-                                                    <g fill="none" fill-rule="evenodd" stroke="currentColor"
-                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                        <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
-                                                        <path
-                                                            d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
-                                                    </g>
-                                                </svg>
-                                            </a>
-                                        </div>
-
-                                    </div>
+                                    <a class="reblateBtn px-4 py-2 w-md" style="border-radius: 10px;"
+                                        href="/overtime-start">Overtime Start
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                            viewBox="0 0 21 21">
+                                            <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
+                                                <path
+                                                    d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
+                                            </g>
+                                        </svg>
+                                    </a>
                                 @elseif(session()->has('show_over_time_end') && session('show_over_time_end') === true)
-                                    <div class="row" style="margin-top:20px;">
-                                        <div class="col-md-12 d-flex justify-content-center">
-                                            <a class="reblateBtn px-4 py-2 w-md" href="/overtime-end">Overtime End
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                                    viewBox="0 0 21 21">
-                                                    <g fill="none" fill-rule="evenodd" stroke="currentColor"
-                                                        stroke-linecap="round" stroke-linejoin="round">
-                                                        <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
-                                                        <path
-                                                            d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
-                                                    </g>
-                                                </svg>
-                                            </a>
-                                        </div>
+                                    <a class="reblateBtn px-4 py-2 w-md" style="border-radius: 10px;"
+                                        href="/overtime-end">Overtime End
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
+                                            viewBox="0 0 21 21">
+                                            <g fill="none" fill-rule="evenodd" stroke="currentColor"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="m11.5 13.535l-3-3.035l3-3m7 3h-10" />
+                                                <path
+                                                    d="M16.5 8.5V5.54a2 2 0 0 0-1.992-2l-8-.032A2 2 0 0 0 4.5 5.5v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3" />
+                                            </g>
+                                        </svg>
+                                    </a>
                                 @endif
                             @else
                                 <div class="d-flex flex-wrap justify-content-between gap-4 align-items-center">
@@ -1160,7 +1622,7 @@
 
                                 </div>
                             @endif
-                            <div class="view-class-more">
+                            <div class="view-class-more mt-2">
                                 <a href="/view-attendence" style="color:#fca311;">View Attendence</a>
                             </div>
                         </div>
@@ -1169,6 +1631,7 @@
 
             </div>
         </div>
+
         <div class="row" style="position: relative; top: -70px;">
             <div class="col-md-12 col-lg-12 col-xl-12">
                 <div class="card" style="box-shadow: none;">
@@ -2341,6 +2804,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js" type="text/javascript"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
+            //  const today = new Date().toISOString().split('T')[0]; // Gets today's date in YYYY-MM-DD format
+            // document.getElementById('date').setAttribute('min', today);
+            // document.getElementById('Ending_date').setAttribute('min', today);
             document.addEventListener('DOMContentLoaded', function() {
                 const popupButton = document.getElementById('popupButton');
                 const popup = document.getElementById('popup');
@@ -2406,10 +2872,7 @@
                     indexAxis: 'y',
                 }
             });
-        </script>
 
-
-        <script>
             // Function to update the current time
             function updateCurrentTime() {
                 const now = new Date();
@@ -2437,46 +2900,132 @@
             function submitForm(event) {
                 event.preventDefault();
 
-                var dateValue = document.getElementById('date').value;
-                var reasonValue = document.getElementById('reason').value;
-                var dateBox = document.getElementById('dateBox');
-                var reasonBox = document.getElementById('reasonBox');
+                var leave_title = document.getElementById('leave_title');
+                var Ending_date = document.getElementById('Ending_date');
+                var Starting_date = document.getElementById('date');
+                var reason = document.getElementById('reason');
                 var messageBox = document.getElementById('messageBox');
 
-                dateBox.style.display = "none";
-                reasonBox.style.display = "none"; // Corrected line
 
-                if (dateValue === '') {
-                    dateBox.style.display = "block";
+
+
+                if (leave_title.value === '') {
+                    messageBox.style.display = "block";
+                    messageBox.style.color = "red";
+                    messageBox.innerHTML = "Please Write Leave Title!";
                     return;
+                } else {
+                    messageBox.style.display = "none";
                 }
-                if (reasonValue === '') {
-                    reasonBox.style.display = "block";
+
+                if (Starting_date.value === '') {
+                    messageBox.style.display = "block";
+                    messageBox.style.color = "red";
+                    messageBox.innerHTML = "Please Select Start Date!";
                     return;
+                } else {
+                    messageBox.style.display = "none";
                 }
 
-                var formData = {
-                    _token: '{{ csrf_token() }}',
-                    date: dateValue,
-                    reason: reasonValue
-                };
+                if (Ending_date.value === '') {
+                    messageBox.style.display = "block";
+                    messageBox.style.color = "red";
+                    messageBox.innerHTML = "Please Select Ending Date!";
+                    return;
+                } else {
+                    messageBox.style.display = "none";
+                }
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/apply-for-leave',
-                    data: formData,
-                    success: function(response) {
-                        // console.log('AJAX request successful');
+                if (reason.value === '') {
+                    messageBox.style.display = "block";
+                    messageBox.style.color = "red";
+                    messageBox.innerHTML = "Please Write A Short Reason!";
+                    return;
+                } else {
+                    messageBox.style.display = "none";
+                }
 
-                        $('#messageBox').text(response.message);
-                    },
-                    error: function(xhr, status, error) {
-                        var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message :
-                            'An error occurred';
+                var formData = new FormData();
+                formData.append('leave_title', leave_title.value);
+                formData.append('Ending_date', Ending_date.value);
+                formData.append('date', Starting_date.value);
+                formData.append('reason', reason.value);
 
-                        $('#messageBox').text(errorMessage); // Set the error message from the server response
-                    }
-                });
+
+                // CSRF token (replace with your actual token handling logic)
+                var csrfToken = "{{ csrf_token() }}";
+
+                // AJAX request using fetch API
+                fetch('/apply-for-leave', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
+                        },
+                        body: formData // Send formData containing file and other fields
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                        if (data.message) {
+                            var form_reset_upload = document.getElementById('myForm');
+                            form_reset_upload.reset();
+                            var messageBox = document.getElementById('messageBox');
+                            messageBox.style.display = "block";
+                            messageBox.style.color = "green";
+                            messageBox.innerHTML = data.message;
+                        }
+
+                    })
+                    .catch(error => {
+                        var messageBox = document.getElementById(
+                        'messageBox'); // Ensure you have an element with id 'messageBox'
+                        messageBox.style.display = "block";
+                        messageBox.style.color = "red";
+                        messageBox.innerHTML = error;
+                    });
+
+
+                // var formData = {
+                //     _token: '{{ csrf_token() }}',
+                //     // date: dateValue,
+                //     // reason: reasonValue
+                // };
+
+                // $.ajax({
+                //     type: 'post',
+                //     url: '/apply-for-leave',
+                //     data: formData,
+                //     success: function(response) {
+                //         console.log('AJAX request successful');
+
+                //         $('#messageBox').text(response.message);
+                //     },
+                //     error: function(xhr, status, error) {
+                //         var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message :
+                //             'An error occurred';
+
+                //         $('#messageBox').text(errorMessage); // Set the error message from the server response
+                //     }
+                // });
+            }
+
+            function updateCharCount() {
+                var textarea = document.getElementById("reason");
+                var charCountSpan = document.getElementById("charCount");
+                var maxLength = 200;
+                var currentCount = textarea.value.length;
+
+                if (currentCount > maxLength) {
+                    textarea.value = textarea.value.slice(0, maxLength); // Truncate the text
+                    currentCount = maxLength; // Update current count
+                }
+
+                charCountSpan.textContent = currentCount;
             }
 
             function checkOut() {

@@ -492,7 +492,10 @@
                                                                 <p
                                                                     style="font-size: 14px; font-weight: 700; margin-bottom: 0px; color: #14213d; ">
                                                                     DOB:</p>
-                                                                <span style="font-size: 14px; ">11-10-2002
+                                                                <span style="font-size: 14px; ">
+                                                                    @if ($emp->emp_birthday !=null)
+                                                                       {{ (\Carbon\Carbon::parse($emp->emp_birthday)->format('d F Y'))   }}
+                                                                    @endif
                                                                 </span>
                                                             </div>
                                                         </div>

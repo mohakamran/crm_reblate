@@ -172,11 +172,16 @@
                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                                 <tr style="background-color: #14213d">
+                                    <th class="borderingLeftTable font-size-20" style="color: white">SN</th>
                                     <th class="borderingLeftTable font-size-20" style="color: white">Holiday Type</th>
                                     <th class="font-size-20" style="color: white">Start Date</th>
                                     <th class="font-size-20" style="color: white">End Date</th>
                                     <th class="font-size-20" style="color: white">Description</th>
                                     <th class="borderingRightTable font-size-20" style="color: white">Total Days</th>
+
+                                    @if (auth()->user()->user_type == "admin" || auth()->user()->user_type == "manager")
+                                        <th class="font-size-20" style="color: white">Action</th>
+                                    @endif
 
 
                                 </tr>
@@ -184,15 +189,38 @@
 
                             <tbody id="table-body">
 
+                                @php
+                                    $count = 1;
+                                @endphp
+
                                 @foreach ($holidays as $holiday)
+
                                     <tr style="border-bottom: 1px solid #c7c7c7">
-                                        <td  ><a href="#" class="table-lines" data-toggle="modal"
-                                                data-target="#popup_{{ $holiday->id }}">{{ $holiday->holiday_type }}</a>
+                                        <td>
+                                            {{$count++}}
+                                        </td>
+                                        <td class="table-lines" >{{ $holiday->holiday_type }}
                                         </td>
                                         <td class="table-lines" >{{ $holiday->startDate }}</td>
                                         <td class="table-lines" >{{ $holiday->endDate }}</td>
                                         <td class="table-lines" >{{ $holiday->holiday_description }}</td>
                                         <td class="table-lines" >{{ $holiday->total_days }}</td>
+
+                                        @if (auth()->user()->user_type == "admin" || auth()->user()->user_type == "manager")
+                                             <td class="table-lines">
+                                                <a href="#" onclick="delUploadEntry('{{$holiday->id}}')">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                                                        viewBox="0 0 24 24">
+                                                        <path fill="#d20f0f"
+                                                            d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zm2-4h2V8H9zm4 0h2V8h-2z">
+                                                        </path>
+                                                    </svg>
+                                                </a>
+                                                <a href="#" data-toggle="modal" data-target="#popup_{{ $holiday->id }}"  >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+                                                </a>
+                                             </td>
+                                        @endif
 
 
                                     </tr>
@@ -272,6 +300,48 @@
         </div> <!-- end row -->
 
         <script>
+
+function delUploadEntry(id) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'Holidays will be removed!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                    confirmButtonColor: '#FF5733', // Red color for "Yes"
+                    cancelButtonColor: '#4CAF50', // Green color for "No"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Send an AJAX request to delete the task
+                        $.ajax({
+                            url: '/del-vacations/' + id,
+                            method: 'GET', // Use the DELETE HTTP method
+                            success: function() {
+                                // Provide user feedback
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'deleted!',
+                                    icon: 'success'
+                                }).then(() => {
+                                    location.reload(); // Refresh the page
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                // Handle errors, you can display an error message to the user
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: error,
+                                    icon: 'error'
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+
             $(document).ready(function() {
 
                 // Open modal

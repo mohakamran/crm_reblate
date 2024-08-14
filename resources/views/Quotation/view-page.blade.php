@@ -161,16 +161,47 @@
             width: 65%;
             margin-top: 30px;
         }
-        .icons{
+
+        .icons {
             font-size: 20px;
             color: #fca311;
             border-radius: 3px;
             width: 26px;
             height: 20px;
         }
+
+        .box {
+            background: #FEEEDF;
+            padding: 20px;
+            height: 260px;
+            max-height: 260px;
+
+        }
+
+        .quotation-container {
+            margin-top: 40px;
+        }
+
+        .stamp-image {
+            /* float: right; */
+            position: absolute;
+            height: 127px;
+            width: 117px;
+            top: -6rem;
+            /* display: block; */
+            margin: 0 auto;
+            left: 22rem;
+            object-fit: contain;
+            rotate: 17px;
+            transform: rotate(-20deg);
+        }
+
+        .quotation-heading {
+            font-size: 20px;
+        }
     </style>
 
-    <body data-sidebar="colored">
+    <body data-sidebar="colored" style="font-family: 'Poppins', sans-serif;">
     @endsection
     @section('content')
         <div class="row">
@@ -186,7 +217,65 @@
                             </div>
                         </div>
                     </div>
-                    <div class="container">
+                    <div class="container  quotation-container">
+                        <div class="row">
+                            <div class="col-md-6  ">
+                                <div class="box">
+                                    <b class="quotation-heading">Quotation By</b>
+                                    <p class="mt-2"><strong>Reblate Solutions & Service Providers</strong></p>
+                                    {{-- <p ><strong>Address</strong>: High End Plaza Basement, MB1, Citi <br>Housing jhelum</p> --}}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                                        viewBox="0 0 24 24">
+                                        <path fill="#14213d"
+                                            d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7" />
+                                    </svg>
+                                    High End Plaza Basement, MB1, Citi Housing jhelum
+                                    </p>
+                                    <svg class="icons" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                                        viewBox="0 0 24 24">
+                                        <path fill="#14213d"
+                                            d="m21 15.46l-5.27-.61l-2.52 2.52a15.045 15.045 0 0 1-6.59-6.59l2.53-2.53L8.54 3H3.03C2.45 13.18 10.82 21.55 21 20.97z" />
+                                    </svg> 0544
+                                    587025</p>
+                                    <svg class="icons" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                                        viewBox="0 0 20 20">
+                                        <path fill="#14213d"
+                                            d="M19 14.5v-9c0-.83-.67-1.5-1.5-1.5H3.49c-.83 0-1.5.67-1.5 1.5v9c0 .83.67 1.5 1.5 1.5H17.5c.83 0 1.5-.67 1.5-1.5m-1.31-9.11c.33.33.15.67-.03.84L13.6 9.95l3.9 4.06c.12.14.2.36.06.51c-.13.16-.43.15-.56.05l-4.37-3.73l-2.14 1.95l-2.13-1.95l-4.37 3.73c-.13.1-.43.11-.56-.05c-.14-.15-.06-.37.06-.51l3.9-4.06l-4.06-3.72c-.18-.17-.36-.51-.03-.84s.67-.17.95.07l6.24 5.04l6.25-5.04c.28-.24.62-.4.95-.07" />
+                                    </svg> <a style="color:black;"
+                                        href="mailto:info@reblatesols.com">info@reblatesols.com</a>
+                                    </p>
+                                    <svg class="icons" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                                        viewBox="0 0 2048 2048">
+                                        <path fill="#14213d"
+                                            d="M1024 0q141 0 272 36t245 103t207 160t160 208t103 245t37 272q0 141-36 272t-103 245t-160 207t-208 160t-245 103t-272 37q-141 0-272-36t-245-103t-207-160t-160-208t-103-244t-37-273q0-141 36-272t103-245t160-207t208-160T751 37t273-37m0 1920q123 0 237-32t214-90t182-141t140-181t91-214t32-238q0-123-32-237t-90-214t-141-182t-181-140t-214-91t-238-32q-123 0-237 32t-214 90t-182 141t-140 181t-91 214t-32 238q0 123 32 237t90 214t141 182t181 140t214 91t238 32m597-880l48-144h75l-85 256h-75l-48-144l-48 144h-75l-85-256h75l48 144l48-144h74zm-464-144h75l-85 256h-75l-48-144l-48 144h-75l-85-256h75l48 144l48-144h74l48 144zm-512 0h75l-85 256h-75l-48-144l-48 144h-75l-85-256h75l48 144l48-144h74l48 144z" />
+                                    </svg> <a href="https://www.reblatesols.com" style="color:black;">www.reblatesols.com</a></p>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="box">
+
+                                    <b class="quotation-heading"> Quotation To</b>
+                                    <p><strong>{{ $quotes->client_name }}</strong></p>
+                                    <svg class="icons" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                                        viewBox="0 0 20 20">
+                                        <path fill="#14213d"
+                                            d="M19 14.5v-9c0-.83-.67-1.5-1.5-1.5H3.49c-.83 0-1.5.67-1.5 1.5v9c0 .83.67 1.5 1.5 1.5H17.5c.83 0 1.5-.67 1.5-1.5m-1.31-9.11c.33.33.15.67-.03.84L13.6 9.95l3.9 4.06c.12.14.2.36.06.51c-.13.16-.43.15-.56.05l-4.37-3.73l-2.14 1.95l-2.13-1.95l-4.37 3.73c-.13.1-.43.11-.56-.05c-.14-.15-.06-.37.06-.51l3.9-4.06l-4.06-3.72c-.18-.17-.36-.51-.03-.84s.67-.17.95.07l6.24 5.04l6.25-5.04c.28-.24.62-.4.95-.07" />
+                                    </svg> {{ $quotes->client_email }}</p>
+                                    <p>Project: {{ $quotes->project_title }}</p>
+                                    <p>Category: {{ $quotes->project_category }}</p>
+                                    @php
+                                        use Carbon\Carbon;
+                                    @endphp
+                                    <p>Deadline: {{ Carbon::parse($quotes->project_deadline)->format('d F Y') }}</p>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="container">
                         <div class="row" style="margin-top: 6%;">
                             <div class="col-md-6">
                                 <label for=""><span
@@ -203,8 +292,8 @@
                                 <hr class="Hr">
                             </div>
                         </div>
-                    </div>
-                    <div class="container">
+                    </div> --}}
+                    {{-- <div class="container">
                         <div class="row" style="margin-top: 2%;">
                             <div class="col-md-6">
                                 <label for=""><span
@@ -222,8 +311,8 @@
                             </div>
 
                         </div>
-                    </div>
-                    <div class="container">
+                    </div> --}}
+                    {{-- <div class="container">
                         <div class="row" style="margin-top: 2%;">
                             <div class="col-lg-12">
                                 <label for=""><span
@@ -233,14 +322,14 @@
                                 <hr class="HrProject">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="container">
                         <div class="row" style="margin-top: 2%;">
                             <div class="col-lg-12">
                                 <label for=""><span
                                         style="font-size: 20px;font-family: 'Poppins', sans-serif;">Client
                                         Requirements</span>: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
-                                <p>
+                                <p style="font-family: 'Poppins';">
                                     {!! $quotes->client_requirements !!}
                                 </p>
 
@@ -248,11 +337,12 @@
                         </div>
                     </div>
                     <div class="container">
-                        <div class="row" style="margin-top: 5%;">
-                            <div class="col-lg-11">
+                        <div class="row">
+                            <div class="col-lg-12">
                                 <table class="table table-bordered">
                                     <thead>
-                                        <tr style="background-color:#14213D;font-family: 'Poppins', sans-serif;color: white;">
+                                        <tr
+                                            style="background-color:#14213D;font-family: 'Poppins', sans-serif;color: white;">
                                             <th scope="col" style="color: white;">SN</th>
                                             <th scope="col" style="color: white;">Task</th>
                                             <th scope="col" style="color: white;">Price</th>
@@ -260,18 +350,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($services as $index => $service)
-                                        <tr>
-                                            <th scope="row" class="text-center">{{ $index + 1 }}</th>
-                                            <td>
-                                                <h5 class="Web" style="font-family: 'Poppins';">&nbsp;&nbsp;&nbsp;{{ $service->service_name }}</h5>
-                                                @foreach(json_decode($service->tasks) as $task)
-                                                <p style="font-family: 'Poppins';">{{ $task }}</p>
-                                                @endforeach
-                                            </td>
-                                            <td class="pricestyling" style="text-align: center; vertical-align: middle;">{{ $quotes->currency }} {{ $service->amount }}/-</td>
-                                            <td></td>
-                                        </tr>
+                                        @foreach ($services as $index => $service)
+                                            <tr>
+                                                <th scope="row" class="text-center">{{ $index + 1 }}</th>
+                                                <td>
+                                                    <h5 class="Web" style="font-family: 'Poppins';">
+                                                        &nbsp;&nbsp;&nbsp;{{ $service->service_name }}</h5>
+                                                    @foreach (json_decode($service->tasks) as $task)
+                                                        <p style="font-family: 'Poppins';">{{ $task }}</p>
+                                                    @endforeach
+                                                </td>
+                                                <td class="pricestyling"
+                                                    style="text-align: center; vertical-align: middle;font-family: 'Poppins';font-size: 20px;
+}">
+                                                    {{ $quotes->currency }} {{ $service->amount }}/-</td>
+                                                <td></td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -280,17 +374,17 @@
                         </div>
                     </div>
                     <div class="container">
-                        <div class="row" style="margin-top: 5%;">
+                        <div class="row">
                             <div class="col-md-6" style="font-family: 'Poppins', sans-serif;">
                                 <!-- <h4 class="questionportion">Questions</h4><br>
-                                <p class="email"><b>Email Us :</b>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>info@reblatesols.com</span>
-                                </p>
-                                <p class="email"><b>Call Us :</b>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>0544
-                                        587025</span></p> -->
+                                                <p class="email"><b>Email Us :</b>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>info@reblatesols.com</span>
+                                                </p>
+                                                <p class="email"><b>Call Us :</b>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>0544
+                                                        587025</span></p> -->
                             </div>
-                            <div class="col-md-6 " style="font-family: 'Poppins', sans-serif;">
+                            <div class="col-md-6 " style="font-family: 'Poppins', sans-serif;display: flex;flex-direction: column;justify-content: flex-end;align-items: flex-end;">
                                 <h4 class="AMOUNT">TOTAL AMOUNT &nbsp;&nbsp;&nbsp;&nbsp;<span class="vl"></span><span
                                         style="color: #14213D;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $quotes->currency }}
                                         {{ $quotes->total_amount }}/- </span></h4>
@@ -304,35 +398,41 @@
                             </div>
                         </div>
                     </div>
-                    <div class="container">
-                        <div class="row" style="margin-top: 5%;font-family: 'Poppins', sans-serif;">
+                    <div class="container pb-3">
+                        <div class="row"
+                            style="margin-top: 5%;font-family: 'Poppins', sans-serif;align-items: flex-end;display: flex;">
                             <div class="col-md-6">
                                 <!-- <h4 class="questionportion">Payment Info</h4>
-                                <p class="Sequence"><b>Bank Name :</b>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<span>CitiBank</span>
-                                </p>
-                                <p class="Sequence"><b>Account</b>
-                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>100102658</span>
-                                </p>
-                                <p class="Sequence"><b>A/C Name</b>
-                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>ReblateSolutions
-                                        & Services Provider</span></p>
-                                <p class="Sequence"><b>Branch Code</b>
-                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>248024</span>
-                                </p>
-                                <p class="Sequence"><b>Bank Address</b>
-                                    :&nbsp;&nbsp;&nbsp;&nbsp;<span>2
-                                        Park Street,Sydney NSW 2000</span></p> -->
+                                                <p class="Sequence"><b>Bank Name :</b>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<span>CitiBank</span>
+                                                </p>
+                                                <p class="Sequence"><b>Account</b>
+                                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>100102658</span>
+                                                </p>
+                                                <p class="Sequence"><b>A/C Name</b>
+                                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>ReblateSolutions
+                                                        & Services Provider</span></p>
+                                                <p class="Sequence"><b>Branch Code</b>
+                                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>248024</span>
+                                                </p>
+                                                <p class="Sequence"><b>Bank Address</b>
+                                                    :&nbsp;&nbsp;&nbsp;&nbsp;<span>2
+                                                        Park Street,Sydney NSW 2000</span></p> -->
                             </div>
-                            <div class="col-md-6" style="margin-left: 56%;top: 18px;">
+                            <div class="col-md-6"
+                                style="display: flex; flex-direction:column;  align-items: flex-end;top:50px;padding-bottom:50px;">
                                 <hr class="Divider">
-                                <h4 style="font-family: 'Poppins', sans-serif;color: #14213D;font-size: 18px;">
+                                @if ($quotes->status == "approved")
+                                    <img src="{{ url('stamp.png') }}" alt="" class="stamp-image">
+                                @endif
+
+                                {{-- <h4 style="font-family: 'Poppins', sans-serif;color: #14213D;font-size: 18px;">
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    Authorized Sign</h4>
+                                    Authorized Sign</h4> --}}
                             </div>
                         </div>
                     </div>
-                    <div class="container">
+                    {{-- <div class="container">
                         <div class="row" style="margin-top: 5%;font-family: 'Poppins', sans-serif;color:#14213D">
                             <div class="col-md-4">
                             <svg class="icons" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m21 15.46l-5.27-.61l-2.52 2.52a15.045 15.045 0 0 1-6.59-6.59l2.53-2.53L8.54 3H3.03C2.45 13.18 10.82 21.55 21 20.97z"/></svg> 0544
@@ -353,9 +453,10 @@
                                 <h4>High End Plaza Basement, MB1, Citi Housing jhelum</h4>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
-
+                    <div class="bar"></div>
+                    <div class="barTwo" style="width: 500px;"></div>
                 </div>
             </div> <!-- end col -->
         </div> <!-- end row -->

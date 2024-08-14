@@ -13,6 +13,376 @@
 @endsection
 @section('body')
 
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    .EmpNameStyle {
+        font-size: 30px;
+        color: #fff;
+        font-weight: 600;
+        font-family: 'Poppins';
+    }
+
+    .EmpStyle {
+        font-size: 18px;
+        color: #fca311;
+        font-family: 'Poppins';
+        font-weight: 300
+    }
+
+
+
+
+    .time-list .dash-stats-list {
+        flex-flow: column wrap;
+        flex-grow: 1;
+        padding: 0 15px;
+    }
+
+    .time-list .dash-stats-list h4 {
+        color: #1f1f1f;
+        font-size: 21px;
+        font-weight: 700;
+        line-height: 1.5;
+        margin-bottom: 0;
+    }
+
+    .time-list .dash-stats-list p {
+        color: #777;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.5;
+        margin-bottom: 0;
+        text-transform: uppercase;
+    }
+
+    ul li {
+        list-style: none;
+    }
+
+    .timesheet-right {
+        color: #8E8E8E;
+        font-size: 13px;
+        float: right;
+        margin-top: 7px;
+
+    }
+
+
+    .punch-info .punch-hours {
+        border: 3px solid #fca311;
+
+        max-width: 250px;
+
+        padding: 20px;
+        margin: 0 auto;
+        border-radius: 12px;
+        position: relative;
+        text-align: center;
+    }
+
+
+
+    .punch-hours span {
+        font-weight: 500;
+        transform: translate(-50%, -50%);
+        font-size: 30px;
+        color: #14213d;
+    }
+
+    .view-class-more {
+
+        font-size: 16px;
+        text-align: center;
+        display: block;
+        /* margin: 0px; */
+        margin-top: 17px;
+
+    }
+
+    .timeliner {
+
+        margin: 0 auto;
+        letter-spacing: 0.2px;
+        position: relative;
+        padding-top: 20px;
+        margin-left: 10px;
+        padding-bottom: 0;
+
+        list-style: none;
+        text-align: left;
+
+    }
+
+    @media (max-width: 767px) {
+        .timeliner {
+            max-width: 98%;
+            padding: 25px;
+        }
+    }
+
+    .timeliner h1 {
+        font-weight: 300;
+        font-size: 1.4em;
+    }
+
+    .timeliner h2,
+    .timeliner h3 {
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    .timeliner .event {
+
+        position: relative;
+    }
+
+    @media (max-width: 767px) {
+        .timeliner .event {
+            padding-top: 30px;
+        }
+    }
+
+    .timeliner .event:last-of-type {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: none;
+    }
+
+    .timeliner .event:before,
+    .timeliner .event:after {
+        position: absolute;
+        display: block;
+        top: 0;
+    }
+
+    .timeliner .event:before {
+        left: -207px;
+        content: attr(data-date);
+        text-align: right;
+        font-weight: 100;
+        font-size: 0.9em;
+        min-width: 120px;
+    }
+
+    @media (max-width: 767px) {
+        .timeliner .event:before {
+            left: 0px;
+            text-align: left;
+        }
+    }
+
+    .timeliner .event:after {
+        -webkit-box-shadow: 0 0 0 3px #fca311;
+        box-shadow: 0 0 0 3px #fca311;
+        left: -23.6px;
+        background: #fff;
+        border-radius: 50%;
+        height: 6px;
+        width: 6px;
+        content: "";
+        top: 10px;
+    }
+
+    @media (max-width: 767px) {
+        .timeliner .event:after {
+            left: -31.8px;
+        }
+    }
+
+    .rtl .timeliner {
+        text-align: right;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
+        border-right: 3px solid #727cf5;
+    }
+
+    .rtl .timeliner .event::before {
+        left: 0;
+        right: -170px;
+    }
+
+    .rtl .timeliner .event::after {
+        left: 0;
+        right: -55.8px;
+    }
+
+
+    /* CSS for styling the chart container */
+    #line_chart {
+        width: 100%;
+        height: 400px;
+    }
+
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+
+    }
+
+    .char-count {
+        font-size: 0.8em;
+        color: #666;
+        text-align: right;
+    }
+
+    .popup-content {
+        /* overflow-y: scroll;
+                                                                                                        scroll-behavior: smooth scroll; */
+        display: flex;
+        max-width: 700px;
+        margin: auto auto;
+        position: relative;
+        top: 100px;
+        justify-content: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    }
+
+    .modal-fullscreen {
+        width: 100vw;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .modal-dialog-scrollable {
+        display: flex;
+        max-height: calc(100vh - 60px);
+        /* Adjust as needed based on your modal content */
+        margin-top: 30px;
+        /* Adjust top margin as needed */
+    }
+
+    .embed-responsive {
+        position: relative;
+        display: block;
+        width: 100%;
+        padding-top: 100%;
+        /* This keeps the aspect ratio (height:width) */
+        overflow: hidden;
+    }
+
+    .embed-responsive iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    .closeBtn {
+        position: absolute;
+        top: 25px;
+        right: 15px;
+        cursor: pointer;
+    }
+
+    .active {
+        color: #14213d;
+        border-bottom: 1px solid #fca311;
+    }
+
+    .notification-hover:hover {
+        background: #fca31130;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .to-do-form input,
+    textarea {
+        width: 100%;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .to-do-form textarea {
+        height: 37px;
+        resize: none;
+    }
+
+
+    button {
+        padding: 5px 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+
+    .container {
+        width: 400px;
+        padding: 20px;
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    form {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+        flex: 1;
+        padding: 8px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px 0 0 4px;
+    }
+
+    button {
+        padding: 8px 16px;
+        font-size: 16px;
+        border: none;
+        background-color: #4caf50;
+        color: white;
+        border-radius: 0 4px 4px 0;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    .card {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .card.completed {
+        text-decoration: line-through;
+        opacity: 0.7;
+    }
+</style>
+
     <body data-sidebar="colored">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     @endsection
@@ -20,8 +390,8 @@
         <style>
             .btn-apply {
                 border: 0px;
-                background: rgba(255, 255, 255, 0.5);;
-                color: #fff;
+                background: rgb(2 2 2 / 80%);
+                color: white;
                 padding: 5px 10px;
                 font-size: 10px;
                 text-transform: uppercase;
@@ -39,7 +409,7 @@
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:30px; color:#fff"
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="width:30px; color:white;"
                                         viewBox="0 0 512 512">
                                         <path fill="currentColor"
                                             d="M256 256a112 112 0 1 0-112-112a112 112 0 0 0 112 112m0 32c-69.42 0-208 42.88-208 128v64h416v-64c0-85.12-138.58-128-208-128" />
@@ -50,12 +420,12 @@
 
                                 <div
                                     class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
-                                    <p class="text-light font-size-18 mb-0 fw-bold">Employees</p>
-                                    <h5 class="mb-0 text-light">{{ $emp_count }}
+                                    <p class="text-black font-size-18 mb-0 fw-bold">Employees</p>
+                                    <h5 class="mb-0 text-black">{{ $emp_count }}
                                     </h5>
                                 </div>
-                                <p class=" mb-0 text-truncate" style="color: lightgray" ><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class=" mb-0 text-truncate text-black" style="color: lightgray" ><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p>
                             </div>
 
@@ -71,7 +441,7 @@
                         <div class="d-flex align-items-center position-relative" style="z-index: 10">
                             <div class="avatar-md flex-shrink-0">
                                 <span class="avatar-title bg-subtle-primary text-primary rounded-pill fs-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
                                         <path fill="#fff"
                                             d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0H21.3C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7h42.7C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352H378.7C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z" />
                                     </svg>
@@ -80,13 +450,13 @@
                             <div class="d-flex flex-column ms-2">
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5 ">
-                                    <p class="text-light font-size-18 mb-0 fw-bold"> Clients</p>
-                                    <h5 class="mb-0 text-light">{{ $client_count }}
+                                    <p class="text-black font-size-18 mb-0 fw-bold"> Clients</p>
+                                    <h5 class="mb-0 text-black">{{ $client_count }}
                                     </h5>
                                 </div>
 
-                                <p class="mb-0 text-truncate" style="color: lightgray"><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class="mb-0 text-truncate " style="color:black"><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p>
                             </div>
 
@@ -113,11 +483,11 @@
 
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5">
-                                    <p class="text-light text-truncate font-size-18 mb-0 fw-bold">Projects</p>
-                                    <h5 class="mb-0 text-light">15 </h5>
+                                    <p class="text-black text-truncate font-size-18 mb-0 fw-bold">Projects</p>
+                                    <h5 class="mb-0 text-black">15 </h5>
                                 </div>
-                                <p class="mb-0 text-truncate" style="color: lightgray"><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class="mb-0 text-truncate" style="color: black"><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
                             </div>
 
@@ -145,7 +515,7 @@
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
                                     <input type="text" id="date_range_picker" name="date_range_picker"
-                                        style="width:135px;padding: 5px; background-color:transparent; border:none; color:#fff" />
+                                        style="width:135px;padding: 5px; background-color:transparent; border:none; color:black" />
 
                                 </div>
 
@@ -176,12 +546,12 @@
 
                                 <div
                                     class="flex-grow-1 overflow-hidden justify-content-between d-flex align-items-center gap-5">
-                                    <p class="text-light font-size-18 mb-0 fw-bold">Revenue</p>
-                                    <h5 class="mb-0 text-light">${{ $total_revenue }}
+                                    <p class="text-black font-size-18 mb-0 fw-bold">Revenue</p>
+                                    <h5 class="mb-0 text-black">${{ $total_revenue }}
                                     </h5>
                                 </div>
-                                <p class="mb-0 text-truncate" style="color: lightgray"><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class="mb-0 text-truncate" style="color: black"><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-top-right"></i> 2.8% Increase</span> vs last month</p>
                             </div>
 
@@ -206,13 +576,13 @@
                             <div class="d-flex flex-column ms-2">
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5 ">
-                                    <p class="text-light font-size-18 mb-0 fw-bold"> Salaries</p>
-                                    <h5 class="mb-0 text-light">${{ $usd_pkr_salary }}
+                                    <p class="text-black font-size-18 mb-0 fw-bold"> Salaries</p>
+                                    <h5 class="mb-0 text-black">${{ $usd_pkr_salary }}
                                     </h5>
                                 </div>
 
-                                <p class="mb-0 text-truncate" style="color: lightgray"><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class="mb-0 text-truncate" style="color: black"><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-bottom-left"></i> 7.8% Loss</span> vs last month</p>
                             </div>
 
@@ -235,11 +605,11 @@
 
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex justify-content-between align-items-center gap-5">
-                                    <p class="text-light text-truncate font-size-18 mb-0 fw-bold">Expenses</p>
-                                    <h5 class="mb-0 text-light">${{ $usd_pkr_expenses }} </h5>
+                                    <p class="text-black text-truncate font-size-18 mb-0 fw-bold">Expenses</p>
+                                    <h5 class="mb-0 text-black">${{ $usd_pkr_expenses }} </h5>
                                 </div>
-                                <p class="mb-0 text-truncate" style="color: lightgray"><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class="mb-0 text-truncate" style="color: black"><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
                             </div>
 
@@ -260,12 +630,12 @@
                             <div class="d-flex flex-column ms-2">
                                 <div
                                     class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between gap-5">
-                                    <p class="text-light text-truncate font-size-18 mb-0 fw-bold">Profit</p>
-                                    <h5 class="mb-0 text-light"> ${{ $total_profit }}
+                                    <p class="text-black text-truncate font-size-18 mb-0 fw-bold">Profit</p>
+                                    <h5 class="mb-0 text-black"> ${{ $total_profit }}
                                     </h5>
                                 </div>
-                                <p class="mb-0 text-truncate" style="color: lightgray"><span
-                                        class="badge bg-subtle-primary text-light font-size-12 fw-normal me-1"><i
+                                <p class="mb-0 text-truncate" style="color: black"><span
+                                        class="badge bg-subtle-primary text-black font-size-12 fw-normal me-1"><i
                                             class="mdi mdi-arrow-top-right"></i> 4.6% Growth</span> vs last month</p>
                             </div>
                         </div>
@@ -274,24 +644,677 @@
             </div>
 
         </div>
+
+        @if ($emp_birthday)
+        <script>
+            // Function to create confetti
+            function createConfetti(id) {
+                var conf = "#confetti_"+id;
+                console.log(conf);
+                const confettiContainer = document.querySelector(conf);
+                for (let i = 0; i < 100; i++) {
+                    const confettiPiece = document.createElement('div');
+                    confettiPiece.classList.add('confetti-piece');
+                    confettiPiece.style.width = `${Math.random() * 10 + 5}px`;
+                    confettiPiece.style.height = confettiPiece.style.width;
+                    confettiPiece.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                    confettiPiece.style.top = `${Math.random() * 100}vh`;
+                    confettiPiece.style.left = `${Math.random() * 100}vw`;
+                    confettiPiece.style.opacity = Math.random();
+                    confettiPiece.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    confettiContainer.appendChild(confettiPiece);
+                }
+
+                const style = document.createElement('style');
+                style.textContent = `
+                .confetti-piece {
+                    animation: confetti-fall 5s linear infinite;
+                }
+            `;
+                document.head.appendChild(style);
+            }
+
+
+        </script>
+            @foreach ($emp_birthday as $emp)
+                <section class="birthday-section">
+                    <div class="confetti" id="confetti_{{$emp->id}}"></div>
+                    <div class="title-container">
+                        <div class="typing-container">
+                            <h1 class="typing-text">Happy Birthday!</h1>
+                        </div>
+                        <p>Wishing you a day filled with love, joy, and cake!</p>
+                    </div>
+                    <div class="content-wrapper">
+                        <div class="left-section">
+                            @if ($emp->Emp_Image && file_exists($emp->Emp_Image))
+                            <img src="{{$emp->Emp_Image}}" alt="Employee" class="employee-img">
+                            @else
+                            <img src="{{url('user.png')}}" alt="Employee" class="employee-img">
+                            @endif
+
+                            <div class="employee-name">{{$emp->Emp_Full_Name}}</div>
+                        </div>
+                        <div style="color: #d32f2f;font-size:22px;">{{ \Carbon\Carbon::parse($emp->emp_birthday)->format('d F Y') }}</div>
+                        <div class="right-section">
+                            <div class="cake-icon"></div>
+                        </div>
+                    </div>
+                    <script>
+                        // Initialize animations
+                        createConfetti({{$emp->id}});
+                    </script>
+                </section>
+            @endforeach
+
+            <style>
+                .birthday-section {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    background: linear-gradient(to bottom, #ffeb3b, #fbc02d);
+                    position: relative;
+                    border-radius: 10px;
+                    height: 300px;
+                    /* Set fixed height */
+                    width: 100%;
+                    overflow: hidden;
+                    /* Ensure particles stay within the section */
+                    padding: 80px;
+                    /* Add some padding */
+                    margin-bottom: 20px;
+                }
+
+                .title-container {
+                    margin-bottom: 10px;
+                    /* Space between title and content */
+                }
+
+                .typing-container {
+                    display: inline-block;
+                    position: relative;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    /* Prevents text wrapping */
+                }
+
+                h1 {
+                    color: #d32f2f;
+                    font-size: 2em;
+                    /* Adjusted size for better fit */
+                    margin: 0;
+                    font-weight: bold;
+                    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+                    border-right: 2px solid #d32f2f;
+                    /* Cursor effect */
+
+                }
+
+
+
+                p {
+                    font-size: 1.5em;
+                    /* Adjusted size for better fit */
+                    color: #555;
+                    margin: 0.5em 0;
+                    font-weight: 300;
+                }
+
+                .content-wrapper {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 100%;
+                    height: 100%;
+                    margin-bottom:30px;
+                }
+
+                .left-section,
+                .right-section {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .left-section {
+                    flex: 1;
+                    text-align: center;
+                }
+
+                .right-section {
+                    flex: 1;
+                    text-align: center;
+                }
+
+                .employee-img {
+                    width: 150px;
+                    /* Adjusted size */
+                    height: 150px;
+                    /* Adjusted size */
+                    border-radius: 50%;
+                    margin: 10px auto;
+                    object-fit: cover;
+                    /* border: 3px solid #fff;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); */
+                }
+
+                .employee-name {
+                    font-size: 1em;
+                    /* Adjusted size for better fit */
+                    color: #333;
+                    font-weight: 500;
+                    margin-top: 5px;
+                }
+
+                .cake-icon {
+                    width: 80px;
+                    /* Adjusted size */
+                    height: 80px;
+                    /* Adjusted size */
+                    background: #f44336;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: white;
+                    font-size: 1.5em;
+                    /* Adjusted size */
+                    line-height: 80px;
+                    /* Adjusted line height */
+                    margin: 10px auto;
+                    position: relative;
+                    animation: bounce 1.5s infinite, pulse 1s infinite;
+                }
+
+                .cake-icon::before {
+                    content: "🎂";
+                    font-size: 1.5em;
+                    /* Adjusted size */
+                }
+
+                .confetti {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    overflow: hidden;
+                }
+
+                .balloon {
+                    position: absolute;
+                    width: 40px;
+                    /* Adjusted size */
+                    height: 60px;
+                    /* Adjusted size */
+                    background-color: #ff5722;
+                    border-radius: 50% 50% 45% 45%;
+                    animation: float 10s ease-in-out infinite, sway 4s ease-in-out infinite, spin 10s linear infinite;
+                }
+
+                .balloon::after {
+                    content: "";
+                    position: absolute;
+                    width: 2px;
+                    height: 30px;
+                    /* Adjusted length */
+                    background-color: #333;
+                    bottom: -30px;
+                    /* Adjusted position */
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+
+                .confetti-piece {
+                    position: absolute;
+                    border-radius: 50%;
+                    background: radial-gradient(circle, rgba(255, 223, 51, 0.7), transparent);
+                    pointer-events: none;
+                }
+
+                @keyframes float {
+                    0% {
+                        transform: translateY(0);
+                    }
+
+                    100% {
+                        transform: translateY(-100vh);
+                    }
+                }
+
+                @keyframes bounce {
+
+                    0%,
+                    100% {
+                        transform: translateY(0);
+                    }
+
+                    50% {
+                        transform: translateY(-10px);
+                        /* Adjusted bounce height */
+                    }
+                }
+
+                @keyframes pulse {
+
+                    0%,
+                    100% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+
+                    50% {
+                        transform: scale(1.1);
+                        opacity: 0.8;
+                    }
+                }
+
+                @keyframes sway {
+
+                    0%,
+                    100% {
+                        transform: translateX(0);
+                    }
+
+                    50% {
+                        transform: translateX(10px);
+                        /* Adjusted sway distance */
+                    }
+                }
+
+                @keyframes spin {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+
+                @keyframes confetti-fall {
+                    0% {
+                        transform: translateY(-100vh) rotate(0);
+                    }
+
+                    100% {
+                        transform: translateY(100vh) rotate(360deg);
+                    }
+                }
+            </style>
+
+        @endif
+
         <div class="row">
 
-            <div class="col-xl-7">
+            {{-- <div class="col-xl-7">
                 <div class="card">
                     <div class="card-body pt-2">
                         <div class="card-header border-0 align-items-center d-flex" >
                             <h4 class="card-title mb-0 flex-grow-1">Overall Performance </h4>
                         </div>
-                        {{-- <div id="chart_div" style="width: 100%; height: 250px; position: relative; left:-15px;"></div> --}}
+                          <div id="chart_div" style="width: 100%; height: 250px; position: relative; left:-15px;"></div>
                         <canvas id="myChartPerformance"
                             style="width:100%;width: 730px;
                         display: block;
                         height: 365px;
                         padding: 25px; color:#fff;"></canvas>
-                        <!-- end table-responsive -->
+
                     </div>
                 </div>
-            </div>
+            </div> --}}
+
+                <div class="col-xl-7">
+                    <div class="card" style="box-shadow: none">
+                        <div class="card-body"
+                            style="background-color: #fff; backdrop-filter: none; border:1px solid #c7c7c7; height: 450px; overflow-y: auto;">
+                            <h3 class="EmpNameStyle mb-1" style="color: #14213d; font-weight: 800">Notfications</h3>
+                            <div class="mt-3">
+                                <ul
+                                    class="d-flex gap-4 align-items-center list-group list-group-flush account-settings-links flex-row">
+                                    <li style="list-style: none"><a href="#all"
+                                            style="font-size:15px;font-family:'Poppins'; font-weight:500; color:#14213d"
+                                            data-toggle="list" class="empMenu active">All</a> </li>
+                                    <li style="list-style: none"><a href="#tasks"
+                                            style="font-size:15px;font-family:'Poppins'; font-weight:500; color:#14213d"
+                                            data-toggle="list" class="empMenu">Tasks</a> </li>
+                                    <li style="list-style: none"><a href="#to-do"
+                                            style="font-size:15px;font-family:'Poppins'; font-weight:500; color:#14213d"
+                                            data-toggle="list" class="empMenu">To Do</a> </li>
+                                </ul>
+                            </div>
+                            <div class="tab-content">
+
+                                {{-- all notifications  --}}
+                                <div class="container-fluid tab-pane fade active show px-0"
+                                    style="border-bottom: none; min-height:350px" id="all">
+                                    {{-- notifications  --}}
+
+                                    @if ($notifications != null && $notifications->isNotEmpty())
+                                        @foreach ($notifications as $notify)
+                                            <div class="notification-hover mt-2 p-2"
+                                                style="border-bottom: 1px solid lightgray"
+                                                id="notifications_{{ $notify->id }}">
+                                                <div class="d-flex">
+                                                    <a href="{{ $notify->link }}">
+                                                        <div class="avatar-sm me-3">
+
+                                                                <img class="img-fluid rounded-circle"
+                                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                                    src="{{ url('user.png') }}">
+
+                                                        </div>
+                                                        <div class="flex-1">
+                                                            <h4 class="mb-1 EmpNameStyle"
+                                                                style="color: #14213d;font-weight: 500; font-size:20px">
+                                                                {{ $notify->title }}</h4>
+                                                            <div class="font-size-15 text-muted d-flex gap-2">
+                                                                <p class="mb-0 "><i class="mdi mdi-clock-outline"></i>
+                                                                    {{ date('d F Y', strtotime($notify->date)) }}
+                                                                    {{ $notify->time }}</p>
+
+                                                            </div>
+                                                            <p class="mb-1 text-muted  ">{{ $notify->message }}</p>
+                                                            <a href="javascript:void()"
+                                                                onclick="markAsRead({{ $notify->id }},'all')">mark as
+                                                                read</a>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <div class="position-absolute" style="top: 50%; left: 30%;">
+                                            <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
+                                                No Notifications</h4>
+                                        </div>
+                                    @endif
+
+
+
+                                </div>
+
+                                <div class="container-fluid tab-pane fade show px-0"
+                                    style="border-bottom: none;min-height:350px" id="tasks">
+                                    {{-- tasks notifications  --}}
+
+                                    @if ($tasks_notifications != null && $tasks_notifications->isNotEmpty())
+                                        @foreach ($tasks_notifications as $notify)
+                                            <div class="notification-hover mt-2 p-2"
+                                                style="border-bottom: 1px solid lightgray"
+                                                id="notifications_tasks_{{ $notify->id }}">
+                                                <div class="d-flex">
+                                                    <a href="{{ $notify->link }}">
+                                                        <div class="avatar-sm me-3">
+
+                                                                <img class="img-fluid rounded-circle"
+                                                                    style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                                    src="{{ url('user.png') }}">
+
+                                                        </div>
+                                                        <div class="flex-1">
+                                                            <h4 class="mb-1 EmpNameStyle"
+                                                                style="color: #14213d;font-weight: 500; font-size:20px">
+                                                                {{ $notify->title }}</h4>
+                                                            <div class="font-size-15 text-muted  d-flex gap-2">
+                                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                                                                    {{ date('d F Y', strtotime($notify->date)) }}
+                                                                    {{ $notify->time }}</p>
+
+                                                            </div>
+                                                            <p class="mb-1 text-muted">{{ $notify->message }}</p>
+                                                            <a href="javascript:void()"
+                                                                onclick="markAsRead({{ $notify->id }},'tasks')">mark as
+                                                                read</a>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <div class="position-absolute" style="top: 50%; left: 25%;">
+                                            <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
+                                                No Tasks Notifications</h4>
+                                        </div>
+                                    @endif
+
+
+                                </div>
+
+                                <div class="tab-pane fade px-0 show" style="border-bottom: none; min-height:350px"
+                                    id="to-do">
+                                    <div class="mt-3">
+                                        <div>
+                                            <h1>To-Do List</h1>
+                                            <form id="todo-form">
+                                                <input type="text" id="task-title" placeholder="Enter task title"
+                                                    required>
+                                                <input type="hidden" id="user_code"
+                                                    value="{{ auth()->user()->user_code }}">
+                                                <input type="hidden" id="user_name"
+                                                    value="{{ auth()->user()->user_name }}">
+                                                <button type="submit">Add Task</button>
+                                            </form>
+                                            <div id="task-list">
+                                                @if ($latest_to_do != null)
+                                                    @foreach ($latest_to_do as $item)
+                                                        <div class="card" data-id="{{ $item->id }}">
+                                                            <h3>{{ $item->task_title }}</h3>
+                                                            <p>Date: {{ $item->date }}</p>
+                                                            <p>Time: {{ $item->time }}</p>
+                                                            <input type="hidden" class="task-id"
+                                                                value="{{ $item->id }}">
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                       document.addEventListener('DOMContentLoaded', function() {
+                                                const taskList = document.getElementById('task-list');
+
+                                                // Handle click on task cards to update status
+                                                taskList.addEventListener('click', function(event) {
+                                                    const task = event.target.closest('.card');
+                                                    if (task) {
+                                                        const taskId = task.getAttribute('data-id');
+                                                        const isCompleted = task.classList.contains('completed');
+                                                        const newStatus = isCompleted ? 'pending' : 'completed';
+
+                                                        // Log the current task ID and new status
+                                                        console.log('Updating Task ID:', taskId, 'New Status:', newStatus);
+
+                                                        // Send a request to update the task status
+                                                        fetch('/update-task-status', {
+                                                            method: 'POST',
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                                'Accept': 'application/json',
+                                                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                                            },
+                                                            body: JSON.stringify({
+                                                                id: taskId,
+                                                                status: newStatus
+                                                            })
+                                                        })
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            console.log('Response Data:', data);
+                                                            if (data.success) {
+                                                                // Toggle completed class and update styling
+                                                                task.classList.toggle('completed');
+                                                                updateTaskStyle(task, !isCompleted); // Update style based on new status
+                                                            } else {
+                                                                console.error('Failed to update status:', data);
+                                                            }
+                                                        })
+                                                        .catch(error => console.error('Error:', error));
+                                                    }
+                                                });
+
+                                                // Handle task submission
+                                                const form = document.getElementById('todo-form');
+                                                form.addEventListener('submit', function(event) {
+                                                    event.preventDefault();
+
+                                                    const taskTitleInput = document.getElementById('task-title');
+                                                    const taskTitle = taskTitleInput.value.trim();
+                                                    const userNameInput = document.getElementById('user_name');
+                                                    const user_name = userNameInput.value.trim();
+                                                    const userCodeInput = document.getElementById('user_code');
+                                                    const user_code = userCodeInput.value.trim();
+
+                                                    if (taskTitle) {
+                                                        fetch('/save-to-do-task', {
+                                                            method: 'POST',
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                                'Accept': 'application/json',
+                                                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                                            },
+                                                            body: JSON.stringify({
+                                                                title: taskTitle,
+                                                                userName: user_name,
+                                                                userCode: user_code,
+                                                                date: getCurrentDate(),
+                                                                time: getCurrentTime()
+                                                            })
+                                                        })
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            console.log('Response Data:', data);
+                                                            if (data.id) {
+                                                                const task = document.createElement('div');
+                                                                task.className = 'card';
+                                                                task.setAttribute('data-id', data.id);
+                                                                task.innerHTML = `
+                                                                    <h3>${taskTitle}</h3>
+                                                                    <p class="task-date">Date: ${getCurrentDate()}</p>
+                                                                    <p class="task-time">Time: ${getCurrentTime()}</p>
+                                                                    <input type="hidden" class="task-id" value="${data.id}">
+                                                                `;
+
+                                                                // Append new task to the task list
+                                                                taskList.insertBefore(task, taskList.firstChild);
+                                                                taskTitleInput.value = ''; // Reset the input field
+                                                            }
+                                                        })
+                                                        .catch(error => console.error('Error:', error));
+                                                    } else {
+                                                        alert('Please enter a task title.');
+                                                    }
+                                                });
+
+                                                // Function to get the current date
+                                                function getCurrentDate() {
+                                                    const now = new Date();
+                                                    const options = {
+                                                        weekday: 'long',
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric'
+                                                    };
+                                                    return now.toLocaleDateString('en-US', options);
+                                                }
+
+                                                // Function to get the current time
+                                                function getCurrentTime() {
+                                                    const now = new Date();
+                                                    return now.toLocaleTimeString('en-US');
+                                                }
+
+                                                // Function to update task style based on status
+                                                function updateTaskStyle(task, isCompleted) {
+                                                    const title = task.querySelector('h3');
+                                                    const date = task.querySelector('.task-date');
+                                                    const time = task.querySelector('.task-time');
+
+                                                    if (isCompleted) {
+                                                        title.style.textDecoration = 'line-through';
+                                                        date.style.textDecoration = 'line-through';
+                                                        time.style.textDecoration = 'line-through';
+                                                        title.style.color = '#aaa'; // Optional: Change color for completed tasks
+                                                        date.style.color = '#aaa';
+                                                        time.style.color = '#aaa';
+                                                    } else {
+                                                        title.style.textDecoration = 'none';
+                                                        date.style.textDecoration = 'none';
+                                                        time.style.textDecoration = 'none';
+                                                        title.style.color = 'black'; // Reset color for pending tasks
+                                                        date.style.color = 'black';
+                                                        time.style.color = 'black';
+                                                    }
+                                                }
+                                            });
+
+                                    </script>
+
+
+
+
+                                    {{-- <div class="position-absolute" style="top: 50%; left: 25%;">
+                                            <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
+                                                No Tasks </h4>
+                                        </div> --}}
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                            <script>
+                    function markAsRead(id, str) {
+                        if (str === "all") {
+                            var not = "notifications_" + id;
+                        }
+
+                        if (str === "tasks") {
+                            var not = "notifications_tasks_" + id;
+                        }
+
+                        var dc = document.getElementById(not).style.display = "none";
+
+                        // Get CSRF token from somewhere (meta tag or inline assignment)
+                        var csrfToken = "{{ csrf_token() }}"; // Ensure this is correctly populated
+
+                        // Make an AJAX request to mark notification as read
+                        fetch('/mark-as-read', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': csrfToken
+                                },
+                                body: JSON.stringify({
+                                    id: id
+                                })
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                console.log('Notification marked as read:', data);
+                                // Handle success
+                            })
+                            .catch(error => {
+                                console.error('Error marking notification as read:', error);
+                                // Handle error
+                            });
+                    }
+                </script>
+
             <div class="col-xl-5">
                 <div class="card">
                     <div class="card-body pt-0">
@@ -380,7 +1403,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Total Statistics</h4>
+                        <h4 class="card-title text-black mb-0 flex-grow-1">Total Statistics</h4>
                     </div>
                     <div class="card-body pt-2">
                         <div class="row mt-3">
@@ -500,7 +1523,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Tasks</h4>
+                        <h4 class="card-title text-dark mb-0 flex-grow-1">Tasks</h4>
 
                     </div>
                     <div class="card-body pt-2">
@@ -570,7 +1593,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Task Report</h4>
+                        <h4 class="card-title text-black mb-0 flex-grow-1">Task Report</h4>
                     </div>
                     <div class="card-body pt-2">
                         <div class="table-responsive simplebar-scrollable-y simplebar-scrollable-x" data-simplebar="init"
@@ -735,7 +1758,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Projects</h4>
+                        <h4 class="card-title text-black mb-0 flex-grow-1">Projects</h4>
                     </div>
                     <div class="card-body pt-2">
                         <div class="table-responsive simplebar-scrollable-y simplebar-scrollable-x" data-simplebar="init"
@@ -895,7 +1918,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
-                        <h4 class="card-title mb-0 flex-grow-1">Project Report</h4>
+                        <h4 class="card-title text-black mb-0 flex-grow-1">Project Report</h4>
                     </div>
                     <div class="card-body pt-2">
                         <div class="table-responsive simplebar-scrollable-y simplebar-scrollable-x" data-simplebar="init"
@@ -1655,4 +2678,10 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="{{ URL::asset('build/js/pages/form-element.init.js') }}"></script>
     @endsection

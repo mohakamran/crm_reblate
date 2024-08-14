@@ -29,6 +29,9 @@
         }
     </style>
 
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <body data-sidebar="colored">
     @endsection
     @section('content')
@@ -42,7 +45,8 @@
                         @if (session('message'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 {{ session('message') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
                             </div>
                         @elseif(session('error'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -211,6 +215,24 @@
                             </div>
                         </div>
 
+                        @if (auth()->user()->user_type === "manager")
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <label for="">Select Admin </label>
+                                    <p for="">selected admin will approve/decline quotation proposal. </p>
+                                    <select name="admin_select" class="form-control" id="exampleSelect">
+                                        @foreach ($users as $user)
+                                            <option value="{{$user->user_code}}">{{$user->user_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            @error('admin_select')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                        @endif
+
+
                         <div class="form-group mt-4">
                             <input type="submit" class="reblateBtn p-2" value="Send for Approval">
                         </div>
@@ -219,6 +241,13 @@
             </div> <!-- end col -->
         </div> <!-- end row -->
         <script>
+            $(document).ready(function() {
+                $('#exampleSelect').select2({
+                    placeholder: 'Select an option',
+                    allowClear: true
+                });
+            });
+
             // Function to save services and tasks to sessionStorage
             function saveServicesToSession() {
                 var services = [];
@@ -547,4 +576,5 @@
     @section('scripts')
         <!-- App js -->
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @endsection

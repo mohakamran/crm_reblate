@@ -10,20 +10,24 @@ class TaskController extends Controller
 {
     public function updateStatus(Request $request)
     {
-        $updated = DB::table('to_do_list')
-                     ->where('id', $request->id)
-                     ->update(['status' => $request->status]);
 
+        // Update the task status in the database
+        $updated = DB::table('to_do_list')
+                    ->where('id', $request->id)
+                    ->update(['status' => $request->status]);
+
+        // Check if the update was successful
         if ($updated) {
             return response()->json(['success' => true]);
         }
+
         return response()->json(['success' => false], 404);
     }
     // emmployee adds today tasks completed
     public function todayTaskAdd(Request $request) {
         $tasks = $request->input('tasks');
         $emp_id = auth()->user()->user_code;
-        $date  = date('y-m-d');
+        $date  = date('Y-m-d');
         foreach ($tasks as $task) {
             DB::table('tasks')->insert([
                 'emp_id' => $emp_id,

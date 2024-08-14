@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\SecurityController;
 
+use App\Http\Controllers\QuotationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -70,7 +72,17 @@ Route::group(['middleware' => 'admin'], function () {
     // notifications page
     require_once __DIR__.'/custom-routes/notifications.php';
     // quotation page
-    require_once __DIR__.'/custom-routes/quotation.php';
+    // require_once __DIR__.'/custom-routes/quotation.php';
+
+
+    Route::middleware('AdminManager')->group(function () {
+        Route::get('/view-quotations', [QuotationController::class, 'index']);
+        Route::get('/create-quotation', [QuotationController::class, 'createQuotation']);
+        Route::post('/create-quotation', [QuotationController::class, 'saveQuotation']);
+        Route::get('/view-quotation/{id}', [QuotationController::class, 'viewQuotation']);
+        Route::get('/del-quotation/{id}', [QuotationController::class, 'delQuotation']);
+        Route::get('/send-quotation/{id}/{status}', [QuotationController::class, 'sendQuotation']);
+    });
 
     //google 2fa
     // Route::get('/google-2fa',[SecurityController::class,'google2FA']);

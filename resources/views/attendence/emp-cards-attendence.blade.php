@@ -497,10 +497,12 @@
                                                                 $attendence_id = $attendanceRecord->id;
                                                             }
 
-                                                            $leaveRecord = DB::table('leaves')
-                                                                ->where('emp_code', $employee->Emp_Code)
+                                                            $leaveRecord = DB::table('emp_leaves_dates')
+                                                                ->where('emp_id', $employee->Emp_Code)
                                                                 ->whereDate('date', $day)
                                                                 ->first();
+
+
 
                                                             // Get the day name
                                                             $dayName = Carbon\Carbon::parse($day)->format('l');
@@ -584,7 +586,9 @@
                                                                     <span class="text-white rounded-pill"
                                                                         style="padding: 5px 8px;background-color: #0D6EFD">W</span>
                                                                 </div>
-                                                            @elseif ($leaveRecord && $leaveRecord->status == 'approved')
+                                                                {{-- @elseif ($leaveRecord && $leaveRecord->status == 'approved') --}}
+
+                                                            @elseif ($leaveRecord)
                                                                 <!-- Display Leave indication -->
                                                                 <div style="margin-left: 10px;">
                                                                     <span class="text-white rounded-pill bg-danger"
@@ -605,7 +609,7 @@
 
 
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="exampleModal_{{ $attendence_id }}"
+                                                        <div class="modal" id="exampleModal_{{ $attendence_id }}"
                                                             tabindex="-1" role="dialog"
                                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered modal-lg"

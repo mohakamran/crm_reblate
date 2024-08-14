@@ -17,9 +17,11 @@
     // Route::get('/view-attendence-emp', [AttendenceController::class, 'viewAttendanceEmployee']);
 
 
-    Route::post('/apply-for-leave', [AttendenceController::class, 'empApplyForLeave'])->name('apply-for-leave');
+    Route::match(['get', 'post'],'/apply-for-leave', [AttendenceController::class, 'empApplyForLeave'])->name('apply-for-leave');
 
     Route::get('/leave-records', [AttendenceController::class, 'empLeaveRecords'])->name('leaves.record');
+    Route::get('/update-leave/{id}', [AttendenceController::class, 'updateLeaves']);
+    Route::post('/update-leave/{id}', [AttendenceController::class, 'updateLeavesSave']);
 
     Route::post('/search-emp-leaves', [AttendenceController::class, 'empSearchRecords']);
     Route::post('/show-update-attendence-form', [AttendenceController::class, 'showUpdateAttendenceForm']);
@@ -35,5 +37,5 @@
     // Route::post('/save-attendance', [AttendanceController::class, 'saveAttendence'])->name('save.attendance');
     // attendence time sheets
     Route::get('/attendence-time-sheet',[AttendenceController::class,'viewTimeSheet']);
-    
+
     Route::post('/search-emp-attendence', [AttendenceController::class, 'searchEmpAttendenceAdmin'])->name('view-attendence')->middleware('checkUserRole');

@@ -11,6 +11,13 @@ use Carbon\Carbon;
 
 class VacationController extends Controller
 {
+    public function delFunction($id) {
+        $find = DB::table('holidays')->where('id',$id)->first();
+        if($find) {
+            DB::table('holidays')->where('id',$id)->delete();
+        }
+        return response()->json(['success' => true]);
+    }
     // index page
     public function index() {
         $holidays = DB::table('holidays')->orderBy('id','desc')->get();

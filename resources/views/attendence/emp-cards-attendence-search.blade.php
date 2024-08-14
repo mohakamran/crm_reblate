@@ -502,8 +502,8 @@
                                                                 $attendence_id = $attendanceRecord->id;
                                                             }
 
-                                                            $leaveRecord = DB::table('leaves')
-                                                                ->where('emp_code', $employee->Emp_Code)
+                                                            $leaveRecord = DB::table('emp_leaves_dates')
+                                                                ->where('emp_id', $employee->Emp_Code)
                                                                 ->whereDate('date', $day)
                                                                 ->first();
 
@@ -589,7 +589,7 @@
                                                                     <span class="text-white rounded-pill font-size-10"
                                                                         style="padding: 3px 5px;background-color: #0D6EFD">W</span>
                                                                 </div>
-                                                            @elseif ($leaveRecord && $leaveRecord->status == 'approved')
+                                                            @elseif ($leaveRecord)
                                                                 <!-- Display Leave indication -->
                                                                 <div >
                                                                     <span class="text-white rounded-pill font-size-10"

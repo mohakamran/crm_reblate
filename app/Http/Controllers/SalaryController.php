@@ -16,11 +16,11 @@ use GuzzleHttp\Client as GuzzleClient;
 use DB;
 
 use Storage;
-
+use PDF;
 
 
 use Carbon\Carbon;
-use PDF;
+
 
 class SalaryController extends Controller
 {
@@ -728,7 +728,7 @@ class SalaryController extends Controller
         });
         $ConvretCurrencyBonus = $this->getExchangeRate($totalBonus);
         $usd_pkr_salary_Bonus = number_format($ConvretCurrencyBonus,2);
-       
+
         $startDate = Carbon::now()->subMonth()->startOfMonth(); // Start of previous month
         $endDate = Carbon::now()->subMonth()->endOfMonth();     // End of previous month
 
@@ -919,7 +919,7 @@ class SalaryController extends Controller
         }
         return view('errors.404');
     }
-    
+
     //get exchange rate prices
     public function getExchangeRate($amount) {
         $client = new GuzzleClient(); // Use the alias GuzzleClient

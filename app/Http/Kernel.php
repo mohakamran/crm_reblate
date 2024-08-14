@@ -74,6 +74,7 @@ class Kernel extends HttpKernel
         'SalaryCheck' => \App\Http\Middleware\SalaryCheck::class,
         'ReportsCheck' => \App\Http\Middleware\ReportsCheck::class,
         'AdminCheck' => \App\Http\Middleware\AdminCheck::class,
-        'AdminUser' => \App\Http\Middleware\AdminUser::class
+        'AdminUser' => \App\Http\Middleware\AdminUser::class,
+        'AdminManager' => \App\Http\Middleware\AdminManager::class,
     ];
 }
