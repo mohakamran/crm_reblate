@@ -624,6 +624,7 @@ public function searchDateManagerHomePage(Request $req) {
 
 
         $check_emp = DB::table('users')->where('user_code',$request->employee_code)->first();
+        // dd($check_emp);
         if($check_emp!=null && $check_emp->user_type == "manager") {
 
              // $credentials = $request->only('user_email', 'password');
@@ -820,15 +821,17 @@ public function searchDateManagerHomePage(Request $req) {
             ->whereMonth('date', $currentMonth)
             ->whereYear('date', $currentYear)
             ->where('status', 'approved')
-            ->get();
+            ->sum('totalNumber');
 
-        if ($total_leaves->isEmpty()) {
-            $total_leaves = 0;
-        } else {
-            $total_leaves = $total_leaves->count();
-        }
+            $total_leaves = DB::table('leaves')
+            ->where('emp_code', $user_code)
+            ->where('status', 'pending')
+            ->whereYear('date', $currentYear)
+            ->whereMonth('date', $currentMonth)
+            ->sum('totalNumber');
 
-        return $total_leaves;
+
+        return $total_leaves ?? 0;
     }
     // get total pending
     public function totalPending() {
@@ -838,19 +841,13 @@ public function searchDateManagerHomePage(Request $req) {
 
          $user_code = auth()->user()->user_code;
          $total_leaves = DB::table('leaves')
-             ->where('emp_code', $user_code)
-             ->whereMonth('date', $currentMonth)
-             ->whereYear('date', $currentYear)
-             ->where('status', 'pending')
-             ->get();
+        ->where('emp_code', $user_code)
+        ->where('status', 'pending')
+        ->whereYear('date', $currentYear)
+        ->whereMonth('date', $currentMonth)
+        ->sum('totalNumber');
 
-         if ($total_leaves->isEmpty()) {
-             $total_leaves = 0;
-         } else {
-             $total_leaves = $total_leaves->count();
-         }
-
-         return $total_leaves;
+         return $total_leaves ?? 0;
     }
     // attendence report
     public function getAttendeceReport() {
@@ -1217,14 +1214,23 @@ public function searchDateManagerHomePage(Request $req) {
             $salary_month = date('d/m/y');
 
 
+            $getTotalPresent = $this->getTotalPresent($user_code,$salary_month);
+            $total_absents = $getTotalPresent - $total_leaves;
+            $getTotalPresent = $getTotalPresent - $total_leaves;
+
+
              $total_leaves = $this->getTotalLeaves($user_code,$salary_month);
-            //  dd("end here");
+            //  dd($total_leaves);
 
              $total_absents = $this->getTotalAbsents($user_code,$salary_month);
-             $total_days = $this->getNumberOfDays($salary_month);
-            //  dd($total_days);
 
-             $getTotalPresent = $this->getTotalPresent($user_code,$salary_month);
+            //  dd($total_absents);
+             $total_days = $this->getNumberOfDays($salary_month);
+            //  dd($total_absents);
+
+
+
+            //  dd($getTotalPresent);
 
              $total_attendence_rate = 0;
 
@@ -1261,14 +1267,14 @@ public function searchDateManagerHomePage(Request $req) {
             } else if($check_shift_time->Emp_Shift_Time == "Night") {
                 $files = DB::table('uploads')->whereIn('shift', ['Night', 'Both'])->orderBy('id','desc')->limit(2)->get();
             }
-            // dd($files);
+
+
 
             $notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('user_id',auth()->user()->user_code)->get();
             $tasks_notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('type','task')->where('user_id',auth()->user()->user_code)->get();
             $to_do_tasks_notifications = DB::table('notifications')->where('status','unread')->orderBy('id','desc')->where('type','to-do-task')->where('user_id',auth()->user()->user_code)->get();
             // dd($notifications);
             $latest_to_do = DB::table('to_do_list')->where('user_code',auth()->user()->user_code)->orderBy('id','desc')->where('status','pending')->get();
-
 
 
             $data = [
@@ -1285,7 +1291,7 @@ public function searchDateManagerHomePage(Request $req) {
                 'shift_emp_time' => $shift_emp_time,
                 'total_pending' => $total_pending,
                 'total_work_days_in_month'=>$total_work_days_in_month,
-                'absent_days' => $absent_days,
+                'absent_days' => $total_absents,
                 'total_present_day' => $total_present_day,
                  'salary_deduct' => $salary_deduct,
                 'emp_count' => $emp_count,
@@ -1640,14 +1646,19 @@ public function searchDateManagerHomePage(Request $req) {
             $salary_month = date('d/m/y');
 
 
+            $getTotalPresent = $this->getTotalPresent($user_code,$salary_month);
+            $total_absents = $getTotalPresent - $total_leaves;
+            $getTotalPresent = $getTotalPresent - $total_leaves;
+
+
              $total_leaves = $this->getTotalLeaves($user_code,$salary_month);
-            //  dd("end here");
+            //  dd($total_leaves);
 
              $total_absents = $this->getTotalAbsents($user_code,$salary_month);
-             $total_days = $this->getNumberOfDays($salary_month);
-            //  dd($total_days);
 
-             $getTotalPresent = $this->getTotalPresent($user_code,$salary_month);
+
+             $total_days = $this->getNumberOfDays($salary_month);
+            //  dd($total_absents);
 
              $total_attendence_rate = 0;
 
@@ -1711,7 +1722,7 @@ public function searchDateManagerHomePage(Request $req) {
                 'salary_deduct' => $salary_deduct,
                 'usd_pkr_expenses' => $usd_pkr_expenses,
                 'usd_pkr_salary' => $usd_pkr_salary,
-                'absent_days' => $absent_days,
+                'absent_days' => $total_absents,
                 'total_present_day' => $total_present_day,
                 'emp_count' => $emp_count,
                 'client_count' => $client_count,
@@ -1919,7 +1930,7 @@ public function getHolidaysUpcoming()
     public function getTotalLeaves($emp_code, $month) {
         // Parse the month string into a Carbon instance
         $date = Carbon::createFromFormat('d/m/Y', $month);
-        $date = $date->subMonth();
+        // $date = $date->subMonth();
 
 
 
@@ -1929,30 +1940,36 @@ public function getHolidaysUpcoming()
         $year = $date->year;
         $currentYear = strlen($year) === 2 ? '20' . $year : $year;
         $month = $date->month;
+        // dd($emp_code, $month);
 
         // Get the first and last day of the month
         $firstDayLastMonth = Carbon::createFromDate($currentYear, $month, 1)->startOfMonth()->toDateString();
         $lastDayLastMonth = Carbon::createFromDate($currentYear, $month, 1)->endOfMonth()->toDateString();
-        //  dd($currentYear);
+        //  dd($firstDayLastMonth, $lastDayLastMonth);
 
 
         $total = 0;
 
         // Get all attendance records for the last month
         $getNumberOfDays = DB::table('leaves')
-            ->where('emp_code', $emp_code)
-            ->whereBetween('date', [$firstDayLastMonth, $lastDayLastMonth])
-            ->where('status','approved')
-            ->count();
+        ->where('emp_code', $emp_code)
+        ->where('status', 'approved')
+        ->whereBetween('date', [$firstDayLastMonth, $lastDayLastMonth])
+        ->sum('totalNumber'); // Use the 'sum' method directly on the column
+
+        // dd($getNumberOfDays);
+
+
+
         if($getNumberOfDays != null) {
-            $total = $getNumberOfDays;
+            $total = (int)$getNumberOfDays;
         }
-        return $total;
+        return $total ?? 0;
     }
 
     public function getTotalPresent($emp_code,$month) {
         $date = Carbon::createFromFormat('d/m/Y', $month);
-        $date = $date->subMonth();
+        // $date = $date->subMonth();
         $year = $date->year;
         $month = $date->month;
 
@@ -1970,47 +1987,40 @@ public function getHolidaysUpcoming()
     }
 
     public function getTotalAbsents($emp_code,$month) {
-        $get_total = $this->getNumberOfDays($month);
-        $getTotalLeaves = $this->getTotalLeaves($emp_code,$month);
+        // Get the current date
+    $currentDate = new \DateTime();
+
+    // Get the first day of the current month
+    $firstDayOfMonth = new \DateTime($currentDate->format('Y-m-01'));
+
+    // Ensure the first day is before or equal to the current date
+    if ($firstDayOfMonth > $currentDate) {
+        throw new \Exception('The current date is before the first day of the month.');
+    }
+
+    // Initialize counters
+    $totalWeekdays = 0;
+
+    // Iterate through each day from the first day of the month to the current date
+    $currentDay = $firstDayOfMonth;
+    while ($currentDay <= $currentDate) {
+        if ($currentDay->format('N') < 6) { // 'N' returns 1 (Monday) through 7 (Sunday)
+            $totalWeekdays++;
+        }
+        $currentDay->modify('+1 day');
+    }
+
+    $total_present = $this->getTotalPresent($emp_code, $month);
+    $total_leaves = $this->getTotalLeaves($emp_code, $month);
 
 
+    $total = $totalWeekdays -  $total_present -  $total_leaves;
+
+    // dd($total);
+
+    return $total ?? 0;
 
 
-        $date = Carbon::createFromFormat('d/m/Y', $month);
-        $date = $date->subMonth();
-        // Get the year and month from the parsed date
-        $year = $date->year;
-        $month = $date->month;
-
-        $currentyear = date('Y');
-        $currentmonth = sprintf('%02d', $month);
-
-        $get_Holidays = $this->get_Holidays( $currentmonth, $currentyear);
-        $holidays_count = count($get_Holidays);
-
-
-
-
-        // Get the first and last day of the month
-        $firstDayLastMonth = Carbon::createFromDate($currentyear, $month, 1)->startOfMonth()->toDateString();
-        $lastDayLastMonth = Carbon::createFromDate($currentyear, $month, 1)->endOfMonth()->toDateString();
-
-
-
-        // Get all attendance records for the last month
-        $getNumberOfDays = DB::table('attendence')
-        ->where('emp_id', $emp_code)
-        ->whereBetween('date', [$firstDayLastMonth, $lastDayLastMonth])->count();
-
-
-        $getNumberOfDays = $getNumberOfDays + $getTotalLeaves;
-
-        $total = $get_total - $getNumberOfDays;
-        // dd($total);
-
-        // dd($total);
-        // return $attendanceRecords;
-        return $total;
 
     }
 

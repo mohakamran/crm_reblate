@@ -645,7 +645,8 @@
 
         </div>
 
-        @if ($emp_birthday)
+         @if ($emp_birthday)
+        <link rel="stylesheet" href="{{url('assets/css/b_whishes.css')}}">
         <script>
             // Function to create confetti
             function createConfetti(id) {
@@ -707,245 +708,7 @@
                 </section>
             @endforeach
 
-            <style>
-                .birthday-section {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    text-align: center;
-                    background: linear-gradient(to bottom, #ffeb3b, #fbc02d);
-                    position: relative;
-                    border-radius: 10px;
-                    height: 300px;
-                    /* Set fixed height */
-                    width: 100%;
-                    overflow: hidden;
-                    /* Ensure particles stay within the section */
-                    padding: 80px;
-                    /* Add some padding */
-                    margin-bottom: 20px;
-                }
 
-                .title-container {
-                    margin-bottom: 10px;
-                    /* Space between title and content */
-                }
-
-                .typing-container {
-                    display: inline-block;
-                    position: relative;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    /* Prevents text wrapping */
-                }
-
-                h1 {
-                    color: #d32f2f;
-                    font-size: 2em;
-                    /* Adjusted size for better fit */
-                    margin: 0;
-                    font-weight: bold;
-                    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-                    border-right: 2px solid #d32f2f;
-                    /* Cursor effect */
-
-                }
-
-
-
-                p {
-                    font-size: 1.5em;
-                    /* Adjusted size for better fit */
-                    color: #555;
-                    margin: 0.5em 0;
-                    font-weight: 300;
-                }
-
-                .content-wrapper {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    width: 100%;
-                    height: 100%;
-                    margin-bottom:30px;
-                }
-
-                .left-section,
-                .right-section {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                }
-
-                .left-section {
-                    flex: 1;
-                    text-align: center;
-                }
-
-                .right-section {
-                    flex: 1;
-                    text-align: center;
-                }
-
-                .employee-img {
-                    width: 150px;
-                    /* Adjusted size */
-                    height: 150px;
-                    /* Adjusted size */
-                    border-radius: 50%;
-                    margin: 10px auto;
-                    object-fit: cover;
-                    /* border: 3px solid #fff;
-                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); */
-                }
-
-                .employee-name {
-                    font-size: 1em;
-                    /* Adjusted size for better fit */
-                    color: #333;
-                    font-weight: 500;
-                    margin-top: 5px;
-                }
-
-                .cake-icon {
-                    width: 80px;
-                    /* Adjusted size */
-                    height: 80px;
-                    /* Adjusted size */
-                    background: #f44336;
-                    border-radius: 50%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    color: white;
-                    font-size: 1.5em;
-                    /* Adjusted size */
-                    line-height: 80px;
-                    /* Adjusted line height */
-                    margin: 10px auto;
-                    position: relative;
-                    animation: bounce 1.5s infinite, pulse 1s infinite;
-                }
-
-                .cake-icon::before {
-                    content: "🎂";
-                    font-size: 1.5em;
-                    /* Adjusted size */
-                }
-
-                .confetti {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    pointer-events: none;
-                    overflow: hidden;
-                }
-
-                .balloon {
-                    position: absolute;
-                    width: 40px;
-                    /* Adjusted size */
-                    height: 60px;
-                    /* Adjusted size */
-                    background-color: #ff5722;
-                    border-radius: 50% 50% 45% 45%;
-                    animation: float 10s ease-in-out infinite, sway 4s ease-in-out infinite, spin 10s linear infinite;
-                }
-
-                .balloon::after {
-                    content: "";
-                    position: absolute;
-                    width: 2px;
-                    height: 30px;
-                    /* Adjusted length */
-                    background-color: #333;
-                    bottom: -30px;
-                    /* Adjusted position */
-                    left: 50%;
-                    transform: translateX(-50%);
-                }
-
-                .confetti-piece {
-                    position: absolute;
-                    border-radius: 50%;
-                    background: radial-gradient(circle, rgba(255, 223, 51, 0.7), transparent);
-                    pointer-events: none;
-                }
-
-                @keyframes float {
-                    0% {
-                        transform: translateY(0);
-                    }
-
-                    100% {
-                        transform: translateY(-100vh);
-                    }
-                }
-
-                @keyframes bounce {
-
-                    0%,
-                    100% {
-                        transform: translateY(0);
-                    }
-
-                    50% {
-                        transform: translateY(-10px);
-                        /* Adjusted bounce height */
-                    }
-                }
-
-                @keyframes pulse {
-
-                    0%,
-                    100% {
-                        transform: scale(1);
-                        opacity: 1;
-                    }
-
-                    50% {
-                        transform: scale(1.1);
-                        opacity: 0.8;
-                    }
-                }
-
-                @keyframes sway {
-
-                    0%,
-                    100% {
-                        transform: translateX(0);
-                    }
-
-                    50% {
-                        transform: translateX(10px);
-                        /* Adjusted sway distance */
-                    }
-                }
-
-                @keyframes spin {
-                    0% {
-                        transform: rotate(0deg);
-                    }
-
-                    100% {
-                        transform: rotate(360deg);
-                    }
-                }
-
-                @keyframes confetti-fall {
-                    0% {
-                        transform: translateY(-100vh) rotate(0);
-                    }
-
-                    100% {
-                        transform: translateY(100vh) rotate(360deg);
-                    }
-                }
-            </style>
 
         @endif
 
@@ -1012,13 +775,13 @@
                                                             <h4 class="mb-1 EmpNameStyle"
                                                                 style="color: #14213d;font-weight: 500; font-size:20px">
                                                                 {{ $notify->title }}</h4>
-                                                            <div class="font-size-15 text-muted d-flex gap-2">
-                                                                <p class="mb-0 "><i class="mdi mdi-clock-outline"></i>
+                                                            <div class="font-size-14 text-muted d-flex gap-2">
+                                                                <p class="mb-0 font-size-14"><i class="mdi mdi-clock-outline"></i>
                                                                     {{ date('d F Y', strtotime($notify->date)) }}
                                                                     {{ $notify->time }}</p>
 
                                                             </div>
-                                                            <p class="mb-1 text-muted  ">{{ $notify->message }}</p>
+                                                            <p class="mb-1 text-muted  font-size-14">{{ $notify->message }}</p>
                                                             <a href="javascript:void()"
                                                                 onclick="markAsRead({{ $notify->id }},'all')">mark as
                                                                 read</a>
@@ -1060,13 +823,13 @@
                                                             <h4 class="mb-1 EmpNameStyle"
                                                                 style="color: #14213d;font-weight: 500; font-size:20px">
                                                                 {{ $notify->title }}</h4>
-                                                            <div class="font-size-15 text-muted  d-flex gap-2">
+                                                            <div class="font-size-14 text-muted  d-flex gap-2">
                                                                 <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
                                                                     {{ date('d F Y', strtotime($notify->date)) }}
                                                                     {{ $notify->time }}</p>
 
                                                             </div>
-                                                            <p class="mb-1 text-muted">{{ $notify->message }}</p>
+                                                            <p class="mb-1 text-muted font-size-14">{{ $notify->message }}</p>
                                                             <a href="javascript:void()"
                                                                 onclick="markAsRead({{ $notify->id }},'tasks')">mark as
                                                                 read</a>
