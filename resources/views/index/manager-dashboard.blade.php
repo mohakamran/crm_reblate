@@ -14,375 +14,375 @@
     <body data-sidebar="colored">
     @endsection
     @section('content')
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-        .EmpNameStyle {
-            font-size: 30px;
-            color: #fff;
-            font-weight: 600;
-            font-family: 'Poppins';
-        }
+            .EmpNameStyle {
+                font-size: 30px;
+                color: #fff;
+                font-weight: 600;
+                font-family: 'Poppins';
+            }
 
-        .EmpStyle {
-            font-size: 18px;
-            color: #fca311;
-            font-family: 'Poppins';
-            font-weight: 300
-        }
-
-
-
-
-        .time-list .dash-stats-list {
-            flex-flow: column wrap;
-            flex-grow: 1;
-            padding: 0 15px;
-        }
-
-        .time-list .dash-stats-list h4 {
-            color: #1f1f1f;
-            font-size: 21px;
-            font-weight: 700;
-            line-height: 1.5;
-            margin-bottom: 0;
-        }
-
-        .time-list .dash-stats-list p {
-            color: #777;
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.5;
-            margin-bottom: 0;
-            text-transform: uppercase;
-        }
-
-        ul li {
-            list-style: none;
-        }
-
-        .timesheet-right {
-            color: #8E8E8E;
-            font-size: 13px;
-            float: right;
-            margin-top: 7px;
-
-        }
-
-
-        .punch-info .punch-hours {
-            border: 3px solid #fca311;
-
-            max-width: 250px;
-
-            padding: 20px;
-            margin: 0 auto;
-            border-radius: 12px;
-            position: relative;
-            text-align: center;
-        }
+            .EmpStyle {
+                font-size: 18px;
+                color: #fca311;
+                font-family: 'Poppins';
+                font-weight: 300
+            }
 
 
 
-        .punch-hours span {
-            font-weight: 500;
-            transform: translate(-50%, -50%);
-            font-size: 30px;
-            color: #14213d;
-        }
 
-        .view-class-more {
+            .time-list .dash-stats-list {
+                flex-flow: column wrap;
+                flex-grow: 1;
+                padding: 0 15px;
+            }
 
-            font-size: 16px;
-            text-align: center;
-            display: block;
-            /* margin: 0px; */
-            margin-top: 17px;
+            .time-list .dash-stats-list h4 {
+                color: #1f1f1f;
+                font-size: 21px;
+                font-weight: 700;
+                line-height: 1.5;
+                margin-bottom: 0;
+            }
 
-        }
+            .time-list .dash-stats-list p {
+                color: #777;
+                font-size: 13px;
+                font-weight: 600;
+                line-height: 1.5;
+                margin-bottom: 0;
+                text-transform: uppercase;
+            }
 
-        .timeliner {
+            ul li {
+                list-style: none;
+            }
 
-            margin: 0 auto;
-            letter-spacing: 0.2px;
-            position: relative;
-            padding-top: 20px;
-            margin-left: 10px;
-            padding-bottom: 0;
+            .timesheet-right {
+                color: #8E8E8E;
+                font-size: 13px;
+                float: right;
+                margin-top: 7px;
 
-            list-style: none;
-            text-align: left;
+            }
 
-        }
 
-        @media (max-width: 767px) {
+            .punch-info .punch-hours {
+                border: 3px solid #fca311;
+
+                max-width: 250px;
+
+                padding: 20px;
+                margin: 0 auto;
+                border-radius: 12px;
+                position: relative;
+                text-align: center;
+            }
+
+
+
+            .punch-hours span {
+                font-weight: 500;
+                transform: translate(-50%, -50%);
+                font-size: 30px;
+                color: #14213d;
+            }
+
+            .view-class-more {
+
+                font-size: 16px;
+                text-align: center;
+                display: block;
+                /* margin: 0px; */
+                margin-top: 17px;
+
+            }
+
             .timeliner {
-                max-width: 98%;
-                padding: 25px;
-            }
-        }
 
-        .timeliner h1 {
-            font-weight: 300;
-            font-size: 1.4em;
-        }
+                margin: 0 auto;
+                letter-spacing: 0.2px;
+                position: relative;
+                padding-top: 20px;
+                margin-left: 10px;
+                padding-bottom: 0;
 
-        .timeliner h2,
-        .timeliner h3 {
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 10px;
-        }
-
-        .timeliner .event {
-
-            position: relative;
-        }
-
-        @media (max-width: 767px) {
-            .timeliner .event {
-                padding-top: 30px;
-            }
-        }
-
-        .timeliner .event:last-of-type {
-            padding-bottom: 0;
-            margin-bottom: 0;
-            border: none;
-        }
-
-        .timeliner .event:before,
-        .timeliner .event:after {
-            position: absolute;
-            display: block;
-            top: 0;
-        }
-
-        .timeliner .event:before {
-            left: -207px;
-            content: attr(data-date);
-            text-align: right;
-            font-weight: 100;
-            font-size: 0.9em;
-            min-width: 120px;
-        }
-
-        @media (max-width: 767px) {
-            .timeliner .event:before {
-                left: 0px;
+                list-style: none;
                 text-align: left;
+
             }
-        }
 
-        .timeliner .event:after {
-            -webkit-box-shadow: 0 0 0 3px #fca311;
-            box-shadow: 0 0 0 3px #fca311;
-            left: -23.6px;
-            background: #fff;
-            border-radius: 50%;
-            height: 6px;
-            width: 6px;
-            content: "";
-            top: 10px;
-        }
+            @media (max-width: 767px) {
+                .timeliner {
+                    max-width: 98%;
+                    padding: 25px;
+                }
+            }
 
-        @media (max-width: 767px) {
+            .timeliner h1 {
+                font-weight: 300;
+                font-size: 1.4em;
+            }
+
+            .timeliner h2,
+            .timeliner h3 {
+                font-weight: 600;
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+
+            .timeliner .event {
+
+                position: relative;
+            }
+
+            @media (max-width: 767px) {
+                .timeliner .event {
+                    padding-top: 30px;
+                }
+            }
+
+            .timeliner .event:last-of-type {
+                padding-bottom: 0;
+                margin-bottom: 0;
+                border: none;
+            }
+
+            .timeliner .event:before,
             .timeliner .event:after {
-                left: -31.8px;
+                position: absolute;
+                display: block;
+                top: 0;
             }
-        }
 
-        .rtl .timeliner {
-            text-align: right;
-            border-bottom-right-radius: 0;
-            border-top-right-radius: 0;
-            border-bottom-left-radius: 4px;
-            border-top-left-radius: 4px;
-            border-right: 3px solid #727cf5;
-        }
+            .timeliner .event:before {
+                left: -207px;
+                content: attr(data-date);
+                text-align: right;
+                font-weight: 100;
+                font-size: 0.9em;
+                min-width: 120px;
+            }
 
-        .rtl .timeliner .event::before {
-            left: 0;
-            right: -170px;
-        }
+            @media (max-width: 767px) {
+                .timeliner .event:before {
+                    left: 0px;
+                    text-align: left;
+                }
+            }
 
-        .rtl .timeliner .event::after {
-            left: 0;
-            right: -55.8px;
-        }
+            .timeliner .event:after {
+                -webkit-box-shadow: 0 0 0 3px #fca311;
+                box-shadow: 0 0 0 3px #fca311;
+                left: -23.6px;
+                background: #fff;
+                border-radius: 50%;
+                height: 6px;
+                width: 6px;
+                content: "";
+                top: 10px;
+            }
 
+            @media (max-width: 767px) {
+                .timeliner .event:after {
+                    left: -31.8px;
+                }
+            }
 
-        /* CSS for styling the chart container */
-        #line_chart {
-            width: 100%;
-            height: 400px;
-        }
+            .rtl .timeliner {
+                text-align: right;
+                border-bottom-right-radius: 0;
+                border-top-right-radius: 0;
+                border-bottom-left-radius: 4px;
+                border-top-left-radius: 4px;
+                border-right: 3px solid #727cf5;
+            }
 
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            width: 100%;
-            height: 100%;
-            z-index: 1000;
+            .rtl .timeliner .event::before {
+                left: 0;
+                right: -170px;
+            }
 
-        }
-
-        .char-count {
-            font-size: 0.8em;
-            color: #666;
-            text-align: right;
-        }
-
-        .popup-content {
-            /* overflow-y: scroll;
-                                                                                                            scroll-behavior: smooth scroll; */
-            display: flex;
-            max-width: 700px;
-            margin: auto auto;
-            position: relative;
-            top: 100px;
-            justify-content: center;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
-
-        .modal-fullscreen {
-            width: 100vw;
-            max-width: 100%;
-            margin: 0;
-        }
-
-        .modal-dialog-scrollable {
-            display: flex;
-            max-height: calc(100vh - 60px);
-            /* Adjust as needed based on your modal content */
-            margin-top: 30px;
-            /* Adjust top margin as needed */
-        }
-
-        .embed-responsive {
-            position: relative;
-            display: block;
-            width: 100%;
-            padding-top: 100%;
-            /* This keeps the aspect ratio (height:width) */
-            overflow: hidden;
-        }
-
-        .embed-responsive iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .closeBtn {
-            position: absolute;
-            top: 25px;
-            right: 15px;
-            cursor: pointer;
-        }
-
-        .active {
-            color: #14213d;
-            border-bottom: 1px solid #fca311;
-        }
-
-        .notification-hover:hover {
-            background: #fca31130;
-            transition: all 0.2s ease-in-out;
-        }
-
-        .to-do-form input,
-        textarea {
-            width: 100%;
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .to-do-form textarea {
-            height: 37px;
-            resize: none;
-        }
+            .rtl .timeliner .event::after {
+                left: 0;
+                right: -55.8px;
+            }
 
 
-        button {
-            padding: 5px 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+            /* CSS for styling the chart container */
+            #line_chart {
+                width: 100%;
+                height: 400px;
+            }
 
-        button:hover {
-            background-color: #218838;
-        }
+            .popup {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: rgba(0, 0, 0, 0.5);
+                width: 100%;
+                height: 100%;
+                z-index: 1000;
 
-        .container {
-            width: 400px;
-            padding: 20px;
-            background-color: #f0f0f0;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+            }
 
-        h1 {
-            text-align: center;
-        }
+            .char-count {
+                font-size: 0.8em;
+                color: #666;
+                text-align: right;
+            }
 
-        form {
-            display: flex;
-            margin-bottom: 10px;
-        }
+            .popup-content {
+                /* overflow-y: scroll;
+                                                                                                                scroll-behavior: smooth scroll; */
+                display: flex;
+                max-width: 700px;
+                margin: auto auto;
+                position: relative;
+                top: 100px;
+                justify-content: center;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                text-align: center;
+            }
 
-        input[type="text"] {
-            flex: 1;
-            padding: 8px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px 0 0 4px;
-        }
+            .modal-fullscreen {
+                width: 100vw;
+                max-width: 100%;
+                margin: 0;
+            }
 
-        button {
-            padding: 8px 16px;
-            font-size: 16px;
-            border: none;
-            background-color: #4caf50;
-            color: white;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
-        }
+            .modal-dialog-scrollable {
+                display: flex;
+                max-height: calc(100vh - 60px);
+                /* Adjust as needed based on your modal content */
+                margin-top: 30px;
+                /* Adjust top margin as needed */
+            }
 
-        button:hover {
-            background-color: #45a049;
-        }
+            .embed-responsive {
+                position: relative;
+                display: block;
+                width: 100%;
+                padding-top: 100%;
+                /* This keeps the aspect ratio (height:width) */
+                overflow: hidden;
+            }
 
-        .card {
-            margin-bottom: 10px;
-            padding: 10px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+            .embed-responsive iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
 
-        .card.completed {
-            text-decoration: line-through;
-            opacity: 0.7;
-        }
-    </style>
+            .closeBtn {
+                position: absolute;
+                top: 25px;
+                right: 15px;
+                cursor: pointer;
+            }
+
+            .active {
+                color: #14213d;
+                border-bottom: 1px solid #fca311;
+            }
+
+            .notification-hover:hover {
+                background: #fca31130;
+                transition: all 0.2s ease-in-out;
+            }
+
+            .to-do-form input,
+            textarea {
+                width: 100%;
+                padding: 5px 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            .to-do-form textarea {
+                height: 37px;
+                resize: none;
+            }
+
+
+            button {
+                padding: 5px 10px;
+                background-color: #28a745;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            button:hover {
+                background-color: #218838;
+            }
+
+            .container {
+                width: 400px;
+                padding: 20px;
+                background-color: #f0f0f0;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            form {
+                display: flex;
+                margin-bottom: 10px;
+            }
+
+            input[type="text"] {
+                flex: 1;
+                padding: 8px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px 0 0 4px;
+            }
+
+            button {
+                padding: 8px 16px;
+                font-size: 16px;
+                border: none;
+                background-color: #4caf50;
+                color: white;
+                border-radius: 0 4px 4px 0;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+            .card {
+                margin-bottom: 10px;
+                padding: 10px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .card.completed {
+                text-decoration: line-through;
+                opacity: 0.7;
+            }
+        </style>
 
         <div class="row mt-2">
             <div class="card px-0">
@@ -432,19 +432,19 @@
         </div>
         <div class="row flex-wrap" style="position: relative; top:-90px;">
             <div id="popupButton">
-                <button type="button" class="position-absolute reblateBtn px-3 py-1 text-white"
+                <button type="button" class="position-absolute reblateBtn px-3 py-1 text-white" onclick="openLeaveModal()"
                     style="background-color: #fca311; right: 35px; top:-45px;"> Apply for Leave</button>
             </div>
 
             <!-- Popup Modal -->
-            <div class="popup" id="popup">
+            <div class="popup" id="popup_leave">
                 <div class="popup-content flex-column">
                     <div class="d-flex mb-3 align-items-center justify-content-between">
                         <h2 class="mb-0"
                             style="color: #fca311; font-weight: 600; font-size: 25px; border-bottom: 1px solid #c7c7c7;">
                             Apply For Leaves
                         </h2>
-                        <span class="closeBtn p-2"
+                        <span class="closeBtn p-2" onclick="closeLeaveModal()"
                             style="border-radius: 50%; background-color: #14213d26; cursor: pointer;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#14213d50"
                                 class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -629,8 +629,8 @@
                                     Leaves
                                 </p>
                                 <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
-                                    @if (isset($total_pending) && $total_pending != '')
-                                        {{ $total_pending }}
+                                    @if (isset($total_leaves) && $total_leaves != '')
+                                        {{ $total_leaves }}
                                     @else
                                         0
                                     @endif
@@ -708,39 +708,38 @@
         </div>
 
         @if ($emp_birthday)
-        <script>
-            // Function to create confetti
-            function createConfetti(id) {
-                var conf = "#confetti_"+id;
-                console.log(conf);
-                const confettiContainer = document.querySelector(conf);
-                for (let i = 0; i < 100; i++) {
-                    const confettiPiece = document.createElement('div');
-                    confettiPiece.classList.add('confetti-piece');
-                    confettiPiece.style.width = `${Math.random() * 10 + 5}px`;
-                    confettiPiece.style.height = confettiPiece.style.width;
-                    confettiPiece.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
-                    confettiPiece.style.top = `${Math.random() * 100}vh`;
-                    confettiPiece.style.left = `${Math.random() * 100}vw`;
-                    confettiPiece.style.opacity = Math.random();
-                    confettiPiece.style.transform = `rotate(${Math.random() * 360}deg)`;
-                    confettiContainer.appendChild(confettiPiece);
-                }
+            <link rel="stylesheet" href="{{ url('assets/css/b_whishes.css') }}">
+            <script>
+                // Function to create confetti
+                function createConfetti(id) {
+                    var conf = "#confetti_" + id;
+                    console.log(conf);
+                    const confettiContainer = document.querySelector(conf);
+                    for (let i = 0; i < 100; i++) {
+                        const confettiPiece = document.createElement('div');
+                        confettiPiece.classList.add('confetti-piece');
+                        confettiPiece.style.width = `${Math.random() * 10 + 5}px`;
+                        confettiPiece.style.height = confettiPiece.style.width;
+                        confettiPiece.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                        confettiPiece.style.top = `${Math.random() * 100}vh`;
+                        confettiPiece.style.left = `${Math.random() * 100}vw`;
+                        confettiPiece.style.opacity = Math.random();
+                        confettiPiece.style.transform = `rotate(${Math.random() * 360}deg)`;
+                        confettiContainer.appendChild(confettiPiece);
+                    }
 
-                const style = document.createElement('style');
-                style.textContent = `
+                    const style = document.createElement('style');
+                    style.textContent = `
                 .confetti-piece {
                     animation: confetti-fall 5s linear infinite;
                 }
             `;
-                document.head.appendChild(style);
-            }
-
-
-        </script>
+                    document.head.appendChild(style);
+                }
+            </script>
             @foreach ($emp_birthday as $emp)
                 <section class="birthday-section">
-                    <div class="confetti" id="confetti_{{$emp->id}}"></div>
+                    <div class="confetti" id="confetti_{{ $emp->id }}"></div>
                     <div class="title-container">
                         <div class="typing-container">
                             <h1 class="typing-text">Happy Birthday!</h1>
@@ -750,265 +749,25 @@
                     <div class="content-wrapper">
                         <div class="left-section">
                             @if ($emp->Emp_Image && file_exists($emp->Emp_Image))
-                            <img src="{{$emp->Emp_Image}}" alt="Employee" class="employee-img">
+                                <img src="{{ $emp->Emp_Image }}" alt="Employee" class="employee-img">
                             @else
-                            <img src="{{url('user.png')}}" alt="Employee" class="employee-img">
+                                <img src="{{ url('user.png') }}" alt="Employee" class="employee-img">
                             @endif
 
-                            <div class="employee-name">{{$emp->Emp_Full_Name}}</div>
+                            <div class="employee-name">{{ $emp->Emp_Full_Name }}</div>
                         </div>
-                        <div style="color: #d32f2f;font-size:22px;">{{ \Carbon\Carbon::parse($emp->emp_birthday)->format('d F Y') }}</div>
+                        <div style="color: #d32f2f;font-size:22px;">
+                            {{ \Carbon\Carbon::parse($emp->emp_birthday)->format('d F Y') }}</div>
                         <div class="right-section">
                             <div class="cake-icon"></div>
                         </div>
                     </div>
                     <script>
                         // Initialize animations
-                        createConfetti({{$emp->id}});
+                        createConfetti({{ $emp->id }});
                     </script>
                 </section>
             @endforeach
-
-            <style>
-                .birthday-section {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    text-align: center;
-                    background: linear-gradient(to bottom, #ffeb3b, #fbc02d);
-                    position: relative;
-                    border-radius: 10px;
-                    height: 300px;
-                    /* Set fixed height */
-                    width: 100%;
-                    overflow: hidden;
-                    /* Ensure particles stay within the section */
-                    padding: 80px;
-                    /* Add some padding */
-                    margin-bottom: 20px;
-                }
-
-                .title-container {
-                    margin-bottom: 10px;
-                    /* Space between title and content */
-                }
-
-                .typing-container {
-                    display: inline-block;
-                    position: relative;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    /* Prevents text wrapping */
-                }
-
-                h1 {
-                    color: #d32f2f;
-                    font-size: 2em;
-                    /* Adjusted size for better fit */
-                    margin: 0;
-                    font-weight: bold;
-                    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-                    border-right: 2px solid #d32f2f;
-                    /* Cursor effect */
-
-                }
-
-
-
-                p {
-                    font-size: 1.5em;
-                    /* Adjusted size for better fit */
-                    color: #555;
-                    margin: 0.5em 0;
-                    font-weight: 300;
-                }
-
-                .content-wrapper {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    width: 100%;
-                    height: 100%;
-                    margin-bottom:30px;
-                }
-
-                .left-section,
-                .right-section {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                }
-
-                .left-section {
-                    flex: 1;
-                    text-align: center;
-                }
-
-                .right-section {
-                    flex: 1;
-                    text-align: center;
-                }
-
-                .employee-img {
-                    width: 150px;
-                    /* Adjusted size */
-                    height: 150px;
-                    /* Adjusted size */
-                    border-radius: 50%;
-                    margin: 10px auto;
-                    object-fit: cover;
-                    /* border: 3px solid #fff;
-                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); */
-                }
-
-                .employee-name {
-                    font-size: 1em;
-                    /* Adjusted size for better fit */
-                    color: #333;
-                    font-weight: 500;
-                    margin-top: 5px;
-                }
-
-                .cake-icon {
-                    width: 80px;
-                    /* Adjusted size */
-                    height: 80px;
-                    /* Adjusted size */
-                    background: #f44336;
-                    border-radius: 50%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    color: white;
-                    font-size: 1.5em;
-                    /* Adjusted size */
-                    line-height: 80px;
-                    /* Adjusted line height */
-                    margin: 10px auto;
-                    position: relative;
-                    animation: bounce 1.5s infinite, pulse 1s infinite;
-                }
-
-                .cake-icon::before {
-                    content: "🎂";
-                    font-size: 1.5em;
-                    /* Adjusted size */
-                }
-
-                .confetti {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    pointer-events: none;
-                    overflow: hidden;
-                }
-
-                .balloon {
-                    position: absolute;
-                    width: 40px;
-                    /* Adjusted size */
-                    height: 60px;
-                    /* Adjusted size */
-                    background-color: #ff5722;
-                    border-radius: 50% 50% 45% 45%;
-                    animation: float 10s ease-in-out infinite, sway 4s ease-in-out infinite, spin 10s linear infinite;
-                }
-
-                .balloon::after {
-                    content: "";
-                    position: absolute;
-                    width: 2px;
-                    height: 30px;
-                    /* Adjusted length */
-                    background-color: #333;
-                    bottom: -30px;
-                    /* Adjusted position */
-                    left: 50%;
-                    transform: translateX(-50%);
-                }
-
-                .confetti-piece {
-                    position: absolute;
-                    border-radius: 50%;
-                    background: radial-gradient(circle, rgba(255, 223, 51, 0.7), transparent);
-                    pointer-events: none;
-                }
-
-                @keyframes float {
-                    0% {
-                        transform: translateY(0);
-                    }
-
-                    100% {
-                        transform: translateY(-100vh);
-                    }
-                }
-
-                @keyframes bounce {
-
-                    0%,
-                    100% {
-                        transform: translateY(0);
-                    }
-
-                    50% {
-                        transform: translateY(-10px);
-                        /* Adjusted bounce height */
-                    }
-                }
-
-                @keyframes pulse {
-
-                    0%,
-                    100% {
-                        transform: scale(1);
-                        opacity: 1;
-                    }
-
-                    50% {
-                        transform: scale(1.1);
-                        opacity: 0.8;
-                    }
-                }
-
-                @keyframes sway {
-
-                    0%,
-                    100% {
-                        transform: translateX(0);
-                    }
-
-                    50% {
-                        transform: translateX(10px);
-                        /* Adjusted sway distance */
-                    }
-                }
-
-                @keyframes spin {
-                    0% {
-                        transform: rotate(0deg);
-                    }
-
-                    100% {
-                        transform: rotate(360deg);
-                    }
-                }
-
-                @keyframes confetti-fall {
-                    0% {
-                        transform: translateY(-100vh) rotate(0);
-                    }
-
-                    100% {
-                        transform: translateY(100vh) rotate(360deg);
-                    }
-                }
-            </style>
-
         @endif
 
         <div class="row" style="position: relative; top: 40px;">
@@ -1060,13 +819,15 @@
                                                         <h4 class="mb-1 EmpNameStyle"
                                                             style="color: #14213d;font-weight: 500; font-size:20px">
                                                             {{ $notify->title }}</h4>
-                                                        <div class="font-size-15 text-muted d-flex gap-2">
-                                                            <p class="mb-0 "><i class="mdi mdi-clock-outline"></i>
+                                                        <div class="  text-muted d-flex gap-2">
+                                                            <p class="mb-0 font-size-12"><i
+                                                                    class="mdi mdi-clock-outline"></i>
                                                                 {{ date('d F Y', strtotime($notify->date)) }}
                                                                 {{ $notify->time }}</p>
 
                                                         </div>
-                                                        <p class="mb-1 text-muted  ">{{ $notify->message }}</p>
+                                                        <p class="mb-1 text-muted  font-size-14">{{ $notify->message }}
+                                                        </p>
                                                         <a href="javascript:void()"
                                                             onclick="markAsRead({{ $notify->id }},'all')">mark as
                                                             read</a>
@@ -1112,13 +873,14 @@
                                                         <h4 class="mb-1 EmpNameStyle"
                                                             style="color: #14213d;font-weight: 500; font-size:20px">
                                                             {{ $notify->title }}</h4>
-                                                        <div class="font-size-15 text-muted  d-flex gap-2">
-                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                                                        <div class="  text-muted  d-flex gap-2">
+                                                            <p class="mb-0 font-size-12"><i
+                                                                    class="mdi mdi-clock-outline"></i>
                                                                 {{ date('d F Y', strtotime($notify->date)) }}
                                                                 {{ $notify->time }}</p>
 
                                                         </div>
-                                                        <p class="mb-1 text-muted">{{ $notify->message }}</p>
+                                                        <p class="mb-1 text-muted font-size-14">{{ $notify->message }}</p>
                                                         <a href="javascript:void()"
                                                             onclick="markAsRead({{ $notify->id }},'tasks')">mark as
                                                             read</a>
@@ -1168,22 +930,22 @@
                                 </div>
 
                                 <script>
-                                   document.addEventListener('DOMContentLoaded', function() {
-                                            const taskList = document.getElementById('task-list');
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const taskList = document.getElementById('task-list');
 
-                                            // Handle click on task cards to update status
-                                            taskList.addEventListener('click', function(event) {
-                                                const task = event.target.closest('.card');
-                                                if (task) {
-                                                    const taskId = task.getAttribute('data-id');
-                                                    const isCompleted = task.classList.contains('completed');
-                                                    const newStatus = isCompleted ? 'pending' : 'completed';
+                                        // Handle click on task cards to update status
+                                        taskList.addEventListener('click', function(event) {
+                                            const task = event.target.closest('.card');
+                                            if (task) {
+                                                const taskId = task.getAttribute('data-id');
+                                                const isCompleted = task.classList.contains('completed');
+                                                const newStatus = isCompleted ? 'pending' : 'completed';
 
-                                                    // Log the current task ID and new status
-                                                    console.log('Updating Task ID:', taskId, 'New Status:', newStatus);
+                                                // Log the current task ID and new status
+                                                console.log('Updating Task ID:', taskId, 'New Status:', newStatus);
 
-                                                    // Send a request to update the task status
-                                                    fetch('/update-task-status', {
+                                                // Send a request to update the task status
+                                                fetch('/update-task-status', {
                                                         method: 'POST',
                                                         headers: {
                                                             'Content-Type': 'application/json',
@@ -1207,23 +969,23 @@
                                                         }
                                                     })
                                                     .catch(error => console.error('Error:', error));
-                                                }
-                                            });
+                                            }
+                                        });
 
-                                            // Handle task submission
-                                            const form = document.getElementById('todo-form');
-                                            form.addEventListener('submit', function(event) {
-                                                event.preventDefault();
+                                        // Handle task submission
+                                        const form = document.getElementById('todo-form');
+                                        form.addEventListener('submit', function(event) {
+                                            event.preventDefault();
 
-                                                const taskTitleInput = document.getElementById('task-title');
-                                                const taskTitle = taskTitleInput.value.trim();
-                                                const userNameInput = document.getElementById('user_name');
-                                                const user_name = userNameInput.value.trim();
-                                                const userCodeInput = document.getElementById('user_code');
-                                                const user_code = userCodeInput.value.trim();
+                                            const taskTitleInput = document.getElementById('task-title');
+                                            const taskTitle = taskTitleInput.value.trim();
+                                            const userNameInput = document.getElementById('user_name');
+                                            const user_name = userNameInput.value.trim();
+                                            const userCodeInput = document.getElementById('user_code');
+                                            const user_code = userCodeInput.value.trim();
 
-                                                if (taskTitle) {
-                                                    fetch('/save-to-do-task', {
+                                            if (taskTitle) {
+                                                fetch('/save-to-do-task', {
                                                         method: 'POST',
                                                         headers: {
                                                             'Content-Type': 'application/json',
@@ -1258,53 +1020,52 @@
                                                         }
                                                     })
                                                     .catch(error => console.error('Error:', error));
-                                                } else {
-                                                    alert('Please enter a task title.');
-                                                }
-                                            });
-
-                                            // Function to get the current date
-                                            function getCurrentDate() {
-                                                const now = new Date();
-                                                const options = {
-                                                    weekday: 'long',
-                                                    year: 'numeric',
-                                                    month: 'long',
-                                                    day: 'numeric'
-                                                };
-                                                return now.toLocaleDateString('en-US', options);
-                                            }
-
-                                            // Function to get the current time
-                                            function getCurrentTime() {
-                                                const now = new Date();
-                                                return now.toLocaleTimeString('en-US');
-                                            }
-
-                                            // Function to update task style based on status
-                                            function updateTaskStyle(task, isCompleted) {
-                                                const title = task.querySelector('h3');
-                                                const date = task.querySelector('.task-date');
-                                                const time = task.querySelector('.task-time');
-
-                                                if (isCompleted) {
-                                                    title.style.textDecoration = 'line-through';
-                                                    date.style.textDecoration = 'line-through';
-                                                    time.style.textDecoration = 'line-through';
-                                                    title.style.color = '#aaa'; // Optional: Change color for completed tasks
-                                                    date.style.color = '#aaa';
-                                                    time.style.color = '#aaa';
-                                                } else {
-                                                    title.style.textDecoration = 'none';
-                                                    date.style.textDecoration = 'none';
-                                                    time.style.textDecoration = 'none';
-                                                    title.style.color = 'black'; // Reset color for pending tasks
-                                                    date.style.color = 'black';
-                                                    time.style.color = 'black';
-                                                }
+                                            } else {
+                                                alert('Please enter a task title.');
                                             }
                                         });
 
+                                        // Function to get the current date
+                                        function getCurrentDate() {
+                                            const now = new Date();
+                                            const options = {
+                                                weekday: 'long',
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            };
+                                            return now.toLocaleDateString('en-US', options);
+                                        }
+
+                                        // Function to get the current time
+                                        function getCurrentTime() {
+                                            const now = new Date();
+                                            return now.toLocaleTimeString('en-US');
+                                        }
+
+                                        // Function to update task style based on status
+                                        function updateTaskStyle(task, isCompleted) {
+                                            const title = task.querySelector('h3');
+                                            const date = task.querySelector('.task-date');
+                                            const time = task.querySelector('.task-time');
+
+                                            if (isCompleted) {
+                                                title.style.textDecoration = 'line-through';
+                                                date.style.textDecoration = 'line-through';
+                                                time.style.textDecoration = 'line-through';
+                                                title.style.color = '#aaa'; // Optional: Change color for completed tasks
+                                                date.style.color = '#aaa';
+                                                time.style.color = '#aaa';
+                                            } else {
+                                                title.style.textDecoration = 'none';
+                                                date.style.textDecoration = 'none';
+                                                time.style.textDecoration = 'none';
+                                                title.style.color = 'black'; // Reset color for pending tasks
+                                                date.style.color = 'black';
+                                                time.style.color = 'black';
+                                            }
+                                        }
+                                    });
                                 </script>
 
 
@@ -1452,6 +1213,31 @@
                                     </h3>
                                     <p class="mb-0" style="color: #14213d; font-family:'poppins';">Current Time</p>
                                 @endif
+
+                                <script>
+                                    // Function to update the current time
+                                    function updateCurrentTime() {
+                                        const now = new Date();
+                                        let hours = now.getHours();
+                                        const ampm = hours >= 12 ? 'PM' : 'AM';
+                                        hours = hours % 12;
+                                        hours = hours ? hours : 12; // 0 should be displayed as 12
+                                        const minutes = pad(now.getMinutes());
+                                        const seconds = pad(now.getSeconds());
+                                        document.getElementById('timer').innerText = hours + ":" + minutes + ":" + seconds +
+                                            " " + ampm;
+                                    }
+
+                                    // Update current time immediately when the page loads
+                                    updateCurrentTime();
+
+                                    // Update current time every second
+                                    setInterval(updateCurrentTime, 1000);
+
+                                    function pad(num) {
+                                        return (num < 10) ? '0' + num : num;
+                                    }
+                                </script>
 
 
                             </div>
@@ -1632,7 +1418,7 @@
             </div>
         </div>
 
-        <div class="row" style="position: relative; top: -70px;">
+        <div class="row" style="position: relative; margin-top:40px;">
             <div class="col-md-12 col-lg-12 col-xl-12">
                 <div class="card" style="box-shadow: none;">
                     <div class="card-body bg-white">
@@ -2134,7 +1920,8 @@
                                             <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Professional
                                                 <br>Growth
                                             </h4>
-                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label"
+                                            <div class="progress mt-3" role="progressbar"
+                                                aria-label="Example with label"
                                                 style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff"
                                                 aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                                 <span
@@ -2155,7 +1942,8 @@
                                         <div class="d-flex flex-column">
                                             <h4 class="EmpStyle" style="color: #14213d; font-weight:800">Overall <br>
                                                 Assesment</h4>
-                                            <div class="progress mt-3" role="progressbar" aria-label="Example with label"
+                                            <div class="progress mt-3" role="progressbar"
+                                                aria-label="Example with label"
                                                 style="height: 30px; border-radius:50px; border:1px solid #14213d; background-color: #fff"
                                                 aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                                 <span
@@ -2807,25 +2595,20 @@
             //  const today = new Date().toISOString().split('T')[0]; // Gets today's date in YYYY-MM-DD format
             // document.getElementById('date').setAttribute('min', today);
             // document.getElementById('Ending_date').setAttribute('min', today);
-            document.addEventListener('DOMContentLoaded', function() {
+
+            function openLeaveModal() {
+
                 const popupButton = document.getElementById('popupButton');
-                const popup = document.getElementById('popup');
+                const popup = document.getElementById('popup_leave');
                 const closeBtn = document.querySelector('.closeBtn');
+                popup.style.display = 'block';
 
-                popupButton.addEventListener('click', function() {
-                    popup.style.display = 'block';
-                });
+            }
 
-                closeBtn.addEventListener('click', function() {
-                    popup.style.display = 'none';
-                });
-
-                window.addEventListener('click', function(e) {
-                    if (e.target === popup) {
-                        popup.style.display = 'none';
-                    }
-                });
-            });
+            function closeLeaveModal() {
+                const popup = document.getElementById('popup_leave');
+                popup.style.display = 'none';
+            }
         </script>
         <script type="text/javascript">
             const chartDiv = document.getElementById('chartDiv');
@@ -2873,29 +2656,7 @@
                 }
             });
 
-            // Function to update the current time
-            function updateCurrentTime() {
-                const now = new Date();
-                let hours = now.getHours();
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12; // 0 should be displayed as 12
-                const minutes = pad(now.getMinutes());
-                const seconds = pad(now.getSeconds());
-                document.getElementById('timer').innerText = hours + ":" + minutes + ":" + seconds +
-                    " " + ampm;
-            }
 
-            // Function to pad single digit numbers with leading zeros
-            function pad(num) {
-                return (num < 10) ? '0' + num : num;
-            }
-
-            // Update current time immediately when the page loads
-            updateCurrentTime();
-
-            // Update current time every second
-            setInterval(updateCurrentTime, 1000);
 
             function submitForm(event) {
                 event.preventDefault();
@@ -2983,7 +2744,7 @@
                     })
                     .catch(error => {
                         var messageBox = document.getElementById(
-                        'messageBox'); // Ensure you have an element with id 'messageBox'
+                            'messageBox'); // Ensure you have an element with id 'messageBox'
                         messageBox.style.display = "block";
                         messageBox.style.color = "red";
                         messageBox.innerHTML = error;

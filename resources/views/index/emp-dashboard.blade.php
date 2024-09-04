@@ -235,7 +235,7 @@
 
             .popup-content {
                 /* overflow-y: scroll;
-                                                                                                                            scroll-behavior: smooth scroll; */
+                                                                                                                                    scroll-behavior: smooth scroll; */
                 display: flex;
                 max-width: 700px;
                 margin: auto auto;
@@ -426,12 +426,12 @@
         </div>
         <div class="row flex-wrap" style="position: relative; top:-90px;">
             <div id="popupButton">
-                <button type="button" class="position-absolute reblateBtn px-3 py-1 text-white"
+                <button type="button" onclick="openLeaveModal()" class="position-absolute reblateBtn px-3 py-1 text-white"
                     style="background-color: #fca311; right: 35px; top:-45px;"> Apply for Leave</button>
             </div>
 
             <!-- Popup Modal -->
-            <div class="popup" id="popup">
+            <div class="popup" id="popup_leave">
                 <div class="popup-content flex-column">
                     <div class="d-flex mb-3 align-items-center justify-content-between">
                         <h2 class="mb-0"
@@ -439,7 +439,7 @@
                             Apply For Leaves
                         </h2>
                         <span class="closeBtn p-2"
-                            style="border-radius: 50%; background-color: #14213d26; cursor: pointer;">
+                            style="border-radius: 50%; background-color: #14213d26; cursor: pointer;" onclick="closeLeaveModal()">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#14213d50"
                                 class="bi bi-x-lg" viewBox="0 0 16 16">
                                 <path
@@ -622,8 +622,8 @@
                                     Leaves
                                 </p>
                                 <h2 class="mb-0 EmpNameStyle" style="color: #14213d; font-weight: 800">
-                                    @if (isset($total_pending) && $total_pending != '')
-                                        {{ $total_pending }}
+                                    @if (isset($total_leaves) && $total_leaves != '')
+                                        {{ $total_leaves }}
                                     @else
                                         0
                                     @endif
@@ -700,45 +700,39 @@
 
         </div>
 
-
-
-
-
-
         @if ($emp_birthday)
-        <script>
-            // Function to create confetti
-            function createConfetti(id) {
-                var conf = "#confetti_"+id;
-                console.log(conf);
-                const confettiContainer = document.querySelector(conf);
-                for (let i = 0; i < 100; i++) {
-                    const confettiPiece = document.createElement('div');
-                    confettiPiece.classList.add('confetti-piece');
-                    confettiPiece.style.width = `${Math.random() * 10 + 5}px`;
-                    confettiPiece.style.height = confettiPiece.style.width;
-                    confettiPiece.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
-                    confettiPiece.style.top = `${Math.random() * 100}vh`;
-                    confettiPiece.style.left = `${Math.random() * 100}vw`;
-                    confettiPiece.style.opacity = Math.random();
-                    confettiPiece.style.transform = `rotate(${Math.random() * 360}deg)`;
-                    confettiContainer.appendChild(confettiPiece);
-                }
+            <link rel="stylesheet" href="{{ url('assets/css/b_whishes.css') }}">
+            <script>
+                // Function to create confetti
+                function createConfetti(id) {
+                    var conf = "#confetti_" + id;
+                    console.log(conf);
+                    const confettiContainer = document.querySelector(conf);
+                    for (let i = 0; i < 100; i++) {
+                        const confettiPiece = document.createElement('div');
+                        confettiPiece.classList.add('confetti-piece');
+                        confettiPiece.style.width = `${Math.random() * 10 + 5}px`;
+                        confettiPiece.style.height = confettiPiece.style.width;
+                        confettiPiece.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                        confettiPiece.style.top = `${Math.random() * 100}vh`;
+                        confettiPiece.style.left = `${Math.random() * 100}vw`;
+                        confettiPiece.style.opacity = Math.random();
+                        confettiPiece.style.transform = `rotate(${Math.random() * 360}deg)`;
+                        confettiContainer.appendChild(confettiPiece);
+                    }
 
-                const style = document.createElement('style');
-                style.textContent = `
+                    const style = document.createElement('style');
+                    style.textContent = `
                 .confetti-piece {
                     animation: confetti-fall 5s linear infinite;
                 }
             `;
-                document.head.appendChild(style);
-            }
-
-
-        </script>
+                    document.head.appendChild(style);
+                }
+            </script>
             @foreach ($emp_birthday as $emp)
                 <section class="birthday-section">
-                    <div class="confetti" id="confetti_{{$emp->id}}"></div>
+                    <div class="confetti" id="confetti_{{ $emp->id }}"></div>
                     <div class="title-container">
                         <div class="typing-container">
                             <h1 class="typing-text">Happy Birthday!</h1>
@@ -748,267 +742,26 @@
                     <div class="content-wrapper">
                         <div class="left-section">
                             @if ($emp->Emp_Image && file_exists($emp->Emp_Image))
-                            <img src="{{$emp->Emp_Image}}" alt="Employee" class="employee-img">
+                                <img src="{{ $emp->Emp_Image }}" alt="Employee" class="employee-img">
                             @else
-                            <img src="{{url('user.png')}}" alt="Employee" class="employee-img">
+                                <img src="{{ url('user.png') }}" alt="Employee" class="employee-img">
                             @endif
 
-                            <div class="employee-name">{{$emp->Emp_Full_Name}}</div>
+                            <div class="employee-name">{{ $emp->Emp_Full_Name }}</div>
                         </div>
-                        <div style="color: #d32f2f;font-size:22px;">{{ \Carbon\Carbon::parse($emp->emp_birthday)->format('d F Y') }}</div>
+                        <div style="color: #d32f2f;font-size:22px;">
+                            {{ \Carbon\Carbon::parse($emp->emp_birthday)->format('d F Y') }}</div>
                         <div class="right-section">
                             <div class="cake-icon"></div>
                         </div>
                     </div>
                     <script>
                         // Initialize animations
-                        createConfetti({{$emp->id}});
+                        createConfetti({{ $emp->id }});
                     </script>
                 </section>
             @endforeach
-
-            <style>
-                .birthday-section {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    text-align: center;
-                    background: linear-gradient(to bottom, #ffeb3b, #fbc02d);
-                    position: relative;
-                    border-radius: 10px;
-                    height: 300px;
-                    /* Set fixed height */
-                    width: 100%;
-                    overflow: hidden;
-                    /* Ensure particles stay within the section */
-                    padding: 80px;
-                    /* Add some padding */
-                    margin-bottom: 20px;
-                }
-
-                .title-container {
-                    margin-bottom: 10px;
-                    /* Space between title and content */
-                }
-
-                .typing-container {
-                    display: inline-block;
-                    position: relative;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    /* Prevents text wrapping */
-                }
-
-                h1 {
-                    color: #d32f2f;
-                    font-size: 2em;
-                    /* Adjusted size for better fit */
-                    margin: 0;
-                    font-weight: bold;
-                    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-                    border-right: 2px solid #d32f2f;
-                    /* Cursor effect */
-
-                }
-
-
-
-                p {
-                    font-size: 1.5em;
-                    /* Adjusted size for better fit */
-                    color: #555;
-                    margin: 0.5em 0;
-                    font-weight: 300;
-                }
-
-                .content-wrapper {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    width: 100%;
-                    height: 100%;
-                    margin-bottom:30px;
-                }
-
-                .left-section,
-                .right-section {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                }
-
-                .left-section {
-                    flex: 1;
-                    text-align: center;
-                }
-
-                .right-section {
-                    flex: 1;
-                    text-align: center;
-                }
-
-                .employee-img {
-                    width: 150px;
-                    /* Adjusted size */
-                    height: 150px;
-                    /* Adjusted size */
-                    border-radius: 50%;
-                    margin: 10px auto;
-                    object-fit: cover;
-                    /* border: 3px solid #fff;
-                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); */
-                }
-
-                .employee-name {
-                    font-size: 1em;
-                    /* Adjusted size for better fit */
-                    color: #333;
-                    font-weight: 500;
-                    margin-top: 5px;
-                }
-
-                .cake-icon {
-                    width: 80px;
-                    /* Adjusted size */
-                    height: 80px;
-                    /* Adjusted size */
-                    background: #f44336;
-                    border-radius: 50%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    color: white;
-                    font-size: 1.5em;
-                    /* Adjusted size */
-                    line-height: 80px;
-                    /* Adjusted line height */
-                    margin: 10px auto;
-                    position: relative;
-                    animation: bounce 1.5s infinite, pulse 1s infinite;
-                }
-
-                .cake-icon::before {
-                    content: "🎂";
-                    font-size: 1.5em;
-                    /* Adjusted size */
-                }
-
-                .confetti {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    pointer-events: none;
-                    overflow: hidden;
-                }
-
-                .balloon {
-                    position: absolute;
-                    width: 40px;
-                    /* Adjusted size */
-                    height: 60px;
-                    /* Adjusted size */
-                    background-color: #ff5722;
-                    border-radius: 50% 50% 45% 45%;
-                    animation: float 10s ease-in-out infinite, sway 4s ease-in-out infinite, spin 10s linear infinite;
-                }
-
-                .balloon::after {
-                    content: "";
-                    position: absolute;
-                    width: 2px;
-                    height: 30px;
-                    /* Adjusted length */
-                    background-color: #333;
-                    bottom: -30px;
-                    /* Adjusted position */
-                    left: 50%;
-                    transform: translateX(-50%);
-                }
-
-                .confetti-piece {
-                    position: absolute;
-                    border-radius: 50%;
-                    background: radial-gradient(circle, rgba(255, 223, 51, 0.7), transparent);
-                    pointer-events: none;
-                }
-
-                @keyframes float {
-                    0% {
-                        transform: translateY(0);
-                    }
-
-                    100% {
-                        transform: translateY(-100vh);
-                    }
-                }
-
-                @keyframes bounce {
-
-                    0%,
-                    100% {
-                        transform: translateY(0);
-                    }
-
-                    50% {
-                        transform: translateY(-10px);
-                        /* Adjusted bounce height */
-                    }
-                }
-
-                @keyframes pulse {
-
-                    0%,
-                    100% {
-                        transform: scale(1);
-                        opacity: 1;
-                    }
-
-                    50% {
-                        transform: scale(1.1);
-                        opacity: 0.8;
-                    }
-                }
-
-                @keyframes sway {
-
-                    0%,
-                    100% {
-                        transform: translateX(0);
-                    }
-
-                    50% {
-                        transform: translateX(10px);
-                        /* Adjusted sway distance */
-                    }
-                }
-
-                @keyframes spin {
-                    0% {
-                        transform: rotate(0deg);
-                    }
-
-                    100% {
-                        transform: rotate(360deg);
-                    }
-                }
-
-                @keyframes confetti-fall {
-                    0% {
-                        transform: translateY(-100vh) rotate(0);
-                    }
-
-                    100% {
-                        transform: translateY(100vh) rotate(360deg);
-                    }
-                }
-            </style>
-
         @endif
-
 
 
         <div class="row" style="position: relative; top: 40px;">
@@ -1060,13 +813,15 @@
                                                         <h4 class="mb-1 EmpNameStyle"
                                                             style="color: #14213d;font-weight: 500; font-size:20px">
                                                             {{ $notify->title }}</h4>
-                                                        <div class="font-size-15 text-muted d-flex gap-2">
-                                                            <p class="mb-0 "><i class="mdi mdi-clock-outline"></i>
+                                                        <div class=" text-muted d-flex gap-2">
+                                                            <p class="mb-0 font-size-12"><i
+                                                                    class="mdi mdi-clock-outline"></i>
                                                                 {{ date('d F Y', strtotime($notify->date)) }}
                                                                 {{ $notify->time }}</p>
 
                                                         </div>
-                                                        <p class="mb-1 text-muted  ">{{ $notify->message }}</p>
+                                                        <p class="mb-1 text-muted font-size-14 ">{{ $notify->message }}
+                                                        </p>
                                                         <a href="javascript:void()"
                                                             onclick="markAsRead({{ $notify->id }},'all')">mark as
                                                             read</a>
@@ -1112,13 +867,14 @@
                                                         <h4 class="mb-1 EmpNameStyle"
                                                             style="color: #14213d;font-weight: 500; font-size:20px">
                                                             {{ $notify->title }}</h4>
-                                                        <div class="font-size-15 text-muted  d-flex gap-2">
-                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                                                        <div class=" text-muted  d-flex gap-2">
+                                                            <p class="mb-0 font-size-12"><i
+                                                                    class="mdi mdi-clock-outline"></i>
                                                                 {{ date('d F Y', strtotime($notify->date)) }}
                                                                 {{ $notify->time }}</p>
 
                                                         </div>
-                                                        <p class="mb-1 text-muted">{{ $notify->message }}</p>
+                                                        <p class="mb-1 text-muted font-size-14">{{ $notify->message }}</p>
                                                         <a href="javascript:void()"
                                                             onclick="markAsRead({{ $notify->id }},'tasks')">mark as
                                                             read</a>
@@ -1450,6 +1206,30 @@
                                     <h3 class="mb-1" style="color: #14213d; font-family:'poppins';font-weight:700">
                                         <span id="timer" class="text-center timer">00:00:00</span>
                                     </h3>
+                                    <script>
+                                        // Function to update the current time
+                                        function updateCurrentTime() {
+                                            const now = new Date();
+                                            let hours = now.getHours();
+                                            const ampm = hours >= 12 ? 'PM' : 'AM';
+                                            hours = hours % 12;
+                                            hours = hours ? hours : 12; // 0 should be displayed as 12
+                                            const minutes = pad(now.getMinutes());
+                                            const seconds = pad(now.getSeconds());
+                                            document.getElementById('timer').innerText = hours + ":" + minutes + ":" + seconds +
+                                                " " + ampm;
+                                        }
+
+                                        // Update current time immediately when the page loads
+                                        updateCurrentTime();
+
+                                        // Update current time every second
+                                        setInterval(updateCurrentTime, 1000);
+
+                                        function pad(num) {
+                                            return (num < 10) ? '0' + num : num;
+                                        }
+                                    </script>
                                     <p class="mb-0" style="color: #14213d; font-family:'poppins';">Current Time</p>
                                 @endif
 
@@ -1631,7 +1411,7 @@
 
             </div>
         </div>
-        <div class="row" style="position: relative; top: -70px;">
+        <div class="row" style="position: relative; margin-top:40px;">
             <div class="col-md-12 col-lg-12 col-xl-12">
                 <div class="card" style="box-shadow: none;">
                     <div class="card-body bg-white">
@@ -1673,7 +1453,7 @@
             </div>
 
         </div>
-        <div class="row">
+        <div class="row " style="margin-top:40px;">
             <div class="col-md-6 col-lg-6 col-xl-6">
                 <div class="card" style="box-shadow: none;">
                     <div class="card-body" style="background-color: #fca311">
@@ -1979,25 +1759,36 @@
                 document.getElementById('todoList').appendChild(li);
             }
 
-            document.addEventListener('DOMContentLoaded', function() {
+            function openLeaveModal() {
+
                 const popupButton = document.getElementById('popupButton');
-                const popup = document.getElementById('popup');
+                const popup = document.getElementById('popup_leave');
                 const closeBtn = document.querySelector('.closeBtn');
+                popup.style.display = 'block';
 
-                popupButton.addEventListener('click', function() {
-                    popup.style.display = 'block';
-                });
+            }
 
-                closeBtn.addEventListener('click', function() {
-                    popup.style.display = 'none';
-                });
+            function closeLeaveModal() {
+                const popup = document.getElementById('popup_leave');
+                popup.style.display = 'none';
+            }
 
-                window.addEventListener('click', function(e) {
-                    if (e.target === popup) {
-                        popup.style.display = 'none';
-                    }
-                });
-            });
+            // document.addEventListener('DOMContentLoaded', function() {
+
+            //     alert(popupButton);
+
+            //     popupButton.addEventListener('click', function() {
+            //         popup.style.display = 'block';
+            //     });
+
+            //     closeBtn.addEventListener('click', function() {
+            //         popup.style.display = 'none';
+            //     });
+
+            //     window.addEventListener('click', function(e) {
+
+            //     });
+            // });
 
             const chartDiv = document.getElementById('chartDiv');
 
@@ -2044,29 +1835,14 @@
                 }
             });
 
-            // Function to update the current time
-            function updateCurrentTime() {
-                const now = new Date();
-                let hours = now.getHours();
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12; // 0 should be displayed as 12
-                const minutes = pad(now.getMinutes());
-                const seconds = pad(now.getSeconds());
-                document.getElementById('timer').innerText = hours + ":" + minutes + ":" + seconds +
-                    " " + ampm;
-            }
+
 
             // Function to pad single digit numbers with leading zeros
             function pad(num) {
                 return (num < 10) ? '0' + num : num;
             }
 
-            // Update current time immediately when the page loads
-            updateCurrentTime();
 
-            // Update current time every second
-            setInterval(updateCurrentTime, 1000);
 
             function updateCharCount() {
                 var textarea = document.getElementById("reason");
