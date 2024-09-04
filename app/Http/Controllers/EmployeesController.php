@@ -481,6 +481,7 @@ class EmployeesController extends Controller
     }
 
     public function manage() {
+        
         // $title = "Update Employee Details";
         // $data = compact('title');
         // $rec = Employee::orderBy('id', 'desc')->get();

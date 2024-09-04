@@ -514,7 +514,7 @@ if (!is_array($employees_access)) {
             <div class="container-fluid tab-pane fade active show" style="border-bottom: none" id="profile">
                 <div class="row">
                     <div class="col-md-6 col-lg-6 col-xl-6">
-                        <div class="card">
+                        <div class="card" style="height:325px;">
                             <div class="card-body bg-light" style="border: 1px solid #c7c7c7; min-height: 270px">
                                 <div class="ms-3 w-100">
 
@@ -950,7 +950,7 @@ if (!is_array($employees_access)) {
                         }
                     </script>
                     <div class="col-md-6 col-lg-6 col-xl-6">
-                        <div class="card">
+                        <div class="card" style="height: 325px;">
                             <div class="card-body bg-light" style="border: 1px solid #c7c7c7">
                                 <div class="ms-3 w-full">
                                     <div id="popupButton2"
@@ -3177,7 +3177,7 @@ if (!is_array($employees_access)) {
             <div class="container-fluid tab-pane fade" style="border-bottom: none" id="projects">
                 <div class="row">
                     <div class="col-md-6 col-lg-6 col-xl-6">
-                        <div class="card">
+                        <div class="card" style="height: 236px;">
                             <div class="card-body bg-light d-flex" style="border: 1px solid #c7c7c7">
                                 <div class="ms-3 w-100">
                                     <div
@@ -3226,7 +3226,7 @@ if (!is_array($employees_access)) {
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6">
-                        <div class="card">
+                        <div class="card" style="height: 236px;">
                             <div class="card-body bg-light d-flex" style="border: 1px solid #c7c7c7">
                                 <div class="ms-3 w-full">
                                     <div
@@ -3283,7 +3283,7 @@ if (!is_array($employees_access)) {
                     <div class="row">
 
                         <div class="col-md-6 col-lg-6 col-xl-6 ps-0">
-                            <div class="card">
+                            <div class="card" style="height: 216px;">
                                 <div class="card-body bg-light w-100" style="border: 1px solid #c7c7c7">
                                     <div
                                         style="width: 30px; height:30px; background-color:#14213d26; border-radius:50%; position: absolute;right:10px; cursor:pointer">
@@ -3333,7 +3333,7 @@ if (!is_array($employees_access)) {
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="card">
+                            <div class="card" style="height: 216px;">
                                 <div class="card-body bg-light" style="border: 1px solid #c7c7c7">
                                     <div
                                         style="width: 30px; height:30px; background-color:#14213d26; border-radius:50%; position: absolute;right:10px; cursor:pointer">
@@ -3389,7 +3389,7 @@ if (!is_array($employees_access)) {
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6 col-lg-6 col-xl-6 ps-0">
-                            <div class="card">
+                            <div class="card" style="height: 250px;">
                                 <div class="card-body bg-light w-100" style="border: 1px solid #c7c7c7">
                                     <div id="popupButton6"
                                         style="width: 30px; height:30px; background-color:#14213d26; border-radius:50%; position: absolute;right:10px; cursor:pointer">
@@ -3789,7 +3789,7 @@ if (!is_array($employees_access)) {
                             }
                         </script>
                         <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="card">
+                            <div class="card" style="height: 250px;">
                                 <div class="card-body bg-light" style="border: 1px solid #c7c7c7; min-height: 242px">
                                     @if (Auth()->user()->user_type == "admin" || Auth()->user()->user_type == "manager")
                                         <div id="popupButton7"

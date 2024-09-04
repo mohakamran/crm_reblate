@@ -30,10 +30,6 @@
                 font-family: 'Poppins';
                 font-weight: 300
             }
-
-
-
-
             .time-list .dash-stats-list {
                 flex-flow: column wrap;
                 flex-grow: 1;
@@ -452,7 +448,6 @@
                         </span>
                     </div>
                     <form id="myForm" action="" method="POST" class="text-start">
-
                         <div class="row">
                             <div class="col-md-12">
                                 <div id="messageBox" class="mt-2 mb-2" style="font-size: 16px;display:none;"></div>
@@ -1021,7 +1016,7 @@
                 <div class="card" style="box-shadow: none">
                     <div class="card-body"
                         style="background-color: #fff; backdrop-filter: none; border:1px solid #c7c7c7; height: 450px; overflow-y: auto;">
-                        <h3 class="EmpNameStyle mb-1" style="color: #14213d; font-weight: 800">Notfications</h3>
+                        <h3 class="EmpNameStyle mb-1" style="color: #14213d; font-weight: 800">Notifications</h3>
                         <div class="mt-3">
                             <ul
                                 class="d-flex gap-4 align-items-center list-group list-group-flush account-settings-links flex-row">
@@ -1939,9 +1934,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
                     </div>
 

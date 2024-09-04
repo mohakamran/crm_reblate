@@ -388,7 +388,7 @@
                                 </div>
                                 @foreach ($latestEmployees as $emp)
                                     <div class="col-md-3">
-                                        <div class="card hovering" style=" overflow: hidden; border-radius: 10px; ">
+                                        <div class="card hovering" style=" overflow: hidden; border-radius: 10px;height:370px; ">
                                             <div class="card-body"
                                                 style="box-shadow: none; backdrop-filter: blur(0px); padding:5px; max-height: 350px;">
                                                 @if ($emp->Emp_Status == "active")
@@ -468,13 +468,13 @@
 
                                                                 <p class="emp-name mb-0">
                                                                     <a href="/view_profile/{{ $emp->Emp_Code }}"
-                                                                        style="color: #14213d;">{{ $emp->Emp_Full_Name }}</a>
+                                                                        style="color: #14213d;font-size:17px;">{{ $emp->Emp_Full_Name }}</a>
                                                                 </p>
                                                                 <span
                                                                     style="font-size: 14px; ">{{ $emp->Emp_Designation }}
                                                                 </span>
                                                             </div>
-                                                            <div class="d-flex gap-1 align-items-center mb-2">
+                                                            <div class="d-flex gap-1 align-items-center mb-2" style="margin-top: 21px;">
                                                                 <p
                                                                     style="font-size: 14px; font-weight: 700; margin-bottom: 0px; color: #14213d; ">
                                                                     Shift:</p>

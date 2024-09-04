@@ -16,7 +16,7 @@
                     <div class="card-body">
                         <p>Below are the details of employee <u><strong>{{$emp_data->Emp_Full_Name}}</strong></u> and Employee code is <u><strong>{{$emp_data->Emp_Code}}</strong></u></p>
                         <br>
-                        <h4>Personal Details
+                        <h4>Personssal Details
                             <hr>
                         </h4>
 

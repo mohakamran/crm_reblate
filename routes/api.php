@@ -22,3 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/employees',[ApiController::class,'index']);
 Route::get('/employee/{id}',[ApiController::class,'getOne']);
+
+Route::get('test', function () {
+    return 'Test route works!';
+});
