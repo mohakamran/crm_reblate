@@ -58,7 +58,7 @@
                 
                     
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
-                        aria-labelledby="page-header-notifications-dropdown">
+                        aria-labelledby="page-header-notifications-dropdown" >
                         @if ($notifications != null && $notifications->isNotEmpty())
                         @foreach ($notifications as $notify)
                         <div class="p-3">
@@ -67,12 +67,12 @@
                                     <h6 class="m-0"> Notifications </h6>
                                 </div>
                                 <div class="col-auto">
-                                    <a href="#!" class="small"> View All</a>
+                                    <a href="{{ $notify->link }}" class="small"> View All</a>
                                 </div>
                             </div>
                         </div>
-                        <div data-simplebar style="max-height: 230px;">
-                            <a href="" class="text-reset notification-item">
+                        <div  data-simplebar style="max-height: 230px;">
+                            <a href="{{ $notify->link }}" class="text-reset notification-item">
                                 <div class="d-flex">
                                     <div class="flex-1">
                                         <h6 class="mb-1">{{ $notify->title }}</h6>

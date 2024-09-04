@@ -64,7 +64,7 @@ View Announcement
                 </ul>
                 <p><strong>Attachments:</strong></p>
                 <ul>
-                <img src="{{ asset($project->image) }}" alt="Project Image" style="max-width: 300px;">
+                <a href="{{ asset($project->image) }}" target="_blank">View PDF</a>
                 </ul>
             </div>
         </div>

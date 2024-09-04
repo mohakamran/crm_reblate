@@ -17,6 +17,9 @@ Projects
         <div class="row">
             <div class="col-12">
                 <div class="card bg-white p-3">
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger">{{ $error }}</div>
+                @endforeach
                     <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <h4 style="color: black;">Add New Project</h4>
@@ -40,18 +43,27 @@ Projects
                                         <input type="text" name="name" id="file_name"
                                             class="form-control"
                                             >
+                                            @error('name')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                     </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="file_shift" style="color: black;">Start Data <span class="text-danger">*</span></label>
                                     <input type="date" name="start_date" class="form-control">
+                                    @error('start_date')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="file_shift" style="color: black;">End Data <span class="text-danger">*</span></label>
                                     <input type="date" name="end_date" class="form-control">
+                                    @error('end_date')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                 </div>
                             </div>
                         </div>
@@ -75,7 +87,7 @@ Projects
                                     <select name="assigned_team_members" id="file_shift"
                                         class="form-control">
                                         @foreach($employee as $employees)
-                                            <option value="{{ $employees->id }}">{{ $employees->Emp_Full_Name }}</option>
+                                            <option value="{{ $employees->Emp_Code }}">{{ $employees->Emp_Full_Name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -84,6 +96,9 @@ Projects
                                 <div class="form-group" style="color: black;">
                                     <label for="file_shift">Budget <span class="text-danger">*</span></label>
                                     <input type="number" id="budget" name="budget" class="form-control">
+                                    @error('budget')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                 </div>
                             </div>
                         </div>
@@ -113,6 +128,9 @@ Projects
                                 <div class="form-group">
                                     <label for="file_shift" style="color: black;">Attachments/Files <span class="text-danger">*</span></label>
                                     <input type="file" name="image" class="form-control">
+                                    @error('image')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                 </div>
                             </div>
                         </div>
@@ -121,6 +139,9 @@ Projects
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <textarea name="description"  id="description" class="form-control p-3" style="width:100%;height:80px;">{!! ($find->description ?? old('file_description')) !!}</textarea>
+                                    @error('description')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                 </div>
                             </div>
                         </div>

@@ -20,6 +20,7 @@
     Route::match(['get', 'post'],'/apply-for-leave', [AttendenceController::class, 'empApplyForLeave'])->name('apply-for-leave');
 
     Route::get('/leave-records', [AttendenceController::class, 'empLeaveRecords'])->name('leaves.record');
+    
     Route::get('/update-leave/{id}', [AttendenceController::class, 'updateLeaves']);
     Route::post('/update-leave/{id}', [AttendenceController::class, 'updateLeavesSave']);
 

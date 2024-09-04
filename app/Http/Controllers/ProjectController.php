@@ -39,12 +39,12 @@ class ProjectController extends Controller
             'budget' => 'nullable|numeric',
             'client' => 'nullable|string|max:255',
             'priority' => 'nullable|string|max:255',
-            'image' => 'required|image|file|mimes:jpg,png,webp,pdf,docx,txt|max:2048',
+            'image' => 'required|file|mimes:pdf|max:2048',
         ]);
 
         $image = $request->file('image');
         $imageName = time() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('ProjectImage'), $imageName);
+        $image->move(public_path('ProjectFiles'), $imageName);
 
         $project = new Project();
         $project->name = $request->input('name');
@@ -55,29 +55,26 @@ class ProjectController extends Controller
         $project->budget = $request->input('budget'); 
         $project->client = $request->input('client'); 
         $project->priority = $request->input('priority'); 
-        $project->image = 'ProjectImage/' . $imageName;
+        $project->image = 'ProjectFiles/' . $imageName;
         $project->assigned_team_members  = $request->input('assigned_team_members'); 
         $project->save();
 
         $teamMemberIds = explode(',', $project->assigned_team_members);
         foreach ($teamMemberIds as $userId) {
             $userId = trim($userId);
-            $empCode = DB::table('employees')
-                         ->where('id', $userId)
-                         ->value('Emp_Code');
             DB::table('notifications')->insert([
                 'title' => 'New Project is assigned to You',
                 'message' => "A new project has been added for {$project->name}.",
                 'date' => date('Y-m-d'),
-                'user_id' => $empCode, 
+                'user_id' => $userId, 
                 'time' => Carbon::now()->format('h:i A'), 
                 'status' => "unread",
                 'type' => "all",
-                'link' => "undefined",
+                'link' => "/project-assign-records",
             ]);
         }
 
-        return redirect()->back()->with('success', 'Project created and team members notified!');
+        return redirect()->route('projects.index')->with('success', 'Project created and team members notified!');
     }
 
     public function delete($id){
@@ -137,18 +134,15 @@ class ProjectController extends Controller
         $teamMemberIds = explode(',', $project->assigned_team_members);
         foreach ($teamMemberIds as $userId) {
             $userId = trim($userId);
-            $empCode = DB::table('employees')
-                         ->where('id', $userId)
-                         ->value('Emp_Code');
             DB::table('notifications')->insert([
                 'title' => 'Updated Project assigned to You',
                 'message' => "The project {$project->name} has been updated.",
                 'date' => date('Y-m-d'),
-                'user_id' => $empCode, 
+                'user_id' => $userId, 
                 'time' => Carbon::now()->format('h:i A'), 
                 'status' => "unread",
                 'type' => "all",
-                'link' => "undefined",
+                'link' => "/project-assign-records",
             ]);
         }
     
@@ -159,6 +153,15 @@ class ProjectController extends Controller
         
         $project = Project::with('attachments')->findOrFail($id);
         return view('projects.view', compact('project'));
+    }
+
+    public function empProjectRecords() {
+        $user_code = Auth()->user()->user_code;
+        $emp_assign_projects = DB::table('projects')
+        ->where('assigned_team_members', 'LIKE', "%$user_code%")
+        ->orderBy('id', 'desc')
+        ->get();
+        return view('projects.ShowRecords',compact('user_code','emp_assign_projects'));
     }
 
 }

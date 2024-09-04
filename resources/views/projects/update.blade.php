@@ -71,7 +71,7 @@ Projects
                 <label for="assigned_team_members">Assigned Team Members <span class="text-danger">*</span></label>
                 <select name="assigned_team_members[]" id="assigned_team_members" class="form-control" required>
                     @foreach($employee as $employees)
-                        <option value="{{ $employees->id }}" {{ in_array($employees->id, old('assigned_team_members', explode(',', $project->assigned_team_members))) ? 'selected' : '' }}>
+                        <option value="{{ $employees->Emp_Code }}" {{ in_array($employees->Emp_Code, old('assigned_team_members', explode(',', $project->assigned_team_members))) ? 'selected' : '' }}>
                             {{ $employees->Emp_Full_Name }}
                         </option>
                     @endforeach

@@ -215,7 +215,6 @@ Projects
                                     <th class="font-size-20" style="color: white">Status</th>
                                     <th class="font-size-20" style="color: white">Client Name</th>
                                     <th class="font-size-20" style="color: white">Priority</th>
-                                    <!-- <th class="font-size-20" style="color: white">Image</th> -->
                                     <th class="borderingRightTable font-size-20" style="color: white">Action</th>
                                 </tr>
                             </thead>
