@@ -9,7 +9,7 @@
         rel="stylesheet">
 @endsection
 @section('page-title')
-    CRM - Dashboard
+    
 @endsection
 @section('body')
 

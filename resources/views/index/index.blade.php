@@ -9,7 +9,7 @@
         rel="stylesheet">
 @endsection
 @section('page-title')
-    CRM - Dashboard
+    
 @endsection
 @section('body')
 
@@ -1104,7 +1104,7 @@
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: transparent;">
-                        <h4 class="card-title mb-0 flex-grow-1">Top Clients</h4>
+                        <h4 class="card-title mb-0 flex-grow-1" style="color: black;">Top Clients</h4>
 
                     </div>
                     <div class="card-body pt-2">
@@ -1122,19 +1122,19 @@
                                                 <table
                                                     class="table table-borderless table-centered align-middle table-nowrap mb-0">
                                                     <tbody>
-                                                        <th>Client Name</th>
-                                                        <th>Project Name</th>
+                                                        <th style="color: black;">Client Name</th>
+                                                        <th style="color: black;">Project Name</th>
                                                         @foreach ($total_clients as $client)
                                                         @endforeach
                                                         <tr>
 
                                                             <td>
-                                                                <h6 class="font-size-15 mb-1">{{ $client->client_name }}
+                                                                <h6 class="font-size-15 mb-1" style="color: black;">{{ $client->client_name }}
                                                                 </h6>
-                                                                <p class="text-muted mb-0 font-size-14">
+                                                                <p class="text-muted mb-0 font-size-14" style="color: black;">
                                                                     {{ $client->client_email }}</p>
                                                             </td>
-                                                            <td>
+                                                            <td style="color: black;">
                                                                 {{-- <span class="badge badge-soft-danger font-size-12">Cancel</span>  --}}
                                                                 {{ $client->project_name }}
                                                             </td>
@@ -1168,7 +1168,7 @@
                     <div class="card-header border-0 align-items-center d-flex" style="background-color: #e3e3e3">
                         <h4 class="card-title text-black mb-0 flex-grow-1">Total Statistics</h4>
                     </div>
-                    <div class="card-body pt-2">
+                    <div class="card-body pt-2 text-dark">
                         <div class="row mt-3">
                             <div class="col-md-6 col-6 text-center">
                                 <div class="stats-box mb-4" style="border: 1px solid #e3e3e3; border-radius:5px;">
