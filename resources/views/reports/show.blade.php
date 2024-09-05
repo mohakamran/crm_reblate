@@ -103,7 +103,9 @@ Reports
                 <div class="card" style="box-shadow: none">
                     <div class="card-body bg-white">
                         <div class="d-flex justify-content-end mb-5">
+                            @if(auth()->user()->user_type == 'employee')
                             <a href="{{ route('report.add') }}" class="reblateBtn p-2"> Create Monthly Report</a>
+                            @endif
                         </div>
                         <table id="datatable-buttons" class="table dt-responsive nowrap"
                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -135,6 +137,7 @@ Reports
                                         <td class="table-lines" style="color: #000;"> {{ $data->date }} </td>
                                         <td class="table-lines" style="color: #000;"> {{ $data->emp_name }} </td>
                                         <td class="table-lines" style="color: #000;"> {{ $data->tasks_completed }} </td>
+                                        
                                         @if(is_null($data->manager_comments))
                                             <td class="table-lines" style="color: green;"> No Comments </td>
                                         @else
@@ -161,19 +164,11 @@ Reports
                                         @endif
 
                                         @if (auth()->user()->user_type == "admin" || auth()->user()->user_type == "manager")
-                                             <td class="table-lines">
-                                                <a href="#" onclick="delUploadEntry('{{$holiday->id}}')">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                                        viewBox="0 0 24 24">
-                                                        <path fill="#d20f0f"
-                                                            d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zm2-4h2V8H9zm4 0h2V8h-2z">
-                                                        </path>
-                                                    </svg>
-                                                </a>
-                                                <a href="#" data-toggle="modal" data-target="#popup_{{ $holiday->id }}"  >
+                                            <td class="table-lines">
+                                                <a href="{{ route('report.record.admin',$data->id) }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
                                                 </a>
-                                             </td>
+                                            </td>
                                         @endif
                                     </tr>
                                 @endforeach

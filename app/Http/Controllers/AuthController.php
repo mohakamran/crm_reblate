@@ -1705,7 +1705,7 @@ public function searchDateManagerHomePage(Request $req) {
 
             $data = [
                 'emp_birthday'=> $emp_birthday,
-                'files' => $files,
+                // 'files' => $files,
                 'latest_to_do' => $latest_to_do,
                 'to_do_tasks_notifications' => $to_do_tasks_notifications,
                 'tasks_notifications' =>$tasks_notifications,

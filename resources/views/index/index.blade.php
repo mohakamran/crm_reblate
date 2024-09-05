@@ -758,6 +758,7 @@
                                     {{-- notifications  --}}
 
                                     @if ($notifications != null && $notifications->isNotEmpty())
+                                    
                                         @foreach ($notifications as $notify)
                                             <div class="notification-hover mt-2 p-2"
                                                 style="border-bottom: 1px solid lightgray"
@@ -796,9 +797,6 @@
                                                 No Notifications</h4>
                                         </div>
                                     @endif
-
-
-
                                 </div>
 
                                 <div class="container-fluid tab-pane fade show px-0"

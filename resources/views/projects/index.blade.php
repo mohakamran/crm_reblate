@@ -230,9 +230,6 @@ Projects
                                     <td style="color: #000;">{{ $data->status }}</td>
                                     <td style="color: #000;">{{ $data->client }}</td>
                                     <td style="color: #000;">{{ $data->priority }}</td>
-                                    <!-- <td style="color: #000;">
-                                        <img src="{{ asset($data->image) }}" alt="Project Image" style="max-width: 300px;">
-                                    </td> -->
                                     <td>
                                         <a href="{{ route('project.edit',$data->id) }}" class="text-link">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
