@@ -547,7 +547,7 @@
                                                                     <span title="Weekend" class="text-white rounded-pill font-size-10"
                                                                         style="padding:3px 5px;background-color: #0D6EFD">W</span>
                                                                 </div>
-                                                            @elseif ($leaveRecord && $leaveRecord->status == 'approved')
+                                                            @elseif ($leaveRecord && isset($leaveRecord->status) && $leaveRecord->status == 'approved')
                                                                 <!-- Display Leave indication -->
                                                                 <span title="Leave" class="text-white rounded-pill font-size-10"
                                                                     style="padding:5px 8px;background-color: #F4BA40">L</span>
@@ -828,15 +828,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                            </div>
-
-
-                            </td>
+                                        </div>
+                                    </td>
                             @endforeach
-
                             </tr>
                             @endforeach
-
                             </tbody>
                             </table>
                         </div>

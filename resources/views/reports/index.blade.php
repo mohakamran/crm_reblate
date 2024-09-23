@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Reports
+    Report Section
 @endsection
 @section('css')
     <!-- DataTables -->
@@ -16,7 +16,7 @@
         rel="stylesheet" type="text/css" />
 @endsection
 @section('page-title')
-Reports
+Reports of {{ Auth()->user()->user_name }}
 @endsection
 @section('body')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -54,14 +54,14 @@ Reports
 
             .modal-backdrop {
 
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--bs-backdrop-bg);
-}
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                width: 100vw;
+                height: 100vh;
+                background-color: var(--bs-backdrop-bg);
+            }
 
             .popup {
                 display: none;
@@ -102,88 +102,103 @@ Reports
             <div class="col-12">
                 <div class="card" style="box-shadow: none">
                     <div class="card-body bg-white">
-                        <div class="d-flex justify-content-end mb-5">
-                            <a href="{{ route('report.add') }}" class="reblateBtn p-2"> Create Monthly Report</a>
-                        </div>
+                        <div class="d-flex justify-content-between align-items-center my-3">
+                            @if($isFriday)
+                                <p>Please submit your weekly report from here <a href="#" data-bs-toggle="modal" data-bs-target="#weeklyReportModal">Click Here</a></p>
+                            @else
+                                <p>Today is not Friday. Please check back on Friday to submit your weekly report.</p>
+                            @endif
+                                
+                        <!-- <form action="{{ route('report.index') }}" method="GET" class="d-flex align-items-end gap-3">
+                            <div class="mr-2">
+                                <label for="startDate" class="mr-1">Start Date:</label>
+                                <input type="date" id="startDate" class="form-control" name="startDate" value="{{ request('startDate') }}">
+                            </div>
+                            <div class="mr-2">
+                                <label for="endDate" class="mr-1">End Date:</label>
+                                <input type="date" id="endDate" name="endDate" class="form-control" value="{{ request('endDate') }}">
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-transparent text-white" style="background-color: #14213d;">Filter</button>
+                            </div>
+                        </form> -->
+                    </div>
                         <table id="datatable-buttons" class="table dt-responsive nowrap"
                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                                 <tr style="background-color: #14213d">
                                     <th class="borderingLeftTable font-size-17" style="color: white">SN</th>
-                                    <th class="borderingLeftTable font-size-17" style="color: white">Report</th>
-                                    <th class="font-size-17" style="color: white">Date</th>
+                                    <th class="font-size-17" style="color: white">Emp Code</th>
                                     <th class="font-size-17" style="color: white">Emp Name</th>
                                     <th class="font-size-17" style="color: white">Task Completed</th>
-                                    <th class="font-size-17" style="color: white">Manager Comments</th>
-                                    <th class="font-size-17" style="color: white">Admin Comments</th>
                                     <th class="font-size-17" style="color: white">Action</th>
                                 </tr>
                             </thead>
 
                             <tbody id="table-body">
-
                                 @php
                                     $count = 1;
                                 @endphp
-
                                 @foreach ($report as $data)
                                     <tr style="border-bottom: 1px solid #c7c7c7">
                                         <td style="color: #000;">
                                             {{$count++}}
                                         </td>
-                                        <td class="table-lines" style="color: #000;">{{ $data->report }}</td>
-                                        <td class="table-lines" style="color: #000;"> {{ $data->date }} </td>
-                                        <td class="table-lines" style="color: #000;"> {{ $data->emp_name }} </td>
-                                        <td class="table-lines" style="color: #000;"> {{ $data->tasks_completed }} </td>
-                                        @if(is_null($data->manager_comments))
-                                            <td class="table-lines" style="color: green;"> No Comments </td>
-                                        @else
-                                            <td class="table-lines" style="color: #000;"> {{ $data->manager_comments }} </td>
-                                        @endif
-                                        @if(is_null($data->admin_comments))
-                                            <td class="table-lines" style="color: green;"> No Comments </td>
-                                        @else
-                                            <td class="table-lines" style="color: #000;"> {{ $data->admin_comments }} </td>
-                                        @endif
+                                        <td class="table-lines" style="color: #000;"> {{ $data->user_code }} </td>
+                                        <td class="table-lines" style="color: #000;"> {{ $data->name }} </td>
+                                        <td class="table-lines" style="color: #000;">{{ Str::limit($data->task_title, 30) }}  </td>
                                         @if(auth()->user()->user_type == 'employee')
                                         <td class="table-lines">
-                                                <a href="#" onclick="deleteproject('{{$data->id}}')">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                                        viewBox="0 0 24 24">
-                                                        <path fill="#d20f0f"
-                                                            d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zm2-4h2V8H9zm4 0h2V8h-2z">
-                                                        </path>
-                                                    </svg>
+                                                <a href="{{ route('report.empShow',$data->id) }}" style="color:#000">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 50 50"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke="black" d="M39.583 25S33.063 33.333 25 33.333C16.938 33.333 10.417 25 10.417 25s6.52-8.333 14.583-8.333S39.583 25 39.583 25M25 20.833a4.167 4.167 0 1 0 0 8.334a4.167 4.167 0 0 0 0-8.334"/><path stroke="black" d="M6.25 14.583v-6.25A2.083 2.083 0 0 1 8.333 6.25h6.25m29.167 8.333v-6.25a2.083 2.083 0 0 0-2.083-2.083h-6.25M6.25 35.417v6.25a2.083 2.083 0 0 0 2.083 2.083h6.25m29.167-8.333v6.25a2.083 2.083 0 0 1-2.083 2.083h-6.25"/></g></svg>
                                                 </a>
-                                                <a href="{{ route('report.edit',$data->id) }}" style="color:#000">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>                                                </a>
-                                             </td>
+                                        </td>
                                         @endif
-
                                         @if (auth()->user()->user_type == "admin" || auth()->user()->user_type == "manager")
-                                             <td class="table-lines">
-                                                <a href="#" onclick="delUploadEntry('{{$holiday->id}}')">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                                        viewBox="0 0 24 24">
-                                                        <path fill="#d20f0f"
-                                                            d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zm2-4h2V8H9zm4 0h2V8h-2z">
-                                                        </path>
-                                                    </svg>
-                                                </a>
-                                                <a href="#" data-toggle="modal" data-target="#popup_{{ $holiday->id }}"  >
+                                            <td class="table-lines">
+                                                <a href="{{ route('report.record.admin',$data->id) }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
                                                 </a>
-                                             </td>
+                                            </td>
                                         @endif
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-
                 </div>
-            </div> <!-- end col -->
-        </div> <!-- end row -->
+            </div>
+        </div>
+        <div class="modal fade" id="weeklyReportModal" tabindex="-1" aria-labelledby="weeklyReportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background: #cbcbcb;">
+            <div class="modal-header" style="background: #14213d;">
+                <h5 class="modal-title text-white" id="weeklyReportModalLabel">{{ Auth()->user()->user_name }} Weekly Report</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: #fff;"></button>
+            </div>
+            <div class="modal-body">
+                <div id="missingDaysMessage" class="alert alert-warning" style="display: none;"></div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="font-weight: 600; font-size: 20px; color: black;">Task Title</th>
+                            <th style="font-weight: 600; font-size: 20px; color: black;">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="weeklyReportTableBody">
+                        <!-- Task rows will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="submitReportButton">Submit Report</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
         <script>
             $(document).ready(function() {
@@ -482,6 +497,90 @@ Reports
                 });
             }
         </script>
+        <script>
+                document.getElementById('filterBtn').addEventListener('click', function() {
+                var startDate = new Date(document.getElementById('startDate').value);
+                var endDate = new Date(document.getElementById('endDate').value);
+                
+                var rows = document.querySelectorAll('#table-body tr');
+                
+                rows.forEach(function(row) {
+                    var dateCell = row.cells[1]; // Assuming the date is in the second column
+                    var rowDate = new Date(dateCell.textContent);
+                    
+                    if (rowDate >= startDate && rowDate <= endDate) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+
+        </script>
+        <script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Fetch weekly report data when modal is opened
+    document.querySelector('a[data-bs-toggle="modal"]').addEventListener('click', function () {
+        fetch('/weekly-report')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Log the response data
+                const tableBody = document.getElementById('weeklyReportTableBody');
+                tableBody.innerHTML = '';
+                const messageDiv = document.getElementById('missingDaysMessage');
+                let missingDays = Array.isArray(data.missingDays) ? data.missingDays : []; // Ensure it's an array
+
+                // Clear previous message
+                messageDiv.style.display = 'none'; // Hide initially
+
+                // Populate the table with tasks
+                data.tasks.forEach(task => {
+                    const row = `<tr>
+                        <td>${task.task_title}</td>
+                        <td>${task.date}</td>
+                    </tr>`;
+                    tableBody.insertAdjacentHTML('beforeend', row);
+                });
+
+                // Check for missing reports
+                if (missingDays.length > 0 || data.tasks.length < 5) {
+                    const message = `Please submit reports for: ${missingDays.join(', ')} before submitting the weekly report.`;
+                    messageDiv.textContent = message;
+                    messageDiv.style.display = 'block'; // Show the message
+                    document.getElementById('submitReportButton').style.display = 'none'; // Hide submit button
+                } else {
+                    document.getElementById('submitReportButton').style.display = 'block'; // Show submit button
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching weekly report:', error);
+            });
+    });
+
+    // Handle report submission
+    document.getElementById('submitReportButton').addEventListener('click', function () {
+        fetch('/submit-weekly-report', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Report submitted and notifications sent!');
+                let modal = bootstrap.Modal.getInstance(document.getElementById('weeklyReportModal'));
+                modal.hide();
+            } else {
+                alert('An error occurred while submitting the report.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+</script>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

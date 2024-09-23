@@ -1184,7 +1184,6 @@
                             <img src="{{ url('Group6.svg') }}" alt="clock" style=" object-fit:contain; width: 50px;">
                             <h5 class="mb-0" style="color: #14213d; font-family:'Poppins'; font-weight:600">Lunch Break
                             </h5>
-
                             @if ($shift_emp_time == 'Morning')
                                 <p class="mb-0" style="color: #14213d; font-family:'Poppins'; font-weight:300">1:15 pm -
                                     2:00 pm</p>

@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log; 
 use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Redirect;
 
 
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Auth;
 
 class AttendenceController extends Controller
 {
@@ -63,6 +64,7 @@ class AttendenceController extends Controller
     }
     // add attendence of employeee
     public function addAttendence(Request $request) {
+        
         $emp_code = $request->emp_code;
 
         $emp_date = $request->emp_date;
@@ -238,7 +240,7 @@ class AttendenceController extends Controller
     }
     // save attendence
         public function saveAttendence(Request $req) {
-
+            
         // Retrieve the data from the AJAX request
         $check_in = $req->check_in;
         $check_out = $req->check_out;
@@ -333,13 +335,6 @@ class AttendenceController extends Controller
             if($break_end == "00:00") {
                 $break_end = "";
             }
-
-
-
-
-
-
-
             // Update the attendance record in the database
             DB::table('attendence')->where('id', $id)->update([
                 'check_in_time' => $check_in,
@@ -857,83 +852,39 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
    // admin can see the the employees card for attendence
    // admin can see the the employees card for attendence
    public function viewEmpAttendence() {
-            // Get the current month and year
             $currentMonth = Carbon::now()->format('m');
             $currentYear = Carbon::now()->format('Y');
             $currentmonth = Carbon::now()->format('F');
             $currentyear = Carbon::now()->format('Y');
-
-            // dd($currentMonth,$currentYear );
-
-            // Get the first day of the current month
             $firstDayOfMonth = Carbon::now()->startOfMonth();
-
-            // Get the current date
             $today = Carbon::now()->toDateString();
-
             $datesForMonth  = $this->getHolidays($currentMonth,$currentYear);
-            // dd($get_holidays);
             $numberOfHolidays = count($datesForMonth);
-            // dd($numberOfHolidays);
-
-            // total working days
             $total_days = $this->getNumberOfDays($currentMonth,$currentyear);
-            // dd($total_days);
-
-            // Query attendance records for the current month up to today's date
-            // Query employees and their attendance records for the current month up to today's date
             $emp = DB::table('employees')->where('Emp_Status','active')->get();
-
-            // Initialize an empty array to store attendance records
             $attendances = [];
-
-            // Initialize an empty array to store days
-            // Get the number of days in the current month
             $numberOfDaysInMonth = Carbon::now()->daysInMonth;
-            // dd($numberOfDaysInMonth);
-
-            // Initialize an empty array to store days
             $daysOfMonth = [];
-
-            // Loop through the days of the month and store each day in the array
-            // Loop through the days of the month and store each day in the array
             for ($day = 1; $day <= $numberOfDaysInMonth; $day++) {
-                // Create a Carbon instance for the current day of the month
                 $currentDate = Carbon::createFromDate($currentYear, $currentMonth, $day);
-
-                // Format the date string into the desired format
-                $formattedDate = $currentDate->format('j F l'); // e.g., "1 April Monday"
-
-                // Store the formatted date in the array
+                $formattedDate = $currentDate->format('j F l'); 
                 $daysOfMonth[] = $formattedDate;
             }
-
-            // dd($daysOfMonth);
-
-            // Iterate over each active employee to fetch their attendance records
             foreach ($emp as $employee) {
-                // Query attendance records for the current month up to today's date for each employee
                 $employeeAttendances = DB::table('attendence')
                     ->where('emp_id', $employee->Emp_Code)
                     ->whereYear('date', $currentYear)
                     ->whereMonth('date', $currentMonth)
                     ->whereDate('date', '<=', $today)
                     ->get();
-
-                // Append the attendance records to the $attendances array
                 $attendances = array_merge($attendances, $employeeAttendances->toArray());
             }
-
             $date = Carbon::now();
             $month = $date->format('m');
             $year = $date->format('Y');
-
-
             $total_present = $this->getHightestPresent($month,$year);
             $total_absent = $this->getLowestPresent($month,$year);
-
             $upcomingLeaves = $this->getUpcomingLeaves($month,$year);
-            // dd($upcomingLeaves);
 
             return view('attendence.emp-cards-attendence', compact('upcomingLeaves','total_absent','total_present','total_days','numberOfHolidays','datesForMonth','currentyear','currentMonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
 
@@ -1038,10 +989,6 @@ public function getLowestPresent($month, $year)
 
     return $topResults->values();  // Return the results as a collection
 }
-
-
-
-
    public function getHightestPresent($month, $year)
    {
        // Construct the start and end dates for the given month and year
@@ -1240,10 +1187,6 @@ public function getLowestPresent($month, $year)
 
     return view('attendence.emp-cards-attendence-search', compact('total_leaves','total_absent','total_present','total_days','numberOfHolidays','datesForMonth','currentyear','currentMonth','numberOfDaysInMonth','attendances','emp','daysOfMonth'));
 
-
-
-
-
    }
    // get highest leaves
    public function getHightLeaves($month, $year) {
@@ -1377,6 +1320,7 @@ public function getLowestPresent($month, $year)
 
 
    }
+
    public function breakStart() {
 
       $id = Auth()->user()->user_code;
@@ -1444,7 +1388,6 @@ public function getLowestPresent($month, $year)
       }
    }
 
-
     public function index()
     {
         // Session::put('attendence_status', false);
@@ -1499,13 +1442,7 @@ public function getLowestPresent($month, $year)
                 return view('attendence.index',compact('shift_time'));
         }
       }
-
-
-
-
     }
-
-
 
     public function checkInTime() {
         $id = Auth()->user()->user_code;
@@ -1570,146 +1507,142 @@ public function getLowestPresent($month, $year)
         $id = Auth()->user()->user_code;
         $emp = DB::table('employees')->where('Emp_Code', $id)->first();
         $currentDateTime = now();
-        $dayFullName = $currentDateTime->format('l'); // get full day name
-        $todayDate = $currentDateTime->toDateString(); // 'Y-m-d'
-        $checkOutTime = $currentDateTime->format('h:i A'); // get time now 11:01 AM/PM
-        // $checkOutTime = "4:15 AM"; // get time now 11:01 AM/PM
-
+        $checkOutTime = $currentDateTime->format('h:i A'); 
+        $todayDate = $currentDateTime->toDateString(); 
+    
+        // Log the check-out initiation
+        Log::info('Check-out initiated for user: ' . $id, ['checkOutTime' => $checkOutTime]);
+    
+      
+        if(Auth()->user()->user_type == 'employee'){
+            $reportSubmitted = DB::table('to_do_list')->where('user_code', $id)->where('status', 'completed')->exists();
+            if (!$reportSubmitted) {
+                return redirect()->back()->with('error', 'Please submit your daily report before clocking out.');
+            }
+        }
+        
+    
         if ($emp) {
             $shift_time = $emp->Emp_Shift_Time;
+    
             if ($shift_time == "Morning") {
-                $shift_time = "morning";
                 $check_morning = DB::table('attendence')->where('date', $todayDate)->where('emp_id', $id)->first();
-                $check_morning_id = $check_morning->id;
-                if ($check_morning) {
-                    if ($check_morning->check_in_status == "done" && $check_morning->check_out_status == "") {
-
-                        Session::put('attendence_status', true);
-                        Session::put('check_out_time', $checkOutTime);
-                        $check_in_time = $check_morning->check_in_time;
-                        $check_out_time = $checkOutTime;
-                        $break_start_time = $check_morning->break_start;
-                        $break_end_time = $check_morning->break_end;
-
-                        $checkIn = Carbon::createFromFormat('h:i A', $check_in_time);
-                        $checkOut = Carbon::createFromFormat('h:i A', $check_out_time);
-
-                        $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to hours
-
-                        if ($break_end_time != "" && $break_start_time != "") {
-                            $breakStart = Carbon::createFromFormat('h:i A', $break_start_time);
-                            $breakEnd = Carbon::createFromFormat('h:i A', $break_end_time);
-
-                            if ($breakStart >= $checkIn && $breakEnd <= $checkOut) {
-                                $totalWorkHours -= $breakEnd->diffInMinutes($breakStart) / 60; // Subtract break time in hours
-                            }
+    
+                if ($check_morning && $check_morning->check_in_status == "done" && $check_morning->check_out_status == "") {
+                    // Update the check-out time and total worked hours
+                    $check_in_time = $check_morning->check_in_time;
+                    $break_start_time = $check_morning->break_start;
+                    $break_end_time = $check_morning->break_end;
+    
+                    $checkIn = Carbon::createFromFormat('h:i A', $check_in_time);
+                    $checkOut = Carbon::createFromFormat('h:i A', $checkOutTime);
+                    $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; 
+    
+                    // Handle breaks
+                    if ($break_start_time && $break_end_time) {
+                        $breakStart = Carbon::createFromFormat('h:i A', $break_start_time);
+                        $breakEnd = Carbon::createFromFormat('h:i A', $break_end_time);
+                        if ($breakStart >= $checkIn && $breakEnd <= $checkOut) {
+                            $totalWorkHours -= $breakEnd->diffInMinutes($breakStart) / 60; 
                         }
-
-                        // Format total worked hours into HH:MM format
-                        $hours = floor($totalWorkHours);
-                        $minutes = ($totalWorkHours - $hours) * 60;
-                        $formattedTotalWorkHours = sprintf('%02d:%02d', $hours, $minutes);
-
-                        Session::put('total_hours', $formattedTotalWorkHours);
-                        DB::table('attendence')
-                            ->where('emp_id', $id)
-                            ->where('id',$check_morning_id)
-                            ->update([
-                                'check_out_time' => $checkOutTime,
-                                'check_out_status' => "done",
-                                'total_time' => $formattedTotalWorkHours
-                            ]);
-
-                        return back();
-                    } else {
-                        return back();
                     }
-                } else {
+    
+                    $hours = floor($totalWorkHours);
+                    $minutes = ($totalWorkHours - $hours) * 60;
+                    $formattedTotalWorkHours = sprintf('%02d:%02d', $hours, $minutes);
+    
+                    // Update the attendance record
+                    $updateSuccess = DB::table('attendence')
+                        ->where('emp_id', $id)
+                        ->where('id', $check_morning->id)
+                        ->update([
+                            'check_out_time' => $checkOutTime,
+                            'check_out_status' => "done",
+                            'total_time' => $formattedTotalWorkHours
+                        ]);
+    
+                    if ($updateSuccess) {
+                        // Log successful update
+                        Log::info('Check-out time saved for user: ' . $id);
+                    } else {
+                        Log::error('Failed to update attendance for user: ' . $id);
+                    }
+    
                     return back();
+                } else {
+                    return back()->with('error', 'You have not checked in or already clocked out.');
                 }
             } else {
-                // dd("good");
-                $shift_time = "night";
-                // dd($id);
-                // $yesterday = Carbon::yesterday(); // Get yesterday's date
+                // Handling for night shift
                 $check_night = DB::table('attendence')
-                ->where('emp_id', $id)
-                ->orderBy('id', 'desc')->first();
-
-                $check_night_id = $check_night->id;
-
-                // dd($check_night->check_in_status);
-
-                if ($check_night) {
-                    if ($check_night->check_in_status == "done" && $check_night->check_out_status == "") {
-                        // dd("working status");
-                        Session::put('attendence_status', true);
-                        Session::put('check_out_time', $checkOutTime);
-                        $check_in_time = $check_night->check_in_time;
-                        $check_out_time = $checkOutTime;
-                        // $check_out_time = "4:15 AM";
-                        $break_start_time = $check_night->break_start;
-                        $break_end_time = $check_night->break_end;
-
-                        // Assuming $check_in_time and $check_out_time are in the format "h:i A" (e.g., "10:01 PM" and "4:15 AM")
-                        $checkIn = Carbon::createFromFormat('h:i A', $check_in_time);
-                        $checkOut = Carbon::createFromFormat('h:i A', $check_out_time);
-
-                        // Handle the case where check-out is on the next day
-                        if ($checkOut < $checkIn) {
-                            $checkOut->addDay(); // Add a day to check-out time
-                        }
-
-                        $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to hours
-
-                        // Assuming $break_start_time and $break_end_time are in the format "h:i A" (e.g., "12:00 PM" and "1:00 PM")
-                        if ($break_end_time != "" && $break_start_time != "") {
-                            $breakStart = Carbon::createFromFormat('h:i A', $break_start_time);
-                            $breakEnd = Carbon::createFromFormat('h:i A', $break_end_time);
-
-                            // Check if break is within working hours
-                            if ($breakStart >= $checkIn && $breakEnd <= $checkOut) {
-                                $totalWorkHours -= $breakEnd->diffInMinutes($breakStart) / 60; // Subtract break time in hours
-                            }
-                        }
-
-                        // Format total worked hours into HH:MM format
-                        $hours = floor($totalWorkHours);
-                        $minutes = ($totalWorkHours - $hours) * 60;
-                        $formattedTotalWorkHours = sprintf('%02d:%02d', $hours, $minutes);
-
-                        // Now $formattedTotalWorkHours should reflect the correct total work hours
-
-                        // dd($formattedTotalWorkHours);
-
-                        Session::put('total_hours', $formattedTotalWorkHours);
-
-                        DB::table('attendence')
-                            ->where('emp_id', $id)
-                            ->where('id',$check_night_id)
-                            ->update([
-                                'check_out_time' => $checkOutTime,
-                                'check_out_status' => "done",
-                                'total_time' => $formattedTotalWorkHours
-                            ]);
-
-                        return back();
-
-                    } else {
-                        return back();
+                    ->where('emp_id', $id)
+                    ->orderBy('id', 'desc')->first();
+    
+                if ($check_night && $check_night->check_in_status == "done" && $check_night->check_out_status == "") {
+                    $check_in_time = $check_night->check_in_time;
+                    $break_start_time = $check_night->break_start;
+                    $break_end_time = $check_night->break_end;
+    
+                    $checkIn = Carbon::createFromFormat('h:i A', $check_in_time);
+                    $checkOut = Carbon::createFromFormat('h:i A', $checkOutTime);
+                    
+                    // Adjust for crossing midnight
+                    if ($checkOut < $checkIn) {
+                        $checkOut->addDay(); 
                     }
-                } else {
+    
+                    $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; 
+    
+                    // Handle breaks
+                    if ($break_start_time && $break_end_time) {
+                        $breakStart = Carbon::createFromFormat('h:i A', $break_start_time);
+                        $breakEnd = Carbon::createFromFormat('h:i A', $break_end_time);
+                        if ($breakStart >= $checkIn && $breakEnd <= $checkOut) {
+                            $totalWorkHours -= $breakEnd->diffInMinutes($breakStart) / 60; 
+                        }
+                    }
+    
+                    $hours = floor($totalWorkHours);
+                    $minutes = ($totalWorkHours - $hours) * 60;
+                    $formattedTotalWorkHours = sprintf('%02d:%02d', $hours, $minutes);
+    
+                    // Update the attendance record
+                    $updateSuccess = DB::table('attendence')
+                        ->where('emp_id', $id)
+                        ->where('id', $check_night->id)
+                        ->update([
+                            'check_out_time' => $checkOutTime,
+                            'check_out_status' => "done",
+                            'total_time' => $formattedTotalWorkHours
+                        ]);
+    
+                    if ($updateSuccess) {
+                        // Log successful update
+                        Log::info('Check-out time saved for user: ' . $id);
+                    } else {
+                        Log::error('Failed to update attendance for user: ' . $id);
+                    }
+    
                     return back();
+                } else {
+                    return back()->with('error', 'You have not checked in or already clocked out for the night shift.');
                 }
             }
         } else {
-            Session::put('show_break_end', false);
-            Session::put('attendence_status', false);
-            Session::put('show_check_out', false);
-            // $check_in_already_message = "Employee Not Found!";
-            // $check_in_already_message = "";
-            return back();
+            return back()->with('error', 'Employee not found.');
         }
+    }
+    
+
+    public function validateReport()
+    {
+        $id = Auth::user()->user_code;
+        $reportSubmitted = DB::table('to_do_list')
+            ->where('user_code', $id)
+            ->where('status', 'completed')
+            ->exists();
+
+        return response()->json(['reportSubmitted' => $reportSubmitted]);
     }
 
 

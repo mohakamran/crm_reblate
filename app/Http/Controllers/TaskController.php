@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 class TaskController extends Controller
@@ -46,14 +47,6 @@ class TaskController extends Controller
     // crearte task by emp
     public function saveToDoTaskByEmp(Request $request)
     {
-        // Validate incoming request data (optional but recommended)
-        // $validatedData = $request->validate([
-        //     'title' => 'required|string|max:255',
-        //     'userName' => 'required|string|max:255',
-        //     'userCode' => 'required|string|max:255',
-        //     'date' => 'required|date',
-        //     'time' => 'required|string',
-        // ]);
 
         try {
             // Insert data into database using DB facade and get the inserted ID
@@ -264,11 +257,14 @@ class TaskController extends Controller
     }
     // delete tasks
     public function deleteTask($id) {
-        $task_find = DB::table('tasks')->where('id',$id)->first();
-        if($task_find) {
-            DB::table('tasks')->where('id',$id)->delete();
+        $task = DB::table('to_do_list')->where('id',$id)->delete();
+        if ($task) {
+            return response()->json(['success' => true]);
+        } else {
+            // Debugging line
+            Log::error("Task not found with ID: $id");
+            return response()->json(['success' => false, 'message' => 'Task not found']);
         }
-        return response()->json(['message','task deleted']);
     }
     // searc emp task by month
     public function searchTaskMonth(Request $req) {

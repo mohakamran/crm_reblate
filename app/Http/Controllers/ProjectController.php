@@ -151,7 +151,7 @@ class ProjectController extends Controller
     
     public function show($id){
         
-        $project = Project::with('attachments')->findOrFail($id);
+        $project = Project::findOrFail($id);
         return view('projects.view', compact('project'));
     }
 

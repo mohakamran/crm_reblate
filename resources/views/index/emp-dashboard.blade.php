@@ -23,6 +23,14 @@
                 font-weight: 600;
                 font-family: 'Poppins';
             }
+            .completed-badge {
+                color: #fca311;
+            display: inline-block;
+            background: #14213d;
+            height: 30px;
+            padding: 5px 16px;
+            border-radius: 50px;
+            }
 
             .EmpStyle {
                 font-size: 18px;
@@ -373,11 +381,6 @@
                 border-radius: 4px;
                 cursor: pointer;
             }
-
-            .card.completed {
-                text-decoration: line-through;
-                opacity: 0.7;
-            }
         </style>
 
         <div class="row mt-2">
@@ -429,8 +432,6 @@
                 <button type="button" onclick="openLeaveModal()" class="position-absolute reblateBtn px-3 py-1 text-white"
                     style="background-color: #fca311; right: 35px; top:-45px;"> Apply for Leave</button>
             </div>
-
-            <!-- Popup Modal -->
             <div class="popup" id="popup_leave">
                 <div class="popup-content flex-column">
                     <div class="d-flex mb-3 align-items-center justify-content-between">
@@ -551,14 +552,6 @@
                     </form>
                 </div>
             </div>
-
-
-
-
-
-
-
-
             <div class="col-md-2 col-lg-2 col-xl-2">
                 <a href="/view-attendence">
                     <div class="card" style="border-radius:10px;">
@@ -897,7 +890,7 @@
                                 id="to-do">
                                 <div class="mt-3">
                                     <div>
-                                        <h1>To-Do List</h1>
+                                        <h1>To-Do List</h1> 
                                         <form id="todo-form">
                                             <input type="text" id="task-title" placeholder="Enter task title"
                                                 required>
@@ -908,17 +901,24 @@
                                             <button type="submit">Add Task</button>
                                         </form>
                                         <div id="task-list">
-                                            @if ($latest_to_do != null)
-                                                @foreach ($latest_to_do as $item)
-                                                    <div class="card" data-id="{{ $item->id }}">
-                                                        <h3>{{ $item->task_title }}</h3>
-                                                        <p>Date: {{ $item->date }}</p>
-                                                        <p>Time: {{ $item->time }}</p>
-                                                        <input type="hidden" class="task-id"
-                                                            value="{{ $item->id }}">
+                                        @if ($latest_to_do != null)
+                                            @foreach ($latest_to_do as $item)
+                                                <div class="card" data-id="{{ $item->id }}">
+                                                    <div class="card-content" style="display: flex;justify-content: space-between;">
+                                                        <div>
+                                                            <h3>{{ $item->task_title }}</h3>
+                                                            <p>Date: {{ $item->date }}</p>
+                                                            <p>Time: {{ $item->time }}</p>
+                                                            <input type="hidden" class="task-id" value="{{ $item->id }}">
+                                                        </div>
+                                                        <div class="card-actions" style="padding-right: 20px;">
+                                                            <button class="tick-btn">✔️</button>
+                                                            <a href="#" onclick="delToDoList('{{$item->id}}')" class="cross-btn">❌</a>
+                                                        </div>
                                                     </div>
-                                                @endforeach
-                                            @endif
+                                                </div>
+                                            @endforeach
+                                        @endif
                                         </div>
                                     </div>
                                 </div>
@@ -926,19 +926,20 @@
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const taskList = document.getElementById('task-list');
-
                                         // Handle click on task cards to update status
                                         taskList.addEventListener('click', function(event) {
                                             const task = event.target.closest('.card');
                                             if (task) {
                                                 const taskId = task.getAttribute('data-id');
-                                                const isCompleted = task.classList.contains('completed');
-                                                const newStatus = isCompleted ? 'pending' : 'completed';
-
-                                                // Log the current task ID and new status
+                                                let newStatus;
+                                                if (event.target.classList.contains('cross-btn')) {
+                                                    newStatus = 'pending';
+                                                } else if (event.target.classList.contains('tick-btn')) {
+                                                    newStatus = 'completed';
+                                                } else {
+                                                    return; 
+                                                }
                                                 console.log('Updating Task ID:', taskId, 'New Status:', newStatus);
-
-                                                // Send a request to update the task status
                                                 fetch('/update-task-status', {
                                                         method: 'POST',
                                                         headers: {
@@ -955,9 +956,14 @@
                                                     .then(data => {
                                                         console.log('Response Data:', data);
                                                         if (data.success) {
-                                                            // Toggle completed class and update styling
-                                                            task.classList.toggle('completed');
-                                                            updateTaskStyle(task, !isCompleted); // Update style based on new status
+                                                            if (newStatus === 'completed') {
+                                                                task.classList.add('completed');
+                                                                showCompletedBadge(task);
+                                                                hideButtons(task);
+                                                            } else {
+                                                                task.classList.remove('completed');
+                                                            }
+                                                            updateTaskStyle(task, newStatus === 'completed');
                                                         } else {
                                                             console.error('Failed to update status:', data);
                                                         }
@@ -1002,10 +1008,18 @@
                                                             task.className = 'card';
                                                             task.setAttribute('data-id', data.id);
                                                             task.innerHTML = `
-                                                                <h3>${taskTitle}</h3>
-                                                                <p class="task-date">Date: ${getCurrentDate()}</p>
-                                                                <p class="task-time">Time: ${getCurrentTime()}</p>
-                                                                <input type="hidden" class="task-id" value="${data.id}">
+                                                            <div class="card-content" style="display: flex;justify-content: space-between;">
+                                                                <div>
+                                                                    <h3>${taskTitle}</h3>
+                                                                    <p class="task-date">Date: ${getCurrentDate()}</p>
+                                                                    <p class="task-time">Time: ${getCurrentTime()}</p>
+                                                                    <input type="hidden" class="task-id" value="${data.id}">
+                                                                </div>
+                                                                <div class="card-actions" style="padding-right: 20px;">
+                                                                    <button class="tick-btn">✔️</button>
+                                                                    <a href="#" onclick="delToDoList(${data.id})" class="cross-btn">❌</a>
+                                                                </div>
+                                                            </div>
                                                             `;
 
                                                             // Append new task to the task list
@@ -1037,6 +1051,28 @@
                                             return now.toLocaleTimeString('en-US');
                                         }
 
+                                        // Function to show the completed badge
+                                        function showCompletedBadge(task) {
+                                            // Create a badge element
+                                            const badge = document.createElement('span');
+                                            badge.classList.add('completed-badge');
+                                            badge.textContent = 'Your Task has been Completed';
+                                            
+                                            // Add the badge to the card
+                                            const cardContent = task.querySelector('.card-content');
+                                            cardContent.appendChild(badge);
+                                        }
+
+                                        // Function to hide both tick and cross buttons
+                                        function hideButtons(task) {
+                                            const tickBtn = task.querySelector('.tick-btn');
+                                            const crossBtn = task.querySelector('.cross-btn');
+
+                                            // Hide both buttons
+                                            tickBtn.style.display = 'none';
+                                            crossBtn.style.display = 'none';
+                                        }
+
                                         // Function to update task style based on status
                                         function updateTaskStyle(task, isCompleted) {
                                             const title = task.querySelector('h3');
@@ -1047,9 +1083,9 @@
                                                 title.style.textDecoration = 'line-through';
                                                 date.style.textDecoration = 'line-through';
                                                 time.style.textDecoration = 'line-through';
-                                                title.style.color = '#aaa'; // Optional: Change color for completed tasks
-                                                date.style.color = '#aaa';
-                                                time.style.color = '#aaa';
+                                                title.style.color = 'black'; 
+                                                date.style.color = 'black';
+                                                time.style.color = 'black';
                                             } else {
                                                 title.style.textDecoration = 'none';
                                                 date.style.textDecoration = 'none';
@@ -1061,22 +1097,14 @@
                                         }
                                     });
                                 </script>
-
-
-
-
                                 {{-- <div class="position-absolute" style="top: 50%; left: 25%;">
                                         <h4 class="mb-1 EmpNameStyle" style="color: #c7c7c7; font-size:35px">
                                             No Tasks </h4>
                                     </div> --}}
-
-
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
 
 
@@ -1122,7 +1150,50 @@
                         });
                 }
             </script>
-
+            <script>
+            function delToDoList(id) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You Want To Delete The to-do list',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                    confirmButtonColor: '#FF5733', // Red color for "Yes"
+                    cancelButtonColor: '#4CAF50', // Green color for "No"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Send an AJAX request to delete the team member
+                        $.ajax({
+                            url: '/del-task/' + id,
+                            method: 'DELETE', // Use the DELETE HTTP method
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include CSRF token
+                            },
+                            success: function() {
+                                // Provide user feedback
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'deleted!',
+                                    icon: 'success'
+                                }).then(() => {
+                                    location.reload(); // Refresh the page
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                // Handle errors, you can display an error message to the user
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'An error occurred while deleting quotation!',
+                                    icon: 'error'
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        </script>
 
             <div class="col-md-5 col-xl-5 col-lg-5">
                 <div class="card" style="box-shadow: none;">
@@ -1163,7 +1234,7 @@
                                     @endif
                                 </h3>
                             </div>
-                            <div class="p-2 w-50"
+                            <!-- <div class="p-2 w-50"
                                 style="background-color: #14213d26;border-radius:10px; border: 1px solid #14213d30">
                                 <p class="mb-0" style="color: #14213d; font-family:'poppins';">Clock Out</p>
                                 <h3 class="mb-0" style="color: #14213d; font-family:'poppins';font-weight:700">
@@ -1173,7 +1244,22 @@
                                         _
                                     @endif
                                 </h3>
+                            </div> -->
+                            <div class="p-2 w-50" style="background-color: #14213d26;border-radius:10px; border: 1px solid #14213d30">
+                                <p class="mb-0" style="color: #14213d; font-family:'poppins';">Clock Out</p>
+                                <h3 class="mb-0" style="color: #14213d; font-family:'poppins';font-weight:700">
+                                    @if (session()->has('check_out_time') && session('check_out_time') != '')
+                                        {{ session('check_out_time') }}
+                                    @else
+                                        _
+                                    @endif
+                                </h3>
                             </div>
+                            @if (session('error'))
+                                <div style="color: red; font-family:'poppins';">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
                         </div>
                         <div class="d-flex justify-content-center align-items-center flex-column mt-3">
                             <img src="{{ url('Group6.svg') }}" alt="clock" style=" object-fit:contain; width: 50px;">
@@ -1326,9 +1412,8 @@
                                 @endif
                             @else
                                 <div class="d-flex flex-wrap justify-content-between gap-4 align-items-center">
-
                                     @if (session()->has('show_check_out') && session('show_check_out') === true)
-                                        <a class="reblateBtn px-4 py-2 w-md" style="border-radius: 10px;"
+                                    <a class="reblateBtn px-4 py-2 w-md" style="border-radius: 10px;"
                                             href="javascript:void()" onclick="checkOut()">Clock Out
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
                                                 viewBox="0 0 16 16">
@@ -1354,9 +1439,6 @@
                                             </svg>
                                         </a>
                                     @endif
-
-
-
                                     @if (session()->has('show_break_end') && session('show_break_end') === true)
                                         <a class="reblateBtn px-4 py-2" href="/break-end">Break End
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
@@ -1397,9 +1479,6 @@
                                             </svg>
                                         </a>
                                     @endif
-
-
-
                                 </div>
                             @endif
                             <div class="view-class-more mt-2">
@@ -1953,53 +2032,116 @@
 
 
             }
-
+            
             function checkOut() {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'You want to clock out!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes',
-                    cancelButtonText: 'No',
-                    confirmButtonColor: '#FF5733', // Red color for "Yes"
-                    cancelButtonColor: '#4CAF50', // Green color for "No"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Send an AJAX request to delete the task
-                        $.ajax({
-                            url: '/check-out/',
-                            method: 'GET', // Use the DELETE HTTP method
-                            success: function() {
-                                // Provide user feedback
-                                Swal.fire({
-                                    title: 'Success!',
-                                    text: 'clocked out marked!',
-                                    icon: 'success'
-                                }).then(() => {
-                                    location.reload(); // Refresh the page
-                                });
-                            },
-                            error: function(xhr, status, error) {
-                                // Handle errors, you can display an error message to the user
-                                console.error('Error:', error);
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'You want to clock out!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes',
+                        cancelButtonText: 'No',
+                        confirmButtonColor: '#FF5733', // Red color for "Yes"
+                        cancelButtonColor: '#4CAF50', // Green color for "No"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Validate daily report submission first
+                            validateDailyReport();
+                        }
+                    });
+                }
+
+                // Function to validate the daily report submission
+                function validateDailyReport() {
+                    $.ajax({
+                        url: '/check-out/validate-report',
+                        method: 'GET',
+                        success: function(response) {
+                            if (response.reportSubmitted) {
+                                // Daily report is submitted, now check if it's Friday
+                                const currentDate = new Date();
+                                const currentDay = currentDate.getDay(); // 0: Sunday, 1: Monday, ..., 5: Friday
+                                
+                                if (currentDay === 5) {  // If it's Friday
+                                    validateWeeklyReport();
+                                } else {
+                                    // If it's not Friday, proceed with clock out
+                                    clockOut();
+                                }
+                            } else {
                                 Swal.fire({
                                     title: 'Error!',
-                                    text: 'An error occurred while clockinh out the user!',
+                                    text: 'Please submit your daily report before clocking out.',
                                     icon: 'error'
                                 });
                             }
-                        });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error:', error);
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An error occurred while validating your daily report!',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                }
 
-                    }
-                });
-            }
+                // Function to validate weekly report submission if it's Friday
+                function validateWeeklyReport() {
+                    $.ajax({
+                        url: '/check-out/validate-weekly-report',
+                        method: 'GET',
+                        success: function(response) {
+                            if (response.weeklyReportSubmitted) {
+                                // If weekly report is submitted, allow clock out
+                                clockOut();
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Please submit your weekly report before clocking out on Friday.',
+                                    icon: 'error'
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error:', error);
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An error occurred while validating your weekly report!',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                }
+
+                // Function to handle the actual clock out process
+                function clockOut() {
+                    $.ajax({
+                        url: '/check-out/',
+                        method: 'GET',
+                        success: function() {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Clocked out successfully!',
+                                icon: 'success'
+                            }).then(() => {
+                                location.reload();  // Refresh the page after successful clock out
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error:', error);
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An error occurred while clocking out!',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                }
         </script>
-
         <script src="{{ URL::asset('build/js/pages/dashboard.init.js') }}"></script>
-
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
-
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

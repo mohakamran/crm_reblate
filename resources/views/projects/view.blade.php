@@ -49,19 +49,7 @@ View Announcement
                 <p><strong>Budget:</strong> {{ $project->budget }}</p>
                 <p><strong>Client:</strong> {{ $project->client }}</p>
                 <p><strong>Priority:</strong> {{ $project->priority }}</p>
-                <p><strong>Assigned Team Members:</strong></p>
-                <ul>
-                    @if($project->assigned_team_members)
-                        @foreach(explode(',', $project->assigned_team_members) as $memberId)
-                            @php
-                                $member = \App\Models\Employee::find($memberId);
-                            @endphp
-                            <li>{{ $member->Emp_Full_Name ?? 'Unknown' }}</li>
-                        @endforeach
-                    @else
-                        <li>No team members assigned.</li>
-                    @endif
-                </ul>
+                <p><strong>Assigned Team Members:</strong>{{ $project->assigned_team_members }}</p>
                 <p><strong>Attachments:</strong></p>
                 <ul>
                 <a href="{{ asset($project->image) }}" target="_blank">View PDF</a>

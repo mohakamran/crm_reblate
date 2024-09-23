@@ -1,9 +1,11 @@
 <?php
     use App\Http\Controllers\AttendenceController;
+    use Illuminate\Support\Facades\Route;
 
     // Route::get('/mark-attendence',[AttendenceController::class,'index']);
     Route::get('/check-in',[AttendenceController::class,'checkInTime']);
     Route::get('/check-out',[AttendenceController::class,'checkOutTime']);
+    Route::get('/check-out/validate-report', [AttendenceController::class, 'validateReport']);
     Route::get('/break-start',[AttendenceController::class,'breakStart']);
     Route::get('/break-end',[AttendenceController::class,'breakEnd']);
     Route::get('/overtime-start',[AttendenceController::class,'overTimeStart']);

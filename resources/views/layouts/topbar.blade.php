@@ -39,9 +39,7 @@
         </div>
 
         <div class="d-flex align-items-center">
-
-
-             @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager')
+             @if (Auth()->user()->user_type == 'employee' || Auth()->user()->user_type == 'manager' )
                 <div class="dropdown d-inline-block">
                     <button type="button" class="btn noti-icon waves-effect"
                         style="background-color: #14213d17; border-radius: 100px;"
@@ -55,39 +53,46 @@
                         @else
                         @endif
                     </button>
-                
-                    
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                         aria-labelledby="page-header-notifications-dropdown" >
                         @if ($notifications != null && $notifications->isNotEmpty())
                         @foreach ($notifications as $notify)
-                        <div class="p-3">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h6 class="m-0"> Notifications </h6>
-                                </div>
-                                <div class="col-auto">
-                                    <a href="{{ $notify->link }}" class="small"> View All</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div  data-simplebar style="max-height: 230px;">
-                            <a href="{{ $notify->link }}" class="text-reset notification-item">
-                                <div class="d-flex">
-                                    <div class="flex-1">
-                                        <h6 class="mb-1">{{ $notify->title }}</h6>
-                                        <div class="font-size-12 text-muted">
-                                            <p class="mb-1">{{ $notify->message }}</p>
-                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> {{ date('d F Y', strtotime($notify->date)) }}
-                                            {{ $notify->time }}</p>
-                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i><a href="javascript:void()"
+                        <div class="notification-hover mt-2 p-2"
+                                            style="border-bottom: 1px solid lightgray"
+                                            id="notifications_{{ $notify->id }}">
+                                            <div class="d-flex">
+                                                <a href="{{ $notify->link }}">
+                                                    <div class="avatar-sm me-3">
+                                                        @if ($emp_det->Emp_Image != '' && file_exists($emp_det->Emp_Image))
+                                                            <img src="{{ $emp_det->Emp_Image }}"
+                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                                alt="">
+                                                        @else
+                                                            <img class="img-fluid rounded-circle"
+                                                                style="border-radius:100%; object-fit:cover;width:2.6rem;height:2.6rem;"
+                                                                src="{{ url('user.png') }}">
+                                                        @endif
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <h4 class="mb-1 EmpNameStyle"
+                                                            style="color: #14213d;font-weight: 500; font-size:20px">
+                                                            {{ $notify->title }}</h4>
+                                                        <div class=" text-muted d-flex gap-2">
+                                                            <p class="mb-0 font-size-12"><i
+                                                                    class="mdi mdi-clock-outline"></i>
+                                                                {{ date('d F Y', strtotime($notify->date)) }}
+                                                                {{ $notify->time }}</p>
+
+                                                        </div>
+                                                        <p class="mb-1 text-muted font-size-14 ">{{ $notify->message }}
+                                                        </p>
+                                                        <a href="javascript:void()"
                                                             onclick="markAsRead({{ $notify->id }},'all')">mark as
-                                                            read</a></p>
+                                                            read</a>
+                                                    </div>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
                         @endforeach
                         @else
                         <div class="p-2 border-top">
@@ -99,10 +104,8 @@
                         </div>
                         @endif
                     </div>
-                    
                 </div>
             @endif 
-
                 
             <div class="btn-group align-items-center">
                 <div class="flex-grow-1 text-start" >

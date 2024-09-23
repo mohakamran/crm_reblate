@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\TaskController;
+use Illuminate\Support\Facades\Route;
     // tasks
     Route::get('/create-new-task',[TaskController::class,'index'])->middleware('TasksCheck');
     Route::get('/view-tasks',[TaskController::class,'viewTasks'])->middleware('TasksCheck');
@@ -15,7 +16,7 @@ use App\Http\Controllers\TaskController;
     Route::post('/task-save-update/{id}',[TaskController::class, 'taskUpdateDatabase']);
     Route::post('/save_task_database',[TaskController::class, 'taskSaveDatabase']);
     Route::post('/search-emp-tasks-date',[TaskController::class, 'searchTaskMonth']);
-    Route::get('/del-task/{id}',[TaskController::class, 'deleteTask']);
+    Route::delete('/del-task/{id}',[TaskController::class, 'deleteTask']);
     Route::any('/update-task', [TaskController::class, 'updateTask']);
     Route::any('/update-task-status', [TaskController::class, 'updateTaskEmp']);
     Route::any('/create-task-by-emp', [TaskController::class, 'createTaskByEmp']);

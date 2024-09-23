@@ -3,15 +3,12 @@
     Reports
 @endsection
 @section('css')
-    <!-- DataTables -->
     <link href="{{ URL::asset('build/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
         type="text/css" />
     <link href="{{ URL::asset('build/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet"
         type="text/css" />
     <link href="{{ URL::asset('build/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css') }}" rel="stylesheet"
         type="text/css" />
-
-    <!-- Responsive datatable examples -->
     <link href="{{ URL::asset('build/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"
         rel="stylesheet" type="text/css" />
 @endsection
@@ -38,30 +35,27 @@ Reports
       color:#000;
       font-weight: 700;
   }
-            /* Adjust layout of DataTable components */
             .dataTables_length,
             .dataTables_filter,
             .dataTables_buttons {
                 display: inline-block;
                 margin-right: 10px;
-                /* Adjust margin as needed */
             }
 
             .dataTables_filter {
                 float: right;
-                /* Align search bar to the right */
             }
 
             .modal-backdrop {
 
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--bs-backdrop-bg);
-}
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--bs-backdrop-bg);
+    }
 
             .popup {
                 display: none;
@@ -76,8 +70,6 @@ Reports
             }
 
             .popup-content {
-                /* overflow-y: scroll;
-                                    scroll-behavior: smooth scroll; */
                 display: flex;
                 max-width: 700px;
                 margin: auto auto;
@@ -97,100 +89,173 @@ Reports
                 right: 15px;
                 cursor: pointer;
             }
+            .task-title {
+        display: inline-block;
+        width: 100%; /* Ensure it takes the full width available */
+        word-wrap: break-word;
+    }
+
+    .task-title span {
+        display: block;
+        width: 100%;
+    }
+    #disapproval-reasons {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+    }
+    .no-disapprovals {
+        font-size: 16px;
+        color: #007bff;
+    }
+    .disapproval-item {
+        margin-bottom: 15px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .disapproval-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    .disapproval-reason {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 5px;
+    }
+    .disapproval-date {
+        font-size: 12px;
+        color: #888;
+    }
+    .label {
+        font-weight: bold;
+        display: inline-block;
+        margin-right: 5px;
+    }
         </style>
         <div class="row">
             <div class="col-12">
                 <div class="card" style="box-shadow: none">
                     <div class="card-body bg-white">
-                        <div class="d-flex justify-content-end mb-5">
-                            @if(auth()->user()->user_type == 'employee')
-                            <a href="{{ route('report.add') }}" class="reblateBtn p-2"> Create Monthly Report</a>
-                            @endif
+                        <div class="d-flex my-3">
+                            <p style="font-size: 23px;">Weekly Report : &nbsp;<span style="color: #fca311;text-decoration: underline;font-size: 26px;">{{ $employeeName }}</span></p>
+                            <div class="d-flex justify-content-end" style="margin-left: 42%;">
+                                <p style="font-size: 23px;">Employee Code : &nbsp; <span style="color: #fca311;text-decoration: underline;font-size: 22px;">{{$employeeCode}}</span></p>
+                            </div>
                         </div>
-                        <table id="datatable-buttons" class="table dt-responsive nowrap"
-                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                            <thead>
-                                <tr style="background-color: #14213d">
-                                    <th class="borderingLeftTable font-size-17" style="color: white">SN</th>
-                                    <th class="borderingLeftTable font-size-17" style="color: white">Report</th>
-                                    <th class="font-size-17" style="color: white">Date</th>
-                                    <th class="font-size-17" style="color: white">Emp Name</th>
-                                    <th class="font-size-17" style="color: white">Task Completed</th>
-                                    <th class="font-size-17" style="color: white">Manager Comments</th>
-                                    <th class="font-size-17" style="color: white">Admin Comments</th>
-                                    <th class="font-size-17" style="color: white">Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="table-body">
-
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Task Title</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                 @php
                                     $count = 1;
                                 @endphp
-
-                                @foreach ($report as $data)
-                                    <tr style="border-bottom: 1px solid #c7c7c7">
-                                        <td style="color: #000;">
-                                            {{$count++}}
-                                        </td>
-                                        <td class="table-lines" style="color: #000;">{{ $data->report }}</td>
-                                        <td class="table-lines" style="color: #000;"> {{ $data->date }} </td>
-                                        <td class="table-lines" style="color: #000;"> {{ $data->emp_name }} </td>
-                                        <td class="table-lines" style="color: #000;"> {{ $data->tasks_completed }} </td>
-                                        
-                                        @if(is_null($data->manager_comments))
-                                            <td class="table-lines" style="color: green;"> No Comments </td>
-                                        @else
-                                            <td class="table-lines" style="color: #000;"> {{ $data->manager_comments }} </td>
-                                        @endif
-                                        @if(is_null($data->admin_comments))
-                                            <td class="table-lines" style="color: green;"> No Comments </td>
-                                        @else
-                                            <td class="table-lines" style="color: #000;"> {{ $data->admin_comments }} </td>
-                                        @endif
-                                        @if(auth()->user()->user_type == 'employee')
-                                        <td class="table-lines">
-                                                <a href="#" onclick="deleteproject('{{$data->id}}')">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                                        viewBox="0 0 24 24">
-                                                        <path fill="#d20f0f"
-                                                            d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zm2-4h2V8H9zm4 0h2V8h-2z">
-                                                        </path>
-                                                    </svg>
-                                                </a>
-                                                <a href="{{ route('report.edit',$data->id) }}" style="color:#000">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>                                                </a>
-                                             </td>
-                                        @endif
-
-                                        @if (auth()->user()->user_type == "admin" || auth()->user()->user_type == "manager")
-                                            <td class="table-lines">
-                                                <a href="{{ route('report.record.admin',$data->id) }}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
-                                                </a>
+                                    @foreach($report as $task)
+                                    @php
+                                        $words = explode(' ', $task->task_title);
+                                        $chunks = array_chunk($words, 13);
+                                    @endphp
+                                        <tr>
+                                            <td style="color: #000;">{{$count++}}</td>
+                                            <td class="task-title"> 
+                                                @foreach ($chunks as $chunk)
+                                                <span>{{ implode(' ', $chunk) }}</span>
+                                                @endforeach
                                             </td>
-                                        @endif
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                            <td>{{ $task->date }}</td>
+                                            <td class="text-warning"> <span style="background: #14213d;border: 1px solid #ffffff;border-radius: 25px;padding: 3px 15px;">{{ $task->status }}</span></td>
+                                            <td>
+                                                @if ($task->approval == 'approved')
+                                                    <div class="text-success">
+                                                        <svg width="25px" height="25px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M5.03033 11.4697C4.73744 11.1768 4.26256 11.1768 3.96967 11.4697C3.67678 11.7626 3.67678 12.2374 3.96967 12.5303L5.03033 11.4697ZM8.5 16L7.96967 16.5303C8.26256 16.8232 8.73744 16.8232 9.03033 16.5303L8.5 16ZM17.0303 8.53033C17.3232 8.23744 17.3232 7.76256 17.0303 7.46967C16.7374 7.17678 16.2626 7.17678 15.9697 7.46967L17.0303 8.53033ZM9.03033 11.4697C8.73744 11.1768 8.26256 11.1768 7.96967 11.4697C7.67678 11.7626 7.67678 12.2374 7.96967 12.5303L9.03033 11.4697ZM12.5 16L11.9697 16.5303C12.2626 16.8232 12.7374 16.8232 13.0303 16.5303L12.5 16ZM21.0303 8.53033C21.3232 8.23744 21.3232 7.76256 21.0303 7.46967C20.7374 7.17678 20.2626 7.17678 19.9697 7.46967L21.0303 8.53033ZM3.96967 12.5303L7.96967 16.5303L9.03033 15.4697L5.03033 11.4697L3.96967 12.5303ZM9.03033 16.5303L17.0303 8.53033L15.9697 7.46967L7.96967 15.4697L9.03033 16.5303ZM7.96967 12.5303L11.9697 16.5303L13.0303 15.4697L9.03033 11.4697L7.96967 12.5303ZM13.0303 16.5303L21.0303 8.53033L19.9697 7.46967L11.9697 15.4697L13.0303 16.5303Z" fill="#000000"></path>
+                                                        </svg>
+                                                        Approved
+                                                    </div>
+                                                @elseif ($task->approval == 'not approved')
+                                                    <div class="text-danger">
+                                                        Not Approved 
+                                                    </div>
+                                                @else
+                                                    @if (session('approved_task_id') == $task->id)
+                                                        <div class="text-success">Approved Successfully</div>
+                                                    @else
+                                                        <form method="POST" action="{{ route('task.approve', $task->id) }}" class="d-inline">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-primary btn-sm">Approved</button>
+                                                        </form>
+                                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#disapprovalModal-{{ $task->id }}">Not Approved</button>
+                                                        
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="disapprovalModal-{{ $task->id }}" tabindex="-1" role="dialog" aria-labelledby="disapprovalModalLabel-{{ $task->id }}" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="disapprovalModalLabel-{{ $task->id }}">Disapproval Reason</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form method="POST" action="{{ route('task.not_approve', $task->id) }}">
+                                                                            @csrf
+                                                                            <input type="text" name="task_title" value="{{ $task->task_title }}" readonly class="form-control mb-2">
+                                                                            <textarea name="disapproval_reason" class="form-control" rows="4" required></textarea>
+                                                                            <button type="submit" class="btn btn-danger mt-2">Submit</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endif
+                                            </td>
 
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <div id="disapproval-reasons">
+                                @if($disapprovals->isEmpty())
+                                    <div class="no-disapprovals">
+                                        No disapprovals yet.
+                                    </div>
+                                @else
+                                    @foreach ($disapprovals as $disapproval)
+                                        <div class="disapproval-item">
+                                            <div class="disapproval-title">
+                                                <span class="label">Task Title:</span> <span style="color: #656a60;font-weight: 400;">{{ $disapproval->task_title }}</span>
+                                            </div>
+                                            <div class="disapproval-reason">
+                                                <span class="label">Reason for Not Approved:</span> {{ $disapproval->disapproval_reason }}
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                    </div>
                 </div>
-            </div> <!-- end col -->
-        </div> <!-- end row -->
+            </div> 
+        </div> 
 
         <script>
             $(document).ready(function() {
-
-                // Open modal
                 $('a[data-toggle="modal"]').click(function() {
                     var target = $(this).attr('data-target');
                     $(target).addClass('show').attr('aria-hidden', 'false');
                     $('body').addClass('modal-open');
                 });
-
-                // Close modal
                 $('.modal .close, .modal .btn-close').click(function() {
                     $(this).closest('.modal').removeClass('show').attr('aria-hidden', 'true');
                     $('body').removeClass('modal-open');
@@ -246,7 +311,6 @@ Reports
                 $('input[name="daterange"]').daterangepicker({
                         opens: 'right',
                         isInvalidDate: function(date) {
-                            // Disable Saturdays and Sundays
                             return (date.day() === 0 || date.day() === 6);
                         }
                     },
@@ -298,15 +362,11 @@ Reports
 
                 error_message_id.style.display = "none";
                 success_message_id.style.display = "none";
-
-                // AJAX call to send data to the Laravel controller
                 $.ajax({
-                    url: '/create-holidays', // The Laravel route
-                    type: 'POST', // POST request
+                    url: '/create-holidays', 
+                    type: 'POST', 
                     data: formData,
                     success: function(response) {
-                        // Show success message
-                        // console.log('Response');
 
                         if (error_message_id.style.display == "block") {
                             error_message_id.style.display == "none";
@@ -324,37 +384,24 @@ Reports
                         }
                     },
                     headers: {
-                        'X-CSRF-TOKEN': csrfToken // Add CSRF token to request headers
+                        'X-CSRF-TOKEN': csrfToken 
                     }
                 });
 
-                return false; // Prevent form submission if within a form
+                return false; 
             }
-
-            //update
             function updateOfficeHolidays(id) {
                 var holiday_id = 'holiday_dates_'+id;
                 var holiday_type_id = 'holiday_type_'+id;
                 var holiday_des_id = 'holiday_description_'+id;
                 var holiday_date_message_id = 'holiday_date_message_'+id;
-                // console.log(holiday_date_message);
                 var holiday_type_message_id = 'holiday_type_message_'+id;
-
-
-
                 var holiday_dates = document.getElementById(holiday_id).value;
                 var holiday_type = document.getElementById(holiday_type_id).value;
-
                 var holiday_description = document.getElementById(holiday_des_id).value;
-
-
                 var holiday_date_message = document.getElementById(holiday_date_message_id);
                 var holiday_type_message = document.getElementById(holiday_type_message_id);
-
-                // var holiday_desc_message = document.getElementById('holiday_desc_message');
-
                 var datesArray = holiday_dates.split(' - ');
-
                 if (holiday_type == "") {
                     holiday_type_message.style.display = "block";
                     holiday_type_message.innerHTML = "required!";
@@ -362,9 +409,6 @@ Reports
                 } else {
                     holiday_type_message.style.display = "none";
                 }
-
-
-
                 if (holiday_dates == "") {
                     holiday_date_message.style.display = "block";
                     holiday_date_message.innerHTML = "Please Select Date!";
@@ -372,9 +416,6 @@ Reports
                 } else {
                     holiday_date_message.style.display = "none";
                 }
-
-
-
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
                 var startDate = datesArray[0];
@@ -400,15 +441,11 @@ Reports
 
                 error_message_id.style.display = "none";
                 success_message_id.style.display = "none";
-
-                // AJAX call to send data to the Laravel controller
                 $.ajax({
-                    url: '/update-holidays', // The Laravel route
-                    type: 'POST', // POST request
+                    url: '/update-holidays', 
+                    type: 'POST', 
                     data: formData,
                     success: function(response) {
-                        // Show success message
-                        // console.log('Response');
 
                         if (error_message_id.style.display == "block") {
                             error_message_id.style.display == "none";
@@ -426,11 +463,11 @@ Reports
                         }
                     },
                     headers: {
-                        'X-CSRF-TOKEN': csrfToken // Add CSRF token to request headers
+                        'X-CSRF-TOKEN': csrfToken 
                     }
                 });
 
-                return false; // Prevent form submission if within a form
+                return false; 
             }
         </script>
         <script>
@@ -442,29 +479,26 @@ Reports
                     showCancelButton: true,
                     confirmButtonText: 'Yes',
                     cancelButtonText: 'No',
-                    confirmButtonColor: '#FF5733', // Red color for "Yes"
-                    cancelButtonColor: '#4CAF50', // Green color for "No"
+                    confirmButtonColor: '#FF5733', 
+                    cancelButtonColor: '#4CAF50', 
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Send an AJAX request to delete the team member
                         $.ajax({
                             url: '/Delete-Report/' + id,
-                            method: 'DELETE', // Use the DELETE HTTP method
+                            method: 'DELETE', 
                             headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include CSRF token
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
                             },
                             success: function() {
-                                // Provide user feedback
                                 Swal.fire({
                                     title: 'Success!',
                                     text: 'deleted!',
                                     icon: 'success'
                                 }).then(() => {
-                                    location.reload(); // Refresh the page
+                                    location.reload(); 
                                 });
                             },
                             error: function(xhr, status, error) {
-                                // Handle errors, you can display an error message to the user
                                 console.error('Error:', error);
                                 Swal.fire({
                                     title: 'Error!',
@@ -477,16 +511,20 @@ Reports
                 });
             }
         </script>
+        <script>
+            function showDisapprovalForm(taskId) {
+                var form = document.getElementById('disapproval-form-' + taskId);
+                form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            }
+        </script>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     @endsection
     @section('scripts')
-        <!-- Required datatable js -->
         <script src="{{ URL::asset('build/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
         <script src="{{ URL::asset('build/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-        <!-- Buttons examples -->
         <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
         <script src="{{ URL::asset('build/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
         <script src="{{ URL::asset('build/libs/jszip/jszip.min.js') }}"></script>
@@ -498,16 +536,9 @@ Reports
 
         <script src="{{ URL::asset('build/libs/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
         <script src="{{ URL::asset('build/libs/datatables.net-select/js/dataTables.select.min.js') }}"></script>
-
-        <!-- Responsive examples -->
         <script src="{{ URL::asset('build/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
         <script src="{{ URL::asset('build/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
-
-        <!-- Datatable init js -->
-
-        <!-- App js -->
         <script src="{{ URL::asset('build/js/app.js') }}"></script>
-
         {{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> --}}
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>

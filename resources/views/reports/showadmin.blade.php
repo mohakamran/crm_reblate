@@ -117,7 +117,7 @@ Reports
                                 <h3>{{ $report->challenges_faced }}</h3>
                                 <h3>{{ $report->goals_for_next_month }}</h3>
                             </div>
-                        </div>
+        </div>
                         <h1>Add Comment</h1>
                         @if (session('success'))
                             <div class="alert alert-success">
