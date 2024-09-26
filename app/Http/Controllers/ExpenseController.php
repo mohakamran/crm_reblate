@@ -107,4 +107,8 @@ class ExpenseController extends Controller
             return redirect('/');
         }
     }
+
+    public function viewDashboard(){
+        return view('finance.dashboard');
+    }
 }

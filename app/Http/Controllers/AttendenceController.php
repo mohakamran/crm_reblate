@@ -783,7 +783,6 @@ $totalWorkHours = $checkOut->diffInMinutes($checkIn) / 60; // Convert minutes to
     }
     // view records of each employee
     public function viewEachAttendenceEmp($id) {
-        // $id = $req->hidden_emp_value;
         if($id) {
             $emp = DB::table('employees')->where('Emp_Code', $id)->first();
             if($emp) {
@@ -1509,19 +1508,19 @@ public function getLowestPresent($month, $year)
         $currentDateTime = now();
         $checkOutTime = $currentDateTime->format('h:i A'); 
         $todayDate = $currentDateTime->toDateString(); 
+        $toDate = now()->format('l, F d, Y');
     
         // Log the check-out initiation
         Log::info('Check-out initiated for user: ' . $id, ['checkOutTime' => $checkOutTime]);
     
       
-        if(Auth()->user()->user_type == 'employee'){
-            $reportSubmitted = DB::table('to_do_list')->where('user_code', $id)->where('status', 'completed')->exists();
+        if( Auth()->user()->user_type == "employee"){
+            $reportSubmitted = DB::table('to_do_list')->where('user_code', $id)->where('date', $toDate)->where('status', 'completed')->exists();
             if (!$reportSubmitted) {
                 return redirect()->back()->with('error', 'Please submit your daily report before clocking out.');
             }
         }
-        
-    
+
         if ($emp) {
             $shift_time = $emp->Emp_Shift_Time;
     
@@ -1637,8 +1636,10 @@ public function getLowestPresent($month, $year)
     public function validateReport()
     {
         $id = Auth::user()->user_code;
+        $toDate = now()->format('l, F d, Y');
         $reportSubmitted = DB::table('to_do_list')
             ->where('user_code', $id)
+            ->where('date', $toDate)
             ->where('status', 'completed')
             ->exists();
 

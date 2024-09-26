@@ -173,7 +173,7 @@ class ReportingController extends Controller
 
     public function reportRecords($employeeId){
         $startOfWeek = Carbon::now()->startOfWeek();
-        $endOfWeek = $startOfWeek->copy()->addDays(3);
+        $endOfWeek = $startOfWeek->copy()->addDays(11);
     
         $startOfWeekFormatted = $startOfWeek->format('Y-m-d');
         $endOfWeekFormatted = $endOfWeek->format('Y-m-d');
@@ -251,6 +251,7 @@ class ReportingController extends Controller
 
     public function index(Request $request)
     {
+        $user_code = Auth()->user()->user_code;
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
         if ($startDate && $endDate) {
@@ -264,8 +265,9 @@ class ReportingController extends Controller
         }
         $report = $query->get();
         $isFriday = now()->dayOfWeek === 5; // 5 represents Friday
-
-        return view('reports.index', compact('report','isFriday'));
+        $emp = DB::table('employees')->where('Emp_Code', $user_code)->first();
+    
+        return view('reports.employee_reports', compact('report','isFriday','emp'));
     }
 
     public function getWeeklyReport()
@@ -273,32 +275,26 @@ class ReportingController extends Controller
         $user_code = Auth::user()->user_code;
         $startOfWeek = Carbon::now()->startOfWeek();
         $endOfWeek = $startOfWeek->copy()->addDays(4);
-    
-        // Fetch tasks for the week
+
         $tasks = DB::table('to_do_list')
             ->where('user_code', $user_code)
             ->whereRaw('DATE_FORMAT(STR_TO_DATE(`date`, "%W, %M %d, %Y"), "%Y-%m-%d") BETWEEN ? AND ?', [$startOfWeek->format('Y-m-d'), $endOfWeek->format('Y-m-d')])
             ->get();
-    
-        // Define week days
+
         $weekDays = [];
+
         for ($i = 0; $i < 5; $i++) {
-            $weekDays[] = $startOfWeek->copy()->addDays($i)->format('l'); // 'Monday', 'Tuesday', etc.
+            $weekDays[] = $startOfWeek->copy()->addDays($i)->format('l'); 
         }
-    
-        // Check for submitted days
+
         $submittedDays = $tasks->pluck('date')->map(function ($date) {
-            return Carbon::createFromFormat('l, F d, Y', $date)->format('l'); // Get just the day names
+            return Carbon::createFromFormat('l, F d, Y', $date)->format('l'); 
         })->toArray();
-    
-        // Identify missing days
+
         $missingDays = array_diff($weekDays, $submittedDays);
-    
-        // Ensure missingDays is always an array
         return response()->json(['tasks' => $tasks, 'missingDays' => array_values($missingDays)]);
     }
     
-
     public function submitWeeklyReport(Request $request)
     {
         $currentDate = date("Y-m-d");
@@ -374,6 +370,61 @@ class ReportingController extends Controller
         return response()->json(['weeklyReportSubmitted' => $weeklyReportSubmitted]);
     }
 
+    public function addManualReport(Request $request)
+    {
+        $request->validate([
+            'task_title' => 'required|string|max:255',
+            'reason' => 'required|string|max:255',
+            'date' => 'required|string',
+        ]);
 
+        $user_id = Auth::user()->user_code;
+        $user_name = Auth::user()->user_name;
+
+        // Insert manual task into the database
+        DB::table('to_do_list')->insert([
+            'name' => $user_name,
+            'user_code' => $user_id,
+            'task_title' => $request->task_title,
+            'reason' => $request->reason,
+            'date' => $request->date,
+            'time' => Carbon::now()->format('H:i:s'),
+            'status' => 'completed', 
+            'created_at' => now(),
+        ]);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function AdminReportsIndex(){
+        $employees = DB::table('to_do_list')
+        ->select('user_code', 'name')  // Select relevant columns
+        ->groupBy('user_code', 'name')  // Group by employee
+        ->get();
+        return view('reports.adminindex',['employees' => $employees]);
+    }
+
+    public function viewEmployeeReports($user_code, Request $request) {
+        $emp = DB::table('employees')->where('Emp_Code', $user_code)->first();
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $employeeReports = DB::table('to_do_list')->where('user_code', $user_code);
+        if ($startDate && $endDate) {
+            $employeeReports->whereBetween('date', [
+                Carbon::parse($startDate)->format('l, F d, Y'),
+                Carbon::parse($endDate)->format('l, F d, Y')
+            ]);
+        }
+        elseif ($startDate) {
+            $employeeReports->where('date', '>=', Carbon::parse($startDate)->format('l, F d, Y'));
+        }
+        elseif ($endDate) {
+            $employeeReports->where('date', '<=', Carbon::parse($endDate)->format('l, F d, Y'));
+        }
+        $employeeReports = $employeeReports->get();
+        return view('reports.employee_reports', compact('employeeReports', 'emp'));
+    }
+    
+    
     
 }

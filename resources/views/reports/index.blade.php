@@ -103,25 +103,23 @@ Reports of {{ Auth()->user()->user_name }}
                 <div class="card" style="box-shadow: none">
                     <div class="card-body bg-white">
                         <div class="d-flex justify-content-between align-items-center my-3">
-                            @if($isFriday)
-                                <p>Please submit your weekly report from here <a href="#" data-bs-toggle="modal" data-bs-target="#weeklyReportModal">Click Here</a></p>
-                            @else
-                                <p>Today is not Friday. Please check back on Friday to submit your weekly report.</p>
-                            @endif
-                                
-                        <!-- <form action="{{ route('report.index') }}" method="GET" class="d-flex align-items-end gap-3">
-                            <div class="mr-2">
-                                <label for="startDate" class="mr-1">Start Date:</label>
-                                <input type="date" id="startDate" class="form-control" name="startDate" value="{{ request('startDate') }}">
-                            </div>
-                            <div class="mr-2">
-                                <label for="endDate" class="mr-1">End Date:</label>
-                                <input type="date" id="endDate" name="endDate" class="form-control" value="{{ request('endDate') }}">
-                            </div>
-                            <div>
-                                <button type="submit" class="btn btn-transparent text-white" style="background-color: #14213d;">Filter</button>
-                            </div>
-                        </form> -->
+                        @if($isFriday)
+                            <p>Please submit your weekly report from here
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#weeklyReportModal">Click Here</a></p>
+                        @else
+                            <p>Today is not Friday. Please check back on Friday to submit your weekly report.</p>
+                        @endif
+                        
+                        @if($isFriday)
+                        <div class="d-flex align-items-end gap-3">
+                                    <div>
+                                        <button type="button" class="btn btn-transparent text-white" style="background-color: #14213d;" data-bs-toggle="modal" data-bs-target="#manualReportModal">
+                                            Add Manual Report
+                                        </button>
+                                    </div>
+                                </div>
+                        @else
+                        @endif   
                     </div>
                         <table id="datatable-buttons" class="table dt-responsive nowrap"
                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -170,36 +168,62 @@ Reports of {{ Auth()->user()->user_name }}
             </div>
         </div>
         <div class="modal fade" id="weeklyReportModal" tabindex="-1" aria-labelledby="weeklyReportModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content" style="background: #cbcbcb;">
-            <div class="modal-header" style="background: #14213d;">
-                <h5 class="modal-title text-white" id="weeklyReportModalLabel">{{ Auth()->user()->user_name }} Weekly Report</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: #fff;"></button>
-            </div>
-            <div class="modal-body">
-                <div id="missingDaysMessage" class="alert alert-warning" style="display: none;"></div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th style="font-weight: 600; font-size: 20px; color: black;">Task Title</th>
-                            <th style="font-weight: 600; font-size: 20px; color: black;">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody id="weeklyReportTableBody">
-                        <!-- Task rows will be populated here -->
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="submitReportButton">Submit Report</button>
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content" style="background: #e7e7e7;">
+                    <div class="modal-header" style="background: #14213d;">
+                        <h5 class="modal-title text-white" id="weeklyReportModalLabel">{{ Auth()->user()->user_name }} Weekly Report</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: #fff;"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="missingDaysMessage" class="alert alert-warning" style="display: none;"></div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight: 600; font-size: 20px; color: black;">Task Title</th>
+                                    <th style="font-weight: 600; font-size: 20px; color: black;">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="weeklyReportTableBody">
+                                <!-- Task rows will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="submitReportButton">Submit Report</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-
-
+        <div class="modal fade" id="manualReportModal" tabindex="-1" aria-labelledby="manualReportModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="manualReportModalLabel">Add Manual Report</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="missingDaysMessage" class="alert alert-warning" style="display: none;"></div>
+                        
+                        <div id="manualReportForm" style="display: block;">
+                            <div class="form-group">
+                                <label for="taskTitleInput">Task Title</label>
+                                <input type="text" id="taskTitleInput" class="form-control" placeholder="Enter Task Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="reasonInput">Reason for Late Submitting</label>
+                                <input type="text" id="reasonInput" class="form-control" placeholder="Enter Reason for Missing Report">
+                            </div>
+                            <div class="form-group">
+                                <label for="dateInput">Date</label>
+                                <input type="date" id="dateInput" class="form-control" placeholder="Select Date">
+                            </div>
+                            <button type="button" id="addManualReportBtn" class="btn btn-success mt-2">Add Report</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script>
             $(document).ready(function() {
 
@@ -518,69 +542,118 @@ Reports of {{ Auth()->user()->user_name }}
 
         </script>
         <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Fetch weekly report data when modal is opened
-    document.querySelector('a[data-bs-toggle="modal"]').addEventListener('click', function () {
-        fetch('/weekly-report')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data); // Log the response data
-                const tableBody = document.getElementById('weeklyReportTableBody');
-                tableBody.innerHTML = '';
-                const messageDiv = document.getElementById('missingDaysMessage');
-                let missingDays = Array.isArray(data.missingDays) ? data.missingDays : []; // Ensure it's an array
+            document.addEventListener('DOMContentLoaded', function () {
+                // Fetch weekly report data when modal is opened
+                document.querySelector('a[data-bs-toggle="modal"]').addEventListener('click', function () {
+                    fetch('/weekly-report')
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data); // Log the response data
+                            const tableBody = document.getElementById('weeklyReportTableBody');
+                            tableBody.innerHTML = '';
+                            const messageDiv = document.getElementById('missingDaysMessage');
+                            let missingDays = Array.isArray(data.missingDays) ? data.missingDays : []; // Ensure it's an array
 
-                // Clear previous message
-                messageDiv.style.display = 'none'; // Hide initially
+                            // Clear previous message
+                            messageDiv.style.display = 'none'; // Hide initially
+                            document.getElementById('addManualReportBtn').style.display = 'none'; // Hide button initially
 
-                // Populate the table with tasks
-                data.tasks.forEach(task => {
-                    const row = `<tr>
-                        <td>${task.task_title}</td>
-                        <td>${task.date}</td>
-                    </tr>`;
-                    tableBody.insertAdjacentHTML('beforeend', row);
+                            // Populate the table with tasks
+                            data.tasks.forEach(task => {
+                                const row = `<tr>
+                                    <td>${task.task_title}</td>
+                                    <td>${task.date}</td>
+                                </tr>`;
+                                tableBody.insertAdjacentHTML('beforeend', row);
+                            });
+
+                            // Check for missing reports
+                            if (missingDays.length > 0 || data.tasks.length < 5) {
+                                const message = `Please submit reports for: ${missingDays.join(', ')} before submitting the weekly report.`;
+                                messageDiv.textContent = message;
+                                messageDiv.style.display = 'block'; // Show the message
+                                
+                                // Show "Add Manual Report" button only on Friday
+                                const today = new Date();
+                                if (today.getDay() === 5) { // 5 is Friday
+                                    document.getElementById('addManualReportBtn').style.display = 'block'; // Show button
+                                } else {
+                                    document.getElementById('addManualReportBtn').style.display = 'none'; // Hide button
+                                }
+
+                                document.getElementById('submitReportButton').style.display = 'none'; // Hide submit button
+                            } else {
+                                document.getElementById('submitReportButton').style.display = 'block'; // Show submit button
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching weekly report:', error);
+                        });
                 });
 
-                // Check for missing reports
-                if (missingDays.length > 0 || data.tasks.length < 5) {
-                    const message = `Please submit reports for: ${missingDays.join(', ')} before submitting the weekly report.`;
-                    messageDiv.textContent = message;
-                    messageDiv.style.display = 'block'; // Show the message
-                    document.getElementById('submitReportButton').style.display = 'none'; // Hide submit button
-                } else {
-                    document.getElementById('submitReportButton').style.display = 'block'; // Show submit button
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching weekly report:', error);
+                // Handle report submission
+                document.getElementById('submitReportButton').addEventListener('click', function () {
+                    fetch('/submit-weekly-report', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({})
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Report submitted and notifications sent!');
+                            let modal = bootstrap.Modal.getInstance(document.getElementById('weeklyReportModal'));
+                            modal.hide();
+                        } else {
+                            alert('An error occurred while submitting the report.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
             });
-    });
+        </script>
+        <script>
+            document.getElementById('addManualReportBtn').addEventListener('click', function () {
+                const taskTitle = document.getElementById('taskTitleInput').value;
+                const reason = document.getElementById('reasonInput').value;
+                const date = document.getElementById('dateInput').value; // Get the selected date
 
-    // Handle report submission
-    document.getElementById('submitReportButton').addEventListener('click', function () {
-        fetch('/submit-weekly-report', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({})
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Report submitted and notifications sent!');
-                let modal = bootstrap.Modal.getInstance(document.getElementById('weeklyReportModal'));
-                modal.hide();
-            } else {
-                alert('An error occurred while submitting the report.');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
-});
-</script>
+                if (taskTitle && reason) {
+                    fetch('/add-manual-report', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            task_title: taskTitle,
+                            reason: reason,
+                            date: new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) // Format selected date
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Manual report added successfully!');
+                            document.getElementById('taskTitleInput').value = ''; // Clear the form fields
+                            document.getElementById('reasonInput').value = '';
+                            document.getElementById('dateInput').value = '';
+
+                            // Reload the weekly report to reflect the new task
+                            fetchWeeklyReport(); // Optional: Write a function to reload the weekly report data
+                        } else {
+                            alert('An error occurred while adding the manual report.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                } else {
+                    alert('Please fill out both fields.');
+                }
+            });
+        </script>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

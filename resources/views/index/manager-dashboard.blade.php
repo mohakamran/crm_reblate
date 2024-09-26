@@ -23,6 +23,14 @@
                 font-weight: 600;
                 font-family: 'Poppins';
             }
+            .completed-badge {
+                color: #fca311;
+            display: inline-block;
+            background: #14213d;
+            height: 30px;
+            padding: 5px 16px;
+            border-radius: 50px;
+            }
 
             .EmpStyle {
                 font-size: 18px;
@@ -902,8 +910,8 @@
                             <div class="tab-pane fade px-0 show" style="border-bottom: none; min-height:350px"
                                 id="to-do">
                                 <div class="mt-3">
-                                    <div>
-                                        <h1>To-Do List</h1>
+                                <div>
+                                        <h1>To-Do List</h1> 
                                         <form id="todo-form">
                                             <input type="text" id="task-title" placeholder="Enter task title"
                                                 required>
@@ -914,17 +922,24 @@
                                             <button type="submit">Add Task</button>
                                         </form>
                                         <div id="task-list">
-                                            @if ($latest_to_do != null)
-                                                @foreach ($latest_to_do as $item)
-                                                    <div class="card" data-id="{{ $item->id }}">
-                                                        <h3>{{ $item->task_title }}</h3>
-                                                        <p>Date: {{ $item->date }}</p>
-                                                        <p>Time: {{ $item->time }}</p>
-                                                        <input type="hidden" class="task-id"
-                                                            value="{{ $item->id }}">
+                                        @if ($latest_to_do != null)
+                                            @foreach ($latest_to_do as $item)
+                                                <div class="card" data-id="{{ $item->id }}">
+                                                    <div class="card-content" style="display: flex;justify-content: space-between;">
+                                                        <div>
+                                                            <h3>{{ $item->task_title }}</h3>
+                                                            <p>Date: {{ $item->date }}</p>
+                                                            <p>Time: {{ $item->time }}</p>
+                                                            <input type="hidden" class="task-id" value="{{ $item->id }}">
+                                                        </div>
+                                                        <div class="card-actions" style="padding-right: 20px;">
+                                                            <button class="tick-btn">✔️</button>
+                                                            <a href="#" onclick="delToDoList('{{$item->id}}')" class="cross-btn">❌</a>
+                                                        </div>
                                                     </div>
-                                                @endforeach
-                                            @endif
+                                                </div>
+                                            @endforeach
+                                        @endif
                                         </div>
                                     </div>
                                 </div>
@@ -938,13 +953,15 @@
                                             const task = event.target.closest('.card');
                                             if (task) {
                                                 const taskId = task.getAttribute('data-id');
-                                                const isCompleted = task.classList.contains('completed');
-                                                const newStatus = isCompleted ? 'pending' : 'completed';
-
-                                                // Log the current task ID and new status
+                                                let newStatus;
+                                                if (event.target.classList.contains('cross-btn')) {
+                                                    newStatus = 'pending';
+                                                } else if (event.target.classList.contains('tick-btn')) {
+                                                    newStatus = 'completed';
+                                                } else {
+                                                    return; 
+                                                }
                                                 console.log('Updating Task ID:', taskId, 'New Status:', newStatus);
-
-                                                // Send a request to update the task status
                                                 fetch('/update-task-status', {
                                                         method: 'POST',
                                                         headers: {
@@ -961,9 +978,14 @@
                                                     .then(data => {
                                                         console.log('Response Data:', data);
                                                         if (data.success) {
-                                                            // Toggle completed class and update styling
-                                                            task.classList.toggle('completed');
-                                                            updateTaskStyle(task, !isCompleted); // Update style based on new status
+                                                            if (newStatus === 'completed') {
+                                                                task.classList.add('completed');
+                                                                showCompletedBadge(task);
+                                                                hideButtons(task);
+                                                            } else {
+                                                                task.classList.remove('completed');
+                                                            }
+                                                            updateTaskStyle(task, newStatus === 'completed');
                                                         } else {
                                                             console.error('Failed to update status:', data);
                                                         }
@@ -1008,10 +1030,18 @@
                                                             task.className = 'card';
                                                             task.setAttribute('data-id', data.id);
                                                             task.innerHTML = `
-                                                                <h3>${taskTitle}</h3>
-                                                                <p class="task-date">Date: ${getCurrentDate()}</p>
-                                                                <p class="task-time">Time: ${getCurrentTime()}</p>
-                                                                <input type="hidden" class="task-id" value="${data.id}">
+                                                                <div class="card-content" style="display: flex;justify-content: space-between;">
+                                                                <div>
+                                                                    <h3>${taskTitle}</h3>
+                                                                    <p class="task-date">Date: ${getCurrentDate()}</p>
+                                                                    <p class="task-time">Time: ${getCurrentTime()}</p>
+                                                                    <input type="hidden" class="task-id" value="${data.id}">
+                                                                </div>
+                                                                <div class="card-actions" style="padding-right: 20px;">
+                                                                    <button class="tick-btn">✔️</button>
+                                                                    <a href="#" onclick="delToDoList(${data.id})" class="cross-btn">❌</a>
+                                                                </div>
+                                                            </div>
                                                             `;
 
                                                             // Append new task to the task list
@@ -1043,6 +1073,28 @@
                                             return now.toLocaleTimeString('en-US');
                                         }
 
+                                        // Function to show the completed badge
+                                        function showCompletedBadge(task) {
+                                            // Create a badge element
+                                            const badge = document.createElement('span');
+                                            badge.classList.add('completed-badge');
+                                            badge.textContent = 'Your Task has been Completed';
+                                            
+                                            // Add the badge to the card
+                                            const cardContent = task.querySelector('.card-content');
+                                            cardContent.appendChild(badge);
+                                        }
+
+                                        // Function to hide both tick and cross buttons
+                                        function hideButtons(task) {
+                                            const tickBtn = task.querySelector('.tick-btn');
+                                            const crossBtn = task.querySelector('.cross-btn');
+
+                                            // Hide both buttons
+                                            tickBtn.style.display = 'none';
+                                            crossBtn.style.display = 'none';
+                                        }
+
                                         // Function to update task style based on status
                                         function updateTaskStyle(task, isCompleted) {
                                             const title = task.querySelector('h3');
@@ -1053,9 +1105,9 @@
                                                 title.style.textDecoration = 'line-through';
                                                 date.style.textDecoration = 'line-through';
                                                 time.style.textDecoration = 'line-through';
-                                                title.style.color = '#aaa'; // Optional: Change color for completed tasks
-                                                date.style.color = '#aaa';
-                                                time.style.color = '#aaa';
+                                                title.style.color = 'black'; 
+                                                date.style.color = 'black';
+                                                time.style.color = 'black';
                                             } else {
                                                 title.style.textDecoration = 'none';
                                                 date.style.textDecoration = 'none';
@@ -1127,6 +1179,50 @@
                         });
                 }
             </script>
+             <script>
+            function delToDoList(id) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You Want To Delete The to-do list',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                    confirmButtonColor: '#FF5733', // Red color for "Yes"
+                    cancelButtonColor: '#4CAF50', // Green color for "No"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Send an AJAX request to delete the team member
+                        $.ajax({
+                            url: '/del-task/' + id,
+                            method: 'DELETE', // Use the DELETE HTTP method
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include CSRF token
+                            },
+                            success: function() {
+                                // Provide user feedback
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'deleted!',
+                                    icon: 'success'
+                                }).then(() => {
+                                    location.reload(); // Refresh the page
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                // Handle errors, you can display an error message to the user
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'An error occurred while deleting quotation!',
+                                    icon: 'error'
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        </script>
 
 
             <div class="col-md-5 col-xl-5 col-lg-5">

@@ -2,6 +2,7 @@
 <?php
 
 use App\Http\Controllers\ExpenseController;
+use Illuminate\Support\Facades\Route;
 
 // Expenses Routes
 Route::get('/add-new-expense', [ExpenseController::class,'addExpenseRoute'])->name('add-new-expense')->middleware('ExpenseRole');
@@ -10,3 +11,5 @@ Route::get('/view-expenses', [ExpenseController::class,'viewExpenses'])->name('v
 Route::get('delete-expense/{expense_id}', [ExpenseController::class,'deleteExpenses'])->middleware('ExpenseRole');
 Route::get('/update-expense/{expense_id}', [ExpenseController::class,'updateExpenseRoute'])->middleware('ExpenseRole');
 Route::post('/update-expense-data/{expense_id}', [ExpenseController::class,'updateExpenseData'])->middleware('ExpenseRole');
+
+Route::get('finance-dashboard', [ExpenseController::class,'viewDashboard'])->name('Finance.Dashboard');

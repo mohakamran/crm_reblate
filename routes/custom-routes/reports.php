@@ -19,6 +19,15 @@
     Route::post('/task/{id}/approve', [ReportingController::class, 'approve'])->name('task.approve');
     Route::post('/task/{id}/not-approve', [ReportingController::class, 'notApprove'])->name('task.not_approve');
     Route::get('/check-out/validate-weekly-report', [ReportingController::class, 'validateWeeklyReport']);
+    Route::post('/add-manual-report', [ReportingController::class, 'addManualReport']);
+
+    // admin dashboard routes for reports
+    Route::get('/Reports-admin',[ReportingController::class, 'AdminReportsIndex'])->name('Reports.index');
+    Route::get('/employee/{user_code}/reports', [ReportingController::class, 'viewEmployeeReports'])->name('employee.reports');
+    Route::get('/employee-reports-search/{user_code}', [ReportingController::class, 'viewEmployeeReports'])->name('employee-reports-search');
+
+
+
 
 
 

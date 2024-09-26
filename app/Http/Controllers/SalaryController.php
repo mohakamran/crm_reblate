@@ -759,6 +759,22 @@ class SalaryController extends Controller
         return view('salaries.salary-dashboard',$data);
     }
 
+    public function showEmployeeData(Request $request)
+    {
+        
+        $emp_id = $request->input('emp_id');
+        $input_month_salary = $request->input('month_salary');
+
+        $date = Carbon::parse($input_month_salary);
+        $month_salary = $date->englishMonth . ', ' . $date->year;
+
+        $salary = Salary::where('emp_id', $emp_id)
+        ->where('month_salary', $month_salary)
+        ->first();
+
+        return view('salaries.salary-employee-data', compact('salary'));
+    }
+
     // view recipts
     public function viewReciepts() {
         $rec = Employee::orderBy('id', 'desc')->where('Emp_Status','active')->get();
