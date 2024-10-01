@@ -13,3 +13,6 @@ Route::get('/update-expense/{expense_id}', [ExpenseController::class,'updateExpe
 Route::post('/update-expense-data/{expense_id}', [ExpenseController::class,'updateExpenseData'])->middleware('ExpenseRole');
 
 Route::get('finance-dashboard', [ExpenseController::class,'viewDashboard'])->name('Finance.Dashboard');
+Route::get('/filter-expenses', [ExpenseController::class, 'filterExpenses'])->name('filterExpenses');
+Route::get('/print-expenses', [ExpenseController::class, 'printExpenses'])->name('print.expenses');
+

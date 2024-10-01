@@ -25,9 +25,37 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-
                         <div class="row d-flex justify-content-between mb-5">
+                        <form action="{{ url('/view-expenses') }}" method="GET">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="ex_child_category">Select Child Category</label>
+                                    <select name="ex_child_category" id="ex_child_category" class="form-control">
+                                        <option value="">Select Category</option>
+                                        @foreach($allCategories as $category)
+                                            <option value="{{ $category }}" 
+                                                {{ request()->input('ex_child_category') == $category ? 'selected' : '' }}>
+                                                {{ $category }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="ex_date">Select Date</label>
+                                    <input type="month" name="ex_month" id="ex_month" class="form-control" value="{{ request()->input('ex_month') }}">
+                                </div>
+                                <div class="col-md-4">
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                                    <a href="{{ url('/print-expenses') }}?ex_child_category={{ request()->input('ex_child_category') }}&ex_month={{ request()->input('ex_month') }}" target="_blank" class="btn btn-secondary">
+                                        Print as PDF
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+
                             <h4 class="card-title" style="width:50%">{{$title}}</h4>
+                           
                             <div style="width: 13%">
 
                                  @if (Session::has('expenses_access'))
@@ -66,16 +94,8 @@
                                                 d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
                                         </svg></span> Add New</a>
                                 @endif
-
-
                             </div>
                         </div>
-                        {{-- <p class="card-title-desc">The Buttons extension for DataTables
-                            provides a common set of options, API methods and styling to display
-                            buttons on a page that will interact with a DataTable. The core library
-                            provides the based framework upon which plug-ins can built.
-                        </p> --}}
-
                         <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
@@ -157,11 +177,10 @@
                         </table>
                     </div>
                 </div>
-            </div> <!-- end col -->
-        </div> <!-- end row -->
+            </div>
+        </div>
 
         <script>
-            // Function to confirm deletion with SweetAlert
             function confirmDelete(id) {
                 Swal.fire({
                     title: 'Are you sure?',
@@ -170,26 +189,23 @@
                     showCancelButton: true,
                     confirmButtonText: 'Yes',
                     cancelButtonText: 'No',
-                    confirmButtonColor: '#FF5733', // Red color for "Yes"
-                    cancelButtonColor: '#4CAF50', // Green color for "No"
+                    confirmButtonColor: '#FF5733', 
+                    cancelButtonColor: '#4CAF50',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Send an AJAX request to delete the task
                         $.ajax({
                             url: '/delete-expense/'+id,
-                            method: 'GET', // Use the DELETE HTTP method
+                            method: 'GET', 
                             success: function() {
-                                // Provide user feedback
                                 Swal.fire({
                                     title: 'Success!',
                                     text: 'The Expense has been deleted.',
                                     icon: 'success'
                                 }).then(() => {
-                                    location.reload(); // Refresh the page
+                                    location.reload();
                                 });
                             },
                             error: function(xhr, status, error) {
-                                // Handle errors, you can display an error message to the user
                                 console.error('Error:', error);
                                 Swal.fire({
                                     title: 'Error!',

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Expense;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class ExpenseController extends Controller
 {
@@ -41,17 +42,29 @@ class ExpenseController extends Controller
         return back();
     }
 
-    public function viewExpenses() {
-        $rec = Expense::orderBy('id', 'desc')->get();
-        if($rec !=null) {
+    public function viewExpenses(Request $request) {
+        $query = Expense::orderBy('id', 'desc');
+        $allCategories = Expense::distinct()->pluck('expense_child_category');
+        if ($request->has('ex_child_category') && !empty($request->input('ex_child_category'))) {
+            $query->where('expense_child_category', $request->input('ex_child_category'));
+        }
+        if ($request->has('ex_month') && !empty($request->input('ex_month'))) {
+            $month = date('m', strtotime($request->input('ex_month')));
+            $year = date('Y', strtotime($request->input('ex_month')));
+            $query->whereYear('expense_date', $year)
+                  ->whereMonth('expense_date', $month);
+        }
+        $rec = $query->get();
+    
+        if ($rec != null) {
             $title = "Reblate Solutions Expenses";
-            $data  = compact('rec','title');
+            $data = compact('rec', 'title','allCategories');
             return view('expenses.view-expenses')->with($data);
         } else {
             return redirect('/');
         }
-
     }
+    
     // delete expense id from database
     public function deleteExpenses($id){
         $emp_data = Expense::find($id);
@@ -111,4 +124,59 @@ class ExpenseController extends Controller
     public function viewDashboard(){
         return view('finance.dashboard');
     }
+
+    public function filterExpenses(Request $request)
+    {
+        // Get the filter values from the request
+        $month = $request->input('month');
+        $subcategory = $request->input('subcategory');
+
+        // Initialize the query
+        $query = Expense::query();
+
+        // Apply the month filter if selected
+        if (!empty($month)) {
+            $query->whereMonth('expense_date', $month);
+        }
+
+        // Apply the subcategory filter if selected
+        if (!empty($subcategory)) {
+            $query->where('expense_child_category', $subcategory);
+        }
+
+        // Fetch the filtered expenses
+        $expenses = $query->get();
+
+        // Generate PDF
+        $pdf = PDF::loadView('expenses.pdf', compact('expenses'));
+
+        // Return the generated PDF
+        return $pdf->download('filtered-expenses.pdf');
+    }
+
+    public function printExpenses(Request $request) {
+        $query = Expense::orderBy('id', 'desc');
+        $allCategories = Expense::distinct()->pluck('expense_child_category');
+        
+        if ($request->has('ex_child_category') && !empty($request->input('ex_child_category'))) {
+            $query->where('expense_child_category', $request->input('ex_child_category'));
+        }
+        if ($request->has('ex_month') && !empty($request->input('ex_month'))) {
+            $month = date('m', strtotime($request->input('ex_month')));
+            $year = date('Y', strtotime($request->input('ex_month')));
+            $query->whereYear('expense_date', $year)
+                  ->whereMonth('expense_date', $month);
+        }
+    
+        $rec = $query->get();
+    
+        if ($rec != null) {
+            $title = "Reblate Solutions Expenses";
+            $data = compact('rec', 'title', 'allCategories');
+            return view('expenses.pdf-expenses')->with($data);
+        } else {
+            return redirect('/');
+        }
+    }
+    
 }
